@@ -22,7 +22,7 @@ class plgContentId_reg_mono_pub_forms extends JPlugin {
 
     public function onContentPrepare($context, &$row, &$params, $page = 0) {
         // Search in the article text the plugin code and exit if not found
-        $regex = "%\{mono_pub_form\}%is";
+        $regex = "%\{mono_pub_form (registration|)\}%is";
         $found = preg_match_all($regex, $row->text, $matches);
 
         $count = 0;
@@ -31,7 +31,6 @@ class plgContentId_reg_mono_pub_forms extends JPlugin {
 
             foreach ($matches[0] as $value) {
                 $html = "";
-                preg_match_all($regex, $value, $matches_inner);
                 
 				// This section generates and processes forms that are 
 				// needed for giving donations.
@@ -42,23 +41,33 @@ class plgContentId_reg_mono_pub_forms extends JPlugin {
 				
 				// Add plugin css
 				$document = JFactory::getDocument();
-				$document->addStyleSheet(JURI::base() . "plugins/content/id_reg_mono_pub_forms/css/style.css");
+				$document->addStyleSheet("plugins/content/id_reg_mono_pub_forms/css/style.css");
 
 				// Email settings
 				$email = $this->params->def('email', $adminEmail);
 				$notifyAdmin = $this->params->def('notify_admin', true);
 				
 				// Language settings
-				$lang = & JFactory::getLanguage();
-				// Get site language
-				$siteLanguage = $lang->getTag();
-				// Language code
-				$langCode = strtoupper(substr($siteLanguage, 0, 2));
-
-				// Load the language file in the current site language		
-				$lang->load('plg_content_id_reg_mono_pub_forms', JPATH_ADMINISTRATOR, $siteLanguage, true);
-
+				$lang =& JFactory::getLanguage();
+				// Load the language file in the current site language
+				$lang->load('plg_content_id_reg_mono_pub_forms', JPATH_ADMINISTRATOR, $lang->getTag(), true);
+						
 				// TODO: create and process forms
+				if(strpos($value,'registration') !== false) {
+					if(!isset($_POST['submit_registration'])) {
+						$html .= IdRegMonoPubFormsHtmlBuilder::getRegisterMonographPublisherForm();
+					} elseif(JSession::checkToken() && isset($_POST['submit_registration'])) {
+						// Validate input data
+						$errors = IdRegMonoPubFormsHelper::validateRegistrationForm();
+						// If there are no errors, continue processing
+						if (empty($errors)) {
+							// TODO: return success form
+							$html .= 'OK';
+						} else {
+							$html .= IdRegMonoPubFormsHtmlBuilder::getRegisterMonographPublisherForm($errors);
+						}
+					}
+				}
 
                 // Add HTML code
                 $replacement[$count] = $html;

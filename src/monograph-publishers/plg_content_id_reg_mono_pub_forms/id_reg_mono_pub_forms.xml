@@ -2,11 +2,11 @@
 <extension type="plugin" group="content" version="2.5" method="upgrade">
 	<name>PLG_ID_REG_MONO_PUB_FORMS</name>
 	<author>Petteri Kivimaki</author>
-	<creationDate>October 2015</creationDate>
+	<creationDate>1 November 2015</creationDate>
     <copyright>(C)2015 Petteri Kivimaki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
     <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
-	<version>1.0.0</version>
+	<version>0.0.1</version>
 	<description>PLG_ID_REG_MONO_PUB_FORMS_DESC</description>
 	<files>
 	   <filename plugin="id_reg_mono_pub_forms">id_reg_mono_pub_forms.php</filename>
@@ -14,12 +14,13 @@
 	   <filename>idRegMonoPubFormsHelper.php</filename>
 	   <filename>idRegMonoPubFormsLogger.php</filename>
 	   <folder>css</folder>
+	   <folder>language</folder>
 	</files>
 	<languages>
-		<language tag="en-GB">en-GB.plg_content_id_reg_mono_pub_forms.ini</language>
-        <language tag="en-GB">en-GB.plg_content_id_reg_mono_pub_forms.sys.ini</language>
-		<language tag="fi-FI">fi-FI.plg_content_id_reg_mono_pub_forms.ini</language>
-        <language tag="fi-FI">fi-FI.plg_content_id_reg_mono_pub_forms.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_content_id_reg_mono_pub_forms.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_id_reg_mono_pub_forms.sys.ini</language>
+		<language tag="fi-FI">language/fi-FI/fi-FI.plg_content_id_reg_mono_pub_forms.ini</language>
+        <language tag="fi-FI">language/fi-FI/fi-FI.plg_content_id_reg_mono_pub_forms.sys.ini</language>
 	</languages>
 	<config>
 	  <fields name="params">
