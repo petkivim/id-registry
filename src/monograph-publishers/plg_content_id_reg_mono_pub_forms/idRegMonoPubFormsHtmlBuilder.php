@@ -10,7 +10,7 @@ defined('_JEXEC') or die('Restricted access');
 
 class IdRegMonoPubFormsHtmlBuilder {
 
-    public static function getRegisterMonographPublisherForm($errors = array()) {
+    public static function getRegisterMonographPublisherForm($langTag, $errors = array()) {
         $html .= '<div class="form_header">' . JText::_('PLG_ID_REG_MONO_PUB_FORMS_REGISTRATION_HEADER') . '</div>';
         $html .= '<div class="plg_id_reg_mono_pub_forms" id="plg_id_reg_mono_pub_forms_registration" >';
         $html .= '<div class="sub_title">' . JText::_('PLG_ID_REG_MONO_PUB_FORMS_REGISTRATION_SUB_TITLE_1') . '</div>';
@@ -85,6 +85,7 @@ class IdRegMonoPubFormsHtmlBuilder {
         $html .= '<span  class="error">' . JText::_($errors['confirmation']) . '</span></div>';
         $html .= '<div class="field_info">' . JText::_('PLG_ID_REG_MONO_PUB_FORMS_CONFIRMATION_POST_FIELD') . '</div>';
         $html .= '<div><input type="submit" name="submit_registration" value="' . JText::_('PLG_ID_REG_MONO_PUB_FORMS_SEND_BTN') . '" /></div>';
+		$html .= '<input type="hidden" name="lang_code" value="' . $langTag . '" />';
         $html .= JHTML::_('form.token');
         $html .= '</form>';
         return $html;

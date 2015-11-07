@@ -55,16 +55,26 @@ class plgContentId_reg_mono_pub_forms extends JPlugin {
 				// TODO: create and process forms
 				if(strpos($value,'registration') !== false) {
 					if(!isset($_POST['submit_registration'])) {
-						$html .= IdRegMonoPubFormsHtmlBuilder::getRegisterMonographPublisherForm();
+						$html .= IdRegMonoPubFormsHtmlBuilder::getRegisterMonographPublisherForm($lang->getTag());
 					} elseif(JSession::checkToken() && isset($_POST['submit_registration'])) {
 						// Validate input data
 						$errors = IdRegMonoPubFormsHelper::validateRegistrationForm();
 						// If there are no errors, continue processing
 						if (empty($errors)) {
-							// TODO: return success form
-							$html .= 'OK';
+							// Get the post variables
+							$post = JFactory::getApplication()->input->post;
+							// Save to DB
+							$publisherId = IdRegMonoPubFormsHelper::saveToDb($post);
+							 // If publisherId is 0 saving donation to DB failed
+                             if ($publisherId == 0) {
+								 // TODO: return error form
+								$html .= 'ERROR';
+							 } else {
+								// TODO: return success form
+								$html .= 'OK';
+							 }
 						} else {
-							$html .= IdRegMonoPubFormsHtmlBuilder::getRegisterMonographPublisherForm($errors);
+							$html .= IdRegMonoPubFormsHtmlBuilder::getRegisterMonographPublisherForm($lang->getTag(), $errors);
 						}
 					}
 				}
