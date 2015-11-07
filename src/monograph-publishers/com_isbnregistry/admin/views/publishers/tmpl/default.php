@@ -18,34 +18,7 @@ defined('_JEXEC') or die('Restricted Access');
                     <?php echo JHtml::_('grid.checkall'); ?>
                 </th>
                 <th width="15%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_FIRST_NAME'); ?>
-                </th>
-                <th width="15%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_LAST_NAME'); ?>
-                </th>
-                <th width="15%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_ORGANIZATION'); ?>
-                </th>
-                <th width="5%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_SOURCE'); ?>
-                </th>
-                <th width="15%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_RECEIVED'); ?>
-                </th>	
-                <th width="5%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_CONFIRMED'); ?>
-                </th>	
-                <th width="5%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_CONFIRMATION_STATUS'); ?>
-                </th>
-                <th width="10%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_AMOUNT'); ?>
-                </th>	
-                <th width="5%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_PUBLIC'); ?>
-                </th>				
-                <th width="5%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_PUBLISHED'); ?>
+                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_OFFICIAL_NAME'); ?>
                 </th>
                 <th width="2%">
                     <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_ID'); ?>
@@ -72,40 +45,9 @@ defined('_JEXEC') or die('Restricted Access');
                         </td>
                         <td>
                             <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_PUBLISHER'); ?>">
-                                <?php echo $row->first_name; ?>
+                                <?php echo $row->official_name; ?>
                             </a>
-                        </td>
-                        <td>
-                            <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_PUBLISHER'); ?>">
-                                <?php echo $row->last_name; ?>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_PUBLISHER'); ?>">
-                                <?php echo $row->organization; ?>
-                            </a>
-                        </td>						
-                        <td>
-                            <?php echo $row->data_source; ?>
-                        </td>	
-                        <td>
-                            <?php echo $row->donation_timestamp; ?>
-                        </td>
-                        <td>
-                            <?php echo ($row->confirmation ? JText::_('COM_ISBNREGISTRY_PUBLISHER_FIELD_YES') : JText::_('COM_ISBNREGISTRY_PUBLISHER_FIELD_NO')); ?>
-                        </td>	
-                        <td>
-                            <?php echo $row->confirmation_status; ?>
-                        </td>						
-                        <td>
-                            <?php echo $row->amount; ?> &euro;
-                        </td>
-                        <td>
-                            <?php echo ($row->permission ? JText::_('COM_ISBNREGISTRY_PUBLISHER_FIELD_YES') : JText::_('COM_ISBNREGISTRY_PUBLISHER_FIELD_NO')); ?>
-                        </td>						
-                        <td align="center">
-                            <?php echo JHtml::_('jgrid.published', $row->published, $i, 'publishers.', true, 'cb'); ?>
-                        </td>
+                        </td>                      
                         <td align="center">
                             <?php echo $row->id; ?>
                         </td>

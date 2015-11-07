@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
@@ -14,15 +15,48 @@ defined('_JEXEC') or die('Restricted access');
  *
  * @since  1.0.0
  */
-class IsbnRegistryTablePublisher extends JTable
-{
-	/**
-	 * Constructor
-	 *
-	 * @param   JDatabaseDriver  &$db  A database connector object
-	 */
-	function __construct(&$db)
-	{
-		parent::__construct('#__isbn_registry_publisher', 'id', $db);
-	}
+class IsbnRegistryTablePublisher extends JTable {
+
+    /**
+     * Constructor
+     *
+     * @param   JDatabaseDriver  &$db  A database connector object
+     */
+    function __construct(&$db) {
+        parent::__construct('#__isbn_registry_publisher', 'id', $db);
+    }
+
+    /**
+     * Stores a publisher.
+     *
+     * @param   boolean  $updateNulls  True to update fields even if they are null.
+     *
+     * @return  boolean  True on success, false on failure.
+     *
+     * @since   1.6
+     */
+    public function store($updateNulls = false) {
+        // Transform the params field
+        if (is_array($this->params)) {
+            $registry = new Registry;
+            $registry->loadArray($this->params);
+            $this->params = (string) $registry;
+        }
+
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        if ($this->id) {
+            // Existing item
+            $this->modified_by = $user->get('username');
+            $this->modified = $date->toSql();
+        } else {
+            // New item
+            $this->created_by = $user->get('username');
+            $this->created = $date->toSql();
+        }
+        return parent::store($updateNulls);
+    }
+
 }

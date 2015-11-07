@@ -30,7 +30,7 @@ class IsbnregistryModelPublishers extends JModelList
 		// Create the base select statement.
 		$query->select('*')
 			  ->from($db->quoteName('#__isbn_registry_publisher'))
-			  ->order('last_name ASC');
+			  ->order('official_name ASC');
 
 		return $query;
 	}

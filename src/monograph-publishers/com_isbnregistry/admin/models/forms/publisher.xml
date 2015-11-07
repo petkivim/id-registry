@@ -1,70 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<form addrulepath="/administrator/components/com_isbnregistry/models/rules">
+<form addrulepath="/administrator/components/com_isbnregistry/models/rules">	
     <fieldset>
         <field
             name="id"
             type="hidden"
-        />	
+        />
         <field
-            name="data_source"
+            name="official_name"
             type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_DATA_SOURCE_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_DATA_SOURCE_DESC"
-            size="20"
-            readonly="true"
-            class="inputbox"
-            default="ADMIN"
-            required="true"
-        />					
-        <field 
-            name="donation_timestamp"
-            type="calendar"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_DONATION_TIMESTAMP_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_DONATION_TIMESTAMP_DESC"
-            disabled="true"
-            class="readonly"
-            format="%d.%m.%Y %H:%M:%S"
-        />				
-        <field
-            name="category"
-            type="list"
-            default="PRI"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CATEGORY_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CATEGORY_DESC"
-            required="true"
-        >	
-            <option value="PRI">COM_ISBNREGISTRY_PUBLISHER_FIELD_CATEGORY_PRI_LABEL</option>
-            <option value="COM">COM_ISBNREGISTRY_PUBLISHER_FIELD_CATEGORY_COM_LABEL</option>
-        </field>				
-        <field
-            name="first_name"
-            type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_FIRST_NAME_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_FIRST_NAME_DESC"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_DESC"
             size="20"
             class="inputbox"
             default=""
             required="true"
         />
         <field
-            name="last_name"
+            name="other_names"
             type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LAST_NAME_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LAST_NAME_DESC"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OTHER_NAMES_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_OTHER_NAMES_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+        />
+        <field
+            name="contact_person"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_DESC"
             size="20"
             class="inputbox"
             default=""
             required="true"
-        />	
+        />
+        <field 
+            name="created"
+            type="calendar"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_DESC"
+            disabled="true"
+            class="readonly"
+            format="%d.%m.%Y %H:%M:%S"
+        />
         <field
-            name="organization"
+            name="created_by"
             type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ORGANIZATION_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ORGANIZATION_DESC"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_BY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_BY_DESC"
             size="20"
-            class="inputbox"
-            default=""
+            disabled="true"
+            class="readonly"
         />	
+        <field 
+            name="modified"
+            type="calendar"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_MODIFIED_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_MODIFIED_DESC"
+            disabled="true"
+            class="readonly"
+            format="%d.%m.%Y %H:%M:%S"
+        />
+        <field
+            name="modified_by"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_MODIFIED_BY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_MODIFIED_BY_DESC"
+            size="20"
+            disabled="true"
+            class="readonly"
+        />
         <field
             name="address"
             type="text"
@@ -96,20 +101,19 @@
             required="true"
         />	
         <field
-            name="country"
-            type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_COUNTRY_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_COUNTRY_DESC"
-            size="20"
-            class="inputbox"
-            default="Suomi"
-            required="true"
-        />					
-        <field
             name="phone"
             type="text"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+        />	
+        <field
+            name="fax"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_FAX_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_FAX_DESC"
             size="20"
             class="inputbox"
             default=""
@@ -124,92 +128,93 @@
             default=""
             required="true" 
             validate="email"
-        />	
+        />
         <field
-            name="amount"
-            type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_AMOUNT_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_AMOUNT_DESC"
+            name="www"
+            type="URL"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_WWW_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_WWW_DESC"
             size="20"
-            class="inputbox validate-amount"
-            default="25,00"
-            required="true"
-            validate="amount"
-        />	
+            class="inputbox"
+            default=""
+        />
+        
         <field
-            name="payment_method"
-            type="list"
-            default="PAYPAL"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PAYMENT_METHOD_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PAYMENT_METHOD_DESC"
-            required="true"
-        >	
-            <option value="CHECKOUT">COM_ISBNREGISTRY_PUBLISHER_FIELD_PAYMENT_METHOD_CHECKOUT_LABEL</option>
-            <option value="PAYPAL">COM_ISBNREGISTRY_PUBLISHER_FIELD_PAYMENT_METHOD_PAYPAL_LABEL</option>
-            <option value="BANK">COM_ISBNREGISTRY_PUBLISHER_FIELD_PAYMENT_METHOD_BANK_LABEL</option>
-        </field>				
+            name="question_1"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_1_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_1_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+        />
         <field
-            name="permission"
-            type="radio"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PERMISSION_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PERMISSION_DESC"
-            default="0"
-            required="true"
-            validate="boolean"
-        >	
-            <option value="0">COM_ISBNREGISTRY_PUBLISHER_FIELD_NO</option>
-            <option value="1">COM_ISBNREGISTRY_PUBLISHER_FIELD_YES</option>
-        </field>		
+            name="question_2"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_2_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_2_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+        />
+        <field
+            name="question_3"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_3_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_3_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+        />
+        <field
+            name="question_4"
+            type="textarea"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_4_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_4_DESC"
+            rows="3"
+            cols="40"/> 
+        <field
+            name="question_5"
+            type="textarea"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_5_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_5_DESC"
+            rows="3"
+            cols="40"/>        
+        <field
+            name="question_6"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_6_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_6_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+        />
+        <field
+            name="question_7"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_7_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_7_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+        />
+        <field
+            name="question_8"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_8_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_8_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+        />
         <field
             name="confirmation"
-            type="radio"
+            type="text"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_DESC"
-            default="0"
-            required="true"
-            validate="boolean"
-        >
-            <option value="0">COM_ISBNREGISTRY_PUBLISHER_FIELD_NO</option>
-            <option value="1">COM_ISBNREGISTRY_PUBLISHER_FIELD_YES</option>
-        </field>
-        <field 
-            name="confirmation_timestamp"
-            type="calendar"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_TIMESTAMP_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_TIMESTAMP_DESC"
-            disabled="true"
-            class="readonly"
-            format="%d.%m.%Y %H:%M:%S"
-        />	
-        <field
-            name="confirmation_status"
-            type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_STATUS_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_STATUS_DESC"
             size="20"
-            disabled="true"
             class="inputbox"
             default=""
-        />				
-        <field
-            name="confirmation_action"
-            type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_ACTION_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_ACTION_DESC"
-            size="20"
-            disabled="true"
-            class="inputbox"
-            default=""
-        />				
-        <field
-            name="co_payment_id"
-            type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CO_PAYMENT_ID_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CO_PAYMENT_ID_DESC"
-            size="20"
-            disabled="true"
-            class="inputbox"
-            default=""
-        />					
+        />
     </fieldset>
 </form>
