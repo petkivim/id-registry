@@ -218,5 +218,14 @@
             class="inputbox"
             default=""
         />
+        
+        <field 
+            name="lang_code" 
+            type="language" 
+            client="site" 
+            default="fi-FI" 
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LANGUAGE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LANGUAGE_DESC"
+        />
     </fieldset>
 </form>

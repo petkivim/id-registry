@@ -30,6 +30,7 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('official_name'); ?>
                 <?php echo $this->form->renderField('other_names'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
+                <?php echo $this->form->renderField('lang_code'); ?>
                 <?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
                 <?php echo $this->form->renderField('modified'); ?>
