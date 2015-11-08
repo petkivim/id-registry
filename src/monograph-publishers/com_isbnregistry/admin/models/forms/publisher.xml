@@ -11,7 +11,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-officialname"
             default=""
             required="true"
         />
@@ -21,7 +21,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OTHER_NAMES_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_OTHER_NAMES_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-othernames"
             default=""
         />
         <field
@@ -30,7 +30,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-contactperson"
             default=""
             required="true"
         />
@@ -78,7 +78,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDRESS_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDRESS_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-address"
             default=""
             required="true"
         />	
@@ -88,7 +88,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ZIP_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ZIP_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-zip"
             default=""
             required="true"
         />	
@@ -98,7 +98,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CITY_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CITY_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-city"
             default=""
             required="true"
         />	
@@ -108,7 +108,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-phone"
             default=""
         />	
         <field
@@ -117,7 +117,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_FAX_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_FAX_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-phone"
             default=""
         />					
         <field
@@ -137,8 +137,9 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_WWW_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_WWW_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-www"
             default=""
+            validate="url"
         />
         
         <field
@@ -147,7 +148,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_1_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_1_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-question1"
             default=""
         />
         <field
@@ -156,7 +157,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_2_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_2_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-question2"
             default=""
         />
         <field
@@ -165,7 +166,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_3_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_3_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-question3"
             default=""
         />
         <field
@@ -173,6 +174,7 @@
             type="textarea"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_4_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_4_DESC"
+            class="validate-question4"
             rows="3"
             cols="40"/> 
         <field
@@ -180,15 +182,17 @@
             type="textarea"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_5_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_5_DESC"
+            class="validate-question5"
             rows="3"
-            cols="40"/>        
+            cols="40"
+        />        
         <field
             name="question_6"
             type="text"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_6_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_6_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-question6"
             default=""
         />
         <field
@@ -197,7 +201,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_7_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_7_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-question7"
             default=""
         />
         <field
@@ -206,7 +210,7 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_8_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_8_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-question8"
             default=""
         />
         <field
@@ -215,10 +219,9 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_DESC"
             size="20"
-            class="inputbox"
+            class="inputbox validate-confirmation"
             default=""
-        />
-        
+        />      
         <field 
             name="lang_code" 
             type="language" 

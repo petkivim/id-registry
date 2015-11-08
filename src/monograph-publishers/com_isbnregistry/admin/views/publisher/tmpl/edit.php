@@ -10,6 +10,11 @@
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.formvalidator');
 
+// Add custom validators
+$document = JFactory::getDocument();
+$document->addScript(JURI::root( true ) . '/administrator/components/com_isbnregistry/scripts/custom_validators.js');
+
+// This fix is needed for JToolBar
 JFactory::getDocument()->addScriptDeclaration('
     Joomla.submitbutton = function(task)
     {
