@@ -11,9 +11,10 @@
         height: 6em;
 }
 
-#confirmation {
+#confirmation, .question, input[type="text"].question {
         display:inline;
 }
+
 
 .field_info {
         font-size: 80%;

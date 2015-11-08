@@ -21,12 +21,21 @@ class IdRegMonoPubFormsHelper {
         $officialName = $post->get('official_name', null, 'string');
         if (empty($officialName) == true) {
             $errors['official_name'] = "PLG_ID_REG_MONO_PUB_FORMS_OFFICIAL_NAME_FIELD_EMPTY";
-        }
+        } else if(strlen($officialName) > 100){
+			$errors['official_name'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Other names - optional
+        $otherNames = $post->get('other_names', null, 'string');
+		if(strlen($otherNames) > 200){
+			$errors['other_names'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
         // Address - required
         $address = $post->get('address', null, 'string');
         if (empty($address) == true) {
             $errors['address'] = "PLG_ID_REG_MONO_PUB_FORMS_ADDRESS_FIELD_EMPTY";
-        }
+        } else if(strlen($address) > 50){
+			$errors['address'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
         // ZIP - required
         $zip = $post->get('zip', null, 'string');
         if (strlen($zip) == 0) {
@@ -38,11 +47,18 @@ class IdRegMonoPubFormsHelper {
         $city = $post->get('city', null, 'string');
         if (empty($city) == true) {
             $errors['city'] = "PLG_ID_REG_MONO_PUB_FORMS_CITY_FIELD_EMPTY";
-        }
+        } else if(strlen($city) > 50){
+			$errors['city'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
         // Phone number - optional (validate format)
 		$phone = $post->get('phone', null, 'string');
-		if (!preg_match('/^(\+){0,1}[0-9 ]*$/i', $phone)) {
+		if (!preg_match('/^(\+){0,1}[0-9 ]{0,30}$/i', $phone)) {
             $errors['phone'] = "PLG_ID_REG_MONO_PUB_FORMS_PHONE_FIELD_INVALID";
+        }
+        // Fax number - optional (validate format)
+		$fax = $post->get('fax', null, 'string');
+		if (!preg_match('/^(\+){0,1}[0-9 ]{0,30}$/i', $fax)) {
+            $errors['fax'] = "PLG_ID_REG_MONO_PUB_FORMS_FAX_FIELD_INVALID";
         }
         // Email - required
         $email = $post->get('email', null, 'string');
@@ -51,11 +67,63 @@ class IdRegMonoPubFormsHelper {
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = "PLG_ID_REG_MONO_PUB_FORMS_EMAIL_FIELD_INVALID";
         }
+		// Www - optional (validate format)
+		$www = $post->get('www', null, 'string');
+		if (strlen($www) > 0 && !preg_match('/^http(s)?:\/\/(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/', $www)) {
+            $errors['www'] = "PLG_ID_REG_MONO_PUB_FORMS_WWW_FIELD_INVALID";
+        } else if(strlen($www) > 100){
+			$errors['www'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Contact person - optional
+        $contactPerson = $post->get('contact_person', null, 'string');
+		if(strlen($contactPerson) > 100){
+			$errors['contact_person'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Question 1 - optional
+        $question1 = $post->get('question_1', null, 'string');
+		if(strlen($question1) > 50){
+			$errors['question_1'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Question 2 - optional
+        $question2 = $post->get('question_2', null, 'string');
+		if(strlen($question2) > 50){
+			$errors['question_2'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Question 3 - optional
+        $question3 = $post->get('question_3', null, 'string');
+		if(strlen($question3) > 50){
+			$errors['question_3'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Question 4 - optional
+        $question4 = $post->get('question_4', null, 'string');
+		if(strlen($question4) > 200){
+			$errors['question_4'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Question 5 - optional
+        $question5 = $post->get('question_5', null, 'string');
+		if(strlen($question5) > 200){
+			$errors['question_5'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Question 6 - optional
+        $question6 = $post->get('question_6', null, 'string');
+		if(strlen($question6) > 50){
+			$errors['question_6'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Question 7 - optional
+        $question7 = $post->get('question_7', null, 'string');
+		if(strlen($question7) > 50){
+			$errors['question_7'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}
+		// Question 8 - optional
+        $question8 = $post->get('question_8', null, 'string');
+		if(strlen($question8) > 50){
+			$errors['question_8'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+		}		
 		// Confirmation - required
         $confirmation = $post->get('confirmation', null, 'string');
         if (empty($confirmation) == true) {
             $errors['confirmation'] = "PLG_ID_REG_MONO_PUB_FORMS_CONFIRMATION_FIELD_EMPTY";
-        } else if (!preg_match('/^\d{2}\.\d{2}\.\d{4} .+$/i', $confirmation)) {
+        } else if (!preg_match('/^\d{2}\.\d{2}\.\d{4} .{1,95}$/i', $confirmation)) {
             $errors['confirmation'] = "PLG_ID_REG_MONO_PUB_FORMS_CONFIRMATION_FIELD_INVALID";
         }
         
