@@ -8,14 +8,25 @@
  */
 // No direct access
 defined('_JEXEC') or die('Restricted access');
+JHtml::_('behavior.formvalidator');
+
+JFactory::getDocument()->addScriptDeclaration('
+    Joomla.submitbutton = function(task)
+    {
+        if (task == "publisher.cancel" || document.formvalidator.isValid(document.getElementById("adminForm")))
+        {
+            Joomla.submitform(task, document.getElementById("adminForm"));
+        }
+    };
+');
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_isbnregistry&layout=edit&id=' . (int) $this->item->id); ?>"
-      method="post" name="adminForm" id="adminForm">
+      method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="form-horizontal">
         <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
         <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_BASIC', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
-            <div class="span6">
+            <div class="span6">              
                 <?php echo $this->form->renderField('official_name'); ?>
                 <?php echo $this->form->renderField('other_names'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>

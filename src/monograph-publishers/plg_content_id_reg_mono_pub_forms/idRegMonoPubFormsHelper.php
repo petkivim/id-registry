@@ -83,13 +83,14 @@ class IdRegMonoPubFormsHelper {
 		$question_8 = $post->get('question_8', null, 'string');
 		$confirmation = $post->get('confirmation', null, 'string');
 		$lang_code = $post->get('lang_code', null, 'string');
+		$created = JFactory::getDate();
 		
         // database connection
         $db = JFactory::getDbo();
         // Insert columns
-        $columns = array('official_name', 'other_names', 'address', 'zip', 'city', 'phone', 'fax', 'email','www', 'contact_person', 'question_1', 'question_2', 'question_3', 'question_4', 'question_5', 'question_6', 'question_7', 'question_8', 'confirmation', 'lang_code', 'created_by');
+        $columns = array('official_name', 'other_names', 'address', 'zip', 'city', 'phone', 'fax', 'email','www', 'contact_person', 'question_1', 'question_2', 'question_3', 'question_4', 'question_5', 'question_6', 'question_7', 'question_8', 'confirmation', 'lang_code', 'created', 'created_by');
         // Insert values
-        $values = array($db->quote($official_name), $db->quote($other_names), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($phone), $db->quote($fax), $db->quote($email), $db->quote($www), $db->quote($contact_person), $db->quote($question_1), $db->quote($question_2), $db->quote($question_3), $db->quote($question_4), $db->quote($question_5), $db->quote($question_6), $db->quote($question_7), $db->quote($question_8), $db->quote($confirmation), $db->quote($lang_code), $db->quote('WWW'));
+        $values = array($db->quote($official_name), $db->quote($other_names), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($phone), $db->quote($fax), $db->quote($email), $db->quote($www), $db->quote($contact_person), $db->quote($question_1), $db->quote($question_2), $db->quote($question_3), $db->quote($question_4), $db->quote($question_5), $db->quote($question_6), $db->quote($question_7), $db->quote($question_8), $db->quote($confirmation), $db->quote($lang_code), $db->quote($created->toSql()), $db->quote('WWW'));
         // Create a new query object.
         $query = $db->getQuery(true);
         // Prepare the insert query
