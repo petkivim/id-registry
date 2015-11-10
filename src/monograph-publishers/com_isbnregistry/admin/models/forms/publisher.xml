@@ -229,5 +229,46 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LANGUAGE_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LANGUAGE_DESC"
         />
+        <field
+            name="additional_info"
+            type="textarea"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDITIONAL_INFO_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDITIONAL_INFO_DESC"
+            class="inputbox validate-additionalinfo"
+            rows="3"
+            cols="40"
+        />      
+        <field
+            name="year_quitted"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_YEAR_QUITTED_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_YEAR_QUITTED_DESC"
+            size="20"
+            class="inputbox validate-yearquitted"
+            default=""
+        />   
+        <field
+            name="state"
+            type="radio"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_DESC"
+            default="1"
+            required="true"
+            validate="boolean"
+        >	
+            <option value="1">COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_ACTIVE</option>
+            <option value="0">COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_PASSIVE</option>        
+        </field>
+        <field
+            name="contact_method"
+            type="list"
+            default="EMAIL"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_METHOD_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_METHOD_DESC"
+            required="true"
+        >	
+            <option value="EMAIL">COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_METHOD_EMAIL</option>
+            <option value="POST">COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_METHOD_POST</option>           
+        </field>		
     </fieldset>
 </form>

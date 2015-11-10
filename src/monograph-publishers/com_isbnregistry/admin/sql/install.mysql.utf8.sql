@@ -13,6 +13,10 @@ CREATE TABLE `#__isbn_registry_publisher` (
         `www` VARCHAR(100),
         `lang_code` VARCHAR(8),
 	`contact_person` VARCHAR(100),
+        `additional_info` VARCHAR(500),
+        `year_quitted` VARCHAR(4) NOT NULL,
+        `state` boolean not null default 1,
+        `contact_method` VARCHAR(10),
 	`question_1` VARCHAR(50),
 	`question_2` VARCHAR(50),
 	`question_3` VARCHAR(50),
@@ -33,9 +37,9 @@ CREATE TABLE `#__isbn_registry_publisher` (
 	DEFAULT CHARSET =utf8
 	COLLATE utf8_swedish_ci;
 
-INSERT INTO `#__isbn_registry_publisher` (`official_name`, `other_names`, `address`, `zip`, `city`, `phone`, `fax`, `email`,`www`, `contact_person`, `question_1`, `question_2`, `question_3`, `question_4`, `question_5`, `question_6`, `question_7`, `question_8`, `confirmation`, `lang_code`, `created`, `created_by`) VALUES
-('Aa-kustantamo', 'Toinen nimi',  'Kettukuja 6', '00100', 'Helsinki', '0400123456', '09123456', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
-('Aä', '', 'Viulutie 123', '004200', 'Helsinki', '', '0998765432', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen',  'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
-('Ää', '', 'Vesitie 100', '05678', 'Nilsiä', '091234567', '', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen',  'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'en-GB', UTC_TIMESTAMP(), 'SYSTEM'),
-('Testikustantamo', 'Test, Koe', 'Hiisikuja 5', '04230', 'Kerava', '050 12346789', '', 'teppo.testaaja@pkrete.com','http://www.test.com', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
-('Edita', '', 'Kaikukatu 6', '00530', 'Helsinki', '09 123 4556', '', 'tiina.teekkari@pkrete.com','http://www.edita.fi', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'en-GB', UTC_TIMESTAMP(), 'SYSTEM');
+INSERT INTO `#__isbn_registry_publisher` (`official_name`, `other_names`, `address`, `zip`, `city`, `phone`, `fax`, `email`,`www`, `contact_person`, `question_1`, `question_2`, `question_3`, `question_4`, `question_5`, `question_6`, `question_7`, `question_8`, `confirmation`, `lang_code`, `state`, `contact_method`, `created`, `created_by`) VALUES
+('Aa-kustantamo', 'Toinen nimi',  'Kettukuja 6', '00100', 'Helsinki', '0400123456', '09123456', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', true, 'EMAIL', UTC_TIMESTAMP(), 'SYSTEM'),
+('Aä', '', 'Viulutie 123', '004200', 'Helsinki', '', '0998765432', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen',  'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', false, 'POST', UTC_TIMESTAMP(), 'SYSTEM'),
+('Ää', '', 'Vesitie 100', '05678', 'Nilsiä', '091234567', '', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen',  'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'en-GB', true, 'EMAIL', UTC_TIMESTAMP(), 'SYSTEM'),
+('Testikustantamo', 'Test, Koe', 'Hiisikuja 5', '04230', 'Kerava', '050 12346789', '', 'teppo.testaaja@pkrete.com','http://www.test.com', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', true, 'POST', UTC_TIMESTAMP(), 'SYSTEM'),
+('Edita', '', 'Kaikukatu 6', '00530', 'Helsinki', '09 123 4556', '', 'tiina.teekkari@pkrete.com','http://www.edita.fi', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', 'Vastaus 7', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'en-GB', false, 'EMAIL', UTC_TIMESTAMP(), 'SYSTEM');

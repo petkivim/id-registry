@@ -36,6 +36,9 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('other_names'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
+                <?php echo $this->form->renderField('state'); ?>
+                <?php echo $this->form->renderField('year_quitted'); ?>
+                <?php echo $this->form->renderField('additional_info'); ?>
                 <?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
                 <?php echo $this->form->renderField('modified'); ?>
@@ -49,6 +52,7 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('fax'); ?>
                 <?php echo $this->form->renderField('email'); ?>
                 <?php echo $this->form->renderField('www'); ?>
+                <?php echo $this->form->renderField('contact_method'); ?>
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
