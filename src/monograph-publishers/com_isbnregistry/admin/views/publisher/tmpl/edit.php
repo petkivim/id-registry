@@ -9,10 +9,16 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.formvalidator');
+JHtml::_('jquery.framework');
 
-// Add custom validators
+// Add scripts
 $document = JFactory::getDocument();
-$document->addScript(JURI::root( true ) . '/administrator/components/com_isbnregistry/scripts/custom_validators.js');
+$document->addScript('components/com_isbnregistry/scripts/publisher_validators.js');
+$document->addScript("components/com_isbnregistry/scripts/chosen/chosen.jquery.js");
+$document->addScript("components/com_isbnregistry/scripts/publisher.js");
+// Add css
+$document->addStyleSheet("components/com_isbnregistry/css/publisher.css");
+$document->addStyleSheet("components/com_isbnregistry/scripts/chosen/chosen.css");
 
 // This fix is needed for JToolBar
 JFactory::getDocument()->addScriptDeclaration('

@@ -41,7 +41,12 @@ class plgContentId_reg_mono_pub_forms extends JPlugin {
 				
 				// Add plugin css
 				$document = JFactory::getDocument();
+				$document->addStyleSheet("plugins/content/id_reg_mono_pub_forms/scripts/chosen/chosen.css");
 				$document->addStyleSheet("plugins/content/id_reg_mono_pub_forms/css/style.css");
+				// Add plugin scripts
+				JHtml::_('jquery.framework');
+				$document->addScript("plugins/content/id_reg_mono_pub_forms/scripts/chosen/chosen.jquery.js");
+				$document->addScript("plugins/content/id_reg_mono_pub_forms/scripts/custom.js");
 
 				// Email settings
 				$email = $this->params->def('email', $adminEmail);
@@ -68,10 +73,10 @@ class plgContentId_reg_mono_pub_forms extends JPlugin {
 							 // If publisherId is 0 saving donation to DB failed
                              if ($publisherId == 0) {
 								 // TODO: return error form
-								$html .= 'ERROR';
+								$html .= '<div>' . JText::_('PLG_ID_REG_MONO_PUB_FORMS_REGISTRATION_ERROR') . ':</div>';
 							 } else {
 								// TODO: return success form
-								$html .= 'OK';
+								$html .= '<div>' . JText::_('PLG_ID_REG_MONO_PUB_FORMS_REGISTRATION_SUCCESS') . ':</div>';
 							 }
 						} else {
 							$html .= IdRegMonoPubFormsHtmlBuilder::getRegisterMonographPublisherForm($lang->getTag(), $errors);

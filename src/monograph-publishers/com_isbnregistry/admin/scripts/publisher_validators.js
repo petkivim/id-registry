@@ -56,7 +56,7 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("question7", function (value) {
-        regex = /^.{0,50}$/;
+        regex = /^(\d{3}){0,1}(,\d{3}){0,1}(,\d{3}){0,1}(,\d{3}){0,1}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("question8", function (value) {

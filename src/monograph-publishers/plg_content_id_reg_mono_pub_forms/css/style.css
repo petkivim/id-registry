@@ -1,38 +1,42 @@
 .error {
-	color: red;
+    color: red;
 }
 
 .form_header {
-        margin-bottom: 1.5em;
+    margin-bottom: 1.5em;
 }
 
 #registerMonographPublisherForm textarea {
-        width: 30em;
-        height: 6em;
+    width: 30em;
+    height: 6em;
 }
 
 #confirmation, .question, input[type="text"].question {
-        display:inline;
+    display:inline;
 }
 
 
 .field_info {
-        font-size: 80%;
-        font-style: italic;
-		margin-bottom: 1em;
+    font-size: 80%;
+    font-style: italic;
+    margin-bottom: 1em;
 }
 
 .sub_title {
-        font-size: 105%;
-        font-weight: bold;
-        margin-bottom: 1em;
+    font-size: 105%;
+    font-weight: bold;
+    margin-bottom: 1em;
 }
 
 .pre_field {
-        margin-top: 1em;
-		margin-bottom: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .post_field {
-        margin-bottom: 1em;
+    margin-bottom: 1em;
+}
+
+#question_7 {
+    width: 40em;
 }

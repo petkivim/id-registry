@@ -56,6 +56,19 @@ class IsbnRegistryTablePublisher extends JTable {
             $this->created_by = $user->get('username');
             $this->created = $date->toSql();
         }
+
+        // Question 7: from array to comma separated string
+        if (is_array($this->question_7)) {
+            if (count($this->question_7) > 0) {
+                $this->question_7 = implode(',', $this->question_7);
+            } else {
+                $this->question_7 = '';
+            }
+        } else {
+            $this->question_7 = '';
+        }
+
+
         return parent::store($updateNulls);
     }
 

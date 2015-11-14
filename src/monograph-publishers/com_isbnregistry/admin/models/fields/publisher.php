@@ -24,7 +24,7 @@ class JFormFieldPublisher extends JFormFieldList {
      *
      * @var         string
      */
-    protected $type = 'Donation';
+    protected $type = 'Publisher';
 
     /**
      * Method to get a list of options for a list input.

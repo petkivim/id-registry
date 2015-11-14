@@ -110,9 +110,9 @@ class IdRegMonoPubFormsHelper {
 			$errors['question_6'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
 		}
 		// Question 7 - optional
-        $question7 = $post->get('question_7', null, 'string');
-		if(strlen($question7) > 50){
-			$errors['question_7'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_LONG";
+        $question7 = $post->get('question_7', null, 'array');
+		if(count($question7) > 4){
+			$errors['question_7'] = "PLG_ID_REG_MONO_PUB_FORMS_FIELD_TOO_MANY";
 		}
 		// Question 8 - optional
         $question8 = $post->get('question_8', null, 'string');
@@ -147,18 +147,26 @@ class IdRegMonoPubFormsHelper {
 		$question_4 = $post->get('question_4', null, 'string');
 		$question_5 = $post->get('question_5', null, 'string');
 		$question_6 = $post->get('question_6', null, 'string');
-		$question_7 = $post->get('question_7', null, 'string');
+		$question_7 = $post->get('question_7', null, 'array');
 		$question_8 = $post->get('question_8', null, 'string');
 		$confirmation = $post->get('confirmation', null, 'string');
 		$lang_code = $post->get('lang_code', null, 'string');
 		$created = JFactory::getDate();
+		
+		// Convert question 7 from array to comma separated string
+		$question_7_str = '';
+		if (is_array($question_7)) {
+			if (count($question_7) > 0) {
+				$question_7_str = implode(',', $question_7);
+			}
+		}
 		
         // database connection
         $db = JFactory::getDbo();
         // Insert columns
         $columns = array('official_name', 'other_names', 'address', 'zip', 'city', 'phone', 'fax', 'email','www', 'contact_person', 'question_1', 'question_2', 'question_3', 'question_4', 'question_5', 'question_6', 'question_7', 'question_8', 'confirmation', 'lang_code', 'created', 'created_by');
         // Insert values
-        $values = array($db->quote($official_name), $db->quote($other_names), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($phone), $db->quote($fax), $db->quote($email), $db->quote($www), $db->quote($contact_person), $db->quote($question_1), $db->quote($question_2), $db->quote($question_3), $db->quote($question_4), $db->quote($question_5), $db->quote($question_6), $db->quote($question_7), $db->quote($question_8), $db->quote($confirmation), $db->quote($lang_code), $db->quote($created->toSql()), $db->quote('WWW'));
+        $values = array($db->quote($official_name), $db->quote($other_names), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($phone), $db->quote($fax), $db->quote($email), $db->quote($www), $db->quote($contact_person), $db->quote($question_1), $db->quote($question_2), $db->quote($question_3), $db->quote($question_4), $db->quote($question_5), $db->quote($question_6), $db->quote($question_7_str), $db->quote($question_8), $db->quote($confirmation), $db->quote($lang_code), $db->quote($created->toSql()), $db->quote('WWW'));
         // Create a new query object.
         $query = $db->getQuery(true);
         // Prepare the insert query

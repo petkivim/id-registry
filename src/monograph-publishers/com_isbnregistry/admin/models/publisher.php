@@ -74,6 +74,11 @@ class IsbnregistryModelPublisher extends JModelAdmin {
             $data = $this->getItem();
         }
 
+        // Question 7: from comma separated string to array
+        if ($data->question_7) {
+            $data->question_7 = explode(',', $data->question_7);
+        }
+
         return $data;
     }
 

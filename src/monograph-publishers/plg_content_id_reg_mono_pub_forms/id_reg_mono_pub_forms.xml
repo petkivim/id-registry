@@ -14,6 +14,7 @@
 	   <filename>idRegMonoPubFormsHelper.php</filename>
 	   <filename>idRegMonoPubFormsLogger.php</filename>
 	   <folder>css</folder>
+	   <folder>scripts</folder>
 	   <folder>language</folder>
 	</files>
 	<languages>
