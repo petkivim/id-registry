@@ -55,11 +55,6 @@ class IdRegMonoPubFormsHelper {
 		if (!preg_match('/^(\+){0,1}[0-9 ]{0,30}$/i', $phone)) {
             $errors['phone'] = "PLG_ID_REG_MONO_PUB_FORMS_PHONE_FIELD_INVALID";
         }
-        // Fax number - optional (validate format)
-		$fax = $post->get('fax', null, 'string');
-		if (!preg_match('/^(\+){0,1}[0-9 ]{0,30}$/i', $fax)) {
-            $errors['fax'] = "PLG_ID_REG_MONO_PUB_FORMS_FAX_FIELD_INVALID";
-        }
         // Email - required
         $email = $post->get('email', null, 'string');
         if (empty($email) == true) {
@@ -137,7 +132,6 @@ class IdRegMonoPubFormsHelper {
 		$zip = $post->get('zip', null, 'string');
 		$city = $post->get('city', null, 'string');
 		$phone = $post->get('phone', null, 'string');
-		$fax = $post->get('fax', null, 'string');
 		$email = $post->get('email', null, 'string');
 		$www = $post->get('www', null, 'string');
 		$contact_person = $post->get('contact_person', null, 'string');
@@ -164,9 +158,9 @@ class IdRegMonoPubFormsHelper {
         // database connection
         $db = JFactory::getDbo();
         // Insert columns
-        $columns = array('official_name', 'other_names', 'address', 'zip', 'city', 'phone', 'fax', 'email','www', 'contact_person', 'question_1', 'question_2', 'question_3', 'question_4', 'question_5', 'question_6', 'question_7', 'question_8', 'confirmation', 'lang_code', 'created', 'created_by');
+        $columns = array('official_name', 'other_names', 'address', 'zip', 'city', 'phone', 'email','www', 'contact_person', 'question_1', 'question_2', 'question_3', 'question_4', 'question_5', 'question_6', 'question_7', 'question_8', 'confirmation', 'lang_code', 'created', 'created_by');
         // Insert values
-        $values = array($db->quote($official_name), $db->quote($other_names), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($phone), $db->quote($fax), $db->quote($email), $db->quote($www), $db->quote($contact_person), $db->quote($question_1), $db->quote($question_2), $db->quote($question_3), $db->quote($question_4), $db->quote($question_5), $db->quote($question_6), $db->quote($question_7_str), $db->quote($question_8), $db->quote($confirmation), $db->quote($lang_code), $db->quote($created->toSql()), $db->quote('WWW'));
+        $values = array($db->quote($official_name), $db->quote($other_names), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($phone), $db->quote($email), $db->quote($www), $db->quote($contact_person), $db->quote($question_1), $db->quote($question_2), $db->quote($question_3), $db->quote($question_4), $db->quote($question_5), $db->quote($question_6), $db->quote($question_7_str), $db->quote($question_8), $db->quote($confirmation), $db->quote($lang_code), $db->quote($created->toSql()), $db->quote('WWW'));
         // Create a new query object.
         $query = $db->getQuery(true);
         // Prepare the insert query

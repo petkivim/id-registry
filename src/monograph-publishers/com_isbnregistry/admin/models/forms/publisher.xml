@@ -109,16 +109,7 @@
             size="20"
             class="inputbox validate-phone"
             default=""
-        />	
-        <field
-            name="fax"
-            type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_FAX_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_FAX_DESC"
-            size="20"
-            class="inputbox validate-phone"
-            default=""
-        />					
+        />						
         <field
             name="email"
             type="email"
@@ -249,17 +240,6 @@
         >	
             <option value="1">COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_ACTIVE</option>
             <option value="0">COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_PASSIVE</option>        
-        </field>
-        <field
-            name="contact_method"
-            type="list"
-            default="EMAIL"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_METHOD_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_METHOD_DESC"
-            required="true"
-        >	
-            <option value="EMAIL">COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_METHOD_EMAIL</option>
-            <option value="POST">COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_METHOD_POST</option>           
         </field>
         <field
             name="question_7"

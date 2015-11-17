@@ -41,10 +41,6 @@ class IdRegMonoPubFormsHtmlBuilder {
         $html .= '<td><input type="text" name="phone" id="phone" size="10" value="' . $_POST['phone'] . '" /></td>';
         $html .= '<td class="error">' . JText::_($errors['phone']) . '</td>';
         $html .= '</tr><tr>';
-        $html .= '<td>' . JText::_('PLG_ID_REG_MONO_PUB_FORMS_FAX_FIELD') . ':</td>';
-        $html .= '<td><input type="text" name="fax" id="fax" size="10" value="' . $_POST['fax'] . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['fax']) . '</td>';
-        $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ID_REG_MONO_PUB_FORMS_EMAIL_FIELD') . ':</td>';
         // Content - Email Cloaking plugin must be disabled to get this work
         $html .= '<td><input type="text" id="email" name="email" size="30" value="' . $_POST['email'] . '"  maxlength="100"/></td>';

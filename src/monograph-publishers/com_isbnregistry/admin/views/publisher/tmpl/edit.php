@@ -55,10 +55,8 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('zip'); ?>
                 <?php echo $this->form->renderField('city'); ?>
                 <?php echo $this->form->renderField('phone'); ?>
-                <?php echo $this->form->renderField('fax'); ?>
                 <?php echo $this->form->renderField('email'); ?>
                 <?php echo $this->form->renderField('www'); ?>
-                <?php echo $this->form->renderField('contact_method'); ?>
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
