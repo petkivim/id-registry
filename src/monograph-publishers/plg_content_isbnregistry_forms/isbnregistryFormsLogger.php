@@ -4,14 +4,14 @@
  * @Plugin      "ID Registry - Monograph Publishers - Forms"
  * @version     1.0.0
  * @author      Petteri Kivim?ki
- * @copyright   Copyright (C) 2015 Petteri Kivim?ki. All rights reserved.
+ * @copyright   Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
  * */
 defined('_JEXEC') or die('Restricted access');
 
-class IdRegMonoPubFormsLogger {
+class IsbnregistryFormsLogger {
 
     public static function log($message, $level) {
-        $logPath = JPATH_BASE . '/logs/plg_id_reg_mono_pub_forms.log.php';
+        $logPath = JPATH_BASE . '/logs/plg_isbnregistry_forms.log.php';
         $exists = file_exists($logPath);
         $file = fopen($logPath, 'a');
         // Blocks if lock is locked
