@@ -22,7 +22,7 @@ class plgContentIsbnregistry_forms extends JPlugin {
 
     public function onContentPrepare($context, &$row, &$params, $page = 0) {
         // Search in the article text the plugin code and exit if not found
-        $regex = "%\{mono_pub_form (registration|)\}%is";
+        $regex = "%\{mono_pub_form (registration|application|)\}%is";
         $found = preg_match_all($regex, $row->text, $matches);
 
         $count = 0;
@@ -81,6 +81,19 @@ class plgContentIsbnregistry_forms extends JPlugin {
 						} else {
 							$html .= IsbnregistryFormsHtmlBuilder::getRegisterMonographPublisherForm($lang->getTag(), $errors);
 						}
+					}
+				} else if(strpos($value,'application') !== false) {
+					if(!isset($_POST['submit_application_pt1'])) {
+						$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1();
+					} elseif(JSession::checkToken() && isset($_POST['submit_application_pt1'])) {
+						// Validate input data
+						$errors = IsbnregistryFormsHelper::validateApplicationFormPt1();
+						// If there are no errors, continue processing
+						if (empty($errors)) {
+							// TODO: return the next page of the form
+						} else {
+							$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1($errors);
+						}						
 					}
 				}
 

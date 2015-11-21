@@ -125,6 +125,116 @@ class IsbnregistryFormsHelper {
         return $errors;
     }
 	
+    public static function validateApplicationFormPt1() {
+        // Array for the error messages
+        $errors = array();
+        
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        
+        // Official name - required
+        $officialName = $post->get('official_name', null, 'string');
+        if (empty($officialName) == true) {
+            $errors['official_name'] = "PLG_ISBNREGISTRY_FORMS_OFFICIAL_NAME_FIELD_EMPTY";
+        } else if(strlen($officialName) > 100){
+			$errors['official_name'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}
+		// Other names - optional
+        $publisherId = $post->get('publisher_id', null, 'string');
+		if(strlen($publisherId) > 20){
+			$errors['publisher_id'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}
+        // Address - required
+        $address = $post->get('address', null, 'string');
+        if (empty($address) == true) {
+            $errors['address'] = "PLG_ISBNREGISTRY_FORMS_ADDRESS_FIELD_EMPTY";
+        } else if(strlen($address) > 50){
+			$errors['address'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}
+        // ZIP - required
+        $zip = $post->get('zip', null, 'string');
+        if (strlen($zip) == 0) {
+            $errors['zip'] = "PLG_ISBNREGISTRY_FORMS_ZIP_FIELD_EMPTY";
+        } else if (!preg_match('/^\d{5}$/i', $zip)) {
+            $errors['zip'] = "PLG_ISBNREGISTRY_FORMS_ZIP_FIELD_INVALID";
+        }
+        // City - required
+        $city = $post->get('city', null, 'string');
+        if (empty($city) == true) {
+            $errors['city'] = "PLG_ISBNREGISTRY_FORMS_CITY_FIELD_EMPTY";
+        } else if(strlen($city) > 50){
+			$errors['city'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}
+		// Contact person - required
+        $contactPerson = $post->get('contact_person', null, 'string');
+		if (empty($contactPerson) == true) {
+            $errors['contact_person'] = "PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD_EMPTY";
+        } elseif(strlen($contactPerson) > 100){
+			$errors['contact_person'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}		
+        // Phone number - required (validate format)
+		$phone = $post->get('phone', null, 'string');
+		if (empty($phone) == true) {
+            $errors['phone'] = "PLG_ISBNREGISTRY_FORMS_PHONE_FIELD_EMPTY";
+        } else if (!preg_match('/^(\+){0,1}[0-9 ]{0,30}$/i', $phone)) {
+            $errors['phone'] = "PLG_ISBNREGISTRY_FORMS_PHONE_FIELD_INVALID";
+        }
+        // Email - required
+        $email = $post->get('email', null, 'string');
+        if (empty($email) == true) {
+            $errors['email'] = "PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD_EMPTY";
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = "PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD_INVALID";
+        }
+		// Question 9 - requried
+        $question9 = $post->get('question_9', null, 'string');
+		if (strlen($question9) == 0) {
+            $errors['question_9'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_9_FIELD_EMPTY";
+        } else if (!preg_match('/^(0|1)$/i', $question9)) {
+            $errors['question_9'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_9_FIELD_INVALID";
+        }
+		// Question 10 - requried
+        $question10 = $post->get('question_10', null, 'string');
+		if (strlen($question10) == 0) {
+            $errors['question_10'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_10_FIELD_EMPTY";
+        } else if (!preg_match('/^(0|1)$/i', $question10)) {
+            $errors['question_10'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_10_FIELD_INVALID";
+        }
+		// Question 11 - requried
+        $question11 = $post->get('question_11', null, 'string');
+		if (strlen($question11) == 0) {
+            $errors['question_11'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_11_FIELD_EMPTY";
+        } else if (!preg_match('/^(0|1)$/i', $question11)) {
+            $errors['question_11'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_11_FIELD_INVALID";
+        }	
+		// Question 12 - requried
+        $question12 = $post->get('question_12', null, 'string');
+		if (empty($question12) == true) {
+            $errors['question_12'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_12_FIELD_EMPTY";
+        } else if (!preg_match('/^(OCCASIONAL|CONTINUOUS)$/', $question12)) {
+            $errors['question_12'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_12_FIELD_INVALID";
+        }		
+		// Question 13 - optional
+        $zip = $post->get('question_13', null, 'string');
+		if (!preg_match('/^\d{0,5}$/i', $zip)) {
+            $errors['question_13'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_13_FIELD_INVALID";
+        }
+		// Publication type - requried
+        $publicationType = $post->get('publication_type', null, 'string');
+		if (empty($publicationType) == true) {
+            $errors['publication_type'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD_EMPTY";
+        } else if (!preg_match('/^(BOOK|DISSERTATION|SHEET_MUSIC|MAP|OTHER)$/', $publicationType)) {
+            $errors['publication_type'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD_INVALID";
+        }	
+		// Publication issued - requried
+        $publicationIssued = $post->get('publication_issued', null, 'string');
+		if (empty($publicationIssued) == true) {
+            $errors['publication_issued'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ISSUED_FIELD_EMPTY";
+        } else if (!preg_match('/^(PRINT|ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publicationIssued)) {
+            $errors['publication_issued'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ISSUED_FIELD_INVALID";
+        }		        
+        return $errors;
+    }	
     public static function saveToDb($post) {
 		$official_name = $post->get('official_name', null, 'string');
 		$other_names = $post->get('other_names', null, 'string');
