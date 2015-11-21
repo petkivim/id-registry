@@ -3,8 +3,8 @@
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
- *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @author 		Petteri Kivimäki
+ * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 // No direct access to this file
@@ -34,7 +34,7 @@ class JFormFieldPublisher extends JFormFieldList {
     protected function getOptions() {
         $db = JFactory::getDBO();
         $query = $db->getQuery(true);
-        $query->select('id,first_name,last_name');
+        $query->select('id,official_name');
         $query->from('#__isbn_registry_publisher');
         $db->setQuery((string) $query);
         $publishers = $db->loadObjectList();
@@ -42,7 +42,7 @@ class JFormFieldPublisher extends JFormFieldList {
 
         if ($publishers) {
             foreach ($publishers as $publisher) {
-                $options[] = JHtml::_('select.option', $publisher->id, $publisher->first_name, $publisher->last_name);
+                $options[] = JHtml::_('select.option', $publisher->id, $publisher->official_name);
             }
         }
 
