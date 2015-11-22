@@ -186,38 +186,38 @@ class IsbnregistryFormsHelper {
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = "PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD_INVALID";
         }
-		// Question 9 - requried
-        $question9 = $post->get('question_9', null, 'string');
-		if (strlen($question9) == 0) {
-            $errors['question_9'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_9_FIELD_EMPTY";
-        } else if (!preg_match('/^(0|1)$/i', $question9)) {
-            $errors['question_9'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_9_FIELD_INVALID";
+		// Published before - requried
+        $publishedBefore = $post->get('published_before', null, 'string');
+		if (strlen($publishedBefore) == 0) {
+            $errors['published_before'] = "PLG_ISBNREGISTRY_FORMS_PUBLISHED_BEFORE_FIELD_EMPTY";
+        } else if (!preg_match('/^(0|1)$/i', $publishedBefore)) {
+            $errors['published_before'] = "PLG_ISBNREGISTRY_FORMS_PUBLISHED_BEFORE_FIELD_INVALID";
         }
-		// Question 10 - requried
-        $question10 = $post->get('question_10', null, 'string');
-		if (strlen($question10) == 0) {
-            $errors['question_10'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_10_FIELD_EMPTY";
-        } else if (!preg_match('/^(0|1)$/i', $question10)) {
-            $errors['question_10'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_10_FIELD_INVALID";
+		// Publications public - requried
+        $publicationsPublic = $post->get('publications_public', null, 'string');
+		if (strlen($publicationsPublic) == 0) {
+            $errors['publications_public'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_PUBLIC_FIELD_EMPTY";
+        } else if (!preg_match('/^(0|1)$/i', $publicationsPublic)) {
+            $errors['publications_public'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_PUBLIC_FIELD_INVALID";
         }
-		// Question 11 - requried
-        $question11 = $post->get('question_11', null, 'string');
-		if (strlen($question11) == 0) {
-            $errors['question_11'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_11_FIELD_EMPTY";
-        } else if (!preg_match('/^(0|1)$/i', $question11)) {
-            $errors['question_11'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_11_FIELD_INVALID";
+		// Publications intra - requried
+        $publicationsIntra = $post->get('publications_intra', null, 'string');
+		if (strlen($publicationsIntra) == 0) {
+            $errors['publications_intra'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_INTRA_FIELD_EMPTY";
+        } else if (!preg_match('/^(0|1)$/i', $publicationsIntra)) {
+            $errors['publications_intra'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_INTRA_FIELD_INVALID";
         }	
-		// Question 12 - requried
-        $question12 = $post->get('question_12', null, 'string');
-		if (empty($question12) == true) {
-            $errors['question_12'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_12_FIELD_EMPTY";
-        } else if (!preg_match('/^(OCCASIONAL|CONTINUOUS)$/', $question12)) {
-            $errors['question_12'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_12_FIELD_INVALID";
+		// Publishing activity - requried
+        $publishingActivity = $post->get('publishing_activity', null, 'string');
+		if (empty($publishingActivity) == true) {
+            $errors['publishing_activity'] = "PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_FIELD_EMPTY";
+        } else if (!preg_match('/^(OCCASIONAL|CONTINUOUS)$/', $publishingActivity)) {
+            $errors['publishing_activity'] = "PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_FIELD_INVALID";
         }		
-		// Question 13 - optional
-        $zip = $post->get('question_13', null, 'string');
-		if (!preg_match('/^\d{0,5}$/i', $zip)) {
-            $errors['question_13'] = "PLG_ISBNREGISTRY_FORMS_QUESTION_13_FIELD_INVALID";
+		// Publishing activity amount - optional
+        $publishingActivityAmount = $post->get('publishing_activity_amount', null, 'string');
+		if (!preg_match('/^\d{0,5}$/i', $publishingActivityAmount)) {
+            $errors['publishing_activity_amount'] = "PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_AMOUNT_FIELD_INVALID";
         }
 		// Publication type - requried
         $publicationType = $post->get('publication_type', null, 'string');
@@ -226,12 +226,12 @@ class IsbnregistryFormsHelper {
         } else if (!preg_match('/^(BOOK|DISSERTATION|SHEET_MUSIC|MAP|OTHER)$/', $publicationType)) {
             $errors['publication_type'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD_INVALID";
         }	
-		// Publication issued - requried
-        $publicationIssued = $post->get('publication_issued', null, 'string');
-		if (empty($publicationIssued) == true) {
-            $errors['publication_issued'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ISSUED_FIELD_EMPTY";
-        } else if (!preg_match('/^(PRINT|ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publicationIssued)) {
-            $errors['publication_issued'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ISSUED_FIELD_INVALID";
+		// Publication format - requried
+        $publicationFormat = $post->get('publication_format', null, 'string');
+		if (empty($publicationFormat) == true) {
+            $errors['publication_format'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_FIELD_EMPTY";
+        } else if (!preg_match('/^(PRINT|ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publicationFormat)) {
+            $errors['publication_format'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_FIELD_INVALID";
         }		        
         return $errors;
     }	
