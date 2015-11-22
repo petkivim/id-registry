@@ -283,6 +283,13 @@ class IsbnregistryFormsHelper {
         $publisherID = $db->insertid();
         return $publisherID;
     }	
+	
+	public static function getLanguageList() {
+		$languages = array(
+			'FIN', 'SWE', 'ENG', 'SMI', 'SPA', 'FRE', 'RUS', 'GER', 'MUL'
+		);
+		return $languages;
+	}
 }
 
 ?>
