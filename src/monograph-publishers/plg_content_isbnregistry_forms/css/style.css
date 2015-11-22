@@ -49,7 +49,7 @@ tr.spacer_top > td {
 	padding-top: 1em;
 }
 
-tr.spacer_bottom > td {
+tr.spacer_bottom > td, .spacer_bottom  {
 	padding-bottom: 1em;
 }
 

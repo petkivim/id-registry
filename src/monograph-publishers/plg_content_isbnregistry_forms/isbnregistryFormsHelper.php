@@ -226,7 +226,7 @@ class IsbnregistryFormsHelper {
         } else if (!preg_match('/^(BOOK|DISSERTATION|SHEET_MUSIC|MAP|OTHER)$/', $publicationType)) {
             $errors['publication_type'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD_INVALID";
         }	
-		// Publication format - requried
+		// Publication format - required
         $publicationFormat = $post->get('publication_format', null, 'string');
 		if (empty($publicationFormat) == true) {
             $errors['publication_format'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_FIELD_EMPTY";
@@ -235,6 +235,158 @@ class IsbnregistryFormsHelper {
         }		        
         return $errors;
     }	
+	
+	public static function validateApplicationFormPt2() {
+        // Array for the error messages
+        $errors = array();
+        
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        
+        // 1st first name - required
+        $firstName = $post->get('first_name_1', null, 'string');
+        if (empty($firstName) == true) {
+            $errors['first_name_1'] = "PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD_EMPTY";
+        } else if(strlen($firstName) > 50){
+			$errors['first_name_1'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}
+        // 1st last name - required
+        $lastName = $post->get('last_name_1', null, 'string');
+        if (empty($lastName) == true) {
+            $errors['last_name_1'] = "PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD_EMPTY";
+        } else if(strlen($lastName) > 50){
+			$errors['last_name_1'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}	
+		// 1st role - required
+        $roles = $post->get('role_1', null, 'array');
+		if(count($roles) == 0){
+			$errors['role_1'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ROLE_FIELD_EMPTY";
+		} else if(count($roles) > 4){
+			$errors['role_1'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
+		} else if(!IsbnregistryFormsHelper::validateRoles($roles)) {
+			$errors['role_1'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ROLE_FIELD_INVALID";
+		}		
+		// Loop through other authors
+		for ($x = 2; $x <= 4; $x++) {
+			// 2-4 first name - optional
+			$firstName = $post->get("first_name_$x", null, 'string');
+			if(strlen($firstName) > 50){
+				$errors["first_name_$x"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+			}
+			// 2-4 last name - optional
+			$lastName = $post->get("last_name_$x", null, 'string');
+			if(strlen($lastName) > 50){
+				$errors["last_name_$x"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+			}	
+			// 2-4 role - optional
+			$roles = $post->get("role_$x", null, 'array');
+			if(count($roles) > 4){
+				$errors["role_$x"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
+			} else if(isset($roles) && !IsbnregistryFormsHelper::validateRoles($roles)) {
+				$errors["role_$x"] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ROLE_FIELD_INVALID";
+			}			
+		}
+		// Title - required
+        $title = $post->get('title', null, 'string');
+        if (empty($title) == true) {
+            $errors['title'] = "PLG_ISBNREGISTRY_FORMS_TITLE_FIELD_EMPTY";
+        } else if(strlen($title) > 200){
+			$errors['title'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}
+		// Subtitle - optional
+        $subtitle = $post->get('subtitle', null, 'string');
+        if(strlen($subtitle) > 200){
+			$errors['subtitle'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}		
+		// Language - required
+        $language = $post->get('language', null, 'string');
+		if (strlen($language) == 0) {
+            $errors['language'] = "PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD_EMPTY";
+        } else if (!IsbnregistryFormsHelper::validateLanguage($language)) {
+            $errors['language'] = "PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD_INVALID";
+        }
+        // Year - required
+        $year = $post->get('year', null, 'string');
+        if (strlen($year) == 0) {
+            $errors['published'] = "PLG_ISBNREGISTRY_FORMS_YEAR_FIELD_EMPTY";
+        } else if (!preg_match('/^\d{4}$/i', $year)) {
+            $errors['published'] = "PLG_ISBNREGISTRY_FORMS_YEAR_FIELD_INVALID";
+        }
+        // Month - required
+        $month = $post->get('month', null, 'string');
+        if (strlen($month) == 0) {
+            $errors['published'] = "PLG_ISBNREGISTRY_FORMS_MONTH_FIELD_EMPTY";
+        } else if (!preg_match('/^(0[1-9]{1}|1[0-2]{1})$/i', $month)) {
+            $errors['published'] = "PLG_ISBNREGISTRY_FORMS_MONTH_FIELD_INVALID";
+        }	
+		// Series - optional
+		$series = $post->get("series", null, 'string');
+		if(strlen($series) > 200){
+			$errors["series"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}	
+		// ISSN - optional
+		$issn = $post->get("issn", null, 'string');
+		if(strlen($issn) > 9){
+			$errors["issn"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		} else if (strlen($issn) > 0 && !preg_match('/^(\d){4}\-(\d){3}[0-9X]{1}$/i', $issn)) {
+            $errors['issn'] = "PLG_ISBNREGISTRY_FORMS_ISSN_FIELD_INVALID";
+        }
+		// Volume - optional
+		$volume = $post->get("volume", null, 'string');
+		if(strlen($volume) > 20){
+			$errors["volume"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}	
+		$publicationFormat = $post->get('publication_format', null, 'string');
+		if(preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $publicationFormat)) {
+			// Printing house - optional
+			$printingHouse = $post->get("printing_house", null, 'string');
+			if(strlen($printingHouse) > 100){
+				$errors["printing_house"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+			}	
+			// Printing house city - optional
+			$printingHouseCity = $post->get("printing_house_city", null, 'string');
+			if(strlen($printingHouseCity) > 50){
+				$errors["printing_house_city"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+			}
+			// Copies - optional
+			$copies = $post->get("copies", null, 'string');
+			if(strlen($copies) > 10){
+				$errors["copies"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+			}			
+			// Edition - optional
+			$edition = $post->get("edition", null, 'string');
+			if(!preg_match('/^([0-9]{1}|10|-)$/i', $edition)){
+				$errors["edition"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+			}
+			// Type - required
+			$types = $post->get('type', null, 'array');
+			if(count($types) == 0){
+				$errors['type'] = "PLG_ISBNREGISTRY_FORMS_TYPE_FIELD_EMPTY";
+			} else if(count($types) > 3){
+				$errors['type'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
+			} else if(!IsbnregistryFormsHelper::validateTypes($types)) {
+				$errors['type'] = "PLG_ISBNREGISTRY_FORMS_TYPE_FIELD_INVALID";
+			}	
+		}
+		// Comments - optional
+        $comments = $post->get('comments', null, 'string');
+		if(strlen($comments) > 200){
+			$errors['comments'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+		}		
+		if(preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publicationFormat)) {		
+			// File format - required
+			$fileFormats = $post->get('fileformat', null, 'array');
+			if(count($fileFormats) == 0){
+				$errors['fileformat'] = "PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_FIELD_EMPTY";
+			} else if(count($fileFormats) > 4){
+				$errors['fileformat'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
+			} else if(!IsbnregistryFormsHelper::validateFileFormats($fileFormats)) {
+				$errors['fileformat'] = "PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_FIELD_INVALID";
+			}
+		}
+		return $errors;
+	}
+	
     public static function saveToDb($post) {
 		$official_name = $post->get('official_name', null, 'string');
 		$other_names = $post->get('other_names', null, 'string');
@@ -290,6 +442,59 @@ class IsbnregistryFormsHelper {
 		);
 		return $languages;
 	}
+	
+	private static function validateRoles($roles) {
+		if(!isset($roles)) {
+			return false;
+		}
+		$validValues = array(
+			'AUTHOR', 'ILLUSTRATOR', 'TRANSLATOR', 'EDITOR'
+		);		
+		foreach($roles as $role) {
+			if(!in_array($role, $validValues)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private static function validateLanguage($language) {
+		$languages = IsbnregistryFormsHelper::getLanguageList();
+		if(!in_array($language, $languages)) {
+			return false;
+		}		
+		return true;
+	}
+	
+	private static function validateTypes($types) {
+		if(!isset($types)) {
+			return false;
+		}
+		$validValues = array(
+			'PAPERBACK', 'HARDBACK', 'SPIRAL_BINDING'
+		);		
+		foreach($types as $type) {
+			if(!in_array($type, $validValues)) {
+				return false;
+			}
+		}
+		return true;
+	}	
+	
+	private static function validateFileFormats($formats) {
+		if(!isset($formats)) {
+			return false;
+		}
+		$validValues = array(
+			'PDF', 'EPUB', 'CD-ROM', 'OTHER'
+		);		
+		foreach($formats as $format) {
+			if(!in_array($format, $validValues)) {
+				return false;
+			}
+		}
+		return true;
+	}	
 }
 
 ?>

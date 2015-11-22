@@ -83,18 +83,30 @@ class plgContentIsbnregistry_forms extends JPlugin {
 						}
 					}
 				} else if(strpos($value,'application') !== false) {
-					if(!isset($_POST['submit_application_pt1'])) {
+					// No buttons presed - show the first page
+					if(!isset($_POST['submit_application_pt1']) && !isset($_POST['submit_application_pt2'])) {
 						$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1();
 					} elseif(JSession::checkToken() && isset($_POST['submit_application_pt1'])) {
 						// Validate input data
 						$errors = IsbnregistryFormsHelper::validateApplicationFormPt1();
 						// If there are no errors, continue processing
 						if (empty($errors)) {
-							// TODO: return the next page of the form
+							// Show the second page
+							$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2();
 						} else {
+							// Show the first page with error messages
 							$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1($errors);
 						}						
-					}
+					} elseif(JSession::checkToken() && isset($_POST['submit_application_pt2'])) {
+						// Validate input data
+						$errors = IsbnregistryFormsHelper::validateApplicationFormPt2();
+						if (empty($errors)) {
+							// TODO: show overview form
+						} else {
+							// Show the second page with error messages
+							$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2($errors);
+						}
+					}				
 				}
 
                 // Add HTML code

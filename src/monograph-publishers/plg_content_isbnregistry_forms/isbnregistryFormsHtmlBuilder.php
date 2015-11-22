@@ -285,7 +285,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '</tr><tr>';		
 		$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_SUBTITLE_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="subtitle" id="title" size="50" value="' . $_POST['subtitle'] . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['subtitle']) . '</td>';
+        $html .= '<td class="error">' . JText::_($errors['subtitle']) . '</td>';
 		$html .= '</tr><tr>';		
 		$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
 		$html .= '<td>';
@@ -322,42 +322,60 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td class="error">' . JText::_($errors['volume']) . '</td>';		
         $html .= '</tr>';
 		$html .= '</table>';	
-		// Information about the printed publication
-        $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_7') . '</div>';
-        $html .= '<table>';
-        $html .= '<tr>';		
-        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PRINTING_HOUSE_FIELD') . ':</td>';
-        $html .= '<td><input type="text" name="printing_house" id="printing_house" size="50" value="' . $_POST['printing_house'] . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['printing_house']) . '</td>';
-        $html .= '</tr><tr>';		
-        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PRINTING_HOUSE_CITY_FIELD') . ':</td>';
-        $html .= '<td><input type="text" name="printing_house_city" id="printing_house_city" size="50" value="' . $_POST['printing_house_city'] . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['printing_house_city']) . '</td>';		
-		$html .= '</tr><tr>';		
-        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_COPIES_FIELD') . ':</td>';
-        $html .= '<td><input type="text" name="copies" id="copies" size="4" value="' . $_POST['copies'] . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['copies']) . '</td>';	
-		$html .= '</tr><tr>';		
-        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EDITION_FIELD') . ':</td>';
- 		$html .= '<td>';
-		$html .= IsbnregistryFormsHtmlBuilder::getEditionMenu();
-		$html .= '</td>';      
-        $html .= '<td class="error">' . JText::_($errors['edition']) . '</td>';	
-        $html .= '</tr><tr class="spacer_bottom">';
-        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_FIELD') . ':</td>';
-        $html .= '<td>';	
-		$html .= '<input type="checkbox" name="type[]" value="PAPERBACK"' . (isset($_POST['type']) && in_array('PAPERBACK', $_POST['type']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_PAPERBACK');
-		$html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="HARDBACK"' . (isset($_POST['type']) && in_array('HARDBACK', $_POST['type']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_HARDBACK');
-		$html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($_POST['type']) && in_array('SPIRAL_BINDING', $_POST['type']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_SPIRAL_BINDING');
-		$html .= '</td>';
-        $html .= '<td class="error">* ' . JText::_($errors['type']) . '</td>';	
-        $html .= '</tr>';
-		$html .= '</table>';
+		if(preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {	
+			// Information about the printed publication
+			$html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_7') . '</div>';
+			$html .= '<table>';
+			$html .= '<tr>';		
+			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PRINTING_HOUSE_FIELD') . ':</td>';
+			$html .= '<td><input type="text" name="printing_house" id="printing_house" size="50" value="' . $_POST['printing_house'] . '" /></td>';
+			$html .= '<td class="error">' . JText::_($errors['printing_house']) . '</td>';
+			$html .= '</tr><tr>';		
+			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PRINTING_HOUSE_CITY_FIELD') . ':</td>';
+			$html .= '<td><input type="text" name="printing_house_city" id="printing_house_city" size="50" value="' . $_POST['printing_house_city'] . '" /></td>';
+			$html .= '<td class="error">' . JText::_($errors['printing_house_city']) . '</td>';		
+			$html .= '</tr><tr>';		
+			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_COPIES_FIELD') . ':</td>';
+			$html .= '<td><input type="text" name="copies" id="copies" size="4" value="' . $_POST['copies'] . '" /></td>';
+			$html .= '<td class="error">' . JText::_($errors['copies']) . '</td>';	
+			$html .= '</tr><tr>';		
+			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EDITION_FIELD') . ':</td>';
+			$html .= '<td>';
+			$html .= IsbnregistryFormsHtmlBuilder::getEditionMenu();
+			$html .= '</td>';      
+			$html .= '<td class="error">' . JText::_($errors['edition']) . '</td>';	
+			$html .= '</tr><tr class="spacer_bottom">';					
+			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_FIELD') . ':</td>';
+			$html .= '<td>';	
+			$html .= '<input type="checkbox" name="type[]" value="PAPERBACK"' . (isset($_POST['type']) && in_array('PAPERBACK', $_POST['type']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_PAPERBACK');
+			$html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="HARDBACK"' . (isset($_POST['type']) && in_array('HARDBACK', $_POST['type']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_HARDBACK');
+			$html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($_POST['type']) && in_array('SPIRAL_BINDING', $_POST['type']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_SPIRAL_BINDING');
+			$html .= '</td>';
+			$html .= '<td class="error">* ' . JText::_($errors['type']) . '</td>';						
+			$html .= '</tr>';
+			$html .= '</table>';
+		}
 		// Additional information
-        $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_7') . '</div>';		
+        $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_8') . '</div>';		
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_COMMENTS_FIELD') . '</div>';
-        $html .= '<div><textarea name="comments" id="comments" class="question">' . $_POST['comments'] . '</textarea>';
-		$html .= '<span class="error">' . JText::_($errors['comments']) . '</span></div>';		
+        $html .= '<div class="spacer_bottom"><textarea name="comments" id="comments" class="question">' . $_POST['comments'] . '</textarea>';
+		$html .= '<span class="error">' . JText::_($errors['comments']) . '</span></div>';	
+		// Other information
+		$html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_9') . '</div>';
+		if(preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
+			$html .= '<table>';
+			$html .= '<tr class="spacer_bottom">';	
+			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_FIELD') . ':</td>';
+			$html .= '<td>';	
+			$html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="PDF"' . (isset($_POST['fileformat']) && in_array('PDF', $_POST['fileformat']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_PDF');
+			$html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($_POST['fileformat']) && in_array('EPUB', $_POST['fileformat']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_EPUB');
+			$html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="CD-ROM"' . (isset($_POST['fileformat']) && in_array('CD-ROM', $_POST['fileformat']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_CD_ROM');
+			$html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="OTHER"' . (isset($_POST['fileformat']) && in_array('OTHER', $_POST['fileformat']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_OTHER');
+			$html .= '</td>';
+			$html .= '<td class="error">* ' . JText::_($errors['fileformat']) . '</td>';		
+			$html .= '</tr>';
+			$html .= '</table>';	
+		}
 		$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1Hidden();
         $html .= '<div><input type="submit" name="submit_application_pt2" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
         $html .= JHTML::_('form.token');
@@ -380,7 +398,7 @@ class IsbnregistryFormsHtmlBuilder {
 		$html .= '<input type="hidden" name="publishing_activity" value="' . $_POST['publishing_activity'] . '" />';
 		$html .= '<input type="hidden" name="publishing_activity_amount" value="' . $_POST['publishing_activity_amount'] . '" />';
 		$html .= '<input type="hidden" name="publication_type" value="' . $_POST['publication_type'] . '" />';
-		$html .= '<input type="hidden" name="publication_format" value="' . $_POST['publication_format'] . '" />';
+		$html .= '<input type="hidden" name="publication_format" value="' . $_POST['publication_format'] . '" />';	
 		return $html;		
 	}
 	
@@ -397,11 +415,11 @@ class IsbnregistryFormsHtmlBuilder {
 	private static function getPublishedYearMenu() {
 		$html .= '<select name="year" id="year">';
 		$html .= '<option value="-"' . (strcmp($_POST['year'], '-') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_YEAR') . '</option>';
-		$html .= '<option value="' . (date("Y")-2) . '"' . ($_POST['year'] === (date("Y")-2) ? ' selected' : '') . '>' . (date("Y")-2) . '</option>';
-		$html .= '<option value="' . (date("Y")-1) . '"' . ($_POST['year'] === (date("Y")-1) ? ' selected' : '') . '>' . (date("Y")-1) . '</option>';
-		$html .= '<option value="' . (date("Y")) . '"' . ($_POST['year'] === date("Y") ? ' selected' : '') . '>' . (date("Y")) . '</option>';
-		$html .= '<option value="' . (date("Y")+1) . '"' . ($_POST['year'] === (date("Y")+1) ? ' selected' : '') . '>' . (date("Y")+1) . '</option>';
-		$html .= '<option value="' . (date("Y")+2) . '"' . ($_POST['year'] === (date("Y")+2) ? ' selected' : '') . '>' . (date("Y")+2) . '</option>';
+		$html .= '<option value="' . (date("Y")-2) . '"' . ($_POST['year'] == (date("Y")-2) ? ' selected' : '') . '>' . (date("Y")-2) . '</option>';
+		$html .= '<option value="' . (date("Y")-1) . '"' . ($_POST['year'] == (date("Y")-1) ? ' selected' : '') . '>' . (date("Y")-1) . '</option>';
+		$html .= '<option value="' . (date("Y")) . '"' . ($_POST['year'] == date("Y") ? ' selected' : '') . '>' . (date("Y")) . '</option>';
+		$html .= '<option value="' . (date("Y")+1) . '"' . ($_POST['year'] == (date("Y")+1) ? ' selected' : '') . '>' . (date("Y")+1) . '</option>';
+		$html .= '<option value="' . (date("Y")+2) . '"' . ($_POST['year'] == (date("Y")+2) ? ' selected' : '') . '>' . (date("Y")+2) . '</option>';
 		$html .=  '</select>';		
 		return $html;
 	}
