@@ -77,6 +77,8 @@ class plgContentIsbnregistry_forms extends JPlugin {
 							 } else {
 								// TODO: return success form
 								$html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_SUCCESS') . '</div>';
+								// Save publisher to session
+								IsbnregistryFormsHelper::savePublisherToSession();
 							 }
 						} else {
 							$html .= IsbnregistryFormsHtmlBuilder::getRegisterMonographPublisherForm($lang->getTag(), $errors);
@@ -85,6 +87,9 @@ class plgContentIsbnregistry_forms extends JPlugin {
 				} else if(strpos($value,'application') !== false) {
 					// No buttons presed - show the first page
 					if(!isset($_POST['submit_application_pt1']) && !isset($_POST['submit_application_pt2'])) {
+						// Load pulisher from session if exists
+						IsbnregistryFormsHelper::loadPublisherFromSession();
+						// Generate form
 						$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1();
 					} elseif(JSession::checkToken() && isset($_POST['submit_application_pt1'])) {
 						// Validate input data

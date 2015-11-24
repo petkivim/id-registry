@@ -494,6 +494,35 @@ class IsbnregistryFormsHelper {
 			}
 		}
 		return true;
+	}
+
+	public static function savePublisherToSession() {
+		$session = JFactory::getSession();
+		$session->set('official_name', $_POST['official_name']);
+		$session->set('address', $_POST['address']);
+		$session->set('zip', $_POST['zip']);
+		$session->set('city', $_POST['city']);
+		$session->set('contact_person', $_POST['contact_person']);
+		$session->set('phone', $_POST['phone']);
+		$session->set('email', $_POST['email']);
+	}
+	
+	public static function loadPublisherFromSession() {
+		$session = JFactory::getSession();
+		$_POST['official_name'] = $session->get('official_name');
+		$_POST['address'] = $session->get('address');
+		$_POST['zip'] = $session->get('zip');
+		$_POST['city'] = $session->get('city');
+		$_POST['contact_person'] = $session->get('contact_person');
+		$_POST['phone'] = $session->get('phone');
+		$_POST['email'] = $session->get('email');					
+		$session->clear('official_name');
+		$session->clear('address');
+		$session->clear('zip');
+		$session->clear('city');
+		$session->clear('contact_person');
+		$session->clear('phone');
+		$session->clear('email');
 	}	
 }
 

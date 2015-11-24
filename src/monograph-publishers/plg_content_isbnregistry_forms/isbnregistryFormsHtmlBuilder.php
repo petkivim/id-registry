@@ -382,7 +382,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '</form></div>';
         return $html;
     } 
-			
+	
 	private static function getIsbnApplicationFormPt1Hidden() {
         $html .= '<input type="hidden" name="official_name" value="' . $_POST['official_name'] . '" />';
         $html .= '<input type="hidden" name="publisher_id" value="' . $_POST['publisher_id'] . '" />';
