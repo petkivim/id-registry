@@ -183,8 +183,11 @@ class IsbnregistryFormsHtmlBuilder {
 		$html .= '<option value="ELECTRONICAL"' . (($_POST['publication_format'] == 'ELECTRONICAL') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_ELECTRONICAL') . '</option>';
 		$html .= '<option value="PRINT_ELECTRONICAL"' . (($_POST['publication_format'] == 'PRINT_ELECTRONICAL') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_BOTH') . '</option>';
 		$html .= '</select><span class="error">* ' . JText::_($errors['publication_format']) . '</span></div>';
-		$html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_POST_FIELD') . '</div>';	
+		$html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_POST_FIELD') . '</div>';
         $html .= '<div><input type="submit" name="submit_application_pt1" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
+		if(isset($_POST['back_application_pt2'])) {
+			$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2Hidden();
+		}
         $html .= JHTML::_('form.token');
         $html .= '</form></div>';
         return $html;
@@ -360,9 +363,9 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_COMMENTS_FIELD') . '</div>';
         $html .= '<div class="spacer_bottom"><textarea name="comments" id="comments" class="question">' . $_POST['comments'] . '</textarea>';
 		$html .= '<span class="error">' . JText::_($errors['comments']) . '</span></div>';	
-		// Other information
-		$html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_9') . '</div>';
 		if(preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
+			// Other information
+			$html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_9') . '</div>';
 			$html .= '<table>';
 			$html .= '<tr class="spacer_bottom">';	
 			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_FIELD') . ':</td>';
@@ -377,7 +380,8 @@ class IsbnregistryFormsHtmlBuilder {
 			$html .= '</table>';	
 		}
 		$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1Hidden();
-        $html .= '<div><input type="submit" name="submit_application_pt2" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
+		$html .= '<div><input type="submit" name="back_application_pt2" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_BACK_BTN') . '" />';
+        $html .= '<input type="submit" name="submit_application_pt2" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
         $html .= JHTML::_('form.token');
         $html .= '</form></div>';
         return $html;
@@ -399,6 +403,60 @@ class IsbnregistryFormsHtmlBuilder {
 		$html .= '<input type="hidden" name="publishing_activity_amount" value="' . $_POST['publishing_activity_amount'] . '" />';
 		$html .= '<input type="hidden" name="publication_type" value="' . $_POST['publication_type'] . '" />';
 		$html .= '<input type="hidden" name="publication_format" value="' . $_POST['publication_format'] . '" />';	
+		return $html;		
+	}
+	
+	private static function getIsbnApplicationFormPt2Hidden() {
+        $html .= '<input type="hidden" name="first_name_1" value="' . $_POST['first_name_1'] . '" />';
+        $html .= '<input type="hidden" name="last_name_1" value="' . $_POST['last_name_1'] . '" />';
+		$html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="AUTHOR"' . (isset($_POST['role_1']) && in_array('AUTHOR', $_POST['role_1']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="ILLUSTRATOR"' . (isset($_POST['role_1']) && in_array('ILLUSTRATOR', $_POST['role_1']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="TRANSLATOR"' . (isset($_POST['role_1']) && in_array('TRANSLATOR', $_POST['role_1']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="EDITOR"' . (isset($_POST['role_1']) && in_array('EDITOR', $_POST['role_1']) ? ' checked' : '') . '/>';
+        $html .= '<input type="hidden" name="first_name_2" value="' . $_POST['first_name_2'] . '" />';
+        $html .= '<input type="hidden" name="last_name_2" value="' . $_POST['last_name_2'] . '" />';
+		$html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="AUTHOR"' . (isset($_POST['role_2']) && in_array('AUTHOR', $_POST['role_2']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="ILLUSTRATOR"' . (isset($_POST['role_2']) && in_array('ILLUSTRATOR', $_POST['role_2']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="TRANSLATOR"' . (isset($_POST['role_2']) && in_array('TRANSLATOR', $_POST['role_2']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="EDITOR"' . (isset($_POST['role_2']) && in_array('EDITOR', $_POST['role_2']) ? ' checked' : '') . '/>';
+        $html .= '<input type="hidden" name="first_name_3" value="' . $_POST['first_name_3'] . '" />';
+        $html .= '<input type="hidden" name="last_name_3" value="' . $_POST['last_name_3'] . '" />';
+		$html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="AUTHOR"' . (isset($_POST['role_3']) && in_array('AUTHOR', $_POST['role_3']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="ILLUSTRATOR"' . (isset($_POST['role_3']) && in_array('ILLUSTRATOR', $_POST['role_3']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="TRANSLATOR"' . (isset($_POST['role_3']) && in_array('TRANSLATOR', $_POST['role_3']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="EDITOR"' . (isset($_POST['role_3']) && in_array('EDITOR', $_POST['role_3']) ? ' checked' : '') . '/>';
+        $html .= '<input type="hidden" name="first_name_4" value="' . $_POST['first_name_4'] . '" />';
+        $html .= '<input type="hidden" name="last_name_4" value="' . $_POST['last_name_4'] . '" />';;	
+		$html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="AUTHOR"' . (isset($_POST['role_4']) && in_array('AUTHOR', $_POST['role_4']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="ILLUSTRATOR"' . (isset($_POST['role_4']) && in_array('ILLUSTRATOR', $_POST['role_4']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="TRANSLATOR"' . (isset($_POST['role_4']) && in_array('TRANSLATOR', $_POST['role_4']) ? ' checked' : '') . '/>';
+		$html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="EDITOR"' . (isset($_POST['role_4']) && in_array('EDITOR', $_POST['role_4']) ? ' checked' : '') . '/>';
+        $html .= '<input type="hidden" name="title" value="' . $_POST['title'] . '" />';
+        $html .= '<input type="hidden" name="subtitle" value="' . $_POST['subtitle'] . '" />';
+		$html .= '<input type="hidden" name="language" value="' . $_POST['language'] . '" />';
+		$html .= '<input type="hidden" name="year" value="' . $_POST['year'] . '" />';
+		$html .= '<input type="hidden" name="month" value="' . $_POST['month'] . '" />';
+        $html .= '<input type="hidden" name="series" value="' . $_POST['series'] . '" />';
+        $html .= '<input type="hidden" name="issn" value="' . $_POST['issn'] . '" />';
+        $html .= '<input type="hidden" name="volume" value="' . $_POST['volume'] . '" />';	
+		if(preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {	
+			// Information about the printed publication
+			$html .= '<input type="hidden" name="printing_house" value="' . $_POST['printing_house'] . '" />';
+			$html .= '<input type="hidden" name="printing_house_city" value="' . $_POST['printing_house_city'] . '" />';
+			$html .= '<input type="hidden" name="copies" value="' . $_POST['copies'] . '" />';
+			$html .= '<input type="hidden" name="edition" value="' . $_POST['edition'] . '" />';	
+			$html .= '<input style="display:none;" type="checkbox" name="type[]" value="PAPERBACK"' . (isset($_POST['type']) && in_array('PAPERBACK', $_POST['type']) ? ' checked' : '') . '/>';
+			$html .= '<input style="display:none;" type="checkbox" name="type[]" value="HARDBACK"' . (isset($_POST['type']) && in_array('HARDBACK', $_POST['type']) ? ' checked' : '') . '/>';
+			$html .= '<input style="display:none;" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($_POST['type']) && in_array('SPIRAL_BINDING', $_POST['type']) ? ' checked' : '') . '/>';
+		}
+		// Additional information
+        $html .= '<textarea name="comments" style="display:none;">' . $_POST['comments'] . '</textarea>';
+		if(preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {	
+			$html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="PDF"' . (isset($_POST['fileformat']) && in_array('PDF', $_POST['fileformat']) ? ' checked' : '') . '/>';
+			$html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($_POST['fileformat']) && in_array('EPUB', $_POST['fileformat']) ? ' checked' : '') . '/>';
+			$html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="CD-ROM"' . (isset($_POST['fileformat']) && in_array('CD-ROM', $_POST['fileformat']) ? ' checked' : '') . '/>';
+			$html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="OTHER"' . (isset($_POST['fileformat']) && in_array('OTHER', $_POST['fileformat']) ? ' checked' : '') . '/>';
+		}
 		return $html;		
 	}
 	

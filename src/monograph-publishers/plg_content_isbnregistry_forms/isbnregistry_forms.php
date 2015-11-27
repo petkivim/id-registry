@@ -91,6 +91,9 @@ class plgContentIsbnregistry_forms extends JPlugin {
 						IsbnregistryFormsHelper::loadPublisherFromSession();
 						// Generate form
 						$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1();
+					} elseif(JSession::checkToken() && isset($_POST['back_application_pt2'])) {
+						// Back button has been pressed - generate form
+						$html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1();						
 					} elseif(JSession::checkToken() && isset($_POST['submit_application_pt1'])) {
 						// Validate input data
 						$errors = IsbnregistryFormsHelper::validateApplicationFormPt1();

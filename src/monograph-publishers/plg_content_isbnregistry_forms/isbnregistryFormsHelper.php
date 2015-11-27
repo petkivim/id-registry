@@ -497,6 +497,7 @@ class IsbnregistryFormsHelper {
 	}
 
 	public static function savePublisherToSession() {
+		// Store publisher data to session
 		$session = JFactory::getSession();
 		$session->set('official_name', $_POST['official_name']);
 		$session->set('address', $_POST['address']);
@@ -509,20 +510,27 @@ class IsbnregistryFormsHelper {
 	
 	public static function loadPublisherFromSession() {
 		$session = JFactory::getSession();
-		$_POST['official_name'] = $session->get('official_name');
-		$_POST['address'] = $session->get('address');
-		$_POST['zip'] = $session->get('zip');
-		$_POST['city'] = $session->get('city');
-		$_POST['contact_person'] = $session->get('contact_person');
-		$_POST['phone'] = $session->get('phone');
-		$_POST['email'] = $session->get('email');					
-		$session->clear('official_name');
-		$session->clear('address');
-		$session->clear('zip');
-		$session->clear('city');
-		$session->clear('contact_person');
-		$session->clear('phone');
-		$session->clear('email');
+		// Read official name from session
+		$officialName = $session->get('official_name');
+		// If variable is not empty, read all the values from session
+		if(!empty($officialName)) {
+			// Load publisher data from sessios to $_POST super global
+			$_POST['official_name'] = $officialName;
+			$_POST['address'] = $session->get('address');
+			$_POST['zip'] = $session->get('zip');
+			$_POST['city'] = $session->get('city');
+			$_POST['contact_person'] = $session->get('contact_person');
+			$_POST['phone'] = $session->get('phone');
+			$_POST['email'] = $session->get('email');	
+			// Remove values from session
+			$session->clear('official_name');
+			$session->clear('address');
+			$session->clear('zip');
+			$session->clear('city');
+			$session->clear('contact_person');
+			$session->clear('phone');
+			$session->clear('email');
+		}
 	}	
 }
 
