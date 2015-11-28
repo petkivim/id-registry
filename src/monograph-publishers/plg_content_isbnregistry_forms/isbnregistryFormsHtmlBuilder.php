@@ -84,7 +84,10 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<span class="error">' . JText::_($errors['question_8']) . '</span></div>';
         $html .= '<div class="pre_field">' . JText::_('PLG_ISBNREGISTRY_FORMS_CONFIRMATION_PRE_FIELD') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONFIRMATION_FIELD') . '<span  class="error"> *</span></div>';
-        $html .= '<div><input type="text" name="confirmation" id="confirmation" size="30" value="' . $_POST['confirmation'] . '" />';
+        $html .= '<div><input type="text" name="confirmation" id="confirmation" size="30" value="';
+        $html .= isset($_POST['confirmation']) ? $_POST['confirmation'] : date("d.m.Y");
+        $html .= '" />';
+
         $html .= '<span  class="error">' . JText::_($errors['confirmation']) . '</span></div>';
         $html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_CONFIRMATION_POST_FIELD') . '</div>';
         $html .= '<div><input type="submit" name="submit_registration" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_SEND_BTN') . '" /></div>';
