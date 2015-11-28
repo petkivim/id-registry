@@ -35,9 +35,15 @@ class IsbnregistryViewPublishers extends JViewLegacy {
             return false;
         }
 
+		// Add publishers helper file
+		require_once JPATH_COMPONENT . '/helpers/publishers.php';
+		// Add sidebar
+		PublishersHelper::addSubmenu('publishers');
+		
         // Set the toolbar
         $this->addToolBar();
-
+		// Render the sidebar
+		$this->sidebar = JHtmlSidebar::render();
         // Display the template
         parent::display($tpl);
     }
@@ -49,7 +55,7 @@ class IsbnregistryViewPublishers extends JViewLegacy {
      *
      * @since   1.6
      */
-    protected function addToolBar() {
+    protected function addToolBar() {		
         JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_MANAGER_PUBLISHERS'));
         JToolBarHelper::addNew('publisher.add');
         JToolBarHelper::editList('publisher.edit');

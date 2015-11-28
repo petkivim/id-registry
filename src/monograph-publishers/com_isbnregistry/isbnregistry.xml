@@ -34,19 +34,24 @@
         -->
     </update>
 	
-	<!-- Site Main File Copy Section -->
-	<!-- Note the folder attribute: This attribute describes the folder
-		to copy FROM in the package to install therefore files copied
-		in this section are copied from /site/ in the package -->
-	<files folder="site">
-		<filename>index.html</filename>
-		<filename>isbnregistry.php</filename>
-		<filename>controller.php</filename>
-	</files>	
+    <!-- Site Main File Copy Section -->
+    <!-- Note the folder attribute: This attribute describes the folder
+    to copy FROM in the package to install therefore files copied
+    in this section are copied from /site/ in the package -->
+    <files folder="site">
+        <filename>index.html</filename>
+        <filename>isbnregistry.php</filename>
+        <filename>controller.php</filename>
+    </files>	
 	
     <administration>
         <!-- Administration Menu Section -->
-        <menu link='index.php?option=com_isbnregistry'>COM_ISBNREGISTRY_MENU</menu>
+        <menu img="class:isbnregistry">COM_ISBNREGISTRY_MENU</menu>
+        <submenu>
+            <menu link="option=com_isbnregistry" view="publishers" img="class:publishers">COM_ISBNREGISTRY_SUBMENU_PUBLISHERS</menu>
+            <menu link="option=com_isbnregistry&amp;view=publications" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS</menu>
+        </submenu>
+
         <!-- Administration Main File Copy Section -->
         <!-- Note the folder attribute: This attribute describes the folder
         to copy FROM in the package to install therefore files copied
@@ -66,9 +71,11 @@
             <folder>views</folder>
             <!-- controllers files section -->
             <folder>controllers</folder>
+            <!-- helpers files section -->
+            <folder>helpers</folder>
             <!-- scripts files section -->
             <folder>scripts</folder>
-			<!-- css files section -->
+            <!-- css files section -->
             <folder>css</folder>
         </files>
         <languages folder="admin/language">
