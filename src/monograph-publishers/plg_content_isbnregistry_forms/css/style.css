@@ -42,19 +42,23 @@
 }
 
 input[type=checkbox].role_checkbox {
-	margin-left: .3em;
+    margin-left: .3em;
 }
 
 tr.spacer_top > td {
-	padding-top: 1em;
+    padding-top: 1em;
 }
 
 tr.spacer_bottom > td, .spacer_bottom  {
-	padding-bottom: 1em;
+    padding-bottom: 1em;
 }
 
 #series_info {
     font-size: 80%;
     font-style: italic;
-	font-weight: bold;
+    font-weight: bold;
+}
+
+#plg_isbnregistry_forms_application td {
+    width: 18em;
 }
