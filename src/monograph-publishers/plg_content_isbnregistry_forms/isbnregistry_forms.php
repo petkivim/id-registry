@@ -58,17 +58,13 @@ class plgContentIsbnregistry_forms extends JPlugin {
 
                 // TODO: create and process forms
                 if (strpos($value, 'registration') !== false) {
-                    if (!isset($_POST['submit_registration'])) {
-                        $html .= IsbnregistryFormsHtmlBuilder::getRegisterMonographPublisherForm($lang->getTag());
-                    } elseif (JSession::checkToken() && isset($_POST['submit_registration'])) {
+                    if (JSession::checkToken() && isset($_POST['submit_registration'])) {
                         // Validate input data
                         $errors = IsbnregistryFormsHelper::validateRegistrationForm();
                         // If there are no errors, continue processing
                         if (empty($errors)) {
-                            // Get the post variables
-                            $post = JFactory::getApplication()->input->post;
                             // Save to DB
-                            $publisherId = IsbnregistryFormsHelper::saveToDb($post);
+                            $publisherId = IsbnregistryFormsHelper::saveToDb($lang->getTag());
                             // If publisherId is 0 saving donation to DB failed
                             if ($publisherId == 0) {
                                 // Return error page
@@ -80,8 +76,10 @@ class plgContentIsbnregistry_forms extends JPlugin {
                                 IsbnregistryFormsHelper::savePublisherToSession();
                             }
                         } else {
-                            $html .= IsbnregistryFormsHtmlBuilder::getRegisterMonographPublisherForm($lang->getTag(), $errors);
+                            $html .= IsbnregistryFormsHtmlBuilder::getRegisterMonographPublisherForm($errors);
                         }
+                    } else {
+                        $html .= IsbnregistryFormsHtmlBuilder::getRegisterMonographPublisherForm();
                     }
                 } else if (strpos($value, 'application') !== false) {
                     if (JSession::checkToken() && isset($_POST['submit_application_pt1'])) {

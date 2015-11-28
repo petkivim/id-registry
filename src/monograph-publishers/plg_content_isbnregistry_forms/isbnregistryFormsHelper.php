@@ -395,7 +395,10 @@ class IsbnregistryFormsHelper {
         return $errors;
     }
 
-    public static function saveToDb($post) {
+    public static function saveToDb($lang_code) {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        // Get all the variables
         $official_name = $post->get('official_name', null, 'string');
         $other_names = $post->get('other_names', null, 'string');
         $address = $post->get('address', null, 'string');
@@ -414,7 +417,6 @@ class IsbnregistryFormsHelper {
         $question_7 = $post->get('question_7', null, 'array');
         $question_8 = $post->get('question_8', null, 'string');
         $confirmation = $post->get('confirmation', null, 'string');
-        $lang_code = $post->get('lang_code', null, 'string');
         $created = JFactory::getDate();
 
         // Convert question 7 from array to comma separated string

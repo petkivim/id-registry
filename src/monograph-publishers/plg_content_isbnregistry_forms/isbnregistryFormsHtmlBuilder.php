@@ -10,7 +10,7 @@ defined('_JEXEC') or die('Restricted access');
 
 class IsbnregistryFormsHtmlBuilder {
 
-    public static function getRegisterMonographPublisherForm($langTag, $errors = array()) {
+    public static function getRegisterMonographPublisherForm($errors = array()) {
         $html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
         $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_registration" >';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_SUB_TITLE_1') . '</div>';
@@ -91,7 +91,6 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<span  class="error">' . JText::_($errors['confirmation']) . '</span></div>';
         $html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_CONFIRMATION_POST_FIELD') . '</div>';
         $html .= '<div><input type="submit" name="submit_registration" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_SEND_BTN') . '" /></div>';
-        $html .= '<input type="hidden" name="lang_code" value="' . $langTag . '" />';
         $html .= JHTML::_('form.token');
         $html .= '</form></div>';
         return $html;
