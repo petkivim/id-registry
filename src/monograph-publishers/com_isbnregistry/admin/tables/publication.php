@@ -71,7 +71,7 @@ class IsbnRegistryTablePublication extends JTable {
 	/**
 	 * Converts the given array to comma separated string.
 	 */
-    private function fromArrayToStr($source) {
+    private static function fromArrayToStr($source) {
         if (is_array($source)) {
             if (count($source) > 0) {
                 $source = implode(',', $source);

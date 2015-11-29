@@ -86,9 +86,9 @@ class IsbnregistryModelPublication extends JModelAdmin {
     }
 
 	/**
-	 * Converts the given comma separated to array.
+	 * Converts the given comma separated string to array.
 	 */
-	private function fromStrToArray($source) {
+	private static function fromStrToArray($source) {
         if ($source && !is_array($source)) {
             $source = explode(',', $source);
         }		
