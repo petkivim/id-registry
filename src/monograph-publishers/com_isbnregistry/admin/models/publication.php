@@ -74,23 +74,24 @@ class IsbnregistryModelPublication extends JModelAdmin {
             $data = $this->getItem();
         }
 
-        // Role 1: from comma separated string to array
-        /*if ($data->role_1) {
-            $data->role_1 = explode(',', $data->role_1);
-        }*/
-		$data->role_1 = IsbnregistryModelPublication::getRoles($data->role_1);
-		$data->role_2 = IsbnregistryModelPublication::getRoles($data->role_2);
-		$data->role_3 = IsbnregistryModelPublication::getRoles($data->role_3);
-		$data->role_4 = IsbnregistryModelPublication::getRoles($data->role_4);
-		$data->type = IsbnregistryModelPublication::getRoles($data->type);
-		$data->fileformat = IsbnregistryModelPublication::getRoles($data->fileformat);
+        // From comma separated string to array
+		$data->role_1 = IsbnregistryModelPublication::fromStrToArray($data->role_1);
+		$data->role_2 = IsbnregistryModelPublication::fromStrToArray($data->role_2);
+		$data->role_3 = IsbnregistryModelPublication::fromStrToArray($data->role_3);
+		$data->role_4 = IsbnregistryModelPublication::fromStrToArray($data->role_4);
+		$data->type = IsbnregistryModelPublication::fromStrToArray($data->type);
+		$data->fileformat = IsbnregistryModelPublication::fromStrToArray($data->fileformat);
+		
         return $data;
     }
 
-	private function getRoles($roles) {
-        if ($roles && !is_array($roles)) {
-            $roles = explode(',', $roles);
+	/**
+	 * Converts the given comma separated to array.
+	 */
+	private function fromStrToArray($source) {
+        if ($source && !is_array($source)) {
+            $source = explode(',', $source);
         }		
-		return $roles;
+		return $source;
 	}
 }

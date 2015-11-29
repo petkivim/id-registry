@@ -57,35 +57,31 @@ class IsbnRegistryTablePublication extends JTable {
             $this->created = $date->toSql();
         }
 
-        // Role 1: from array to comma separated string
-        /*if (is_array($this->role_1)) {
-            if (count($this->role_1) > 0) {
-                $this->role_1 = implode(',', $this->role_1);
-            } else {
-                $this->role_1 = '';
-            }
-        } else {
-            $this->role_1 = '';
-        }*/
-		$this->role_1 = IsbnRegistryTablePublication::getRoles($this->role_1);
-        $this->role_2 = IsbnRegistryTablePublication::getRoles($this->role_2);
-        $this->role_3 = IsbnRegistryTablePublication::getRoles($this->role_3);
-        $this->role_4 = IsbnRegistryTablePublication::getRoles($this->role_4);
-		$this->type = IsbnRegistryTablePublication::getRoles($this->type);
-		$this->fileformat = IsbnRegistryTablePublication::getRoles($this->fileformat);
+        // From array to comma separated string
+		$this->role_1 = IsbnRegistryTablePublication::fromArrayToStr($this->role_1);
+        $this->role_2 = IsbnRegistryTablePublication::fromArrayToStr($this->role_2);
+        $this->role_3 = IsbnRegistryTablePublication::fromArrayToStr($this->role_3);
+        $this->role_4 = IsbnRegistryTablePublication::fromArrayToStr($this->role_4);
+		$this->type = IsbnRegistryTablePublication::fromArrayToStr($this->type);
+		$this->fileformat = IsbnRegistryTablePublication::fromArrayToStr($this->fileformat);
+		
         return parent::store($updateNulls);
     }
-    private function getRoles($roles) {
-        if (is_array($roles)) {
-            if (count($roles) > 0) {
-                $roles = implode(',', $roles);
+	
+	/**
+	 * Converts the given array to comma separated string.
+	 */
+    private function fromArrayToStr($source) {
+        if (is_array($source)) {
+            if (count($source) > 0) {
+                $source = implode(',', $source);
             } else {
-                $roles = '';
+                $source = '';
             }
         } else {
-            $roles = '';
+            $source = '';
         }
-        return $roles;
+        return $source;
     }
 
 }
