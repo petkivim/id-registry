@@ -518,11 +518,11 @@ class IsbnregistryFormsHelper {
         array_push($columns, 'first_name_1', 'last_name_1', 'role_1', 'first_name_2', 'last_name_2', 'role_2', 'first_name_3', 'last_name_3', 'role_3', 'first_name_4', 'last_name_4', 'role_4');
         array_push($columns, 'title', 'subtitle', 'language', 'year', 'month', 'series', 'issn', 'volume');
         // If printed
-        if (preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $publication_format)) {
+        if (IsbnregistryFormsHelper::isPrint($publication_format)) {
             array_push($columns, 'printing_house', 'printing_house_city', 'copies', 'edition', 'type');
         }
         // If electronical
-        if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publication_format)) {
+        if (IsbnregistryFormsHelper::isElectronical($publication_format)) {
             array_push($columns, 'fileformat');
         }
         array_push($columns, 'comments', 'lang_code', 'created', 'created_by');
@@ -531,11 +531,11 @@ class IsbnregistryFormsHelper {
         array_push($values, $db->quote($first_name_1), $db->quote($last_name_1), $db->quote($role_1_str), $db->quote($first_name_2), $db->quote($last_name_2), $db->quote($role_2_str), $db->quote($first_name_3), $db->quote($last_name_3), $db->quote($role_3_str), $db->quote($first_name_4), $db->quote($last_name_4), $db->quote($role_4_str));
         array_push($values, $db->quote($title), $db->quote($subtitle), $db->quote($language), $db->quote($year), $db->quote($month), $db->quote($series), $db->quote($issn), $db->quote($volume));
         // If printed
-        if (preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $publication_format)) {
+        if (IsbnregistryFormsHelper::isPrint($publication_format)) {
             array_push($values, $db->quote($printing_house), $db->quote($printing_house_city), $db->quote($copies), $db->quote($edition), $db->quote($type_str));
         }
         // If electronical
-        if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publication_format)) {
+        if (IsbnregistryFormsHelper::isElectronical($publication_format)) {
             array_push($values, $db->quote($fileformat_str));
         }
         array_push($values, $db->quote($comments), $db->quote($lang_code), $db->quote($created->toSql()), $db->quote('WWW'));
@@ -744,6 +744,20 @@ class IsbnregistryFormsHelper {
             }
         }
         return $str;
+    }
+
+    /**
+     * Returns true if and only if the given format includes print.
+     */
+    public static function isPrint($format) {
+        return preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $format);
+    }
+
+    /**
+     * Returns true if and only if the given format includes electronical.
+     */
+    public static function isElectronical($format) {
+        return preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $format);
     }
 
 }

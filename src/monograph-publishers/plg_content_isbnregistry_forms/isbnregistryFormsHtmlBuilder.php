@@ -87,7 +87,6 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<div><input type="text" name="confirmation" id="confirmation" size="30" value="';
         $html .= isset($_POST['confirmation']) ? $_POST['confirmation'] : date("d.m.Y");
         $html .= '" />';
-
         $html .= '<span  class="error">' . JText::_($errors['confirmation']) . '</span></div>';
         $html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_CONFIRMATION_POST_FIELD') . '</div>';
         $html .= '<div><input type="submit" name="submit_registration" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_SEND_BTN') . '" /></div>';
@@ -327,7 +326,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td class="error">' . JText::_($errors['volume']) . '</td>';
         $html .= '</tr>';
         $html .= '</table>';
-        if (preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
+        if (IsbnregistryFormsHelper::isPrint($_POST['publication_format'])) {
             // Information about the printed publication
             $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_7') . '</div>';
             $html .= '<table>';
@@ -365,7 +364,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_COMMENTS_FIELD') . '</div>';
         $html .= '<div class="spacer_bottom"><textarea name="comments" id="comments" class="question">' . $_POST['comments'] . '</textarea>';
         $html .= '<span class="error">' . JText::_($errors['comments']) . '</span></div>';
-        if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
+        if (IsbnregistryFormsHelper::isElectronical($_POST['publication_format'])) {
             // Other information
             $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_9') . '</div>';
             $html .= '<table>';
@@ -456,12 +455,12 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LANGUAGE_SUMMARY_FIELD') . ':</td>';
         $html .= '<td>' . IsbnregistryFormsHelper::getLanguageLabel() . '</td>';
-        if (preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
+        if (IsbnregistryFormsHelper::isPrint($_POST['publication_format'])) {
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_FIELD') . ':</td>';
             $html .= '<td>' . IsbnregistryFormsHelper::getTypeString() . '</td>';
         }
-        if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
+        if (IsbnregistryFormsHelper::isElectronical($_POST['publication_format'])) {
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_FIELD') . ':</td>';
             $html .= '<td>' . IsbnregistryFormsHelper::getFileFormatString() . '</td>';
@@ -518,7 +517,6 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="EDITOR"' . (isset($_POST['role_3']) && in_array('EDITOR', $_POST['role_3']) ? ' checked' : '') . '/>';
         $html .= '<input type="hidden" name="first_name_4" value="' . $_POST['first_name_4'] . '" />';
         $html .= '<input type="hidden" name="last_name_4" value="' . $_POST['last_name_4'] . '" />';
-        ;
         $html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="AUTHOR"' . (isset($_POST['role_4']) && in_array('AUTHOR', $_POST['role_4']) ? ' checked' : '') . '/>';
         $html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="ILLUSTRATOR"' . (isset($_POST['role_4']) && in_array('ILLUSTRATOR', $_POST['role_4']) ? ' checked' : '') . '/>';
         $html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="TRANSLATOR"' . (isset($_POST['role_4']) && in_array('TRANSLATOR', $_POST['role_4']) ? ' checked' : '') . '/>';
@@ -531,7 +529,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<input type="hidden" name="series" value="' . $_POST['series'] . '" />';
         $html .= '<input type="hidden" name="issn" value="' . $_POST['issn'] . '" />';
         $html .= '<input type="hidden" name="volume" value="' . $_POST['volume'] . '" />';
-        if (preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
+        if (IsbnregistryFormsHelper::isPrint($_POST['publication_format'])) {
             // Information about the printed publication
             $html .= '<input type="hidden" name="printing_house" value="' . $_POST['printing_house'] . '" />';
             $html .= '<input type="hidden" name="printing_house_city" value="' . $_POST['printing_house_city'] . '" />';
@@ -543,7 +541,7 @@ class IsbnregistryFormsHtmlBuilder {
         }
         // Additional information
         $html .= '<textarea name="comments" style="display:none;">' . $_POST['comments'] . '</textarea>';
-        if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
+        if (IsbnregistryFormsHelper::isElectronical($_POST['publication_format'])) {
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="PDF"' . (isset($_POST['fileformat']) && in_array('PDF', $_POST['fileformat']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($_POST['fileformat']) && in_array('EPUB', $_POST['fileformat']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="CD_ROM"' . (isset($_POST['fileformat']) && in_array('CD_ROM', $_POST['fileformat']) ? ' checked' : '') . '/>';
