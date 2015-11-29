@@ -395,7 +395,7 @@ class IsbnregistryFormsHelper {
         return $errors;
     }
 
-    public static function saveToDb($lang_code) {
+    public static function saveRegistrationToDb($lang_code) {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
         // Get all the variables
@@ -444,6 +444,125 @@ class IsbnregistryFormsHelper {
         $db->execute();
         $publisherID = $db->insertid();
         return $publisherID;
+    }
+
+    public static function saveApplicationToDb($lang_code) {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        // Information about the publisher
+        $official_name = $post->get('official_name', null, 'string');
+        $publisher_id = $post->get('publisher_id', null, 'string');
+        $address = $post->get('address', null, 'string');
+        $zip = $post->get('zip', null, 'string');
+        $city = $post->get('city', null, 'string');
+        $contact_person = $post->get('contact_person', null, 'string');
+        $phone = $post->get('phone', null, 'string');
+        $email = $post->get('email', null, 'string');
+        // Information about publishing activities
+        $published_before = $post->get('published_before', null, 'boolean');
+        $publications_public = $post->get('publications_public', null, 'boolean');
+        $publications_intra = $post->get('publications_intra', null, 'boolean');
+        $publishing_activity = $post->get('publishing_activity', null, 'string');
+        $publishing_activity_amount = $post->get('publishing_activity_amount', null, 'string');
+        // Preliminary information about the publication
+        $publication_type = $post->get('publication_type', null, 'string');
+        $publication_format = $post->get('publication_format', null, 'string');
+        // Information about the authors
+        $first_name_1 = $post->get('first_name_1', null, 'string');
+        $last_name_1 = $post->get('last_name_1', null, 'string');
+        $role_1 = $post->get('role_1', null, 'array');
+        $first_name_2 = $post->get('first_name_2', null, 'string');
+        $last_name_2 = $post->get('last_name_2', null, 'string');
+        $role_2 = $post->get('role_2', null, 'array');
+        $first_name_3 = $post->get('first_name_3', null, 'string');
+        $last_name_3 = $post->get('last_name_3', null, 'string');
+        $role_3 = $post->get('role_3', null, 'array');
+        $first_name_4 = $post->get('first_name_4', null, 'string');
+        $last_name_4 = $post->get('last_name_4', null, 'string');
+        $role_4 = $post->get('role_4', null, 'array');
+        // Information about the publication
+        $title = $post->get('title', null, 'string');
+        $subtitle = $post->get('subtitle', null, 'string');
+        $language = $post->get('language', null, 'string');
+        $year = $post->get('year', null, 'string');
+        $month = $post->get('month', null, 'string');
+        // Information about the series
+        $series = $post->get('series', null, 'string');
+        $issn = $post->get('issn', null, 'string');
+        $volume = $post->get('volume', null, 'string');
+        // Information about the printed publication
+        $printing_house = $post->get('printing_house', null, 'string');
+        $printing_house_city = $post->get('printing_house_city', null, 'string');
+        $copies = $post->get('copies', null, 'string');
+        $edition = $post->get('edition', null, 'string');
+        $type = $post->get('type', null, 'array');
+        // Additional information
+        $comments = $post->get('comments', null, 'string');
+        // Other information
+        $fileformat = $post->get('fileformat', null, 'array');
+        // Date
+        $created = JFactory::getDate();
+
+        // From array to comma separated string
+        $role_1_str = IsbnregistryFormsHelper::fromArrayToStr($role_1);
+        $role_2_str = IsbnregistryFormsHelper::fromArrayToStr($role_2);
+        $role_3_str = IsbnregistryFormsHelper::fromArrayToStr($role_3);
+        $role_4_str = IsbnregistryFormsHelper::fromArrayToStr($role_4);
+        $type_str = IsbnregistryFormsHelper::fromArrayToStr($type);
+        $fileformat_str = IsbnregistryFormsHelper::fromArrayToStr($fileformat);
+
+        // database connection
+        $db = JFactory::getDbo();
+        // Insert columns
+        $columns = array('official_name', 'publisher_id', 'address', 'zip', 'city', 'contact_person', 'phone', 'email', 'published_before', 'publications_public', 'publications_intra', 'publishing_activity', 'publishing_activity_amount', 'publication_type', 'publication_format');
+        array_push($columns, 'first_name_1', 'last_name_1', 'role_1', 'first_name_2', 'last_name_2', 'role_2', 'first_name_3', 'last_name_3', 'role_3', 'first_name_4', 'last_name_4', 'role_4');
+        array_push($columns, 'title', 'subtitle', 'language', 'year', 'month', 'series', 'issn', 'volume');
+        // If printed
+        if (preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $publication_format)) {
+            array_push($columns, 'printing_house', 'printing_house_city', 'copies', 'edition', 'type');
+        }
+        // If electronical
+        if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publication_format)) {
+            array_push($columns, 'fileformat');
+        }
+        array_push($columns, 'comments', 'lang_code', 'created', 'created_by');
+        // Insert values
+        $values = array($db->quote($official_name), $db->quote($publisher_id), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($contact_person), $db->quote($phone), $db->quote($email), $db->quote($published_before), $db->quote($publications_public), $db->quote($publications_intra), $db->quote($publishing_activity), $db->quote($publishing_activity_amount), $db->quote($publication_type), $db->quote($publication_format));
+        array_push($values, $db->quote($first_name_1), $db->quote($last_name_1), $db->quote($role_1_str), $db->quote($first_name_2), $db->quote($last_name_2), $db->quote($role_2_str), $db->quote($first_name_3), $db->quote($last_name_3), $db->quote($role_3_str), $db->quote($first_name_4), $db->quote($last_name_4), $db->quote($role_4_str));
+        array_push($values, $db->quote($title), $db->quote($subtitle), $db->quote($language), $db->quote($year), $db->quote($month), $db->quote($series), $db->quote($issn), $db->quote($volume));
+        // If printed
+        if (preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $publication_format)) {
+            array_push($values, $db->quote($printing_house), $db->quote($printing_house_city), $db->quote($copies), $db->quote($edition), $db->quote($type_str));
+        }
+        // If electronical
+        if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publication_format)) {
+            array_push($values, $db->quote($fileformat_str));
+        }
+        array_push($values, $db->quote($comments), $db->quote($lang_code), $db->quote($created->toSql()), $db->quote('WWW'));
+        // Create a new query object.
+        $query = $db->getQuery(true);
+        // Prepare the insert query
+        $query->insert($db->quoteName('#__isbn_registry_publication'))
+                ->columns($db->quoteName($columns))
+                ->values(implode(',', $values));
+        // Set the query using our newly populated query object and execute it
+        $db->setQuery($query);
+        $db->execute();
+        $publicationID = $db->insertid();
+        return $publicationID;
+    }
+
+    private static function fromArrayToStr($source) {
+        if (is_array($source)) {
+            if (count($source) > 0) {
+                $source = implode(',', $source);
+            } else {
+                $source = '';
+            }
+        } else {
+            $source = '';
+        }
+        return $source;
     }
 
     public static function getLanguageList() {

@@ -64,7 +64,7 @@ class plgContentIsbnregistry_forms extends JPlugin {
                         // If there are no errors, continue processing
                         if (empty($errors)) {
                             // Save to DB
-                            $publisherId = IsbnregistryFormsHelper::saveToDb($lang->getTag());
+                            $publisherId = IsbnregistryFormsHelper::saveRegistrationToDb($lang->getTag());
                             // If publisherId is 0 saving donation to DB failed
                             if ($publisherId == 0) {
                                 // Return error page
@@ -108,9 +108,16 @@ class plgContentIsbnregistry_forms extends JPlugin {
                         $errorsPt1 = IsbnregistryFormsHelper::validateApplicationFormPt1();
                         $errorsPt2 = IsbnregistryFormsHelper::validateApplicationFormPt2();
                         if (empty($errorsPt1) && empty($errorsPt2)) {
-                            // TODO: save data to DB
-                            // Return success page
-                            $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUCCESS') . '</div>';
+                            // Save to DB
+                            $publisherId = IsbnregistryFormsHelper::saveApplicationToDb($lang->getTag());
+                            // If publisherId is 0 saving donation to DB failed
+                            if ($publisherId == 0) {
+                                // Return error page
+                                $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_ERROR') . '</div>';
+                            } else {
+                                // Return success page
+                                $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUCCESS') . '</div>';
+                            }
                         } else {
                             if (!empty($errorsPt1)) {
                                 // Show the first page with error messages
