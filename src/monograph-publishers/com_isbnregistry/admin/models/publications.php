@@ -10,11 +10,11 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Publishers Model
+ * Publications Model
  *
  * @since  1.0.0
  */
-class IsbnregistryModelPublishers extends JModelList
+class IsbnregistryModelPublications extends JModelList
 {
 	/**
 	 * Method to build an SQL query to load the list data.
@@ -29,7 +29,7 @@ class IsbnregistryModelPublishers extends JModelList
 
 		// Create the base select statement.
 		$query->select('*')
-			  ->from($db->quoteName('#__isbn_registry_publisher'))
+			  ->from($db->quoteName('#__isbn_registry_publication'))
 			  ->order('official_name ASC');
 
 		return $query;

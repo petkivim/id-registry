@@ -532,7 +532,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<input type="hidden" name="issn" value="' . $_POST['issn'] . '" />';
         $html .= '<input type="hidden" name="volume" value="' . $_POST['volume'] . '" />';
         if (preg_match('/^(PRINT|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
-// Information about the printed publication
+            // Information about the printed publication
             $html .= '<input type="hidden" name="printing_house" value="' . $_POST['printing_house'] . '" />';
             $html .= '<input type="hidden" name="printing_house_city" value="' . $_POST['printing_house_city'] . '" />';
             $html .= '<input type="hidden" name="copies" value="' . $_POST['copies'] . '" />';
@@ -541,12 +541,12 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<input style="display:none;" type="checkbox" name="type[]" value="HARDBACK"' . (isset($_POST['type']) && in_array('HARDBACK', $_POST['type']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($_POST['type']) && in_array('SPIRAL_BINDING', $_POST['type']) ? ' checked' : '') . '/>';
         }
-// Additional information
+        // Additional information
         $html .= '<textarea name="comments" style="display:none;">' . $_POST['comments'] . '</textarea>';
         if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $_POST['publication_format'])) {
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="PDF"' . (isset($_POST['fileformat']) && in_array('PDF', $_POST['fileformat']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($_POST['fileformat']) && in_array('EPUB', $_POST['fileformat']) ? ' checked' : '') . '/>';
-            $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="CD-ROM"' . (isset($_POST['fileformat']) && in_array('CD-ROM', $_POST['fileformat']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="CD_ROM"' . (isset($_POST['fileformat']) && in_array('CD_ROM', $_POST['fileformat']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="OTHER"' . (isset($_POST['fileformat']) && in_array('OTHER', $_POST['fileformat']) ? ' checked' : '') . '/>';
         }
         return $html;

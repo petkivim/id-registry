@@ -1,0 +1,8 @@
+#jform_role_2_chosen, #jform_role_3_chosen {
+    margin-bottom: 2em;
+}
+
+.chosen-container .chosen-drop {
+    z-index: 1040;
+}
+

@@ -10,14 +10,14 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Publishers View
+ * Publications View
  *
  * @since  1.0.0
  */
-class IsbnregistryViewPublishers extends JViewLegacy {
+class IsbnregistryViewPublications extends JViewLegacy {
 
     /**
-     * Display the Publishers view
+     * Display the Publications view
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      *
@@ -38,7 +38,7 @@ class IsbnregistryViewPublishers extends JViewLegacy {
 		// Add publishers helper file
 		require_once JPATH_COMPONENT . '/helpers/publishers.php';
 		// Add sidebar
-		PublishersHelper::addSubmenu('publishers');
+		PublishersHelper::addSubmenu('publications');
 		
         // Set the toolbar
         $this->addToolBar();
@@ -56,10 +56,10 @@ class IsbnregistryViewPublishers extends JViewLegacy {
      * @since   1.6
      */
     protected function addToolBar() {		
-        JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLISHERS'));
-        JToolBarHelper::addNew('publisher.add');
-        JToolBarHelper::editList('publisher.edit');
-        JToolBarHelper::deleteList('', 'publishers.delete');
+        JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS'));
+        JToolBarHelper::addNew('publication.add');
+        JToolBarHelper::editList('publication.edit');
+        JToolBarHelper::deleteList('', 'publications.delete');
     }
 
 }

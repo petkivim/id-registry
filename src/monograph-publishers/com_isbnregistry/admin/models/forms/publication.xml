@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<form addrulepath="/administrator/components/com_isbnregistry/models/rules">	
+    <fieldset addfieldpath="/administrator/components/com_isbnregistry/models/fields">
+        <field
+            name="id"
+            type="hidden"
+        />
+        <field
+            name="official_name"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_DESC"
+            size="20"
+            class="inputbox validate-officialname"
+            default=""
+            required="true"
+        />
+        <field
+            name="publisher_id"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_ID_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_ID_DESC"
+            size="20"
+            class="inputbox validate-publisherid"
+            default=""
+        />
+        <field
+            name="contact_person"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_DESC"
+            size="20"
+			required="true" 
+            class="inputbox validate-contactperson"
+            default=""
+        />
+        <field 
+            name="created"
+            type="calendar"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_DESC"
+            readonly="true"
+            class="readonly"
+            format="%Y-%m-%d %H:%M:%S"
+            filter="server_utc"
+        />
+        <field
+            name="created_by"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_BY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_BY_DESC"
+            size="20"
+            readonly="true"
+            class="readonly"
+        />	
+        <field 
+            name="modified"
+            type="calendar"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_MODIFIED_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_MODIFIED_DESC"
+            readonly="true"
+            class="readonly"
+            format="%Y-%m-%d %H:%M:%S"
+            filter="server_utc"
+        />
+        <field
+            name="modified_by"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_MODIFIED_BY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_MODIFIED_BY_DESC"
+            size="20"
+            readonly="true"
+            class="readonly"
+        />
+        <field
+            name="address"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDRESS_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDRESS_DESC"
+            size="20"
+            class="inputbox validate-address"
+            default=""
+            required="true"
+        />	
+        <field
+            name="zip"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ZIP_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ZIP_DESC"
+            size="20"
+            class="inputbox validate-zip"
+            default=""
+            required="true"
+        />	
+        <field
+            name="city"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CITY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CITY_DESC"
+            size="20"
+            class="inputbox validate-city"
+            default=""
+            required="true"
+        />	
+        <field
+            name="phone"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_DESC"
+            size="20"
+			required="true" 
+            class="inputbox validate-phone"
+            default=""
+        />						
+        <field
+            name="email"
+            type="email"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_EMAIL_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_EMAIL_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+            required="true" 
+            validate="email"
+        />          
+        <field 
+            name="lang_code" 
+            type="language" 
+            client="site" 
+            default="fi-FI" 
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LANGUAGE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LANGUAGE_DESC"
+        />
+		<field 
+			name="published_before" 
+			type="radio" 
+			default="0" 
+			required="true" 
+			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_LABEL" 
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_DESC">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field 
+			name="publications_public" 
+			type="radio" 
+			default="0" 
+			required="true" 
+			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_LABEL" 
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_DESC">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field 
+			name="publications_intra" 
+			type="radio" 
+			default="0" 
+			required="true" 
+			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_INTRA_LABEL" 
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_INTRA_DESC">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field 
+			name="publishing_activity" 
+			type="radio" 
+			default="OCCASIONAL" 
+			required="true" 
+			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHING_ACTIVITY_LABEL" 
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHING_ACTIVITY_DESC">
+			<option value="CONTINUOUS">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHING_ACTIVITY_CONTINUOUS</option>
+			<option value="OCCASIONAL">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHING_ACTIVITY_OCCASIONAL</option>
+		</field>	
+        <field
+            name="publishing_activity_amount"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHING_ACTIVITY_AMOUNT_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHING_ACTIVITY_AMOUNT_DESC"
+            size="5"
+            class="inputbox validate-publishingactivityamount"
+            default=""
+        />
+		<field 
+			name="publication_type" 
+			type="list" 
+			default="" 
+			required="true" 
+			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_LABEL" 
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_DESC">
+			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+			<option value="BOOK">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_BOOK</option>
+			<option value="DISSERTATION">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_DISSERTATION</option>
+			<option value="SHEET_MUSIC">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_SHEET_MUSIC</option>
+			<option value="MAP">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_MAP</option>
+			<option value="OTHER">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_OTHER</option>
+		</field>	
+		<field 
+			name="publication_format" 
+			type="list" 
+			default="" 
+			required="true" 
+			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_FORMAT_LABEL" 
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_FORMAT_DESC">
+			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+			<option value="PRINT">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_FORMAT_PRINT</option>
+			<option value="ELECTRONICAL">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_FORMAT_ELECTRONICAL</option>
+			<option value="PRINT_ELECTRONICAL">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_FORMAT_PRINT_ELECTRONICAL</option>
+		</field>	
+        <field
+            name="first_name_1"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_FIRST_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_FIRST_NAME_DESC"
+            size="20"
+            class="inputbox validate-firstname"
+            default=""
+            required="true"
+        />	
+        <field
+            name="last_name_1"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_LAST_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_LAST_NAME_DESC"
+            size="20"
+            class="inputbox validate-lastname"
+            default=""
+            required="true"
+        />	
+        <field
+            name="role_1"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_DESC"
+            multiple="true"
+            class="validate-role"
+            default=""
+            required="true"
+        >	
+			<option value="AUTHOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_AUTHOR</option>
+			<option value="ILLUSTRATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_ILLUSTRATOR</option>
+			<option value="TRANSLATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_TRANSLATOR</option>
+			<option value="EDITOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_EDITOR</option>
+		</field>
+        <field
+            name="first_name_2"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_FIRST_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_FIRST_NAME_DESC"
+            size="20"
+            class="inputbox validate-firstnameopt"
+            default=""
+        />	
+        <field
+            name="last_name_2"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_LAST_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_LAST_NAME_DESC"
+            size="20"
+            class="inputbox validate-lastnameopt"
+            default=""
+        />	
+        <field
+            name="role_2"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_DESC"
+            multiple="true"
+            class="validate-roleopt"
+            default=""
+        >	
+			<option value="AUTHOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_AUTHOR</option>
+			<option value="ILLUSTRATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_ILLUSTRATOR</option>
+			<option value="TRANSLATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_TRANSLATOR</option>
+			<option value="EDITOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_EDITOR</option>
+		</field>	
+        <field
+            name="first_name_3"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_FIRST_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_FIRST_NAME_DESC"
+            size="20"
+            class="inputbox validate-firstnameopt"
+            default=""
+        />	
+        <field
+            name="last_name_3"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_LAST_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_LAST_NAME_DESC"
+            size="20"
+            class="inputbox validate-lastnameopt"
+            default=""
+        />	
+        <field
+            name="role_3"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_DESC"
+            multiple="true"
+            class="validate-roleopt"
+            default=""
+        >	
+			<option value="AUTHOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_AUTHOR</option>
+			<option value="ILLUSTRATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_ILLUSTRATOR</option>
+			<option value="TRANSLATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_TRANSLATOR</option>
+			<option value="EDITOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_EDITOR</option>
+		</field>
+        <field
+            name="first_name_4"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_FIRST_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_FIRST_NAME_DESC"
+            size="20"
+            class="inputbox validate-firstnameopt"
+            default=""
+        />	
+        <field
+            name="last_name_4"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_LAST_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_LAST_NAME_DESC"
+            size="20"
+            class="inputbox validate-lastnameopt"
+            default=""
+        />	
+        <field
+            name="role_4"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_DESC"
+            multiple="true"
+            class="validate-roleopt"
+            default=""
+        >	
+			<option value="AUTHOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_AUTHOR</option>
+			<option value="ILLUSTRATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_ILLUSTRATOR</option>
+			<option value="TRANSLATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_TRANSLATOR</option>
+			<option value="EDITOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_EDITOR</option>
+		</field>	
+        <field
+            name="title"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_TITLE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_TITLE_DESC"
+            size="20"
+            class="inputbox validate-title"
+            default=""
+			required="true"
+        />	
+        <field
+            name="subtitle"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_SUBTITLE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_SUBTITLE_DESC"
+            size="20"
+            class="inputbox validate-subtitle"
+            default=""
+        />		
+        <field
+            name="language"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_DESC"
+            class="validate-language"
+			required="true"
+            default=""
+        >	
+			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+			<option value="FIN">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_FIN</option>
+			<option value="SWE">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_SWE</option>
+			<option value="ENG">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_ENG</option>
+			<option value="SMI">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_SMI</option>
+			<option value="SPA">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_SPA</option>
+			<option value="FRE">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_FRE</option>
+			<option value="RUS">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_RUS</option>
+			<option value="GER">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_GER</option>
+			<option value="MUL">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_MUL</option>
+		</field>		
+        <field
+            name="year"
+            type="Year"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_YEAR_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_YEAR_DESC"
+            class="validate-year"
+            default=""
+            required="true"
+        />		
+        <field
+            name="month"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_MONTH_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_MONTH_DESC"
+            class="validate-month"
+			required="true"
+            default=""
+        >	
+			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+			<option value="01">01</option>
+			<option value="02">02</option>
+			<option value="03">03</option>
+			<option value="04">04</option>
+			<option value="05">05</option>
+			<option value="06">06</option>
+			<option value="07">07</option>
+			<option value="08">08</option>
+			<option value="09">09</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+		</field>
+        <field
+            name="series"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_SERIES_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_SERIES_DESC"
+            size="20"
+            class="inputbox validate-series"
+            default=""
+        />	
+        <field
+            name="issn"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_ISSN_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_ISSN_DESC"
+            size="9"
+            class="inputbox validate-issn"
+            default=""
+        />	
+        <field
+            name="volume"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_VOLUME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_VOLUME_DESC"
+            size="20"
+            class="inputbox validate-volume"
+            default=""
+        />					
+        <field
+            name="printing_house"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PRINTING_HOUSE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PRINTING_HOUSE_DESC"
+            size="20"
+            class="inputbox validate-printinghouse"
+            default=""
+        />
+        <field
+            name="printing_house_city"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PRINTING_HOUSE_CITY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PRINTING_HOUSE_CITY_DESC"
+            size="20"
+            class="inputbox validate-printinghousecity"
+            default=""
+        />
+        <field
+            name="copies"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_COPIES_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_COPIES_DESC"
+            size="20"
+            class="inputbox validate-copies"
+            default=""
+        />	
+        <field
+            name="edition"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_EDITION_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_EDITION_DESC"
+            class="validate-edition"
+            default=""
+        >	
+			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+		</field>		
+        <field
+            name="type"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_DESC"
+            multiple="true"
+            class="validate-type"
+            default=""
+        >	
+			<option value="PAPERBACK">COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_PAPERBACK</option>
+			<option value="HARDBACK">COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_HARDBACK</option>
+			<option value="SPIRAL_BINDING">COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_SPIRAL_BINDING</option>
+		</field>	
+        <field
+            name="comments"
+            type="textarea"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_COMMENTS_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_COMMENTS_DESC"
+            class="inputbox validate-comments"
+            rows="3"
+            cols="40"
+        /> 		
+        <field
+            name="fileformat"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_DESC"
+            multiple="true"
+            class="validate-fileformat"
+            default=""
+        >	
+			<option value="PDF">COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_PDF</option>
+			<option value="EPUB">COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_EPUB</option>
+			<option value="CD_ROM">COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_CD_ROM</option>
+			<option value="OTHER">COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_OTHER</option>
+		</field>		
+    </fieldset>
+</form>
