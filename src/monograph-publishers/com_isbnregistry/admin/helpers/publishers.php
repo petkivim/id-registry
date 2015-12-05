@@ -29,10 +29,12 @@ class PublishersHelper extends JHelperContent {
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLISHERS'), 'index.php?option=com_isbnregistry&view=publishers', $vName == 'publishers'
         );
-
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS'), 'index.php?option=com_isbnregistry&view=publications', $vName == 'publications'
         );
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISBNREGISTRY_SUBMENU_ISBN_RANGES'), 'index.php?option=com_isbnregistry&view=isbnranges', $vName == 'isbnranges'
+        );		
     }
 
 }
