@@ -34,6 +34,15 @@
             class="inputbox validate-contactperson"
             default=""
         />
+        <field
+            name="publisher_id"
+            type="Publisher"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_ID_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_ID_DESC"
+            class="validate-publisherid"
+            default=""
+            required="true"
+        />			
         <field 
             name="created"
             type="calendar"

@@ -36,9 +36,10 @@ class JFormFieldPublisher extends JFormFieldList {
         $query = $db->getQuery(true);
         $query->select('id,official_name');
         $query->from('#__isbn_registry_publisher');
+		$query->order('official_name ASC');
         $db->setQuery((string) $query);
         $publishers = $db->loadObjectList();
-        $options = array();
+        $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT'));
 
         if ($publishers) {
             foreach ($publishers as $publisher) {

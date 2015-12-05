@@ -49,6 +49,7 @@ CREATE TABLE `#__isbn_registry_publication` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `official_name` VARCHAR(100) NOT NULL,
     `publisher_identifier_str` VARCHAR(20),
+    `publisher_id` INT,
     `address` VARCHAR(50) NOT NULL,
     `zip` VARCHAR(10) NOT NULL,
     `city` VARCHAR(50) NOT NULL,
@@ -95,7 +96,8 @@ CREATE TABLE `#__isbn_registry_publication` (
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`),
-    INDEX `idx_official_name` (`official_name`)
+    INDEX `idx_official_name` (`official_name`),
+    INDEX `idx_publisher_id` (`publisher_id`)
 )
 ENGINE =MyISAM
 AUTO_INCREMENT =0

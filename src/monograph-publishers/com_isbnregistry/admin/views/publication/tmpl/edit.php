@@ -41,6 +41,7 @@ JFactory::getDocument()->addScriptDeclaration('
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_1'); ?></legend>
                 <?php echo $this->form->renderField('official_name'); ?>
                 <?php echo $this->form->renderField('publisher_identifier_str'); ?>
+				<?php echo $this->form->renderField('publisher_id'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
 				<?php echo $this->form->renderField('created'); ?>
