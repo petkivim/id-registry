@@ -24,11 +24,12 @@ CREATE TABLE `#__isbn_registry_publisher` (
     `question_7` VARCHAR(50),
     `question_8` VARCHAR(50),
     `confirmation` VARCHAR(100) NOT NULL,
-    `created` TIMESTAMP,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
-    `modified` TIMESTAMP,
+    `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `modified_by` VARCHAR(30),
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    INDEX `idx_official_name` (`official_name`)
 )
 ENGINE =MyISAM
 AUTO_INCREMENT =0
@@ -89,11 +90,83 @@ CREATE TABLE `#__isbn_registry_publication` (
     `type` VARCHAR(35),
     `comments` VARCHAR(500),
     `fileformat` VARCHAR(25),
-    `created` TIMESTAMP,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
-    `modified` TIMESTAMP,
+    `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `modified_by` VARCHAR(30),
+    PRIMARY KEY (`id`),
+    INDEX `idx_official_name` (`official_name`)
+)
+ENGINE =MyISAM
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__isbn_registry_isbn_range`;
+
+CREATE TABLE `#__isbn_registry_isbn_range` (
+    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `prefix` INT NOT NULL,
+    `category` INT NOT NULL,
+    `range_begin` INT NOT NULL,
+    `range_end` INT NOT NULL,
+    `free` INT NOT NULL,
+    `taken` INT NOT NULL DEFAULT 0,
+    `next` INT NOT NULL,
+    `is_active` boolean not null default 1,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `created_by` VARCHAR(30),
+    `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`)
+)
+ENGINE =MyISAM
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__isbn_registry_publisher_isbn_range`;
+
+CREATE TABLE `#__isbn_registry_publisher_isbn_range` (
+    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `publisher_identifier` INT NOT NULL,
+    `publisher_id` INT NOT NULL,
+    `isbn_range_id` INT NOT NULL,
+    `range_begin` INT NOT NULL,
+    `range_end` INT NOT NULL,
+    `free` INT NOT NULL,
+    `taken` INT NOT NULL DEFAULT 0,
+    `next` INT NOT NULL,
+    `is_active` boolean not null default 1,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `created_by` VARCHAR(30),
+    `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `modified_by` VARCHAR(30),
+    PRIMARY KEY (`id`),
+    INDEX `idx_publisher_id` (`publisher_id`),
+    INDEX `idx_isbn_range_id` (`isbn_range_id`)
+)
+ENGINE =MyISAM
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__isbn_registry_isbn_used`;
+
+CREATE TABLE `#__isbn_registry_isbn_used` (
+    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `publisher_isbn_range_id` INT NOT NULL,
+    `number_used` INT NOT NULL,
+    `isbn_full` VARCHAR(17) NOT NULL,
+    `publication_id` INT NOT NULL,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `created_by` VARCHAR(30),
+    `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `modified_by` VARCHAR(30),
+    PRIMARY KEY (`id`),
+    INDEX `idx_isbn_full` (`isbn_full`),
+    INDEX `idx_publisher_isbn_range_id` (`publisher_isbn_range_id`),
+    INDEX `idx_publication_id` (`publication_id`)
 )
 ENGINE =MyISAM
 AUTO_INCREMENT =0
