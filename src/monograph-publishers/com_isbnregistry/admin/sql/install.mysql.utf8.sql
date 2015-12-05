@@ -108,7 +108,8 @@ DROP TABLE IF EXISTS `#__isbn_registry_isbn_range`;
 
 CREATE TABLE `#__isbn_registry_isbn_range` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
-    `prefix` INT NOT NULL,
+    `prefix` INT,
+    `lang_group` INT NOT NULL,
     `category` INT NOT NULL,
     `range_begin` INT NOT NULL,
     `range_end` INT NOT NULL,
@@ -158,7 +159,7 @@ DROP TABLE IF EXISTS `#__isbn_registry_isbn_used`;
 CREATE TABLE `#__isbn_registry_isbn_used` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `publisher_isbn_range_id` INT NOT NULL,
-    `number_used` INT NOT NULL,
+    `publication_identifier` INT NOT NULL,
     `isbn_full` VARCHAR(17) NOT NULL,
     `publication_id` INT NOT NULL,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
