@@ -3,7 +3,7 @@
 
     <name>COM_ISBNREGISTRY</name>
     <!-- The following elements are optional and free of formatting constraints -->
-    <creationDate>7 November 2015</creationDate>
+    <creationDate>5 December 2015</creationDate>
     <author>Petteri Kivimaki</author>
     <copyright>(C)2015 Petteri Kivimaki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
@@ -50,6 +50,7 @@
         <submenu>
             <menu link="option=com_isbnregistry" view="publishers" img="class:publishers">COM_ISBNREGISTRY_SUBMENU_PUBLISHERS</menu>
             <menu link="option=com_isbnregistry&amp;view=publications" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS</menu>
+			<menu link="option=com_isbnregistry&amp;view=isbnranges" view="isbnranges" img="class:isbnranges">COM_ISBNREGISTRY_SUBMENU_ISBN_RANGES</menu>
         </submenu>
 
         <!-- Administration Main File Copy Section -->
