@@ -378,7 +378,7 @@ class IsbnregistryFormsHelper {
         }
         // Comments - optional
         $comments = $post->get('comments', null, 'string');
-        if (strlen($comments) > 200) {
+        if (strlen($comments) > 500) {
             $errors['comments'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
         if (preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $publicationFormat)) {

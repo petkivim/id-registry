@@ -87,7 +87,7 @@ CREATE TABLE `#__isbn_registry_publication` (
     `copies` VARCHAR(10),
     `edition` VARCHAR(2),
     `type` VARCHAR(35),
-    `comments` VARCHAR(200),
+    `comments` VARCHAR(500),
     `fileformat` VARCHAR(25),
     `created` TIMESTAMP,
     `created_by` VARCHAR(30),
