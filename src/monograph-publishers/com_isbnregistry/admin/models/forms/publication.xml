@@ -16,12 +16,12 @@
             required="true"
         />
         <field
-            name="publisher_id"
+            name="publisher_identifier_str"
             type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_ID_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_ID_DESC"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_IDENTIFIER_STR_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_IDENTIFIER_STR_DESC"
             size="20"
-            class="inputbox validate-publisherid"
+            class="inputbox validate-publisheridentifierstr"
             default=""
         />
         <field

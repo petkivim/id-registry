@@ -107,9 +107,9 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td><input type="text" name="official_name" id="official_name" size="30" value="' . $_POST['official_name'] . '" /></td>';
         $html .= '<td class="error">* ' . JText::_($errors['official_name']) . '</td>';
         $html .= '</tr><tr>';
-        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHER_ID_FIELD') . ':</td>';
-        $html .= '<td><input type="text" name="publisher_id" id="publisher_id" size="30" value="' . $_POST['publisher_id'] . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['publisher_id']) . '</td>';
+        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHER_IDENTIFIER_FIELD') . ':</td>';
+        $html .= '<td><input type="text" name="publisher_identifier_str" id="publisher_identifier_str" size="30" value="' . $_POST['publisher_identifier_str'] . '" /></td>';
+        $html .= '<td class="error">' . JText::_($errors['publisher_identifier_str']) . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="address" id="address" size="30" value="' . $_POST['address'] . '" /></td>';
@@ -399,7 +399,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td>' . $_POST['official_name'] . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHER_ID_FIELD') . ':</td>';
-        $html .= '<td>' . $_POST['publisher_id'] . '</td>';
+        $html .= '<td>' . $_POST['publisher_identifier_str'] . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
         $html .= '<td>' . $_POST['address'] . '</td>';
@@ -479,7 +479,7 @@ class IsbnregistryFormsHtmlBuilder {
 
     private static function getIsbnApplicationFormPt1Hidden() {
         $html .= '<input type="hidden" name="official_name" value="' . $_POST['official_name'] . '" />';
-        $html .= '<input type="hidden" name="publisher_id" value="' . $_POST['publisher_id'] . '" />';
+        $html .= '<input type="hidden" name="publisher_identifier_str" value="' . $_POST['publisher_identifier_str'] . '" />';
         $html .= '<input type="hidden" name="address" value="' . $_POST['address'] . '" />';
         $html .= '<input type="hidden" name="zip" value="' . $_POST['zip'] . '" />';
         $html .= '<input type="hidden" name="city" value="' . $_POST['city'] . '" />';

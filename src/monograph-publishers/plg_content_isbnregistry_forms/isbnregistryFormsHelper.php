@@ -139,10 +139,10 @@ class IsbnregistryFormsHelper {
         } else if (strlen($officialName) > 100) {
             $errors['official_name'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
-        // Other names - optional
-        $publisherId = $post->get('publisher_id', null, 'string');
+        // Publisher identifier - optional
+        $publisherId = $post->get('publisher_identifier_str', null, 'string');
         if (strlen($publisherId) > 20) {
-            $errors['publisher_id'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+            $errors['publisher_identifier_str'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
         // Address - required
         $address = $post->get('address', null, 'string');
@@ -451,7 +451,7 @@ class IsbnregistryFormsHelper {
         $post = JFactory::getApplication()->input->post;
         // Information about the publisher
         $official_name = $post->get('official_name', null, 'string');
-        $publisher_id = $post->get('publisher_id', null, 'string');
+        $publisher_identifier_str = $post->get('publisher_identifier_str', null, 'string');
         $address = $post->get('address', null, 'string');
         $zip = $post->get('zip', null, 'string');
         $city = $post->get('city', null, 'string');
@@ -514,7 +514,7 @@ class IsbnregistryFormsHelper {
         // database connection
         $db = JFactory::getDbo();
         // Insert columns
-        $columns = array('official_name', 'publisher_id', 'address', 'zip', 'city', 'contact_person', 'phone', 'email', 'published_before', 'publications_public', 'publications_intra', 'publishing_activity', 'publishing_activity_amount', 'publication_type', 'publication_format');
+        $columns = array('official_name', 'publisher_identifier_str', 'address', 'zip', 'city', 'contact_person', 'phone', 'email', 'published_before', 'publications_public', 'publications_intra', 'publishing_activity', 'publishing_activity_amount', 'publication_type', 'publication_format');
         array_push($columns, 'first_name_1', 'last_name_1', 'role_1', 'first_name_2', 'last_name_2', 'role_2', 'first_name_3', 'last_name_3', 'role_3', 'first_name_4', 'last_name_4', 'role_4');
         array_push($columns, 'title', 'subtitle', 'language', 'year', 'month', 'series', 'issn', 'volume');
         // If printed
@@ -527,7 +527,7 @@ class IsbnregistryFormsHelper {
         }
         array_push($columns, 'comments', 'lang_code', 'created', 'created_by');
         // Insert values
-        $values = array($db->quote($official_name), $db->quote($publisher_id), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($contact_person), $db->quote($phone), $db->quote($email), $db->quote($published_before), $db->quote($publications_public), $db->quote($publications_intra), $db->quote($publishing_activity), $db->quote($publishing_activity_amount), $db->quote($publication_type), $db->quote($publication_format));
+        $values = array($db->quote($official_name), $db->quote($publisher_identifier_str), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($contact_person), $db->quote($phone), $db->quote($email), $db->quote($published_before), $db->quote($publications_public), $db->quote($publications_intra), $db->quote($publishing_activity), $db->quote($publishing_activity_amount), $db->quote($publication_type), $db->quote($publication_format));
         array_push($values, $db->quote($first_name_1), $db->quote($last_name_1), $db->quote($role_1_str), $db->quote($first_name_2), $db->quote($last_name_2), $db->quote($role_2_str), $db->quote($first_name_3), $db->quote($last_name_3), $db->quote($role_3_str), $db->quote($first_name_4), $db->quote($last_name_4), $db->quote($role_4_str));
         array_push($values, $db->quote($title), $db->quote($subtitle), $db->quote($language), $db->quote($year), $db->quote($month), $db->quote($series), $db->quote($issn), $db->quote($volume));
         // If printed

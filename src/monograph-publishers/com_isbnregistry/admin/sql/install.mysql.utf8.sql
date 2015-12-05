@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `#__isbn_registry_publication`;
 CREATE TABLE `#__isbn_registry_publication` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `official_name` VARCHAR(100) NOT NULL,
-    `publisher_id` VARCHAR(20),
+    `publisher_identifier_str` VARCHAR(20),
     `address` VARCHAR(50) NOT NULL,
     `zip` VARCHAR(10) NOT NULL,
     `city` VARCHAR(50) NOT NULL,

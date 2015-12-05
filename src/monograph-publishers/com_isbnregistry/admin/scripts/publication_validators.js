@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
         regex = /^.{1,100}$/;
         return regex.test(value);
     });
-    document.formvalidator.setHandler("publisher_id", function (value) {
+    document.formvalidator.setHandler("publisheridentifierstr", function (value) {
         regex = /^.{0,20}$/;
         return regex.test(value);
     });
