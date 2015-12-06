@@ -336,5 +336,20 @@
             <option value="940">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_940</option>
             <option value="950">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_950</option>
         </field>
+		<field name="previous_names"
+			type="Repeatable"
+			icon="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAMES_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAMES_DESC"
+			select="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAME_EDIT"
+			class="validate-previousnames"
+			default="">
+			<fieldset hidden="true" name="list_previous_names_modal" repeat="true">
+				<field name="name"
+					label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAME_LABEL"
+					size="30"
+					type="text" />
+			</fieldset>
+		</field>		
     </fieldset>
 </form>

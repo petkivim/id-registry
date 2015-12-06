@@ -7,6 +7,10 @@ jQuery(document).ready(function () {
         regex = /^.{0,200}$/;
         return regex.test(value);
     });
+    document.formvalidator.setHandler("previousnames", function (value) {
+        regex = /^.{0,300}$/;
+        return regex.test(value);
+    });
     document.formvalidator.setHandler("contactperson", function (value) {
         regex = /^.{0,100}$/;
         return regex.test(value);

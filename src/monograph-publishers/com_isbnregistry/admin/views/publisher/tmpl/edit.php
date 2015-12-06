@@ -40,6 +40,7 @@ JFactory::getDocument()->addScriptDeclaration('
             <div class="span6">              
                 <?php echo $this->form->renderField('official_name'); ?>
                 <?php echo $this->form->renderField('other_names'); ?>
+				<?php echo $this->form->renderField('previous_names'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
                 <?php echo $this->form->renderField('state'); ?>
