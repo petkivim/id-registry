@@ -129,19 +129,26 @@ AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
 
+INSERT INTO `#__isbn_registry_isbn_range` (`prefix`, `lang_group`, `category`, `range_begin`, `range_end`, `free`, `next`, `created`, `created_by`) VALUES
+(978, 951, 2, '00', '19', 20, '00', UTC_TIMESTAMP(), 'SYSTEM'),
+(0, 952, 3, '000', '099', 100, '000', UTC_TIMESTAMP(), 'SYSTEM'),
+(978, 952, 4, '0100', '0199', 100, '0100', UTC_TIMESTAMP(), 'SYSTEM');
+
 DROP TABLE IF EXISTS `#__isbn_registry_publisher_isbn_range`;
 
 CREATE TABLE `#__isbn_registry_publisher_isbn_range` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
-    `publisher_identifier` INT NOT NULL,
+    `publisher_identifier` VARCHAR(15) NOT NULL,
     `publisher_id` INT NOT NULL,
     `isbn_range_id` INT NOT NULL,
-    `range_begin` INT NOT NULL,
-    `range_end` INT NOT NULL,
+    `category` INT NOT NULL,
+    `range_begin` VARCHAR(5) NOT NULL,
+    `range_end` VARCHAR(5) NOT NULL,
     `free` INT NOT NULL,
     `taken` INT NOT NULL DEFAULT 0,
-    `next` INT NOT NULL,
+    `next` VARCHAR(5) NOT NULL,
     `is_active` boolean not null default 1,
+    `is_closed` boolean not null default 0,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -162,6 +169,7 @@ CREATE TABLE `#__isbn_registry_isbn_used` (
     `publisher_isbn_range_id` INT NOT NULL,
     `publication_identifier` INT NOT NULL,
     `isbn_full` VARCHAR(17) NOT NULL,
+    `publisher_id` INT NOT NULL,
     `publication_id` INT NOT NULL,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
@@ -169,6 +177,7 @@ CREATE TABLE `#__isbn_registry_isbn_used` (
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`),
     INDEX `idx_isbn_full` (`isbn_full`),
+    INDEX `idx_publisher_id` (`publisher_id`),
     INDEX `idx_publisher_isbn_range_id` (`publisher_isbn_range_id`),
     INDEX `idx_publication_id` (`publication_id`)
 )

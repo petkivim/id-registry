@@ -350,6 +350,13 @@
 					size="30"
 					type="text" />
 			</fieldset>
-		</field>		
+		</field>	
+        <field
+            name="isbn_range"
+            type="Isbnrange"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_RANGE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_RANGE_DESC"
+			default=""
+        />		
     </fieldset>
 </form>

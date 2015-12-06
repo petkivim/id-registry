@@ -56,7 +56,7 @@ class IsbnRegistryTableIsbnrange extends JTable {
             $this->created_by = $user->get('username');
             $this->created = $date->toSql();
 			$this->category = strlen($this->range_begin);
-			$this->free = $this->range_end - $this->range_begin;
+			$this->free = $this->range_end - $this->range_begin + 1;
 			$this->next = $this->range_begin;
         }
 

@@ -142,15 +142,7 @@
         />
 		<field 
 			name="published_before" 
-			type="radio" 
-			default="0" 
-			required="true" 
-			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_LABEL" 
-			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_DESC">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-		<field 
+			type="radio" 		<field 
 			name="publications_public" 
 			type="radio" 
 			default="0" 
@@ -160,6 +152,14 @@
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
+			default="0" 
+			required="true" 
+			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_LABEL" 
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_DESC">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+
 		<field 
 			name="publications_intra" 
 			type="radio" 

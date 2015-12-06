@@ -78,7 +78,16 @@ JFactory::getDocument()->addScriptDeclaration('
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'isbn', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_ISBN', true)); ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'identifiers', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_IDENTIFIERS', true)); ?>
+        <div class="row-fluid form-horizontal-desktop">
+            <div class="span6">
+				 <?php echo $this->form->renderField('isbn_range'); ?>
+            </div>
+            <div class="span6">
+            </div>
+        </div>
+        <?php echo JHtml::_('bootstrap.endTab'); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'isbn', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_ISBN', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">
             </div>
