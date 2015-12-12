@@ -9,15 +9,13 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.formvalidator');
-JHtml::_('jquery.framework');
+JHtml::_('formbehavior.chosen');
 
 // Add scripts
 $document = JFactory::getDocument();
 $document->addScript('components/com_isbnregistry/scripts/publication_validators.js');
-$document->addScript("components/com_isbnregistry/scripts/chosen/chosen.jquery.js");
 $document->addScript("components/com_isbnregistry/scripts/publication.js");
 // Add css
-$document->addStyleSheet("components/com_isbnregistry/scripts/chosen/chosen.css");
 $document->addStyleSheet("components/com_isbnregistry/css/publication.css");
 
 // This fix is needed for JToolBar

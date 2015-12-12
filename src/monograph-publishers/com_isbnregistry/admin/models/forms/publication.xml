@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<form addrulepath="/administrator/components/com_isbnregistry/models/rules">	
+<form addrulepath="/administrator/components/com_isbnregistry/models/rules">	
     <fieldset addfieldpath="/administrator/components/com_isbnregistry/models/fields">
         <field
             name="id"
@@ -142,24 +142,26 @@
         />
 		<field 
 			name="published_before" 
-			type="radio" 		<field 
+			type="radio"
+			default="0" 
+			required="true" 
+			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_LABEL" 
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_DESC"
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field 
 			name="publications_public" 
 			type="radio" 
 			default="0" 
 			required="true" 
 			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_LABEL" 
-			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_DESC">
+			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_DESC"
+			>
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-			default="0" 
-			required="true" 
-			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_LABEL" 
-			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_DESC">
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
-		</field>
-
 		<field 
 			name="publications_intra" 
 			type="radio" 

@@ -17,12 +17,11 @@ defined('_JEXEC') or die('Restricted access');
  */
 class IsbnregistryViewPublisher extends JViewLegacy {
 
-    /**
-     * View form
-     *
-     * @var         form
-     */
     protected $form = null;
+
+	protected $item = null;
+
+	protected $state = null;
 
     /**
      * Display the Publisher view
@@ -35,6 +34,7 @@ class IsbnregistryViewPublisher extends JViewLegacy {
         // Get the Data
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
+		$this->state = $this->get('State');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
@@ -46,7 +46,8 @@ class IsbnregistryViewPublisher extends JViewLegacy {
 
         // Set the toolbar
         $this->addToolBar();
-
+		// Add jQuery
+		JHtml::_('jquery.framework');
         // Display the template
         parent::display($tpl);
     }

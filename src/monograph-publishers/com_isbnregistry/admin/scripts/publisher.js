@@ -8,4 +8,8 @@ jQuery(document).ready(function ($) {
 		disable_search_threshold: 10,
 		width: "17em"
 	});	
+	$("#jform_isbn_range").chosen({
+		disable_search_threshold: 10,
+		width: "22em"
+	});	
 });
