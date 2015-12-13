@@ -71,5 +71,10 @@ class IsbnRegistryTablePublisher extends JTable {
 
         return parent::store($updateNulls);
     }
+	
+	public function delete($pk = null) {
+
+		return parent::delete($pk);
+	}
 
 }

@@ -57,4 +57,23 @@ class IsbnregistryModelPublisherisbnranges extends JModelList {
 		$result = $db->loadObjectList();
         return $result;
 	}
+	
+	public static function deleteIsbnRanges($publisherId) {
+		$db = JFactory::getDbo();		 
+		$query = $db->getQuery(true);
+		 
+		// Conditions
+		$conditions = array(
+			$db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId)
+		);
+		 
+		$query->delete($db->quoteName('#__isbn_registry_publisher_isbn_range'));
+		$query->where($conditions);
+		 
+		$db->setQuery($query);
+		 
+		$result = $db->execute();		
+		
+		return $result;
+	}
 }

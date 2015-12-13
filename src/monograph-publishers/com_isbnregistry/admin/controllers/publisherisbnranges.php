@@ -31,7 +31,7 @@ class IsbnregistryControllerPublisherisbnranges extends JControllerForm
 			 // Get request parameters
 			$publisherId = JRequest::getVar("publisherId",null,"post","int");
 
-			// Include isbnrange model
+			// Include publisherisbnranges model
 			require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publisherisbnranges.php';
 			
 			// Get new publisher identifier

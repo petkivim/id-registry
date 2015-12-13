@@ -163,6 +163,7 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
 		}
         return true;
 	}
+
     /**
      * Disactivates all the isbn ranges related to the publisher matching the
      * given publisher id.
