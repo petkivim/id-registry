@@ -83,7 +83,7 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
      * @param isbnrange $isbnrange isbn range object which subset the publisher isbn range is
      * @param int $publisherId id of the publisher that owns the isbn range
      * @param int $publisherIdentifier publisher identifier of the publisher that owns the range to be created
-     * @return int database id of the publisher isbn range object that was created
+     * @return boolean returns true if and only if the object was successfully saved to the database; otherwise false
      */
     public static function saveToDb($isbnrange, $publisherId, $publisherIdentifier) {
         // Get date and user
@@ -113,11 +113,56 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
         IsbnregistryModelPublisherisbnrange::disactivateAll($publisherId);
 
         // Add object to DB
-        $result = JFactory::getDbo()->insertObject('#__isbn_registry_publisher_isbn_range', $object);
+        $ret = JFactory::getDbo()->insertObject('#__isbn_registry_publisher_isbn_range', $object);
+		
+		if (!$ret) {
+			$this->setError($db->getErrorMsg());
+			return false;
+		}
+ 
+		//Get the new record id
+		//$result = (int)$db->insertid();
 
-        return $result;
+        return true;
     }
 
+	public static function activateIsbnRange($publisherId, $publisherIsbnRangeId) {
+        // Disactivate all the other publisher isbn ranges
+        IsbnregistryModelPublisherisbnrange::disactivateAll($publisherId);
+		
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();		
+		
+		// Database connection
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+		
+        // Fields to update.
+        $fields = array(
+            $db->quoteName('is_active') . ' = ' . $db->quote(true),
+            $db->quoteName('modified') . ' = ' . $db->quote($date->toSql()),
+            $db->quoteName('modified_by') . ' = ' . $db->quote($user->get('username'))
+        );
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId),
+			$db->quoteName('id') . ' = ' . $db->quote($publisherIsbnRangeId)
+        );
+		
+        // Create query
+        $query->update($db->quoteName('#__isbn_registry_publisher_isbn_range'))->set($fields)->where($conditions);
+        $db->setQuery($query);
+        // Execute query
+        $result = $db->execute();
+		
+		// Return true or false
+		if($db->getAffectedRows() == 0) {
+			return false;
+		}
+        return true;
+	}
     /**
      * Disactivates all the isbn ranges related to the publisher matching the
      * given publisher id.
@@ -150,7 +195,6 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
         $db->setQuery($query);
         // Execute query
         $result = $db->execute();
-        return $result;
+        return $db->getAffectedRows();
     }
-
 }

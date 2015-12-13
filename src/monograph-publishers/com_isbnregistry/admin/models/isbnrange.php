@@ -146,7 +146,9 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
                 require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publisherisbnrange.php';
                 // Insert data into publisher isbn range table
                 $insertOk = IsbnregistryModelPublisherisbnrange::saveToDb($isbnrange, $publisherId, $result);
-                return $result;
+				if($insertOk) {
+					return $result;
+				}
             }
         }
         return 0;

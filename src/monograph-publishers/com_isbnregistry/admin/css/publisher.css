@@ -10,3 +10,34 @@
         width: 20em;
 }
 
+#publisherIsbnRanges table {
+	text-align: center;
+	width: 25em;
+}
+.isbn_range_col_1 {
+	width: 10em;
+}
+
+.isbn_range_col_2 {
+	width: 5em;
+}
+
+.isbn_range_col_3 {
+	width: 5em;
+}
+
+.isbn_range_col_4 {
+	width: 5em;
+}
+
+.isbn_range_col_4_activate {
+	width: 5em;
+	cursor: pointer;
+}
+
+.isbn_range_active_row > td {
+	padding-bottom: .8em;
+}
+
+
+

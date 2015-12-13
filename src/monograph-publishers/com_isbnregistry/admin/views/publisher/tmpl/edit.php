@@ -36,6 +36,7 @@ JFactory::getDocument()->addScriptDeclaration('
         <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_BASIC', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">              
+				<?php echo $this->form->renderField('id'); ?>
                 <?php echo $this->form->renderField('official_name'); ?>
                 <?php echo $this->form->renderField('other_names'); ?>
 				<?php echo $this->form->renderField('previous_names'); ?>
@@ -78,10 +79,12 @@ JFactory::getDocument()->addScriptDeclaration('
         <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'identifiers', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_IDENTIFIERS', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
-            <div class="span6">
-				 <?php echo $this->form->renderField('isbn_range'); ?>
+            <div class="span6" id="publisherIsbnRanges">
+				<?php echo $this->loadTemplate('isbn_ranges'); ?>
             </div>
             <div class="span6">
+				 <?php echo $this->form->renderField('isbn_range'); ?>
+				 <?php echo $this->form->renderField('get_publisher_identifier'); ?>			
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>

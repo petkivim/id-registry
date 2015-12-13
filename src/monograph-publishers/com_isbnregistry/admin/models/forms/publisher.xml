@@ -357,6 +357,13 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_RANGE_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_RANGE_DESC"
 			default=""
-        />		
+        />	
+        <field
+            name="get_publisher_identifier"
+            type="Button"
+            label=""
+            description=""
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER"
+        />			
     </fieldset>
 </form>
