@@ -132,6 +132,24 @@ class IsbnregistryFormsHelper {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
+        // Publication type - requried
+        $publicationType = $post->get('publication_type', null, 'string');
+        if (empty($publicationType) == true) {
+            $errors['publication_type'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD_EMPTY";
+        } else if (!preg_match('/^(BOOK|DISSERTATION|SHEET_MUSIC|MAP|OTHER)$/', $publicationType)) {
+            $errors['publication_type'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD_INVALID";
+        }
+
+        return $errors;
+    }
+
+    public static function validateApplicationFormPt2() {
+        // Array for the error messages
+        $errors = array();
+
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+
         // Official name - required
         $officialName = $post->get('official_name', null, 'string');
         if (empty($officialName) == true) {
@@ -219,13 +237,6 @@ class IsbnregistryFormsHelper {
         if (!preg_match('/^\d{0,5}$/i', $publishingActivityAmount)) {
             $errors['publishing_activity_amount'] = "PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_AMOUNT_FIELD_INVALID";
         }
-        // Publication type - requried
-        $publicationType = $post->get('publication_type', null, 'string');
-        if (empty($publicationType) == true) {
-            $errors['publication_type'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD_EMPTY";
-        } else if (!preg_match('/^(BOOK|DISSERTATION|SHEET_MUSIC|MAP|OTHER)$/', $publicationType)) {
-            $errors['publication_type'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD_INVALID";
-        }
         // Publication format - required
         $publicationFormat = $post->get('publication_format', null, 'string');
         if (empty($publicationFormat) == true) {
@@ -236,7 +247,7 @@ class IsbnregistryFormsHelper {
         return $errors;
     }
 
-    public static function validateApplicationFormPt2() {
+    public static function validateApplicationFormPt3() {
         // Array for the error messages
         $errors = array();
 
@@ -759,6 +770,13 @@ class IsbnregistryFormsHelper {
     public static function isElectronical($format) {
         return preg_match('/^(ELECTRONICAL|PRINT_ELECTRONICAL)$/', $format);
     }
+    
+    /**
+     * Returns true if and only if the given publication type is "DISSERTATION".
+     */
+    public static function isDissertation($publicationType) {
+        return preg_match('/^DISSERTATION$/', $publicationType);
+    }    
 
 }
 

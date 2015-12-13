@@ -96,18 +96,30 @@ class plgContentIsbnregistry_forms extends JPlugin {
                     } else if (JSession::checkToken() && isset($_POST['submit_application_pt2'])) {
                         // Validate input data
                         $errors = IsbnregistryFormsHelper::validateApplicationFormPt2();
+                        // If there are no errors, continue processing
                         if (empty($errors)) {
-                            // Show overview form
+                            // Show the second page
                             $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3();
                         } else {
-                            // Show the second page with error messages
+                            // Show the first page with error messages
                             $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2($errors);
                         }
                     } else if (JSession::checkToken() && isset($_POST['submit_application_pt3'])) {
                         // Validate input data
+                        $errors = IsbnregistryFormsHelper::validateApplicationFormPt3();
+                        if (empty($errors)) {
+                            // Show overview form
+                            $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt4();
+                        } else {
+                            // Show the second page with error messages
+                            $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3($errors);
+                        }
+                    } else if (JSession::checkToken() && isset($_POST['submit_application_pt4'])) {
+                        // Validate input data
                         $errorsPt1 = IsbnregistryFormsHelper::validateApplicationFormPt1();
                         $errorsPt2 = IsbnregistryFormsHelper::validateApplicationFormPt2();
-                        if (empty($errorsPt1) && empty($errorsPt2)) {
+                        $errorsPt3 = IsbnregistryFormsHelper::validateApplicationFormPt3();
+                        if (empty($errorsPt1) && empty($errorsPt2) && empty($errorsPt3)) {
                             // Save to DB
                             $publisherId = IsbnregistryFormsHelper::saveApplicationToDb($lang->getTag());
                             // If publisherId is 0 saving donation to DB failed
@@ -122,17 +134,20 @@ class plgContentIsbnregistry_forms extends JPlugin {
                             if (!empty($errorsPt1)) {
                                 // Show the first page with error messages
                                 $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1($errorsPt1);
-                            } else {
+                            } else if (!empty($errorsPt2)) {
                                 // Show the second page with error messages
                                 $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2($errorsPt2);
+                            } else {
+                                // Show the third page with error messages
+                                $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3($errorsPt3);
                             }
                         }
-                    } else if (JSession::checkToken() && isset($_POST['back_application_pt2'])) {
-                        // Back button has been pressed - generate form
-                        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1();
                     } else if (JSession::checkToken() && isset($_POST['back_application_pt3'])) {
                         // Back button has been pressed - generate form
                         $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2();
+                    } else if (JSession::checkToken() && isset($_POST['back_application_pt4'])) {
+                        // Back button has been pressed - generate form
+                        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3();
                     } else {
                         // Load pulisher from session if exists
                         IsbnregistryFormsHelper::loadPublisherFromSession();
