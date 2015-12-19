@@ -33,7 +33,16 @@ JFactory::getDocument()->addScriptDeclaration('
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="form-horizontal">
         <div class="row-fluid form-horizontal-desktop">
-            <div class="span6">              
+            <div class="span6">  
+				<?php
+				// If even one ISBN has been used, this item can't be modified
+				if(strcmp($this->item->range_begin, $this->item->next) != 0) {
+					$this->form->setFieldAttribute( 'prefix', 'readonly', 'true' );
+					$this->form->setFieldAttribute( 'lang_group', 'readonly', 'true' );
+					$this->form->setFieldAttribute( 'range_begin', 'readonly', 'true' );
+					$this->form->setFieldAttribute( 'range_end', 'readonly', 'true' );
+				}
+				?>            
                 <?php echo $this->form->renderField('prefix'); ?>
                 <?php echo $this->form->renderField('lang_group'); ?>
                 <?php echo $this->form->renderField('range_begin'); ?>
