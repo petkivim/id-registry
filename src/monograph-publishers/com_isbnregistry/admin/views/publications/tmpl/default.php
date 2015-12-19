@@ -7,6 +7,9 @@
  */
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
+// Load styles
+$document = JFactory::getDocument();
+$document->addStyleSheet("components/com_isbnregistry/css/publication.css");
 ?>
 <form action="index.php?option=com_isbnregistry&view=publications" method="post" id="adminForm" name="adminForm">
     <div id="j-sidebar-container" class="span2">
