@@ -80,6 +80,7 @@ CREATE TABLE `#__isbn_registry_publication` (
     `role_4` VARCHAR(40),
     `title` VARCHAR(200) NOT NULL,
     `subtitle` VARCHAR(200),
+    `map_scale` VARCHAR(50),
     `language` VARCHAR(3) NOT NULL,
     `year` VARCHAR(4) NOT NULL,
     `month` VARCHAR(2) NOT NULL,

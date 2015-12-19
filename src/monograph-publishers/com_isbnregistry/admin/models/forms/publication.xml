@@ -379,6 +379,15 @@
             default=""
         />		
         <field
+            name="map_scale"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_MAP_SCALE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_MAP_SCALE_DESC"
+            size="20"
+            class="inputbox validate-mapscale"
+            default=""
+        />			
+        <field
             name="language"
             type="list"
             label="COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_LABEL"

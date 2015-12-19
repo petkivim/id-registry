@@ -83,6 +83,10 @@ jQuery(document).ready(function () {
         regex = /^.{0,200}$/;
         return regex.test(value);
     });
+    document.formvalidator.setHandler("mapscale", function (value) {
+        regex = /^.{0,50}$/;
+        return regex.test(value);
+    });	
     document.formvalidator.setHandler("language", function (value) {
         regex = /^.{3}$/;
         return regex.test(value);

@@ -351,6 +351,14 @@ class IsbnregistryFormsHelper {
         if (strlen($subtitle) > 200) {
             $errors['subtitle'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
+		// If publication is a map, validate map scale
+		if (IsbnregistryFormsHelper::isMap($publicationType)) {
+			// Map scale - optional
+			$mapScale = $post->get('map_scale', null, 'string');
+			if (strlen($mapScale) > 50) {
+				$errors['map_scale'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+			}			
+		}
         // Language - required
         $language = $post->get('language', null, 'string');
         if (strlen($language) == 0) {
@@ -534,6 +542,7 @@ class IsbnregistryFormsHelper {
         // Information about the publication
         $title = $post->get('title', null, 'string');
         $subtitle = $post->get('subtitle', null, 'string');
+		$map_scale = $post->get('map_scale', null, 'string');
         $language = $post->get('language', null, 'string');
         $year = $post->get('year', null, 'string');
         $month = $post->get('month', null, 'string');
@@ -606,6 +615,12 @@ class IsbnregistryFormsHelper {
             array_push($columns, 'fileformat');
 			array_push($values, $db->quote($fileformat_str));
         }		
+		// If map
+		if (IsbnregistryFormsHelper::isMap($publication_type)) {
+            array_push($columns, 'map_scale');
+			array_push($values, $db->quote($map_scale));			
+		}
+		
 		array_push($columns, 'comments', 'lang_code', 'created', 'created_by');
 		array_push($values, $db->quote($comments), $db->quote($lang_code), $db->quote($created->toSql()), $db->quote('WWW'));
 		
@@ -836,7 +851,13 @@ class IsbnregistryFormsHelper {
     public static function isDissertation($publicationType) {
         return preg_match('/^DISSERTATION$/', $publicationType);
     }    
-
+	
+    /**
+     * Returns true if and only if the given publication type is "MAP".
+     */
+    public static function isMap($publicationType) {
+        return preg_match('/^MAP$/', $publicationType);
+    } 	
 }
 
 ?>

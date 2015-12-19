@@ -346,6 +346,12 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td><input type="text" name="subtitle" id="title" size="50" value="' . $_POST['subtitle'] . '" /></td>';
         $html .= '<td class="error">' . JText::_($errors['subtitle']) . '</td>';
         $html .= '</tr><tr>';
+		if (IsbnregistryFormsHelper::isMap($_POST['publication_type'])) {
+			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_MAP_SCALE_FIELD') . ':</td>';
+			$html .= '<td><input type="text" name="map_scale" id="map_scale" size="15" value="' . $_POST['map_scale'] . '" /></td>';
+			$html .= '<td class="error">' . JText::_($errors['map_scale']) . '</td>';
+			$html .= '</tr><tr>';			
+		}
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
         $html .= '<td>';
         $html .= IsbnregistryFormsHtmlBuilder::getLanguageMenu();
@@ -632,6 +638,9 @@ class IsbnregistryFormsHtmlBuilder {
 		}
 		$html .= '<input type="hidden" name="title" value="' . $_POST['title'] . '" />';
         $html .= '<input type="hidden" name="subtitle" value="' . $_POST['subtitle'] . '" />';
+		if (IsbnregistryFormsHelper::isMap($_POST['publication_type'])) {
+				$html .= '<input type="hidden" name="map_scale" value="' . $_POST['map_scale'] . '" />';
+		}
         $html .= '<input type="hidden" name="language" value="' . $_POST['language'] . '" />';
         $html .= '<input type="hidden" name="year" value="' . $_POST['year'] . '" />';
         $html .= '<input type="hidden" name="month" value="' . $_POST['month'] . '" />';
