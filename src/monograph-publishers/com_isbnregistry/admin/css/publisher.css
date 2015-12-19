@@ -12,14 +12,14 @@
 
 #publisherIsbnRanges table {
 	text-align: center;
-	width: 25em;
+	width: 45em;
 }
 .isbn_range_col_1 {
 	width: 10em;
 }
 
 .isbn_range_col_2 {
-	width: 5em;
+	width: 10em;
 }
 
 .isbn_range_col_3 {
@@ -30,7 +30,11 @@
 	width: 5em;
 }
 
-.isbn_range_col_4_activate {
+.isbn_range_col_5 {
+	width: 5em;
+}
+
+.isbn_range_col_5_activate {
 	width: 5em;
 	cursor: pointer;
 }

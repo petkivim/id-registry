@@ -56,7 +56,7 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$('div#publisherIsbnRanges').on('click', 'td.isbn_range_col_4_activate', function(){
+	$('div#publisherIsbnRanges').on('click', 'td.isbn_range_col_5_activate', function(){
 		// Get publisher id
 		var publisher_id = $("#jform_id").val();
 		// Get publisher isbn range id
@@ -126,9 +126,10 @@ jQuery(document).ready(function ($) {
 					}
 					content += '>';
 					content += '<td class="isbn_range_col_1">' + data[i].publisher_identifier + '-' + padding + '-X' + '</td>';
-					content += '<td class="isbn_range_col_2">' + data[i].free + '</td>';
-					content += '<td class="isbn_range_col_3">' + data[i].next + '</td>';
-					content += '<td class="isbn_range_col_4';
+					content += '<td class="isbn_range_col_2">' + data[i].created.split(' ')[0] + ' (' + data[i].created_by + ')</td>';
+					content += '<td class="isbn_range_col_3">' + data[i].free + '</td>';
+					content += '<td class="isbn_range_col_4">' + data[i].next + '</td>';
+					content += '<td class="isbn_range_col_5';
 					if(data[i].is_active == 1) {
 						content += '">' + active;
 					} else if(data[i].is_closed == 1) {
@@ -136,7 +137,7 @@ jQuery(document).ready(function ($) {
 					} else {
 						content += '_activate">' + activate;
 					}
-					content += '</td>';
+					content += '</td>';					
 					content += '</tr>';
 				}
 				$(content).insertAfter('#isbn_ranges_header');

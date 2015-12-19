@@ -15,6 +15,7 @@ defined('_JEXEC') or die('Restricted access');
 		<th class="isbn_range_col_2"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_ISBN_RANGES_COL_2'); ?></th>
 		<th class="isbn_range_col_3"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_ISBN_RANGES_COL_3'); ?></th>
 		<th class="isbn_range_col_4"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_ISBN_RANGES_COL_4'); ?></th>
+		<th class="isbn_range_col_5"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_ISBN_RANGES_COL_5'); ?></th>
 	</tr>
 </table>
 <span id="label_active" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_ISBN_RANGES_ACTIVE'); ?></span>
