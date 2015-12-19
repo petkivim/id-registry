@@ -20,11 +20,14 @@ defined('_JEXEC') or die('Restricted Access');
                     <th width="2%">
                         <?php echo JHtml::_('grid.checkall'); ?>
                     </th>
-                    <th width="15%">
+                    <th width="25%">
                         <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_OFFICIAL_NAME'); ?>
                     </th>
-                    <th width="15%">
+                    <th width="25%">
                         <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_TITLE'); ?>
+                    </th>	
+                    <th width="35%">
+                        <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_COMMENTS'); ?>
                     </th>					
                     <th width="2%">
                         <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_ID'); ?>
@@ -58,7 +61,10 @@ defined('_JEXEC') or die('Restricted Access');
                                 <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_PUBLICATION'); ?>">
                                     <?php echo $row->title; ?>
                                 </a>
-                            </td>     							
+                            </td>  
+                            <td>
+                                   <?php echo (strlen($row->comments) > 50 ? substr($row->comments, 0, 47) . '...' : $row->comments); ?>
+                            </td>   							
                             <td align="center">
                                 <?php echo $row->id; ?>
                             </td>
