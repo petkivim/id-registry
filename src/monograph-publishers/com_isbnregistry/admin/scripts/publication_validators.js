@@ -7,6 +7,10 @@ jQuery(document).ready(function () {
         regex = /^.{0,20}$/;
         return regex.test(value);
     });
+    document.formvalidator.setHandler("locality", function (value) {
+        regex = /^.{0,50}$/;
+        return regex.test(value);
+    });	
     document.formvalidator.setHandler("address", function (value) {
         regex = /^.{1,50}$/;
         return regex.test(value);

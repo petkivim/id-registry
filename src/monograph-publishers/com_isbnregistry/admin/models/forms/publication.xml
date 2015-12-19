@@ -25,6 +25,15 @@
             default=""
         />
         <field
+            name="locality"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LOCALITY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LOCALITY_DESC"
+            size="20"
+            class="inputbox validate-locality"
+            default=""
+        />		
+        <field
             name="contact_person"
             type="text"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_LABEL"
@@ -41,7 +50,6 @@
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_ID_DESC"
             class="validate-publisherid"
             default=""
-            required="true"
         />			
         <field 
             name="created"

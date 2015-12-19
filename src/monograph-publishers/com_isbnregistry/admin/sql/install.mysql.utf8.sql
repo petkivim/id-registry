@@ -51,6 +51,7 @@ CREATE TABLE `#__isbn_registry_publication` (
     `official_name` VARCHAR(100) NOT NULL,
     `publisher_identifier_str` VARCHAR(20),
     `publisher_id` INT,
+    `locality` VARCHAR(50),
     `address` VARCHAR(50) NOT NULL,
     `zip` VARCHAR(10) NOT NULL,
     `city` VARCHAR(50) NOT NULL,
