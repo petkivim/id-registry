@@ -1,5 +1,7 @@
 jQuery(document).ready(function ($) {
 	loadPublisherIsbnRanges();
+	updatePreviousNames();
+	observePreviousNamesChanges();
 	
 	$(document).ajaxStart(function () {
 		$(document.body).css({ 'cursor': 'wait' })
@@ -29,7 +31,7 @@ jQuery(document).ready(function ($) {
 		// Get current URL
 		var url = window.location.pathname;		
 		// Get session ID
-		var name = $("input[type='hidden'][value='1']").attr('name');
+		var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
 		// Set post parameterts
 		var postData = {};
 		// Session ID
@@ -62,7 +64,7 @@ jQuery(document).ready(function ($) {
 		// Get current URL
 		var url = window.location.pathname;
 		// Get session ID
-		var name = $("input[type='hidden'][value='1']").attr('name');
+		var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
 		// Set post parameterts
 		var postData = {};
 		// Session ID
@@ -94,7 +96,7 @@ jQuery(document).ready(function ($) {
 		// Get current URL
 		var url = window.location.pathname;		
 		// Get session ID
-		var name = $("input[type='hidden'][value='1']").attr('name');
+		var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
 		// Set post parameterts
 		var postData = {};
 		// Session ID
@@ -140,7 +142,44 @@ jQuery(document).ready(function ($) {
 				$(content).insertAfter('#isbn_ranges_header');
 			});
 		}
-	}	
+	}
+
+	function observePreviousNamesChanges() {
+		// select the target node
+		var target = document.querySelector('#jform_previous_names');
+		// create an observer instance
+		var observer = new MutationObserver(function(mutations) {
+		  mutations.forEach(function(mutation) {
+				updatePreviousNames();
+		  });
+		});
+		// configuration of the observer:
+		var config = { attributes: true };
+		// pass in the target node, as well as the observer options
+		observer.observe(target, config);
+	}
+
+	function updatePreviousNames() {
+		// Get previous names value, which is a JSON string
+		var previous_names = $('#jform_previous_names').val();
+		// Parse JSON
+		var json = jQuery.parseJSON(previous_names);
+		// Check for null value
+		if(json != null) {
+			// Put all the names inside a div
+			var content = '<div id="previous_names">' + json.name.toString().replace(/,/g, ", ") + '</div>';
+			// Remove earlier values
+			$('div#previous_names').remove();
+			// Add new values
+			$(content).insertBefore('#jform_previous_names_button');
+			// Add some margin
+			$('div#previous_names').css("margin-bottom", "1em");
+			$('div#previous_names').css("margin-top", ".4em");
+			// Set width to 17em
+			$('div#previous_names').css("width", "17em");
+		}
+	}
+	
 });
 
 function pad(num, char) {
