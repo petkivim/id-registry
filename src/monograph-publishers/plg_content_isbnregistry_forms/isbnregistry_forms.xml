@@ -22,6 +22,8 @@
         <language tag="en-GB">language/en-GB/en-GB.plg_content_isbnregistry_forms.sys.ini</language>
 		<language tag="fi-FI">language/fi-FI/fi-FI.plg_content_isbnregistry_forms.ini</language>
         <language tag="fi-FI">language/fi-FI/fi-FI.plg_content_isbnregistry_forms.sys.ini</language>
+		<language tag="sv-SE">language/sv-SE/sv-SE.plg_content_isbnregistry_forms.ini</language>
+        <language tag="sv-SE">language/sv-SE/sv-SE.plg_content_isbnregistry_forms.sys.ini</language>
 	</languages>
 	<config>
 	  <fields name="params">
