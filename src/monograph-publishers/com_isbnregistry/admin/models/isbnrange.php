@@ -138,10 +138,10 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
             // Increase used numbers pointer
             $isbnrange->taken += 1;
             // Update new values to database
-            $result = IsbnregistryModelIsbnrange::updateToDb($isbnrange);
+            $result = self::updateToDb($isbnrange);
             if ($result > 0) {
                 // Format publisher identifier
-                $result = IsbnregistryModelIsbnrange::formatPublisherIdentifier($isbnrange, $publisherIdentifier);
+                $result = self::formatPublisherIdentifier($isbnrange, $publisherIdentifier);
                 // Include publisherisbnrange model
                 require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publisherisbnrange.php';
                 // Insert data into publisher isbn range table
@@ -178,7 +178,7 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
 			// Next pointer is a string, add left padding
 			$nextPointer = str_pad($nextPointer, $isbnrange->category, "0", STR_PAD_LEFT);		
             // Format publisher identifier
-            $result = IsbnregistryModelIsbnrange::formatPublisherIdentifier($isbnrange, $nextPointer);
+            $result = self::formatPublisherIdentifier($isbnrange, $nextPointer);
 			// Compare result to the given identifier
 			if(strcmp($result, $identifier) == 0) {
 				// If they match, we can delete the given identifier and decrease next pointer by one
@@ -214,7 +214,7 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
 			// Update taken
 			$isbnrange->taken -= 1;
 			// Update to db
-			$success = IsbnregistryModelIsbnrange::updateToDb($isbnrange);
+			$success = self::updateToDb($isbnrange);
 			if($success == 1) {
 				return true;
 			}

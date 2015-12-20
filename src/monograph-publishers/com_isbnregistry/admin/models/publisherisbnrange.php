@@ -110,7 +110,7 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
         $object->next = $object->range_begin;
 
         // Disactivate all the other publisher isbn ranges
-        IsbnregistryModelPublisherisbnrange::disactivateAll($publisherId);
+        self::disactivateAll($publisherId);
 
         // Add object to DB
         $ret = JFactory::getDbo()->insertObject('#__isbn_registry_publisher_isbn_range', $object);
@@ -128,7 +128,7 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
 
 	public static function activateIsbnRange($publisherId, $publisherIsbnRangeId) {
         // Disactivate all the other publisher isbn ranges
-        IsbnregistryModelPublisherisbnrange::disactivateAll($publisherId);
+        self::disactivateAll($publisherId);
 		
         // Get date and user
         $date = JFactory::getDate();
@@ -201,7 +201,7 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
 	
 	public static function deleteIsbnRange($publisherIsbnRangeId) {
         // Check if the given publisher isbn range can be deleted
-		$publisherIsbnRange = IsbnregistryModelPublisherisbnrange::canBeDeleted($publisherIsbnRangeId);
+		$publisherIsbnRange = self::canBeDeleted($publisherIsbnRangeId);
         if($publisherIsbnRange == null) {
 			return false;
 		}
@@ -293,13 +293,20 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
 				// If not enough free numbers, return an empty array
 				return $resultsArray;
 			}
+			// Include helper class
+			require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/helpers/publisherisbnrange.php';
 			 // Get the next available number
             $nextPointer = (int)$publisherIsbnrange->next;
 			// Generate ISBNs
 			for ($x = $nextPointer; $x < $nextPointer + $isbnCount; $x++) {
+				// Add padding to the publication code
 				$temp = str_pad($x, $publisherIsbnrange->category, "0", STR_PAD_LEFT);
-				// TODO: calculate real checksum - now all the ISBNs have 'X'
-				array_push($resultsArray, $publisherIsbnrange->publisher_identifier . '-' . $temp . '-X');
+				// Remove dashes
+				$isbn = str_replace('-', '', $publisherIsbnrange->publisher_identifier . $temp);
+				// Calculate check digit
+				$checkDigit = PublishersisbnrangeHelper::countIsbnCheckDigit($isbn);
+				// Push isbn to results arrays
+				array_push($resultsArray, $publisherIsbnrange->publisher_identifier . '-' . $temp . '-' . $checkDigit);
 			}
 			// Increase the pointer
 			$publisherIsbnrange->next += $isbnCount;
@@ -318,7 +325,7 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
 			}
 			
 			// Update changed publisher isbn range to the database
-			if(IsbnregistryModelPublisherisbnrange::updateToDb($publisherIsbnrange) == 1) {
+			if(self::updateToDb($publisherIsbnrange) == 1) {
 				// If update was succesfull, return the generated ISBN numbers
 				return $resultsArray;
 			} else {
