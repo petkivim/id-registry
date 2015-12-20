@@ -63,4 +63,24 @@ class IsbnRegistryTableIsbnrange extends JTable {
         return parent::store($updateNulls);
     }
 
+	/**
+     * Deletes an ISBN Range.
+     *
+     * @param   integer  $pk  Primary key of the ISBN range to be deleted.
+     *
+     * @return  boolean  True on success, false on failure.
+     *
+     */
+	public function delete($pk = null) {
+		// Item can be deleted only if no ISBNs have been used yet
+		if(strcmp($this->range_begin, $this->next) != 0) {
+			// If ISBNs have been used, raise a warning
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ISBN_RANGES_DELETE_FAILED'), 'warning');
+			// Return false as the item can't be deleted
+			return false;
+		}
+		// No ISBNs have been used, delete the item
+		return parent::delete($pk);
+	}
+
 }
