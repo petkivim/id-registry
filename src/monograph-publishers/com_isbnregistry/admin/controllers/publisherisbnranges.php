@@ -42,9 +42,12 @@ class IsbnregistryControllerPublisherisbnranges extends JControllerForm
 
 			$mainframe->close();
         } catch(Exception $e) {
-			//$error['success'] = false;
-			//echo json_encode($error);
-			echo new JResponseJson($e);
+			http_response_code(500);
+			$response['success'] = false;
+			$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_ISBN_RANGES_FAILED');
+			$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+			echo json_encode($response);
+			//echo new JResponseJson($e);
 			if(!is_null($mainframe)) {
 				$mainframe->close();
 			}

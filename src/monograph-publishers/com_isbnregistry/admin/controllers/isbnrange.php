@@ -39,6 +39,15 @@ class IsbnregistryControllerIsbnrange extends JControllerForm
 			
 			// Get new publisher identifier
 			$result = IsbnregistryModelIsbnrange::getPublisherIdentifier($isbnRangeId, $publisherId);
+			// Genrate response
+			$response['success'] = $result == 0 ? false : true;
+			if($result == 0) {
+				$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_ISBN_RANGE_FAILED');
+				$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+			} else {
+				$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_ISBN_RANGE_SUCCESS');
+				$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');				
+			}
 			// Add publisher identifier to response
 			$response["publisherIdentifier"] = $result;
 			
@@ -49,8 +58,11 @@ class IsbnregistryControllerIsbnrange extends JControllerForm
 
 			$mainframe->close();
         } catch(Exception $e) {
-			$error['success'] = false;
-			echo json_encode($error);
+			http_response_code(500);
+			$response['success'] = false;
+			$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_ISBN_RANGE_FAILED');
+			$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+			echo json_encode($response);
 			if(!is_null($mainframe)) {
 				$mainframe->close();
 			}

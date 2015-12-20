@@ -49,9 +49,15 @@ jQuery(document).ready(function ($) {
 			// Add request parameters
 			$.post( url, postData)
 			.done(function( data ) {
-				if(data.publisherIdentifier != 0) {
+				if(data.success == true) {
 					location.reload();
+				} else {
+					$('#system-message-container').html(showNotification('error', data.title, data.message));
 				}
+			})                        
+			.fail(function(xhr, textStatus, errorThrown) {
+				var json = jQuery.parseJSON(xhr.responseText);
+				$('#system-message-container').html(showNotification('error', json.title, json.message));
 			});
 		}
 	});
@@ -83,9 +89,15 @@ jQuery(document).ready(function ($) {
 			.done(function( data ) {
 				// If operation was successfull, update view
 				if(data.success == true) {
-					$('tr.isbn_range_active_row, tr.isbn_range_row').remove();
-					loadPublisherIsbnRanges();
+					$('#system-message-container').html(showNotification('success', data.title, data.message));					
+					loadPublisherIsbnRanges();				
+				} else {
+					$('#system-message-container').html(showNotification('error', data.title, data.message));
 				}
+			})                        
+			.fail(function(xhr, textStatus, errorThrown) {
+				var json = jQuery.parseJSON(xhr.responseText);
+				$('#system-message-container').html(showNotification('error', json.title, json.message));
 			});
 		}		
 	});
@@ -140,7 +152,14 @@ jQuery(document).ready(function ($) {
 					content += '</td>';					
 					content += '</tr>';
 				}
+				// Remove current content
+				$('tr.isbn_range_active_row, tr.isbn_range_row').remove();
+				// Add new content
 				$(content).insertAfter('#isbn_ranges_header');
+			})
+			.fail(function(xhr, textStatus, errorThrown) {
+				var json = jQuery.parseJSON(xhr.responseText);
+				$('#system-message-container').append(showNotification('error', json.title, json.message));
 			});
 		}
 	}
@@ -189,4 +208,13 @@ function pad(num, char) {
         result += char;
     }
     return result;
+}
+
+function showNotification(type, title, message) {
+		var html = '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		html += '<div class="alert alert-' + type + '">';
+		html += '<h4 class="alert-heading">' + title + '</h4>';
+		html += '<p class="alert-message">' + message + '</p>';
+		html += '</div>';
+		return html;
 }

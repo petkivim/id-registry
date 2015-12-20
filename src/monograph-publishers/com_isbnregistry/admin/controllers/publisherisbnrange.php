@@ -42,15 +42,20 @@ class IsbnregistryControllerPublisherisbnrange extends JControllerForm
 			$result = IsbnregistryModelPublisherisbnrange::activateIsbnRange($publisherId, $publisherIsbnRangeId);
 
 			$response['success'] = $result;
+			$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_ISBN_RANGE_ACTIVATION_SUCCESS');
+			$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
 			
 			// Return results in JSON
 			echo json_encode($response);
 
 			$mainframe->close();
         } catch(Exception $e) {
-			//$response['success'] = false;
-			//echo json_encode($response);
-			echo new JResponseJson($e);
+			http_response_code(500);
+			$response['success'] = false;
+			$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_ISBN_RANGE_ACTIVATION_FAILED');
+			$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+			echo json_encode($response);
+			//echo new JResponseJson($e);
 			if(!is_null($mainframe)) {
 				$mainframe->close();
 			}
