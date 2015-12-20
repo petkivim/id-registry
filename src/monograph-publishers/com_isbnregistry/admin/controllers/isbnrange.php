@@ -30,7 +30,7 @@ class IsbnregistryControllerIsbnrange extends JControllerForm
 			$isbnRangeId = JRequest::getVar("isbnRangeId",null,"post","int");
 			// Create response array
 			$response = array();
-			// Add request parameters to reposposen
+			// Add request parameters to response
 			$response["publisherId"] = $publisherId;
 			$response["isbnRangeId"] = $isbnRangeId;
 

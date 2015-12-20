@@ -52,5 +52,53 @@ class IsbnregistryControllerPublisherisbnranges extends JControllerForm
 				$mainframe->close();
 			}
         }
+    }
+	
+	function deleteIsbnRange() {
+		// Check for request forgeries
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		
+		// http://pkrete.com/sites/idr/administrator/?option=com_isbnregistry&task=publisherisbnranges.deleteIsbnRange&publisherIsbnRangeId=1
+        $mainframe = JFactory::getApplication();
+         try {
+			 // Get request parameters
+			$publisherIsbnRangeId = JRequest::getVar("publisherIsbnRangeId",null,"post","int");
+			// Create response array
+			$response = array();
+			// Add request parameters to response
+			$response["publisherIsbnRangeId"] = $publisherIsbnRangeId;
+
+			// Include isbnrange model
+			require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publisherisbnrange.php';
+			
+			// Get new publisher identifier
+			$result = IsbnregistryModelPublisherisbnrange::deleteIsbnRange($publisherIsbnRangeId);
+			
+			// Genrate response
+			if($result) {
+				$response['success'] = true;	
+				$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_ISBN_RANGE_SUCCESS');
+				$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');				
+			} else {
+				$response['success'] = false;
+				$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_ISBN_RANGE_FAILED');
+				$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');				
+			}			
+			// Set the MIME type for JSON output.
+			header('Content-type: application/json; charset=utf-8');
+
+			echo json_encode($response);
+
+			$mainframe->close();
+        } catch(Exception $e) {
+			http_response_code(500);
+			$response['success'] = false;
+			$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_ISBN_RANGE_FAILED');
+			$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+			echo json_encode($response);
+			if(!is_null($mainframe)) {
+				$mainframe->close();
+			}
+        }
     }	
 }

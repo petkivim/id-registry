@@ -198,4 +198,72 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
         $result = $db->execute();
         return $db->getAffectedRows();
     }
+	
+	public static function deleteIsbnRange($publisherIsbnRangeId) {
+        // Check if the given publisher isbn range can be deleted
+		$publisherIsbnRange = IsbnregistryModelPublisherisbnrange::canBeDeleted($publisherIsbnRangeId);
+        if($publisherIsbnRange == null) {
+			return false;
+		}
+		
+		// Include isbnrange model
+		require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/isbnrange.php';
+		// Check that no other identifiers have been given from the same range since this one
+		if(!IsbnregistryModelIsbnrange::canDeleteIdentifier($publisherIsbnRange->isbn_range_id, $publisherIsbnRange->publisher_identifier)) {
+			return false;
+		}			
+		
+		// Database connection
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+			$db->quoteName('id') . ' = ' . $db->quote($publisherIsbnRangeId)
+        );
+		// Create query		
+		$query->delete($db->quoteName('#__isbn_registry_publisher_isbn_range'));
+		$query->where($conditions);
+		$db->setQuery($query);
+		// Execute query  
+		$result = $db->execute();		
+		
+		// Return true or false
+		if($db->getAffectedRows() == 0) {
+			return false;
+		}
+		// Update the ISBN range accordingly
+		IsbnregistryModelIsbnrange::decreaseByOne($publisherIsbnRange->isbn_range_id);
+
+        return true;
+	}
+
+	private static function canBeDeleted($publisherIsbnRangeId) {
+		// Database connection
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+			$db->quoteName('id') . ' = ' . $db->quote($publisherIsbnRangeId)
+        );
+		// Create query		
+		$query->select('*');
+		$query->from($db->quoteName('#__isbn_registry_publisher_isbn_range'));
+		$query->where($conditions);
+		$db->setQuery($query);
+		// Execute query  
+		$result = $db->loadObject();
+
+		// Check for null
+		if($result == null) {
+			return null;
+		}
+		// If no ISBNs have been given yet, the item can be deleted
+		if(strcmp($result->range_begin, $result->next) == 0) {
+			return $result;
+		}
+		// Otherwise the item can't be deleted
+		return null;
+	}	
 }

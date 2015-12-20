@@ -144,6 +144,10 @@ jQuery(document).ready(function ($) {
 					content += '<td class="isbn_range_col_5';
 					if(data[i].is_active == 1) {
 						content += '">' + active;
+						// If range hasn't been used yet, add delete icon
+						if(data[i].range_begin == data[i].next) {
+							content += ' <span class="icon-delete"></span>';
+						}						
 					} else if(data[i].is_closed == 1) {
 						content += '">' + closed;
 					} else {
@@ -200,6 +204,38 @@ jQuery(document).ready(function ($) {
 		}
 	}
 	
+	$('div#publisherIsbnRanges').on('click', 'span.icon-delete', function(){
+		// Get publisher isbn range id
+		var publisher_isbn_range_id = $(this).closest('tr').attr('id').replace('row-', '');
+		// Get current URL
+		var url = window.location.pathname;
+		// Get session ID
+		var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
+		// Set post parameterts
+		var postData = {};
+		// Session ID
+		postData[name] = 1;
+		// Component that's called
+		postData['option'] = 'com_isbnregistry';
+		postData['task'] = 'publisherisbnranges.deleteIsbnRange';
+		// Set publisher isbn range id
+		postData['publisherIsbnRangeId'] = publisher_isbn_range_id;
+		// Add request parameters
+		$.post( url, postData )
+		.done(function( data ) {
+			// If operation was successfull, update view
+			if(data.success == true) {
+				$('#system-message-container').html(showNotification('success', data.title, data.message));					
+				loadPublisherIsbnRanges();				
+			} else {
+				$('#system-message-container').html(showNotification('error', data.title, data.message));
+			}
+		})                        
+		.fail(function(xhr, textStatus, errorThrown) {
+			var json = jQuery.parseJSON(xhr.responseText);
+			$('#system-message-container').html(showNotification('error', json.title, json.message));
+		});	
+	});	
 });
 
 function pad(num, char) {

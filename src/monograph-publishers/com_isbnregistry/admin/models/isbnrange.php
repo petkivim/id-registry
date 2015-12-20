@@ -153,7 +153,75 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
         }
         return 0;
     }
+	
+    public static function canDeleteIdentifier($rangeId, $identifier) {
+        // Database connection
+        $db = JFactory::getDBO();
+        // Conditions for which records should be fetched
+        $conditions = array(
+            $db->quoteName('id') . " = " . $db->quote($rangeId)
+        );
+        // Database query
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from($db->quoteName('#__isbn_registry_isbn_range'));
+        $query->where($conditions);
+        $db->setQuery((string) $query);
+        $isbnrange = $db->loadObject();
 
+        // Check that we have a result
+        if ($isbnrange) {
+			 // Get the next available number
+            $nextPointer = $isbnrange->next;
+			// Decrease next pointer
+			$nextPointer = $nextPointer - 1;
+			// Next pointer is a string, add left padding
+			$nextPointer = str_pad($nextPointer, $isbnrange->category, "0", STR_PAD_LEFT);		
+            // Format publisher identifier
+            $result = IsbnregistryModelIsbnrange::formatPublisherIdentifier($isbnrange, $nextPointer);
+			// Compare result to the given identifier
+			if(strcmp($result, $identifier) == 0) {
+				// If they match, we can delete the given identifier and decrease next pointer by one
+				return true;
+			}
+		}
+		return false;
+	}
+	
+    public static function decreaseByOne($rangeId) {
+        // Database connection
+        $db = JFactory::getDBO();
+        // Conditions for which records should be fetched
+        $conditions = array(
+            $db->quoteName('id') . " = " . $db->quote($rangeId)
+        );
+        // Database query
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from($db->quoteName('#__isbn_registry_isbn_range'));
+        $query->where($conditions);
+        $db->setQuery((string) $query);
+        $isbnrange = $db->loadObject();
+
+        // Check that we have a result
+        if ($isbnrange) {
+			// Decrease next pointer
+			$isbnrange->next = $isbnrange->next - 1;
+			// Next pointer is a string, add left padding
+			$isbnrange->next = str_pad($isbnrange->next, $isbnrange->category, "0", STR_PAD_LEFT);	
+			// Update free
+			$isbnrange->free += 1;
+			// Update taken
+			$isbnrange->taken -= 1;
+			// Update to db
+			$success = IsbnregistryModelIsbnrange::updateToDb($isbnrange);
+			if($success == 1) {
+				return true;
+			}
+		}
+		return false;
+	}		
+	
     /**
      * Updates the given isbn range to the database.
      * @param isbnrange $isbnrange object to be updated
