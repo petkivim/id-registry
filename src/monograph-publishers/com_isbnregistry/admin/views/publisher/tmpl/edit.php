@@ -82,17 +82,22 @@ JFactory::getDocument()->addScriptDeclaration('
             <div class="span6" id="publisherIsbnRanges">
 				<?php echo $this->loadTemplate('isbn_ranges'); ?>
             </div>
-            <div class="span6">
-				 <?php echo $this->form->renderField('isbn_range'); ?>
-				 <?php echo $this->form->renderField('get_publisher_identifier'); ?>			
+            <div class="span6">				
+				<?php echo $this->form->renderField('isbn_range'); ?>
+				<?php echo $this->form->renderField('get_publisher_identifier'); ?>			
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'isbn', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_ISBN', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">
+				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_IDENTIFIERS_SUBTITLE_1'); ?></legend>
+				<?php echo $this->form->renderField('isbn_count'); ?>
+				<?php echo $this->form->renderField('get_isbn_numbers'); ?>	
+				<?php echo $this->form->renderField('created_isbn_numbers'); ?>
             </div>
             <div class="span6">
+				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_IDENTIFIERS_SUBTITLE_2'); ?></legend>
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>

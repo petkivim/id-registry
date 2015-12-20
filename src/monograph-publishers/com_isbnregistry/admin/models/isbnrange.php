@@ -255,7 +255,8 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
         $db->setQuery($query);
         // Execute query
         $result = $db->execute();
-        return $result;
+		// Return the number of affected rows
+        return $db->getAffectedRows();
     }
 
 }

@@ -364,6 +364,30 @@
             label=""
             description=""
 			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER"
-        />			
+        />
+        <field
+            name="isbn_count"
+            type="number"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_COUNT_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_COUNT_DESC"
+            default="0"
+			min="0"
+        />	
+        <field
+            name="get_isbn_numbers"
+            type="Button"
+            label=""
+            description=""
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBERS"
+        />		
+        <field
+            name="created_isbn_numbers"
+            type="textarea"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_ISBN_NUMBERS_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_ISBN_NUMBERS_DESC"
+            class="inputbox"
+            rows="3"
+            cols="40"
+        /> 		
     </fieldset>
 </form>

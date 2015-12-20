@@ -115,7 +115,7 @@ jQuery(document).ready(function ($) {
 		postData[name] = 1;
 		// Component that's called
 		postData['option'] = 'com_isbnregistry';
-		postData['task'] = 'publisherisbnranges.getIsbnRanges';
+		postData['task'] = 'publisherisbnrange.getIsbnRanges';
 		// Set publisher id
 		postData['publisherId'] = publisher_id;		
 		// Get labels
@@ -217,7 +217,7 @@ jQuery(document).ready(function ($) {
 		postData[name] = 1;
 		// Component that's called
 		postData['option'] = 'com_isbnregistry';
-		postData['task'] = 'publisherisbnranges.deleteIsbnRange';
+		postData['task'] = 'publisherisbnrange.deleteIsbnRange';
 		// Set publisher isbn range id
 		postData['publisherIsbnRangeId'] = publisher_isbn_range_id;
 		// Add request parameters
@@ -235,6 +235,50 @@ jQuery(document).ready(function ($) {
 			var json = jQuery.parseJSON(xhr.responseText);
 			$('#system-message-container').html(showNotification('error', json.title, json.message));
 		});	
+	});	
+	
+	$("#jform_get_isbn_numbers").click(function(){
+		// Get publisher id
+		var publisher_id = $("#jform_id").val();
+		// Get isbn count
+		var isbn_count = $("#jform_isbn_count").val();		
+		// Get current URL
+		var url = window.location.pathname;		
+		// Get session ID
+		var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
+		// Set post parameterts
+		var postData = {};
+		// Session ID
+		postData[name] = 1;
+		// Component that's called
+		postData['option'] = 'com_isbnregistry';
+		postData['task'] = 'publisherisbnrange.getIsbnNumbers';
+		// Set publisher id
+		postData['publisherId'] = publisher_id;		
+		// Set isbn count
+		postData['isbnCount'] = isbn_count;			
+		// If publisher is not new, try to generate isbn numbers
+		if(publisher_id.length > 0 && isbn_count > 0) {
+			// Add request parameters
+			$.post( url, postData)
+			.done(function( data ) {
+				if(data.success == true) {														
+					var isbn_numbers = '';
+					$.each(data.isbn_numbers, function(key, value) {
+						isbn_numbers += value + '\n';
+					});
+					$("textarea#jform_created_isbn_numbers").html(isbn_numbers);
+					$('#system-message-container').html(showNotification('success', data.title, data.message));
+					loadPublisherIsbnRanges();
+				} else {
+					$('#system-message-container').html(showNotification('error', data.title, data.message));
+				}
+			})                        
+			.fail(function(xhr, textStatus, errorThrown) {
+				var json = jQuery.parseJSON(xhr.responseText);
+				$('#system-message-container').html(showNotification('error', json.title, json.message));
+			});
+		}
 	});	
 });
 

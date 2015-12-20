@@ -217,7 +217,7 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        // Conditions for which records should be updated.
+        // Conditions for delete operation - delete by id
         $conditions = array(
 			$db->quoteName('id') . ' = ' . $db->quote($publisherIsbnRangeId)
         );
@@ -265,5 +265,105 @@ class IsbnregistryModelPublisherisbnrange extends JModelAdmin {
 		}
 		// Otherwise the item can't be deleted
 		return null;
+	}
+
+    public static function generateIsbnNumbers($publisherId, $isbnCount) {
+        // Database connection
+        $db = JFactory::getDBO();
+        // Conditions for which records should be fetched
+        $conditions = array(
+            $db->quoteName('publisher_id') . " = " . $db->quote($publisherId),
+			$db->quoteName('is_active') . " = " . $db->quote(true),
+			$db->quoteName('is_closed') . " = " . $db->quote(false)
+        );
+        // Database query
+        $query = $db->getQuery(true);
+        $query->select('*');
+        $query->from($db->quoteName('#__isbn_registry_publisher_isbn_range'));
+        $query->where($conditions);
+        $db->setQuery((string) $query);
+        $publisherIsbnrange = $db->loadObject();
+
+		// Array for results
+		$resultsArray = array();
+        // Check that we have a result
+        if ($publisherIsbnrange) {
+			// Check there are enough free numbers
+			if($publisherIsbnrange->free < $isbnCount) {
+				// If not enough free numbers, return an empty array
+				return $resultsArray;
+			}
+			 // Get the next available number
+            $nextPointer = (int)$publisherIsbnrange->next;
+			// Generate ISBNs
+			for ($x = $nextPointer; $x < $nextPointer + $isbnCount; $x++) {
+				$temp = str_pad($x, $publisherIsbnrange->category, "0", STR_PAD_LEFT);
+				// TODO: calculate real checksum - now all the ISBNs have 'X'
+				array_push($resultsArray, $publisherIsbnrange->publisher_identifier . '-' . $temp . '-X');
+			}
+			// Increase the pointer
+			$publisherIsbnrange->next += $isbnCount;
+			// Increase taken
+			$publisherIsbnrange->taken += $isbnCount;
+			// Decreseace free
+			$publisherIsbnrange->free -= $isbnCount;
+			// Next pointer is a string, add left padding
+			$publisherIsbnrange->next = str_pad($publisherIsbnrange->next, $publisherIsbnrange->category, "0", STR_PAD_LEFT);
+
+			// Are there any free numbers left?
+			if($publisherIsbnrange->free == 0) {
+				// If all the numbers are used, closed and disactivate
+				$publisherIsbnrange->is_active = false;
+				$publisherIsbnrange->is_closed = true;
+			}
+			
+			// Update changed publisher isbn range to the database
+			if(IsbnregistryModelPublisherisbnrange::updateToDb($publisherIsbnrange) == 1) {
+				// If update was succesfull, return the generated ISBN numbers
+				return $resultsArray;
+			} else {
+				// If update failed, return an empty array
+				return array();
+			}
+		}
+		return $resultsArray;
 	}	
+	
+    /**
+     * Updates the given publisher isbn range to the database.
+     * @param publisherIsbnrange $publisherIsbnrange object to be updated
+     * @return int number of affected rows; 1 means success, 0 means failure
+     */
+    private static function updateToDb($publisherIsbnrange) {
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        // Database connection
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $db->quoteName('free') . ' = ' . $db->quote($publisherIsbnrange->free),
+            $db->quoteName('taken') . ' = ' . $db->quote($publisherIsbnrange->taken),
+            $db->quoteName('next') . ' = ' . $db->quote($publisherIsbnrange->next),
+            $db->quoteName('is_active') . ' = ' . $db->quote($publisherIsbnrange->is_active),
+			$db->quoteName('is_closed') . ' = ' . $db->quote($publisherIsbnrange->is_closed),
+            $db->quoteName('modified') . ' = ' . $db->quote($date->toSql()),
+            $db->quoteName('modified_by') . ' = ' . $db->quote($user->get('username'))
+        );
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $db->quoteName('id') . ' = ' . $db->quote($publisherIsbnrange->id)
+        );
+        // Create query
+        $query->update($db->quoteName('#__isbn_registry_publisher_isbn_range'))->set($fields)->where($conditions);
+        $db->setQuery($query);
+        // Execute query
+        $result = $db->execute();
+		// Return the number of affected rows
+        return $db->getAffectedRows();
+    }	
 }
