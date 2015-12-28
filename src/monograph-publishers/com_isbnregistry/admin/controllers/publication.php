@@ -39,8 +39,8 @@ class IsbnregistryControllerPublication extends JControllerForm
 			
 			// Get publications
 			$result = IsbnregistryModelPublication::getPublicationsWithoutIdentifier($publisherId, $type);
-			// Check if the array is empty
-			if(empty($result)) {
+			// Check if the array exists
+			if(!isset($result)) {
 				$response['success'] = false;
 				$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLISHERS_WITHOUT_IDENTIFIERS_FAILED');
 				$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');				
