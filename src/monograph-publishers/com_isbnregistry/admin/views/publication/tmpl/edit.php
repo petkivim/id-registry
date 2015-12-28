@@ -45,6 +45,7 @@ if(strlen($this->item->publication_identifier) != 0) {
                 <?php echo $this->form->renderField('publisher_identifier_str'); ?>
 				<?php echo $this->form->renderField('locality'); ?>
 				<?php echo $this->form->renderField('publisher_id'); ?>
+				<?php echo $this->form->renderField('link_to_publisher'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
 				<?php echo $this->form->renderField('created'); ?>

@@ -557,6 +557,13 @@
 			<option value="EPUB">COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_EPUB</option>
 			<option value="CD_ROM">COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_CD_ROM</option>
 			<option value="OTHER">COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_OTHER</option>
-		</field>		
+		</field>	
+        <field
+            name="link_to_publisher"
+            type="Span"
+            label=""
+            description=""
+			default="COM_ISBNREGISTRY_PUBLICATION_FIELD_LINK_TO_PUBLISHER"
+        />			
     </fieldset>
 </form>
