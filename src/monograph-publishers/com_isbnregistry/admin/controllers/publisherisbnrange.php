@@ -164,7 +164,7 @@ class IsbnregistryControllerPublisherisbnrange extends JControllerForm
 			$response["publisherId"] = $publisherId;
 			$response["isbnCount"] = $isbnCount;
 			
-			// Include publisherisbnranges model
+			// Include publisherisbnrange model
 			require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publisherisbnrange.php';
 			
 			// Get array of ISBN numbers
@@ -196,4 +196,69 @@ class IsbnregistryControllerPublisherisbnrange extends JControllerForm
 			}
         }
     }	
+
+	function getIsbnNumber() {
+		// Check for request forgeries
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		
+		// http://pkrete.com/sites/idr/administrator/?option=com_isbnregistry&task=publisherisbnranges.getIsbnNumbers&publisherId=1&publicationId=5
+        $mainframe = JFactory::getApplication();
+         try {
+			// Set the MIME type for JSON output.
+			header('Content-type: application/json; charset=utf-8');
+			
+			 // Get request parameters
+			$publisherId = JRequest::getVar("publisherId",null,"post","int");
+			$publicationId = JRequest::getVar("publicationId",null,"post","int");
+
+			// Add request parameters to response
+			$response["publisherId"] = $publisherId;
+			$response["publicationId"] = $publicationId;
+			
+			// Include publisherisbnrange model
+			require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publisherisbnrange.php';
+			
+			// Get array of ISBN numbers
+			$result = IsbnregistryModelPublisherisbnrange::generateIsbnNumbers($publisherId, 1);
+			// Check if the array is empty
+			if(empty($result)) {
+				$response['success'] = false;
+				$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_ISBN_NUMBER_FAILED');
+				$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');				
+			} else {
+				// Include publication model
+				require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publication.php';
+				// Get generated identifier
+				$isbn = $result[0];
+				// Update publication record
+				$updateSuccess = IsbnregistryModelPublication::updateIdentifier($publicationId, $publisherId, $isbn, 'ISBN');
+				// Check if operation succeeded
+				if($updateSuccess) {
+					$response['success'] = true;	
+					$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_ISBN_NUMBER_SUCCESS');
+					$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');						
+					$response['publication_identifier'] = $isbn;
+				} else {
+					// TODO: Updating publication failed, try to delete the generated identifier
+					$response['success'] = false;
+					$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_ISBN_NUMBER_FAILED');
+					$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');						
+				}
+			}
+			// Return results in JSON
+			echo json_encode($response);
+
+			$mainframe->close();
+        } catch(Exception $e) {
+			http_response_code(500);
+			$response['success'] = false;
+			$response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_ISBN_NUMBER_FAILED');
+			$response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+			echo json_encode($response);
+			//echo new JResponseJson($e);
+			if(!is_null($mainframe)) {
+				$mainframe->close();
+			}
+        }
+    }		
 }

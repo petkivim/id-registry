@@ -381,8 +381,8 @@
         <field
             name="map_scale"
             type="text"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_MAP_SCALE_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_MAP_SCALE_DESC"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_MAP_SCALE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_MAP_SCALE_DESC"
             size="20"
             class="inputbox validate-mapscale"
             default=""
@@ -406,12 +406,21 @@
 			<option value="RUS">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_RUS</option>
 			<option value="GER">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_GER</option>
 			<option value="MUL">COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_MUL</option>
-		</field>		
+		</field>	
+        <field
+            name="publication_identifier"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_DESC"
+            size="20"
+            readonly="true"
+            class="readonly"
+        />		
         <field
             name="year"
             type="Year"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_YEAR_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_YEAR_DESC"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_YEAR_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_YEAR_DESC"
             class="validate-year"
             default=""
             required="true"

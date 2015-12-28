@@ -28,12 +28,16 @@ JFactory::getDocument()->addScriptDeclaration('
         }
     };
 ');
-?>
+// If even one ISBN has been used, this item can't be modified
+if(strlen($this->item->publication_identifier) != 0) {
+	$this->form->setFieldAttribute( 'publisher_id', 'readonly', 'true' );
+}
+?>				
 <form action="<?php echo JRoute::_('index.php?option=com_isbnregistry&layout=edit&id=' . (int) $this->item->id); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
     <div class="form-horizontal">
-        <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
-        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER', true)); ?>
+        <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'publisher')); ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publisher', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">              
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_1'); ?></legend>
@@ -65,7 +69,7 @@ JFactory::getDocument()->addScriptDeclaration('
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'additional', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLICATION', true)); ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publication', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLICATION', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_4'); ?></legend>
@@ -92,8 +96,9 @@ JFactory::getDocument()->addScriptDeclaration('
 				<?php echo $this->form->renderField('title'); ?>
                 <?php echo $this->form->renderField('subtitle'); ?>	
 				<?php echo $this->form->renderField('map_scale'); ?>
-				<?php echo $this->form->renderField('language'); ?>			
-				<h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHED'); ?></h4>
+				<?php echo $this->form->renderField('language'); ?>	
+				<?php echo $this->form->renderField('publication_identifier'); ?>					
+				<h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED'); ?></h4>
 				<?php echo $this->form->renderField('year'); ?>	
 				<?php echo $this->form->renderField('month'); ?>
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_7'); ?></legend>
@@ -110,14 +115,6 @@ JFactory::getDocument()->addScriptDeclaration('
 				<?php echo $this->form->renderField('comments'); ?>
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_10'); ?></legend>
 				<?php echo $this->form->renderField('fileformat'); ?>				
-            </div>
-        </div>
-        <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'isbn', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_ISBN', true)); ?>
-        <div class="row-fluid form-horizontal-desktop">
-            <div class="span6">
-            </div>
-            <div class="span6">
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>

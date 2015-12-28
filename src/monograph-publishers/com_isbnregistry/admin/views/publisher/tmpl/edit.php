@@ -98,6 +98,9 @@ JFactory::getDocument()->addScriptDeclaration('
             </div>
             <div class="span6">
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_IDENTIFIERS_SUBTITLE_2'); ?></legend>
+				<?php echo $this->form->renderField('publications_without_isbn'); ?>
+				<?php echo $this->form->renderField('get_isbn_number'); ?>		
+				<?php echo $this->form->renderField('link_to_publication'); ?>					
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>

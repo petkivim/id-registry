@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
 	loadPublisherIsbnRanges();
+	loadPublicationsWithoutIdentifier();
 	updatePreviousNames();
 	observePreviousNamesChanges();
 	
@@ -23,6 +24,11 @@ jQuery(document).ready(function ($) {
 		disable_search_threshold: 10,
 		width: "22em"
 	});	
+	$("#jform_publications_without_isbn").chosen({
+		disable_search_threshold: 10,
+		width: "17em"
+	});
+	
 	$("#jform_get_publisher_identifier").click(function(){
 		// Get ISBN range id
 		var isbn_range_id = $("#jform_isbn_range").chosen().val();
@@ -280,6 +286,145 @@ jQuery(document).ready(function ($) {
 			});
 		}
 	});	
+
+	$("#jform_get_isbn_numbers").click(function(){
+		// Get publisher id
+		var publisher_id = $("#jform_id").val();
+		// Get isbn count
+		var isbn_count = $("#jform_isbn_count").val();		
+		// Get current URL
+		var url = window.location.pathname;		
+		// Get session ID
+		var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
+		// Set post parameterts
+		var postData = {};
+		// Session ID
+		postData[name] = 1;
+		// Component that's called
+		postData['option'] = 'com_isbnregistry';
+		postData['task'] = 'publisherisbnrange.getIsbnNumbers';
+		// Set publisher id
+		postData['publisherId'] = publisher_id;		
+		// Set isbn count
+		postData['isbnCount'] = isbn_count;			
+		// If publisher is not new, try to generate isbn numbers
+		if(publisher_id.length > 0 && isbn_count > 0) {
+			// Add request parameters
+			$.post( url, postData)
+			.done(function( data ) {
+				if(data.success == true) {														
+					var isbn_numbers = '';
+					$.each(data.isbn_numbers, function(key, value) {
+						isbn_numbers += value + '\n';
+					});
+					$("textarea#jform_created_isbn_numbers").html(isbn_numbers);
+					$('#system-message-container').html(showNotification('success', data.title, data.message));
+					loadPublisherIsbnRanges();
+				} else {
+					$('#system-message-container').html(showNotification('error', data.title, data.message));
+				}
+			})                        
+			.fail(function(xhr, textStatus, errorThrown) {
+				var json = jQuery.parseJSON(xhr.responseText);
+				$('#system-message-container').html(showNotification('error', json.title, json.message));
+			});
+		}
+	});	
+	
+	$("#jform_get_isbn_number").click(function(){
+		// Get publisher id
+		var publisher_id = $("#jform_id").val();
+		// Get selected publication
+		var publication_id = $('#jform_publications_without_isbn').val();
+		// Get current URL
+		var url = window.location.pathname;		
+		// Get session ID
+		var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
+		// Set post parameterts
+		var postData = {};
+		// Session ID
+		postData[name] = 1;
+		// Component that's called
+		postData['option'] = 'com_isbnregistry';
+		postData['task'] = 'publisherisbnrange.getIsbnNumber';
+		// Set publisher id
+		postData['publisherId'] = publisher_id;		
+		// Set publication id
+		postData['publicationId'] = publication_id;			
+		// If publisher is not new and publication is selected, try to get isbn number
+		if(publisher_id.length > 0 && publication_id.length > 0) {
+			// Add request parameters
+			$.post( url, postData)
+			.done(function( data ) {
+				if(data.success == true) {	
+					// Get selected label
+					var label = jQuery('#jform_publications_without_isbn option:selected').text();
+					$('#system-message-container').html(showNotification('success', data.title, data.message));
+					loadPublisherIsbnRanges();
+					loadPublicationsWithoutIdentifier();
+					var link = '<a href="' + url + '?option=com_isbnregistry&view=publication&layout=edit&id=' + publication_id + '" target="new">';
+					link += label + ' (' + data.publication_identifier + ')</a>';
+                    $('#jform_link_to_publication').html(link);
+				} else {
+					$('#system-message-container').html(showNotification('error', data.title, data.message));
+					$('#jform_link_to_publication').html('');
+				}
+			})                        
+			.fail(function(xhr, textStatus, errorThrown) {
+				var json = jQuery.parseJSON(xhr.responseText);
+				$('#system-message-container').html(showNotification('error', json.title, json.message));
+				$('#jform_link_to_publication').html('');
+			});
+		}			
+	});
+	
+	function loadPublicationsWithoutIdentifier() {
+		// Get publisher id
+		var publisher_id = $("#jform_id").val();
+		// Get current URL
+		var url = window.location.pathname;		
+		// Get session ID
+		var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
+		// Set post parameterts
+		var postData = {};
+		// Session ID
+		postData[name] = 1;
+		// Component that's called
+		postData['option'] = 'com_isbnregistry';
+		postData['task'] = 'publication.getPublicationsWithoutIdentifier';
+		// Set publisher id
+		postData['publisherId'] = publisher_id;		
+		// Set type
+		postData['type'] = 'isbn';
+		// Load publications if publisher is not new
+		if(publisher_id.length > 0) {
+			// Add request parameters
+			$.post( url, postData)
+			.done(function( data ) {
+				// Check that query was succesfull
+				if(data.success == true) {
+					// Remove all options except the first one
+					$('#jform_publications_without_isbn').find('option:not(:first)').remove();
+					// Go through the publications
+					for (var i = 0; i < data.publications.length; i++) {
+						// Add results to dropdown list
+						$('#jform_publications_without_isbn').append($('<option>', {
+							value: data.publications[i].id,
+							text: data.publications[i].title
+						}));
+					}
+					// Update Chosen jQuery plugin
+					$('#jform_publications_without_isbn').trigger('liszt:updated');
+				} else {
+					$('#system-message-container').html(showNotification('error', data.title, data.message));
+				}				
+			})
+			.fail(function(xhr, textStatus, errorThrown) {
+				var json = jQuery.parseJSON(xhr.responseText);
+				$('#system-message-container').append(showNotification('error', json.title, json.message));
+			});
+		}
+	}	
 });
 
 function pad(num, char) {

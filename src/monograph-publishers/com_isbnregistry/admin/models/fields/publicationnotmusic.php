@@ -17,14 +17,14 @@ JFormHelper::loadFieldClass('list');
  *
  * @since  1.0.0
  */
-class JFormFieldPublication extends JFormFieldList {
+class JFormFieldPublicationNotMusic extends JFormFieldList {
 
     /**
      * The field type.
      *
      * @var         string
      */
-    protected $type = 'Publications';
+    protected $type = 'PublicationsNotMusic';
 
     /**
      * Method to get a list of options for a list input.
@@ -36,6 +36,7 @@ class JFormFieldPublication extends JFormFieldList {
         $query = $db->getQuery(true);
         $query->select('id, title');
         $query->from('#__isbn_registry_publication');
+		$query->where('publication_type != "SHEET_MUSIC"');
 		$query->order('title ASC');
         $db->setQuery((string) $query);
         $publications = $db->loadObjectList();

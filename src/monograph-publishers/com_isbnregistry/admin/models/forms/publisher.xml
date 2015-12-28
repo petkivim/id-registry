@@ -388,6 +388,28 @@
             class="inputbox"
             rows="3"
             cols="40"
-        /> 		
+        /> 	
+        <field
+            name="publications_without_isbn"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISBN_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISBN_DESC"
+        >
+			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+		</field>
+        <field
+            name="get_isbn_number"
+            type="Button"
+            label=""
+            description=""
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBER"
+        />	
+        <field
+            name="link_to_publication"
+            type="Span"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_DESC"
+			default="-"
+        />			
     </fieldset>
 </form>

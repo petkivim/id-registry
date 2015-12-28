@@ -94,4 +94,99 @@ class IsbnregistryModelPublication extends JModelAdmin {
         }		
 		return $source;
 	}
+	
+	public static function getPublicationsWithoutIdentifier($publisherId, $type) {
+		// Initialize variables.
+		$db    = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		
+        // Conditions for which records should be fetched
+        $conditions = array(
+            $db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId),
+			$db->quoteName('publication_identifier') . ' = ' . $db->quote('')
+        );
+		
+		// Add conditions related to publication type
+		if (strcasecmp($type, 'isbn') == 0) {
+			array_push($conditions, $db->quoteName('publication_type') . ' != ' . $db->quote('SHEET_MUSIC'));
+		} else if (strcasecmp($type, 'ismn') == 0) {			
+			array_push($conditions, $db->quoteName('publication_type') . ' = ' . $db->quote('SHEET_MUSIC'));
+		}
+		
+		// Create the query
+		$query->select('id, title')
+			  ->from($db->quoteName('#__isbn_registry_publication'))
+			  ->where($conditions)
+			  ->order('title ASC');
+        $db->setQuery($query);
+        // Execute query
+		$result = $db->loadObjectList();
+        return $result;
+	}	
+	
+	public static function updateIdentifier($publicationId, $publisherId, $identifier, $identifierType) {
+		// Check that identifier type is valid
+		if(!self::isValidIdentifierType($identifierType)) {
+			return false;
+		}
+		// Check that publication does not have an identifier yet
+		if(self::hasIdentifier($publicationId)) {
+			return false;
+		}
+		
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        // Database connection
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $db->quoteName('publication_identifier') . ' = ' . $db->quote($identifier),
+            $db->quoteName('publication_identifier_type') . ' = ' . $db->quote($identifierType)
+        );
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $db->quoteName('id') . ' = ' . $db->quote($publicationId),
+			$db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId)
+        );
+		
+        // Create query
+        $query->update($db->quoteName('#__isbn_registry_publication'))->set($fields)->where($conditions);
+        $db->setQuery($query);
+        // Execute query
+        $result = $db->execute();
+		// Operation succeeded if affected rows returns 1
+        if($db->getAffectedRows() == 1) {
+			return true;
+		}		
+		// Otherwise operation failed
+		return false;
+	}
+	
+	private static function isValidIdentifierType($type) {
+		return preg_match('/^(ISBN|ISMN)$/', $type);
+	}
+	
+	private static function hasIdentifier($publicationId) {
+        // Database connection
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+		// Create query
+		$query->select('publication_identifier');
+		$query->from($db->quoteName('#__isbn_registry_publication'));
+		$query->where($db->quoteName('id') . ' = ' . $db->quote($publicationId));
+		 
+		$db->setQuery($query);
+		$publicationIdentifier = $db->loadResult();	
+		// If publication_identifier column length is 0, 
+		// publication does not have an identifier yet
+		if(strlen($publicationIdentifier) == 0) {
+			return false;
+		}
+		return true;
+	}
 }
