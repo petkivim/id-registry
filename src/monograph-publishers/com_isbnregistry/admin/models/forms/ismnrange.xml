@@ -5,19 +5,17 @@
             name="id"
             type="hidden"
         />
-		<field 
-			name="prefix" 
-			type="list" 
-			default="" 
+        <field
+            name="prefix"
+            type="text"
 			required="true"
-			class="validate-prefix"
+			default="979-0"
             label="COM_ISBNREGISTRY_ISMN_RANGE_FIELD_PREFIX_LABEL"
             description="COM_ISBNREGISTRY_ISMN_RANGE_FIELD_PREFIX_DESC"
-			>
-			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
-			<option value="979-0">979-0</option>
-			<option value="M">M</option>
-		</field>				
+            size="20"
+            readonly="true"
+            class="readonly validate-prefix"
+        />			
         <field
             name="range_begin"
             type="text"
