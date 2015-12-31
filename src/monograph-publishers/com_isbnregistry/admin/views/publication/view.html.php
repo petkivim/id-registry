@@ -71,6 +71,7 @@ class IsbnregistryViewPublication extends JViewLegacy {
             $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_NEW');
         } else {
             $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_EDIT');
+			$title .= ' : ' . $this->item->title;
         }
 
         JToolBarHelper::title($title, 'publication');
