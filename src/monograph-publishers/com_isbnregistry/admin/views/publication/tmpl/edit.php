@@ -48,6 +48,7 @@ if(strlen($this->item->publication_identifier) != 0) {
 				<?php echo $this->form->renderField('link_to_publisher'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
+				<?php echo $this->form->renderField('no_identifier_granted'); ?>
 				<?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
                 <?php echo $this->form->renderField('modified'); ?>

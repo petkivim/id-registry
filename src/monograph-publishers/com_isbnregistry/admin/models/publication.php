@@ -103,6 +103,7 @@ class IsbnregistryModelPublication extends JModelAdmin {
         // Conditions for which records should be fetched
         $conditions = array(
             $db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId),
+			$db->quoteName('no_identifier_granted') . ' = ' . $db->quote(false),
 			$db->quoteName('publication_identifier') . ' = ' . $db->quote('')
         );
 		

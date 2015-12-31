@@ -50,7 +50,15 @@
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLISHER_ID_DESC"
             class="validate-publisherid"
             default=""
-        />			
+        />	
+        <field
+            name="no_identifier_granted"
+            type="checkbox"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_NO_IDENTIFIER_GRANTED_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_NO_IDENTIFIER_GRANTED_DESC"
+            default="0"
+            value="1"
+        />		
         <field 
             name="created"
             type="calendar"
