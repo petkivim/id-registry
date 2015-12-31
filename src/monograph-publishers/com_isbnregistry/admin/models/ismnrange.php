@@ -105,6 +105,7 @@ class IsbnregistryModelIsmnrange extends JModelAdmin {
         $conditions = array(
             $db->quoteName('id') . " = " . $db->quote($rangeId),
             $db->quoteName('is_active') . " = " . $db->quote(true),
+            $db->quoteName('is_closed') . " = " . $db->quote(false)
         );
         // Database query
         $query = $db->getQuery(true);
@@ -115,23 +116,20 @@ class IsbnregistryModelIsmnrange extends JModelAdmin {
         $ismnrange = $db->loadObject();
 
         // Check that we have a result
-        if ($ismnrange) {
-            // Check that there are free numbers available
-            if ($ismnrange->next > $ismnrange->range_end) {
-                return 0;
-            }
+        if ($ismnrange != null) {
             // Get the next available number
             $publisherIdentifier = $ismnrange->next;
             // Is this the last value of the range
             if ($ismnrange->next == $ismnrange->range_end) {
                 // This is the last value -> range becames inactive
                 $ismnrange->is_active = false;
-            } else {
-                // Increase next pointer
-                $ismnrange->next = $ismnrange->next + 1;
-                // Next pointer is a string, add left padding
-                $ismnrange->next = str_pad($ismnrange->next, $ismnrange->category, "0", STR_PAD_LEFT);
+                // Range becomes closed
+                $ismnrange->is_closed = true;
             }
+            // Increase next pointer
+            $ismnrange->next = $ismnrange->next + 1;
+            // Next pointer is a string, add left padding
+            $ismnrange->next = str_pad($ismnrange->next, $ismnrange->category, "0", STR_PAD_LEFT);
             // Decrease free numbers pointer 
             $ismnrange->free -= 1;
             // Increase used numbers pointer
@@ -145,14 +143,14 @@ class IsbnregistryModelIsmnrange extends JModelAdmin {
                 require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publisherismnrange.php';
                 // Insert data into publisher ismn range table
                 $insertOk = IsbnregistryModelPublisherismnrange::saveToDb($ismnrange, $publisherId, $result);
-				if($insertOk) {
-					return $result;
-				}
+                if ($insertOk) {
+                    return $result;
+                }
             }
         }
         return 0;
     }
-	
+
     public static function canDeleteIdentifier($rangeId, $identifier) {
         // Database connection
         $db = JFactory::getDBO();
@@ -170,23 +168,23 @@ class IsbnregistryModelIsmnrange extends JModelAdmin {
 
         // Check that we have a result
         if ($ismnrange) {
-			 // Get the next available number
+            // Get the next available number
             $nextPointer = $ismnrange->next;
-			// Decrease next pointer
-			$nextPointer = $nextPointer - 1;
-			// Next pointer is a string, add left padding
-			$nextPointer = str_pad($nextPointer, $ismnrange->category, "0", STR_PAD_LEFT);		
+            // Decrease next pointer
+            $nextPointer = $nextPointer - 1;
+            // Next pointer is a string, add left padding
+            $nextPointer = str_pad($nextPointer, $ismnrange->category, "0", STR_PAD_LEFT);
             // Format publisher identifier
             $result = self::formatPublisherIdentifier($ismnrange, $nextPointer);
-			// Compare result to the given identifier
-			if(strcmp($result, $identifier) == 0) {
-				// If they match, we can delete the given identifier and decrease next pointer by one
-				return true;
-			}
-		}
-		return false;
-	}
-	
+            // Compare result to the given identifier
+            if (strcmp($result, $identifier) == 0) {
+                // If they match, we can delete the given identifier and decrease next pointer by one
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static function decreaseByOne($rangeId) {
         // Database connection
         $db = JFactory::getDBO();
@@ -204,23 +202,23 @@ class IsbnregistryModelIsmnrange extends JModelAdmin {
 
         // Check that we have a result
         if ($ismnrange) {
-			// Decrease next pointer
-			$ismnrange->next = $ismnrange->next - 1;
-			// Next pointer is a string, add left padding
-			$ismnrange->next = str_pad($ismnrange->next, $ismnrange->category, "0", STR_PAD_LEFT);	
-			// Update free
-			$ismnrange->free += 1;
-			// Update taken
-			$ismnrange->taken -= 1;
-			// Update to db
-			$success = self::updateToDb($ismnrange);
-			if($success == 1) {
-				return true;
-			}
-		}
-		return false;
-	}		
-	
+            // Decrease next pointer
+            $ismnrange->next = $ismnrange->next - 1;
+            // Next pointer is a string, add left padding
+            $ismnrange->next = str_pad($ismnrange->next, $ismnrange->category, "0", STR_PAD_LEFT);
+            // Update free
+            $ismnrange->free += 1;
+            // Update taken
+            $ismnrange->taken -= 1;
+            // Update to db
+            $success = self::updateToDb($ismnrange);
+            if ($success == 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Updates the given ismn range to the database.
      * @param ismnrange $ismnrange object to be updated
@@ -241,6 +239,7 @@ class IsbnregistryModelIsmnrange extends JModelAdmin {
             $db->quoteName('taken') . ' = ' . $db->quote($ismnrange->taken),
             $db->quoteName('next') . ' = ' . $db->quote($ismnrange->next),
             $db->quoteName('is_active') . ' = ' . $db->quote($ismnrange->is_active),
+            $db->quoteName('is_closed') . ' = ' . $db->quote($ismnrange->is_closed),
             $db->quoteName('modified') . ' = ' . $db->quote($date->toSql()),
             $db->quoteName('modified_by') . ' = ' . $db->quote($user->get('username'))
         );
@@ -254,7 +253,7 @@ class IsbnregistryModelIsmnrange extends JModelAdmin {
         $db->setQuery($query);
         // Execute query
         $result = $db->execute();
-		// Return the number of affected rows
+        // Return the number of affected rows
         return $db->getAffectedRows();
     }
 

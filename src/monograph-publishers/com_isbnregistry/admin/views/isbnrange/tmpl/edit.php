@@ -42,6 +42,9 @@ JFactory::getDocument()->addScriptDeclaration('
 					$this->form->setFieldAttribute( 'range_begin', 'readonly', 'true' );
 					$this->form->setFieldAttribute( 'range_end', 'readonly', 'true' );
 				}
+				if($this->item->is_closed) {
+					$this->form->setFieldAttribute( 'is_active', 'readonly', 'true' );
+				}
 				?>            
                 <?php echo $this->form->renderField('prefix'); ?>
                 <?php echo $this->form->renderField('lang_group'); ?>

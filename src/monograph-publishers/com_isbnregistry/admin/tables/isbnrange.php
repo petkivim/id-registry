@@ -96,6 +96,7 @@ class IsbnRegistryTableIsbnrange extends JTable {
         );
         if($mustBeActive) {
             array_push($conditions, $this->_db->quoteName('is_active') . " = " . $this->_db->quote(true));
+            array_push($conditions, $this->_db->quoteName('is_closed') . " = " . $this->_db->quote(false));
         }
         // Database query
         $query = $this->_db->getQuery(true);
@@ -123,6 +124,7 @@ class IsbnRegistryTableIsbnrange extends JTable {
         $this->taken = $isbnrange->taken;
         $this->next = $isbnrange->next;
         $this->is_active = $isbnrange->is_active;
+        $this->is_closed = $isbnrange->is_closed;
 
         // Update object to DB
         return $this->store();

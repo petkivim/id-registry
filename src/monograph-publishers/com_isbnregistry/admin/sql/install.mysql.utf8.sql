@@ -123,6 +123,7 @@ CREATE TABLE `#__isbn_registry_isbn_range` (
     `taken` INT NOT NULL DEFAULT 0,
     `next` VARCHAR(5) NOT NULL,
     `is_active` boolean not null default 1,
+    `is_closed` boolean not null default 0,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -137,6 +138,7 @@ COLLATE utf8_swedish_ci;
 INSERT INTO `#__isbn_registry_isbn_range` (`prefix`, `lang_group`, `category`, `range_begin`, `range_end`, `free`, `next`, `created`, `created_by`) VALUES
 (978, 951, 2, '00', '19', 20, '00', UTC_TIMESTAMP(), 'SYSTEM'),
 (0, 952, 3, '000', '099', 100, '000', UTC_TIMESTAMP(), 'SYSTEM'),
+(0, 952, 5, '00020', '00021', 2, '00020', UTC_TIMESTAMP(), 'SYSTEM'),
 (978, 952, 4, '0100', '0199', 100, '0100', UTC_TIMESTAMP(), 'SYSTEM');
 
 DROP TABLE IF EXISTS `#__isbn_registry_publisher_isbn_range`;
@@ -203,6 +205,7 @@ CREATE TABLE `#__isbn_registry_ismn_range` (
     `taken` INT NOT NULL DEFAULT 0,
     `next` VARCHAR(7) NOT NULL,
     `is_active` boolean not null default 1,
+    `is_closed` boolean not null default 0,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',

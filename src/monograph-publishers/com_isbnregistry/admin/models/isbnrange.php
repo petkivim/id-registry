@@ -107,22 +107,19 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
 
         // Check that we have a result
         if ($isbnrange != null) {
-            // Check that there are free numbers available
-            if ($isbnrange->next > $isbnrange->range_end) {
-                return 0;
-            }
             // Get the next available number
             $publisherIdentifier = $isbnrange->next;
             // Is this the last value of the range
             if ($isbnrange->next == $isbnrange->range_end) {
                 // This is the last value -> range becames inactive
                 $isbnrange->is_active = false;
-            } else {
-                // Increase next pointer
-                $isbnrange->next = $isbnrange->next + 1;
-                // Next pointer is a string, add left padding
-                $isbnrange->next = str_pad($isbnrange->next, $isbnrange->category, "0", STR_PAD_LEFT);
+                // Range becomes closed
+                $isbnrange->is_closed = true;
             }
+            // Increase next pointer
+            $isbnrange->next = $isbnrange->next + 1;
+            // Next pointer is a string, add left padding
+            $isbnrange->next = str_pad($isbnrange->next, $isbnrange->category, "0", STR_PAD_LEFT);
             // Decrease free numbers pointer 
             $isbnrange->free -= 1;
             // Increase used numbers pointer
@@ -200,6 +197,12 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
             $isbnrange->free += 1;
             // Update taken
             $isbnrange->taken -= 1;
+            // Check if closed
+            if ($isbnrange->is_closed) {
+                // Update is_closed and is_active
+                $isbnrange->is_closed = false;
+                $isbnrange->is_active = true;
+            }
             // Update to db
             if ($dao->updateRange($isbnrange)) {
                 return true;

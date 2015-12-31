@@ -33,10 +33,14 @@ class JFormFieldIsbnrange extends JFormFieldList {
      */
     protected function getOptions() {
         $db = JFactory::getDBO();
+		$conditions = array(
+            $db->quoteName('is_active') . ' = ' . $db->quote(true),
+			$db->quoteName('is_closed') . ' = ' . $db->quote(false)
+        );		
         $query = $db->getQuery(true);
         $query->select('id,prefix,lang_group,range_begin,range_end,free,next');
         $query->from('#__isbn_registry_isbn_range');
-		$query->where('is_active = true');
+		$query->where($conditions);
 		$query->order('prefix ASC, lang_group ASC, category ASC, range_begin ASC');
         $db->setQuery((string) $query);
         $isbnranges = $db->loadObjectList();
