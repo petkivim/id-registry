@@ -79,7 +79,6 @@
             size="20"
             class="inputbox validate-address"
             default=""
-            required="true"
         />	
         <field
             name="zip"
@@ -89,7 +88,6 @@
             size="20"
             class="inputbox validate-zip"
             default=""
-            required="true"
         />	
         <field
             name="city"
@@ -99,7 +97,6 @@
             size="20"
             class="inputbox validate-city"
             default=""
-            required="true"
         />	
         <field
             name="phone"
@@ -118,7 +115,6 @@
             size="20"
             class="inputbox"
             default=""
-            required="true" 
             validate="email"
         />
         <field
@@ -235,7 +231,6 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_DESC"
             default="1"
-            required="true"
             validate="boolean"
         >	
             <option value="1">COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_ACTIVE</option>

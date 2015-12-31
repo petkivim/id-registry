@@ -16,7 +16,7 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("address", function (value) {
-        regex = /^.{1,50}$/;
+        regex = /^.{0,50}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("zip", function (value) {
@@ -24,7 +24,7 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("city", function (value) {
-        regex = /^.{1,50}$/;
+        regex = /^.{0,50}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("phone", function (value) {

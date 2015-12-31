@@ -13,7 +13,6 @@
             size="20"
             class="inputbox validate-officialname"
             default=""
-            required="true"
         />
         <field
             name="publisher_identifier_str"
@@ -39,7 +38,6 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_DESC"
             size="20"
-			required="true" 
             class="inputbox validate-contactperson"
             default=""
         />
@@ -105,7 +103,6 @@
             size="20"
             class="inputbox validate-address"
             default=""
-            required="true"
         />	
         <field
             name="zip"
@@ -115,7 +112,6 @@
             size="20"
             class="inputbox validate-zip"
             default=""
-            required="true"
         />	
         <field
             name="city"
@@ -125,7 +121,6 @@
             size="20"
             class="inputbox validate-city"
             default=""
-            required="true"
         />	
         <field
             name="phone"
@@ -133,7 +128,6 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_DESC"
             size="20"
-			required="true" 
             class="inputbox validate-phone"
             default=""
         />						
@@ -145,7 +139,6 @@
             size="20"
             class="inputbox"
             default=""
-            required="true" 
             validate="email"
         />          
         <field 
@@ -160,7 +153,6 @@
 			name="published_before" 
 			type="radio"
 			default="0" 
-			required="true" 
 			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_LABEL" 
 			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED_BEFORE_DESC"
 			>
@@ -171,7 +163,6 @@
 			name="publications_public" 
 			type="radio" 
 			default="0" 
-			required="true" 
 			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_LABEL" 
 			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_DESC"
 			>
@@ -182,7 +173,6 @@
 			name="publications_intra" 
 			type="radio" 
 			default="0" 
-			required="true" 
 			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_INTRA_LABEL" 
 			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_INTRA_DESC">
 			<option value="1">JYES</option>
@@ -192,7 +182,6 @@
 			name="publishing_activity" 
 			type="radio" 
 			default="OCCASIONAL" 
-			required="true" 
 			class="validate-publishingactivity"
 			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHING_ACTIVITY_LABEL" 
 			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHING_ACTIVITY_DESC">
@@ -212,7 +201,6 @@
 			name="publication_type" 
 			type="list" 
 			default="" 
-			required="true" 
 			class="validate-publicationtype"
 			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_LABEL" 
 			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_DESC">
@@ -227,7 +215,6 @@
 			name="publication_format" 
 			type="list" 
 			default="" 
-			required="true" 
 			class="validate-publicationformat"
 			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_FORMAT_LABEL" 
 			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_FORMAT_DESC">
@@ -244,7 +231,6 @@
             size="20"
             class="inputbox validate-firstname"
             default=""
-            required="true"
         />	
         <field
             name="last_name_1"
@@ -254,7 +240,6 @@
             size="20"
             class="inputbox validate-lastname"
             default=""
-            required="true"
         />	
         <field
             name="role_1"
@@ -264,7 +249,6 @@
             multiple="true"
             class="validate-role"
             default=""
-            required="true"
         >	
 			<option value="AUTHOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_AUTHOR</option>
 			<option value="ILLUSTRATOR">COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_ROLE_ILLUSTRATOR</option>
@@ -375,7 +359,6 @@
             size="20"
             class="inputbox validate-title"
             default=""
-			required="true"
         />	
         <field
             name="subtitle"
@@ -401,7 +384,6 @@
             label="COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_LABEL"
             description="COM_ISBNREGISTRY_PUBLICATION_FIELD_LANGUAGE_DESC"
             class="validate-language"
-			required="true"
             default=""
         >	
 			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
@@ -431,7 +413,6 @@
             description="COM_ISBNREGISTRY_PUBLICATION_FIELD_YEAR_DESC"
             class="validate-year"
             default=""
-            required="true"
         />		
         <field
             name="month"
@@ -439,7 +420,6 @@
             label="COM_ISBNREGISTRY_PUBLICATION_FIELD_MONTH_LABEL"
             description="COM_ISBNREGISTRY_PUBLICATION_FIELD_MONTH_DESC"
             class="validate-month"
-			required="true"
             default=""
         >	
 			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
