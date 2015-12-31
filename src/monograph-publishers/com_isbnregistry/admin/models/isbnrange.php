@@ -99,24 +99,14 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
      * @return mixed returns 0 if the operation fails; on success the generated
      * publisher identifier string is returned
      */
-    public static function getPublisherIdentifier($rangeId, $publisherId) {
-        // Database connection
-        $db = JFactory::getDBO();
-        // Conditions for which records should be fetched
-        $conditions = array(
-            $db->quoteName('id') . " = " . $db->quote($rangeId),
-            $db->quoteName('is_active') . " = " . $db->quote(true),
-        );
-        // Database query
-        $query = $db->getQuery(true);
-        $query->select('*');
-        $query->from($db->quoteName('#__isbn_registry_isbn_range'));
-        $query->where($conditions);
-        $db->setQuery((string) $query);
-        $isbnrange = $db->loadObject();
+    public function getPublisherIdentifier($rangeId, $publisherId) {
+        // Get DAO for db access
+        $dao = $this->getTable();
+        // Get ISBN range object
+        $isbnrange = $dao->getRange($rangeId, true);
 
         // Check that we have a result
-        if ($isbnrange) {
+        if ($isbnrange != null) {
             // Check that there are free numbers available
             if ($isbnrange->next > $isbnrange->range_end) {
                 return 0;
@@ -138,125 +128,84 @@ class IsbnregistryModelIsbnrange extends JModelAdmin {
             // Increase used numbers pointer
             $isbnrange->taken += 1;
             // Update new values to database
-            $result = self::updateToDb($isbnrange);
-            if ($result > 0) {
+            if ($dao->updateRange($isbnrange)) {
                 // Format publisher identifier
                 $result = self::formatPublisherIdentifier($isbnrange, $publisherIdentifier);
-                // Include publisherisbnrange model
-                require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models/publisherisbnrange.php';
+                // Get an instance of a ISBN range model
+                $publisherIsbnRangeModel = $this->getInstance('publisherisbnrange', 'IsbnregistryModel');
                 // Insert data into publisher isbn range table
-                $insertOk = IsbnregistryModelPublisherisbnrange::saveToDb($isbnrange, $publisherId, $result);
-				if($insertOk) {
-					return $result;
-				}
+                if ($publisherIsbnRangeModel->saveToDb($isbnrange, $publisherId, $result)) {
+                    return $result;
+                }
             }
         }
         return 0;
     }
-	
-    public static function canDeleteIdentifier($rangeId, $identifier) {
-        // Database connection
-        $db = JFactory::getDBO();
-        // Conditions for which records should be fetched
-        $conditions = array(
-            $db->quoteName('id') . " = " . $db->quote($rangeId)
-        );
-        // Database query
-        $query = $db->getQuery(true);
-        $query->select('*');
-        $query->from($db->quoteName('#__isbn_registry_isbn_range'));
-        $query->where($conditions);
-        $db->setQuery((string) $query);
-        $isbnrange = $db->loadObject();
+
+    /**
+     * Checks if the given identifier can be deleted. The identifier can be
+     * deleted if and only if it is the last identifier that was generated
+     * from its range. 
+     * @param integer $rangeId id of the range in which the identifier belongs
+     * @param string $identifier identifier to be deleted
+     * @return boolean true if and only if the identifier can be deleted; 
+     * otherwise false
+     */
+    public function canDeleteIdentifier($rangeId, $identifier) {
+        // Get DAO for db access
+        $dao = $this->getTable();
+        // Get ISBN range object
+        $isbnrange = $dao->getRange($rangeId, false);
 
         // Check that we have a result
         if ($isbnrange) {
-			 // Get the next available number
+            // Get the next available number
             $nextPointer = $isbnrange->next;
-			// Decrease next pointer
-			$nextPointer = $nextPointer - 1;
-			// Next pointer is a string, add left padding
-			$nextPointer = str_pad($nextPointer, $isbnrange->category, "0", STR_PAD_LEFT);		
+            // Decrease next pointer
+            $nextPointer = $nextPointer - 1;
+            // Next pointer is a string, add left padding
+            $nextPointer = str_pad($nextPointer, $isbnrange->category, "0", STR_PAD_LEFT);
             // Format publisher identifier
             $result = self::formatPublisherIdentifier($isbnrange, $nextPointer);
-			// Compare result to the given identifier
-			if(strcmp($result, $identifier) == 0) {
-				// If they match, we can delete the given identifier and decrease next pointer by one
-				return true;
-			}
-		}
-		return false;
-	}
-	
-    public static function decreaseByOne($rangeId) {
-        // Database connection
-        $db = JFactory::getDBO();
-        // Conditions for which records should be fetched
-        $conditions = array(
-            $db->quoteName('id') . " = " . $db->quote($rangeId)
-        );
-        // Database query
-        $query = $db->getQuery(true);
-        $query->select('*');
-        $query->from($db->quoteName('#__isbn_registry_isbn_range'));
-        $query->where($conditions);
-        $db->setQuery((string) $query);
-        $isbnrange = $db->loadObject();
+            // Compare result to the given identifier
+            if (strcmp($result, $identifier) == 0) {
+                // If they match, we can delete the given identifier and decrease next pointer by one
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Updates the range matching the given identifier id and decreases its
+     * next pointer by one. Also free and taken properties are updated 
+     * accordingly.
+     * @param integer $rangeId id of the range to be updated
+     * @return boolean true if and only if the operation succeeds; otherwise
+     * false
+     */
+    public function decreaseByOne($rangeId) {
+        // Get DAO for db access
+        $dao = $this->getTable();
+        // Get ISBN range object
+        $isbnrange = $dao->getRange($rangeId, false);
 
         // Check that we have a result
         if ($isbnrange) {
-			// Decrease next pointer
-			$isbnrange->next = $isbnrange->next - 1;
-			// Next pointer is a string, add left padding
-			$isbnrange->next = str_pad($isbnrange->next, $isbnrange->category, "0", STR_PAD_LEFT);	
-			// Update free
-			$isbnrange->free += 1;
-			// Update taken
-			$isbnrange->taken -= 1;
-			// Update to db
-			$success = self::updateToDb($isbnrange);
-			if($success == 1) {
-				return true;
-			}
-		}
-		return false;
-	}		
-	
-    /**
-     * Updates the given isbn range to the database.
-     * @param isbnrange $isbnrange object to be updated
-     * @return int number of affected rows; 1 means success, 0 means failure
-     */
-    private static function updateToDb($isbnrange) {
-        // Get date and user
-        $date = JFactory::getDate();
-        $user = JFactory::getUser();
-
-        // Database connection
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-
-        // Fields to update.
-        $fields = array(
-            $db->quoteName('free') . ' = ' . $db->quote($isbnrange->free),
-            $db->quoteName('taken') . ' = ' . $db->quote($isbnrange->taken),
-            $db->quoteName('next') . ' = ' . $db->quote($isbnrange->next),
-            $db->quoteName('is_active') . ' = ' . $db->quote($isbnrange->is_active),
-            $db->quoteName('modified') . ' = ' . $db->quote($date->toSql()),
-            $db->quoteName('modified_by') . ' = ' . $db->quote($user->get('username'))
-        );
-
-        // Conditions for which records should be updated.
-        $conditions = array(
-            $db->quoteName('id') . ' = ' . $db->quote($isbnrange->id)
-        );
-        // Create query
-        $query->update($db->quoteName('#__isbn_registry_isbn_range'))->set($fields)->where($conditions);
-        $db->setQuery($query);
-        // Execute query
-        $result = $db->execute();
-		// Return the number of affected rows
-        return $db->getAffectedRows();
+            // Decrease next pointer
+            $isbnrange->next = $isbnrange->next - 1;
+            // Next pointer is a string, add left padding
+            $isbnrange->next = str_pad($isbnrange->next, $isbnrange->category, "0", STR_PAD_LEFT);
+            // Update free
+            $isbnrange->free += 1;
+            // Update taken
+            $isbnrange->taken -= 1;
+            // Update to db
+            if ($dao->updateRange($isbnrange)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

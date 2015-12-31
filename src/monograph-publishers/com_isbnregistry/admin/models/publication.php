@@ -75,119 +75,84 @@ class IsbnregistryModelPublication extends JModelAdmin {
         }
 
         // From comma separated string to array
-		$data->role_1 = IsbnregistryModelPublication::fromStrToArray($data->role_1);
-		$data->role_2 = IsbnregistryModelPublication::fromStrToArray($data->role_2);
-		$data->role_3 = IsbnregistryModelPublication::fromStrToArray($data->role_3);
-		$data->role_4 = IsbnregistryModelPublication::fromStrToArray($data->role_4);
-		$data->type = IsbnregistryModelPublication::fromStrToArray($data->type);
-		$data->fileformat = IsbnregistryModelPublication::fromStrToArray($data->fileformat);
-		
+        $data->role_1 = $this->fromStrToArray($data->role_1);
+        $data->role_2 = $this->fromStrToArray($data->role_2);
+        $data->role_3 = $this->fromStrToArray($data->role_3);
+        $data->role_4 = $this->fromStrToArray($data->role_4);
+        $data->type = $this->fromStrToArray($data->type);
+        $data->fileformat = $this->fromStrToArray($data->fileformat);
+
         return $data;
     }
 
-	/**
-	 * Converts the given comma separated string to array.
-	 */
-	private static function fromStrToArray($source) {
+    /**
+     * Converts the given comma separated string to array.
+     */
+    private function fromStrToArray($source) {
         if ($source && !is_array($source)) {
             $source = explode(',', $source);
-        }		
-		return $source;
-	}
-	
-	public static function getPublicationsWithoutIdentifier($publisherId, $type) {
-		// Initialize variables.
-		$db    = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		
-        // Conditions for which records should be fetched
-        $conditions = array(
-            $db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId),
-			$db->quoteName('no_identifier_granted') . ' = ' . $db->quote(false),
-			$db->quoteName('publication_identifier') . ' = ' . $db->quote('')
-        );
-		
-		// Add conditions related to publication type
-		if (strcasecmp($type, 'isbn') == 0) {
-			array_push($conditions, $db->quoteName('publication_type') . ' != ' . $db->quote('SHEET_MUSIC'));
-		} else if (strcasecmp($type, 'ismn') == 0) {			
-			array_push($conditions, $db->quoteName('publication_type') . ' = ' . $db->quote('SHEET_MUSIC'));
-		}
-		
-		// Create the query
-		$query->select('id, title')
-			  ->from($db->quoteName('#__isbn_registry_publication'))
-			  ->where($conditions)
-			  ->order('title ASC');
-        $db->setQuery($query);
-        // Execute query
-		$result = $db->loadObjectList();
-        return $result;
-	}	
-	
-	public static function updateIdentifier($publicationId, $publisherId, $identifier, $identifierType) {
-		// Check that identifier type is valid
-		if(!self::isValidIdentifierType($identifierType)) {
-			return false;
-		}
-		// Check that publication does not have an identifier yet
-		if(self::hasIdentifier($publicationId)) {
-			return false;
-		}
-		
-        // Get date and user
-        $date = JFactory::getDate();
-        $user = JFactory::getUser();
+        }
+        return $source;
+    }
 
-        // Database connection
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
+    /**
+     * Returns a list of publications without an identifier belonging to the
+     * publisher specified by the publisher id.
+     * @param integer $publisherId id of the publisher that owns the publications
+     * @param string $type publication type, can be "ISBN" or "ISMN"
+     * @return object list of publications
+     */
+    public function getPublicationsWithoutIdentifier($publisherId, $type) {
+        // Get DAO for db access
+        $dao = $this->getTable();
+        // Return result
+        return $dao->getPublicationsWithoutIdentifier($publisherId, $type);
+    }
 
-        // Fields to update.
-        $fields = array(
-            $db->quoteName('publication_identifier') . ' = ' . $db->quote($identifier),
-            $db->quoteName('publication_identifier_type') . ' = ' . $db->quote($identifierType)
-        );
+    public function updateIdentifier($publicationId, $publisherId, $identifier, $identifierType) {
+        // Check that identifier type is valid
+        if (!$this->isValidIdentifierType($identifierType)) {
+            return false;
+        }
+        // Check that publication does not have an identifier yet
+        if ($this->hasIdentifier($publicationId)) {
+            return false;
+        }
 
-        // Conditions for which records should be updated.
-        $conditions = array(
-            $db->quoteName('id') . ' = ' . $db->quote($publicationId),
-			$db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId)
-        );
-		
-        // Create query
-        $query->update($db->quoteName('#__isbn_registry_publication'))->set($fields)->where($conditions);
-        $db->setQuery($query);
-        // Execute query
-        $result = $db->execute();
-		// Operation succeeded if affected rows returns 1
-        if($db->getAffectedRows() == 1) {
-			return true;
-		}		
-		// Otherwise operation failed
-		return false;
-	}
-	
-	private static function isValidIdentifierType($type) {
-		return preg_match('/^(ISBN|ISMN)$/', $type);
-	}
-	
-	private static function hasIdentifier($publicationId) {
-        // Database connection
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-		// Create query
-		$query->select('publication_identifier');
-		$query->from($db->quoteName('#__isbn_registry_publication'));
-		$query->where($db->quoteName('id') . ' = ' . $db->quote($publicationId));
-		 
-		$db->setQuery($query);
-		$publicationIdentifier = $db->loadResult();	
-		// If publication_identifier column length is 0, 
-		// publication does not have an identifier yet
-		if(strlen($publicationIdentifier) == 0) {
-			return false;
-		}
-		return true;
-	}
+        // Get DAO for db access
+        $dao = $this->getTable();
+        // Return result
+        return $dao->updateIdentifier($publicationId, $publisherId, $identifier, $identifierType);
+    }
+
+    /**
+     * Validates the given identifier type. Valid values are "ISBN" and "ISMN".
+     * @param string $type identifier type to be validated
+     * @return boolean true if type is valid; otherwise false
+     */
+    private function isValidIdentifierType($type) {
+        return preg_match('/^(ISBN|ISMN)$/', $type);
+    }
+
+    /**
+     * Chacks if the publication identified by the given id has an identifier 
+     * yet.
+     * @param integer $publicationId id of the publication to be checked
+     * @return boolean true if the publication doesn't have an identifier yet;
+     * otherwise false
+     */
+    private function hasIdentifier($publicationId) {
+        // Get DAO for db access
+        $dao = $this->getTable();
+        // Get object
+        $publicationIdentifier = $dao->loadPublicationIdentifier($publicationId);
+
+        // If publication_identifier column length is 0, 
+        // publication does not have an identifier yet
+        if ($publicationIdentifier == null || strlen($publicationIdentifier) == 0) {
+            return false;
+        }
+        return true;
+    }
+
 }

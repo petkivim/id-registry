@@ -17,63 +17,22 @@ defined('_JEXEC') or die('Restricted access');
  */
 class IsbnregistryModelPublisherisbnranges extends JModelList {
 
-	/**
-	 * Method to build an SQL query to load the list data.
-	 *
-	 * @return      string  An SQL query
-	 */
-	protected function getListQuery()
-	{
-		// Initialize variables.
-		$db    = JFactory::getDbo();
-		$query = $db->getQuery(true);
+    /**
+     * Method to build an SQL query to load the list data.
+     *
+     * @return      string  An SQL query
+     */
+    protected function getListQuery() {
+        // Initialize variables.
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
 
-		// Create the base select statement.
-		$query->select('*')
-			  ->from($db->quoteName('#__isbn_registry_publisher_isbn_range'))
-			  ->order('publisher_identifier ASC, range_begin ASC');
+        // Create the base select statement.
+        $query->select('*')
+                ->from($db->quoteName('#__isbn_registry_publisher_isbn_range'))
+                ->order('publisher_identifier ASC, range_begin ASC');
 
-		return $query;
-	}
-	
-	public static function getPublisherIdentifiers($publisherId) {
-		// Initialize variables.
-		$db    = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		
-        // Conditions for which records should be fetched
-        $conditions = array(
-            $db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId)
-        );
-		
-		// Create the base select statement.
-		$query->select('*')
-			  ->from($db->quoteName('#__isbn_registry_publisher_isbn_range'))
-			  ->where($conditions)
-			  ->order('is_active DESC, publisher_identifier ASC, range_begin ASC');
-        $db->setQuery($query);
-        // Execute query
-        //$result = $db->execute();
-		$result = $db->loadObjectList();
-        return $result;
-	}
-	
-	public static function deleteIsbnRanges($publisherId) {
-		$db = JFactory::getDbo();		 
-		$query = $db->getQuery(true);
-		 
-		// Conditions
-		$conditions = array(
-			$db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId)
-		);
-		 
-		$query->delete($db->quoteName('#__isbn_registry_publisher_isbn_range'));
-		$query->where($conditions);
-		 
-		$db->setQuery($query);
-		 
-		$result = $db->execute();		
-		
-		return $result;
-	}
+        return $query;
+    }
+
 }
