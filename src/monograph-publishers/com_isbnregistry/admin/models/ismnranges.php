@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
@@ -14,24 +15,24 @@ defined('_JEXEC') or die('Restricted access');
  *
  * @since  1.0.0
  */
-class IsbnregistryModelIsmnranges extends JModelList
-{
-	/**
-	 * Method to build an SQL query to load the list data.
-	 *
-	 * @return      string  An SQL query
-	 */
-	protected function getListQuery()
-	{
-		// Initialize variables.
-		$db    = JFactory::getDbo();
-		$query = $db->getQuery(true);
+class IsbnregistryModelIsmnranges extends JModelList {
 
-		// Create the base select statement.
-		$query->select('*')
-			  ->from($db->quoteName('#__isbn_registry_ismn_range'))
-			  ->order('prefix ASC, category ASC, range_begin ASC');
+    /**
+     * Method to build an SQL query to load the list data.
+     *
+     * @return      string  An SQL query
+     */
+    protected function getListQuery() {
+        // Initialize variables.
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
 
-		return $query;
-	}
+        // Create the base select statement.
+        $query->select('*')
+                ->from($db->quoteName('#__isbn_registry_ismn_range'))
+                ->order('prefix ASC, category ASC, range_begin ASC');
+
+        return $query;
+    }
+
 }
