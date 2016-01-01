@@ -219,7 +219,6 @@ COLLATE utf8_swedish_ci;
 
 INSERT INTO `#__isbn_registry_ismn_range` (`prefix`, `category`, `range_begin`, `range_end`, `free`, `next`, `created`, `created_by`) VALUES
 ('979-0', 3, '000', '019', 20, '000', UTC_TIMESTAMP(), 'SYSTEM'),
-('M', 5, '00000', '00099', 100, '00000', UTC_TIMESTAMP(), 'SYSTEM'),
 ('979-0', 7, '0000100', '0000199', 100, '0000100', UTC_TIMESTAMP(), 'SYSTEM');
 
 DROP TABLE IF EXISTS `#__isbn_registry_publisher_ismn_range`;
