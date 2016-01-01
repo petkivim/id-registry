@@ -44,11 +44,11 @@ jQuery(document).ready(function ($) {
 		postData[name] = 1;
 		// Component that's called
 		postData['option'] = 'com_isbnregistry';
-		postData['task'] = 'isbnrange.getIsbnRange';
+		postData['task'] = 'isbnrange.getRange';
 		// Set publisher id
 		postData['publisherId'] = publisher_id;	
 		// Set isbn range id
-		postData['isbnRangeId'] = isbn_range_id;		
+		postData['rangeId'] = isbn_range_id;		
 		// If publisher is not new and isbn range has been selected
 		// call API that generates new publisher identifiers
 		if(isbn_range_id.length > 0 && publisher_id.length > 0) {
