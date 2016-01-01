@@ -86,8 +86,12 @@ JFactory::getDocument()->addScriptDeclaration('
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_2'); ?></legend>							
 				<?php echo $this->loadTemplate('isbn_ranges'); ?>				
             </div>
-            <div class="span6">				
-	
+            <div class="span6" id="publisherIsmnRanges">				
+				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_3'); ?></legend>
+				<?php echo $this->form->renderField('ismn_range'); ?>
+				<?php echo $this->form->renderField('get_publisher_identifier_ismn'); ?>	
+				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_4'); ?></legend>							
+				<?php echo $this->loadTemplate('ismn_ranges'); ?>	
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
@@ -111,9 +115,15 @@ JFactory::getDocument()->addScriptDeclaration('
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_1'); ?></legend>
+				<?php echo $this->form->renderField('ismn_count'); ?>
+				<?php echo $this->form->renderField('get_ismns'); ?>	
+				<?php echo $this->form->renderField('created_ismns'); ?>
             </div>
             <div class="span6">		
-				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_2'); ?></legend>			
+				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_2'); ?></legend>	
+				<?php echo $this->form->renderField('publications_without_ismn'); ?>
+				<?php echo $this->form->renderField('get_ismn'); ?>		
+				<?php echo $this->form->renderField('link_to_publication_ismn'); ?>						
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>		

@@ -220,6 +220,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 // Get generated identifier
                 $identifier = $result[0];
                 // Update publication record
+                // TODO: if this operation fails, the identifier given to it should be freed. Now the identifier is left unused.
                 $updateSuccess = $publicationModel->updateIdentifier($publicationId, $publisherId, $identifier, strtoupper($this->getIdentifierType()));
                 // Check if operation succeeded
                 if ($updateSuccess) {

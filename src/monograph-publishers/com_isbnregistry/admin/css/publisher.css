@@ -6,40 +6,40 @@
     z-index: 1040;
 }
 
-#jform_isbn_range {
+#jform_isbn_range, #jform_ismn_range  {
         width: 20em;
 }
 
-#publisherIsbnRanges table {
+#publisherIsbnRanges table, #publisherIsmnRanges table {
 	text-align: center;
 	width: 45em;
 }
-.isbn_range_col_1 {
+.isbn_range_col_1, .ismn_range_col_1 {
 	width: 10em;
 }
 
-.isbn_range_col_2 {
+.isbn_range_col_2, .ismn_range_col_2 {
 	width: 10em;
 }
 
-.isbn_range_col_3 {
+.isbn_range_col_3, .ismn_range_col_3 {
 	width: 5em;
 }
 
-.isbn_range_col_4 {
+.isbn_range_col_4, .ismn_range_col_4 {
 	width: 5em;
 }
 
-.isbn_range_col_5 {
+.isbn_range_col_5, .ismn_range_col_5 {
 	width: 5em;
 }
 
-.isbn_range_col_5_activate {
+.isbn_range_col_5_activate, .ismn_range_col_5_activate {
 	width: 5em;
 	cursor: pointer;
 }
 
-.isbn_range_active_row > td {
+.isbn_range_active_row > td, .ismn_range_active_row > td {
 	padding-bottom: .8em;
 }
 

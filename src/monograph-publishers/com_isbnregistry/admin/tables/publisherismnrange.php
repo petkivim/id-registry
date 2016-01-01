@@ -13,11 +13,11 @@ defined('_JEXEC') or die('Restricted access');
 require_once __DIR__ . '/abstractpublisheridentifierrange.php';
 
 /**
- * Publisher ISBN Range Table class
+ * Publisher ISMN Range Table class
  *
  * @since  1.0.0
  */
-class IsbnRegistryTablePublisherisbnrange extends IsbnRegistryTableAbstractPublisherIdentifierRange {
+class IsbnRegistryTablePublisherismnrange extends IsbnRegistryTableAbstractPublisherIdentifierRange {
 
     /**
      * Constructor
@@ -25,13 +25,13 @@ class IsbnRegistryTablePublisherisbnrange extends IsbnRegistryTableAbstractPubli
      * @param   JDatabaseDriver  &$db  A database connector object
      */
     function __construct(&$db) {
-        parent::__construct('#__isbn_registry_publisher_isbn_range', $db);
+        parent::__construct('#__isbn_registry_publisher_ismn_range', $db);
     }
 
     /**
-     * Method to store a new publisher ISBN range into database.
+     * Method to store a new publisher ISMN range into database.
      * 
-     * @param range $range ISBN range object which subset the 
+     * @param range $range ISMN range object which subset the 
      * publisher identifier range is
      * @param int $publisherId id of the publisher that owns the range
      * @param int $publisherIdentifier publisher identifier of the publisher 
@@ -40,8 +40,8 @@ class IsbnRegistryTablePublisherisbnrange extends IsbnRegistryTableAbstractPubli
      * successfully saved to the database; otherwise false
      */
     public function saveToDb($range, $publisherId, $publisherIdentifier) {
-        // Set isbn range id
-        $this->isbn_range_id = $range->id;
+        // Set ismn range id
+        $this->ismn_range_id = $range->id;
 
         return parent::saveToDb($range, $publisherId, $publisherIdentifier);
     }
@@ -49,10 +49,10 @@ class IsbnRegistryTablePublisherisbnrange extends IsbnRegistryTableAbstractPubli
     /**
      * Returns the character count that's reserved for publisher and
      * publication identifiers.
-     * @return int ISBN's char count is 6
+     * @return int ISMN's char count is 8
      */
     public function getRangeLength() {
-        return 6;
+        return 8;
     }
 
 }

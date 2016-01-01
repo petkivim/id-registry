@@ -405,6 +405,66 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISBN_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISBN_DESC"
 			default="-"
+        />	
+        <field
+            name="ismn_range"
+            type="Ismnrange"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISMN_RANGE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISMN_RANGE_DESC"
+			default=""
+        />	
+        <field
+            name="get_publisher_identifier_ismn"
+            type="Button"
+            label=""
+            description=""
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER_ISMN"
+        />		
+       <field
+            name="ismn_count"
+            type="number"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISMN_COUNT_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISMN_COUNT_DESC"
+            default="0"
+			min="0"
+        />	
+        <field
+            name="get_ismns"
+            type="Button"
+            label=""
+            description=""
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISMN_NUMBERS"
+        />		
+        <field
+            name="created_ismns"
+            type="textarea"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_ISMN_NUMBERS_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_ISMN_NUMBERS_DESC"
+            class="inputbox"
+            rows="3"
+            cols="40"
+        /> 	
+        <field
+            name="publications_without_ismn"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISMN_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISMN_DESC"
+        >
+			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+		</field>
+        <field
+            name="get_ismn"
+            type="Button"
+            label=""
+            description=""
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISMN_NUMBER"
+        />	
+        <field
+            name="link_to_publication_ismn"
+            type="Span"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISMN_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISMN_DESC"
+			default="-"
         />			
     </fieldset>
 </form>
