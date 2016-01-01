@@ -1,4 +1,17 @@
 jQuery(document).ready(function ($) {
+    // Init variables
+    // Get publisher id
+    var publisher_id = $("#jform_id").val();
+    // Get current URL
+    var url = window.location.pathname;
+    // Get session ID
+    var sessionId = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
+    // Get labels
+    var label_active = $("#label_active").text();
+    var label_closed = $("#label_closed").text();
+    var label_activate = $("#label_activate").text();
+
+    // Run async functions when page loads
     loadPublisherIsbnRanges();
     loadPublicationsWithoutIdentifier();
     updatePreviousNames();
@@ -32,16 +45,10 @@ jQuery(document).ready(function ($) {
     $("#jform_get_publisher_identifier").click(function () {
         // Get ISBN range id
         var isbn_range_id = $("#jform_isbn_range").chosen().val();
-        // Get publisher id
-        var publisher_id = $("#jform_id").val();
-        // Get current URL
-        var url = window.location.pathname;
-        // Get session ID
-        var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
         // Set post parameterts
         var postData = {};
         // Session ID
-        postData[name] = 1;
+        postData[sessionId] = 1;
         // Component that's called
         postData['option'] = 'com_isbnregistry';
         postData['task'] = 'isbnrange.getRange';
@@ -69,18 +76,12 @@ jQuery(document).ready(function ($) {
     });
 
     $('div#publisherIsbnRanges').on('click', 'td.isbn_range_col_5_activate', function () {
-        // Get publisher id
-        var publisher_id = $("#jform_id").val();
         // Get publisher isbn range id
         var publisher_isbn_range_id = $(this).closest('tr').attr('id').replace('row-', '');
-        // Get current URL
-        var url = window.location.pathname;
-        // Get session ID
-        var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
         // Set post parameterts
         var postData = {};
         // Session ID
-        postData[name] = 1;
+        postData[sessionId] = 1;
         // Component that's called
         postData['option'] = 'com_isbnregistry';
         postData['task'] = 'publisherisbnrange.activate';
@@ -109,25 +110,15 @@ jQuery(document).ready(function ($) {
     });
 
     function loadPublisherIsbnRanges() {
-        // Get publisher id
-        var publisher_id = $("#jform_id").val();
-        // Get current URL
-        var url = window.location.pathname;
-        // Get session ID
-        var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
         // Set post parameterts
         var postData = {};
         // Session ID
-        postData[name] = 1;
+        postData[sessionId] = 1;
         // Component that's called
         postData['option'] = 'com_isbnregistry';
         postData['task'] = 'publisherisbnrange.getRanges';
         // Set publisher id
         postData['publisherId'] = publisher_id;
-        // Get labels
-        var active = $("#label_active").text();
-        var closed = $("#label_closed").text();
-        var activate = $("#label_activate").text();
         // Load ISBN ranges if publisher is not new
         if (publisher_id.length > 0) {
             // Add request parameters
@@ -149,15 +140,15 @@ jQuery(document).ready(function ($) {
                             content += '<td class="isbn_range_col_4">' + data[i].next + '</td>';
                             content += '<td class="isbn_range_col_5';
                             if (data[i].is_active == 1) {
-                                content += '">' + active;
+                                content += '">' + label_active;
                                 // If range hasn't been used yet, add delete icon
                                 if (data[i].range_begin == data[i].next) {
                                     content += ' <span class="icon-delete"></span>';
                                 }
                             } else if (data[i].is_closed == 1) {
-                                content += '">' + closed;
+                                content += '">' + label_closed;
                             } else {
-                                content += '_activate">' + activate;
+                                content += '_activate">' + label_activate;
                             }
                             content += '</td>';
                             content += '</tr>';
@@ -213,14 +204,10 @@ jQuery(document).ready(function ($) {
     $('div#publisherIsbnRanges').on('click', 'span.icon-delete', function () {
         // Get publisher isbn range id
         var publisher_isbn_range_id = $(this).closest('tr').attr('id').replace('row-', '');
-        // Get current URL
-        var url = window.location.pathname;
-        // Get session ID
-        var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
         // Set post parameterts
         var postData = {};
         // Session ID
-        postData[name] = 1;
+        postData[sessionId] = 1;
         // Component that's called
         postData['option'] = 'com_isbnregistry';
         postData['task'] = 'publisherisbnrange.delete';
@@ -244,18 +231,12 @@ jQuery(document).ready(function ($) {
     });
 
     $("#jform_get_isbn_numbers").click(function () {
-        // Get publisher id
-        var publisher_id = $("#jform_id").val();
         // Get isbn count
         var isbn_count = $("#jform_isbn_count").val();
-        // Get current URL
-        var url = window.location.pathname;
-        // Get session ID
-        var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
         // Set post parameterts
         var postData = {};
         // Session ID
-        postData[name] = 1;
+        postData[sessionId] = 1;
         // Component that's called
         postData['option'] = 'com_isbnregistry';
         postData['task'] = 'publisherisbnrange.getIdentifiers';
@@ -288,18 +269,12 @@ jQuery(document).ready(function ($) {
     });
 
     $("#jform_get_isbn_number").click(function () {
-        // Get publisher id
-        var publisher_id = $("#jform_id").val();
         // Get selected publication
         var publication_id = $('#jform_publications_without_isbn').val();
-        // Get current URL
-        var url = window.location.pathname;
-        // Get session ID
-        var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
         // Set post parameterts
         var postData = {};
         // Session ID
-        postData[name] = 1;
+        postData[sessionId] = 1;
         // Component that's called
         postData['option'] = 'com_isbnregistry';
         postData['task'] = 'publisherisbnrange.getIdentifier';
@@ -335,16 +310,10 @@ jQuery(document).ready(function ($) {
     });
 
     function loadPublicationsWithoutIdentifier() {
-        // Get publisher id
-        var publisher_id = $("#jform_id").val();
-        // Get current URL
-        var url = window.location.pathname;
-        // Get session ID
-        var name = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
         // Set post parameterts
         var postData = {};
         // Session ID
-        postData[name] = 1;
+        postData[sessionId] = 1;
         // Component that's called
         postData['option'] = 'com_isbnregistry';
         postData['task'] = 'publication.getPublicationsWithoutIdentifier';

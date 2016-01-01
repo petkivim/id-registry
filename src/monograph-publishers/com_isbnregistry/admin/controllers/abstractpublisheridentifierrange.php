@@ -220,7 +220,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 // Get generated identifier
                 $identifier = $result[0];
                 // Update publication record
-                $updateSuccess = $publicationModel->updateIdentifier($publicationId, $publisherId, $identifier, 'ISBN');
+                $updateSuccess = $publicationModel->updateIdentifier($publicationId, $publisherId, $identifier, strtoupper($this->getIdentifierType()));
                 // Check if operation succeeded
                 if ($updateSuccess) {
                     $response['success'] = true;

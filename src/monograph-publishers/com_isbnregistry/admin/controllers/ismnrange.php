@@ -26,7 +26,7 @@ class IsbnregistryControllerIsmnrange extends IsbnregistryControllerAbstractIden
      * @return string "isbn"
      */
     public function getIdentifierType() {
-        return "isbn";
+        return "ismn";
     }
 
 }
