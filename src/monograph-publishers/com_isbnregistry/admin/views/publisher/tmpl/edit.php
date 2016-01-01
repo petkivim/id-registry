@@ -82,7 +82,7 @@ JFactory::getDocument()->addScriptDeclaration('
             <div class="span6" id="publisherIsbnRanges">
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_1'); ?></legend>
 				<?php echo $this->form->renderField('isbn_range'); ?>
-				<?php echo $this->form->renderField('get_publisher_identifier'); ?>	
+				<?php echo $this->form->renderField('get_publisher_identifier_isbn'); ?>	
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_2'); ?></legend>							
 				<?php echo $this->loadTemplate('isbn_ranges'); ?>				
             </div>
@@ -96,14 +96,14 @@ JFactory::getDocument()->addScriptDeclaration('
             <div class="span6">
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_1'); ?></legend>
 				<?php echo $this->form->renderField('isbn_count'); ?>
-				<?php echo $this->form->renderField('get_isbn_numbers'); ?>	
-				<?php echo $this->form->renderField('created_isbn_numbers'); ?>
+				<?php echo $this->form->renderField('get_isbns'); ?>	
+				<?php echo $this->form->renderField('created_isbns'); ?>
             </div>
             <div class="span6">		
 				<legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_2'); ?></legend>
 				<?php echo $this->form->renderField('publications_without_isbn'); ?>
-				<?php echo $this->form->renderField('get_isbn_number'); ?>		
-				<?php echo $this->form->renderField('link_to_publication'); ?>				
+				<?php echo $this->form->renderField('get_isbn'); ?>		
+				<?php echo $this->form->renderField('link_to_publication_isbn'); ?>				
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>

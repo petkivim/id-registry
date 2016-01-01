@@ -42,7 +42,7 @@ jQuery(document).ready(function ($) {
         width: "17em"
     });
 
-    $("#jform_get_publisher_identifier").click(function () {
+    $("#jform_get_publisher_identifier_isbn").click(function () {
         // Get ISBN range id
         var isbn_range_id = $("#jform_isbn_range").chosen().val();
         // Set post parameterts
@@ -230,7 +230,7 @@ jQuery(document).ready(function ($) {
                 });
     });
 
-    $("#jform_get_isbn_numbers").click(function () {
+    $("#jform_get_isbns").click(function () {
         // Get isbn count
         var isbn_count = $("#jform_isbn_count").val();
         // Set post parameterts
@@ -254,7 +254,7 @@ jQuery(document).ready(function ($) {
                             $.each(data.isbn_numbers, function (key, value) {
                                 isbn_numbers += value + '\n';
                             });
-                            $("textarea#jform_created_isbn_numbers").html(isbn_numbers);
+                            $("textarea#jform_created_isbns").html(isbn_numbers);
                             $('#system-message-container').html(showNotification('success', data.title, data.message));
                             loadPublisherIsbnRanges();
                         } else {
@@ -268,7 +268,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $("#jform_get_isbn_number").click(function () {
+    $("#jform_get_isbn").click(function () {
         // Get selected publication
         var publication_id = $('#jform_publications_without_isbn').val();
         // Set post parameterts
@@ -295,16 +295,16 @@ jQuery(document).ready(function ($) {
                             loadPublicationsWithoutIdentifier();
                             var link = '<a href="' + url + '?option=com_isbnregistry&view=publication&layout=edit&id=' + publication_id + '" target="new">';
                             link += label + ' (' + data.publication_identifier + ')</a>';
-                            $('#jform_link_to_publication').html(link);
+                            $('#jform_link_to_publication_isbn').html(link);
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
-                            $('#jform_link_to_publication').html('');
+                            $('#jform_link_to_publication_isbn').html('');
                         }
                     })
                     .fail(function (xhr, textStatus, errorThrown) {
                         var json = jQuery.parseJSON(xhr.responseText);
                         $('#system-message-container').html(showNotification('error', json.title, json.message));
-                        $('#jform_link_to_publication').html('');
+                        $('#jform_link_to_publication_isbn').html('');
                     });
         }
     });

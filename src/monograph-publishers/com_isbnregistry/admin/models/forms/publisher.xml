@@ -354,11 +354,11 @@
 			default=""
         />	
         <field
-            name="get_publisher_identifier"
+            name="get_publisher_identifier_isbn"
             type="Button"
             label=""
             description=""
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER"
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER_ISBN"
         />
         <field
             name="isbn_count"
@@ -369,14 +369,14 @@
 			min="0"
         />	
         <field
-            name="get_isbn_numbers"
+            name="get_isbns"
             type="Button"
             label=""
             description=""
 			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBERS"
         />		
         <field
-            name="created_isbn_numbers"
+            name="created_isbns"
             type="textarea"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_ISBN_NUMBERS_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_ISBN_NUMBERS_DESC"
@@ -393,17 +393,17 @@
 			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
 		</field>
         <field
-            name="get_isbn_number"
+            name="get_isbn"
             type="Button"
             label=""
             description=""
 			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBER"
         />	
         <field
-            name="link_to_publication"
+            name="link_to_publication_isbn"
             type="Span"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_DESC"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISBN_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISBN_DESC"
 			default="-"
         />			
     </fieldset>
