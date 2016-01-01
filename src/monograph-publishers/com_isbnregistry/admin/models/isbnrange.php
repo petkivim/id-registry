@@ -17,7 +17,7 @@ require_once __DIR__ . '/abstractidentifierrange.php';
  *
  * @since  1.0.0
  */
-class IsbnregistryModelIsbnrange extends AbstractIdentifierRange {
+class IsbnregistryModelIsbnrange extends IsbnregistryModelAbstractIdentifierRange {
 
     /**
      * Method to get a table object, load it if necessary.

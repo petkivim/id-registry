@@ -10,7 +10,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-abstract class AbstractIdentifierRange extends JModelAdmin {
+abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
 
     abstract public function formatPublisherIdentifier($identifierrange, $publisherIdentifier);
     

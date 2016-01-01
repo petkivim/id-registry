@@ -10,12 +10,14 @@
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
+require_once __DIR__ . '/abstractidentifierrange.php';
+
 /**
  * ISBN Range Table class
  *
  * @since  1.0.0
  */
-class IsbnRegistryTableIsbnrange extends JTable {
+class IsbnRegistryTableIsbnrange extends IsbnRegistryTableAbstractIdentifierRange {
 
     /**
      * Constructor
@@ -23,111 +25,6 @@ class IsbnRegistryTableIsbnrange extends JTable {
      * @param   JDatabaseDriver  &$db  A database connector object
      */
     function __construct(&$db) {
-        parent::__construct('#__isbn_registry_isbn_range', 'id', $db);
+        parent::__construct('#__isbn_registry_isbn_range', $db);
     }
-
-    /**
-     * Stores an ISBN Range.
-     *
-     * @param   boolean  $updateNulls  True to update fields even if they are null.
-     *
-     * @return  boolean  True on success, false on failure.
-     *
-     * @since   1.6
-     */
-    public function store($updateNulls = false) {
-        // Transform the params field
-        if (is_array($this->params)) {
-            $registry = new Registry;
-            $registry->loadArray($this->params);
-            $this->params = (string) $registry;
-        }
-
-        // Get date and user
-        $date = JFactory::getDate();
-        $user = JFactory::getUser();
-
-        if ($this->id) {
-            // Existing item
-            $this->modified_by = $user->get('username');
-            $this->modified = $date->toSql();
-        } else {
-            // New item
-            $this->created_by = $user->get('username');
-            $this->created = $date->toSql();
-            $this->category = strlen($this->range_begin);
-            $this->free = $this->range_end - $this->range_begin + 1;
-            $this->next = $this->range_begin;
-        }
-
-        return parent::store($updateNulls);
-    }
-
-    /**
-     * Deletes an ISBN Range.
-     *
-     * @param   integer  $pk  Primary key of the ISBN range to be deleted.
-     *
-     * @return  boolean  True on success, false on failure.
-     *
-     */
-    public function delete($pk = null) {
-        // Item can be deleted only if no ISBNs have been used yet
-        if (strcmp($this->range_begin, $this->next) != 0) {
-            // If ISBNs have been used, raise a warning
-            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ISBN_RANGES_DELETE_FAILED'), 'warning');
-            // Return false as the item can't be deleted
-            return false;
-        }
-        // No ISBNs have been used, delete the item
-        return parent::delete($pk);
-    }
-
-    /**
-     * Returns the identifier range identified by the given id. The range must
-     * be marked as active.
-     * @param integer $rangeId id of the range to be fetched
-     * @param boolean $mustBeActive must range be active
-     * @return object identifier range object on success; null on failure
-     */
-    public function getRange($rangeId, $mustBeActive) {
-        $conditions = array(
-            $this->_db->quoteName('id') . " = " . $this->_db->quote($rangeId)          
-        );
-        if($mustBeActive) {
-            array_push($conditions, $this->_db->quoteName('is_active') . " = " . $this->_db->quote(true));
-            array_push($conditions, $this->_db->quoteName('is_closed') . " = " . $this->_db->quote(false));
-        }
-        // Database query
-        $query = $this->_db->getQuery(true);
-        $query->select('*');
-        $query->from($this->_db->quoteName($this->_tbl));
-        $query->where($conditions);
-        $this->_db->setQuery((string) $query);
-
-        return $this->_db->loadObject();
-    }
-
-    /**
-     * Updates the given isbn range to the database.
-     * @param isbnrange $isbnrange object to be updated
-     * @return boolean true on success
-     */
-    public function updateRange($isbnrange) {
-        // Load object
-        if (!$this->load($isbnrange->id)) {
-            return false;
-        }
-
-        // Update fields
-        $this->free = $isbnrange->free;
-        $this->taken = $isbnrange->taken;
-        $this->next = $isbnrange->next;
-        $this->is_active = $isbnrange->is_active;
-        $this->is_closed = $isbnrange->is_closed;
-
-        // Update object to DB
-        return $this->store();
-    }
-
 }
