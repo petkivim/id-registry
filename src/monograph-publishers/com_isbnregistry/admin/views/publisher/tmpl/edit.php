@@ -82,26 +82,26 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
         <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'identifiers', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6" id="publisherIsbnRanges">
-                <?php if (!$viewOnly) { ?>
+                <?php if (!$viewOnly) : ?>
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_1'); ?></legend>
                     <?php echo $this->form->renderField('isbn_range'); ?>
                     <?php echo $this->form->renderField('get_publisher_identifier_isbn'); ?>
-                <?php } ?>
+                <?php endif; ?>
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_2'); ?></legend>							
                 <?php echo $this->loadTemplate('isbn_ranges'); ?>				
             </div>
             <div class="span6" id="publisherIsmnRanges">
-                <?php if (!$viewOnly) { ?>
+                <?php if (!$viewOnly) : ?>
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_3'); ?></legend>
                     <?php echo $this->form->renderField('ismn_range'); ?>
                     <?php echo $this->form->renderField('get_publisher_identifier_ismn'); ?>	
-                <?php } ?>
+                <?php endif; ?>
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_4'); ?></legend>							
                 <?php echo $this->loadTemplate('ismn_ranges'); ?>	
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php if (!$viewOnly) { ?>
+        <?php if (!$viewOnly) : ?>
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'isbn', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN', true)); ?>
             <div class="row-fluid form-horizontal-desktop">
                 <div class="span6">
@@ -139,7 +139,7 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->loadTemplate('publications_list'); ?>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?> 
-        <?php } ?>
+        <?php endif; ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>
     <input type="hidden" name="task" value="publisher.edit" />

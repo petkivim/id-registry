@@ -70,6 +70,18 @@ JHTML::_('behavior.modal');
                     </td>
                 </tr>
             <?php endforeach; ?>
+        <?php else : ?>
+            <tr>
+                <td></td>
+                <td>
+                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_NONE'); ?>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
         <?php endif; ?>
     </tbody>
 </table>
