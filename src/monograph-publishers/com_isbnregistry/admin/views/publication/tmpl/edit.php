@@ -10,6 +10,7 @@
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.formvalidator');
 JHtml::_('formbehavior.chosen');
+JHTML::_('behavior.modal');
 
 // Add scripts
 $document = JFactory::getDocument();
