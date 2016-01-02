@@ -110,6 +110,13 @@ AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
 
+INSERT INTO `#__isbn_registry_publication` (`official_name`, `publisher_id`, `address`, `zip`, `city`, `phone`, `email`, `contact_person`, `publication_type`, `publication_format`, `first_name_1`, `last_name_1`, `role_1`, `title`, `lang_code`, `created`, `created_by`) VALUES
+('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'BOOK', 'PRINT', 'Matti', 'Meikäläinen', 'AUTHOR', 'Kirja 1 - painettu', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
+('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'BOOK', 'PRINT_ELECTRONICAL', 'Teppo', 'Testaaja', 'AUTHOR', 'Kirja 2 - painettu & e', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
+('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'SHEET_MUSIC', 'PRINT', 'Tiina', 'Teekkari', 'AUTHOR', 'Nuotti 1 - painettu', 'en-GB', UTC_TIMESTAMP(), 'SYSTEM'),
+('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'DISSETATION', 'ELECTRONICAL', 'Pertti', 'Professori', 'AUTHOR', 'Disseration 1 - e', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
+('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'SHEET_MUSIC', 'PRINT_ELECTRONICAL', 'Mauno', 'Ahonen', 'AUTHOR', 'Nuotti 2 - painettu & e', 'en-GB', UTC_TIMESTAMP(), 'SYSTEM');
+
 DROP TABLE IF EXISTS `#__isbn_registry_isbn_range`;
 
 CREATE TABLE `#__isbn_registry_isbn_range` (
