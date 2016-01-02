@@ -226,15 +226,15 @@
             default=""
         />   
         <field
-            name="state"
+            name="has_quitted"
             type="radio"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_DESC"
-            default="1"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_HAS_QUITTED_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_HAS_QUITTED_DESC"
+            default="0"
             validate="boolean"
         >	
-            <option value="1">COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_ACTIVE</option>
-            <option value="0">COM_ISBNREGISTRY_PUBLISHER_FIELD_STATE_PASSIVE</option>        
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>        
         </field>
         <field
             name="question_7"

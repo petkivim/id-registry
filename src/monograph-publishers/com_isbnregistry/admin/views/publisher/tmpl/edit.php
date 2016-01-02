@@ -42,7 +42,7 @@ JFactory::getDocument()->addScriptDeclaration('
 				<?php echo $this->form->renderField('previous_names'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
-                <?php echo $this->form->renderField('state'); ?>
+                <?php echo $this->form->renderField('has_quitted'); ?>
                 <?php echo $this->form->renderField('year_quitted'); ?>
                 <?php echo $this->form->renderField('additional_info'); ?>
                 <?php echo $this->form->renderField('created'); ?>
