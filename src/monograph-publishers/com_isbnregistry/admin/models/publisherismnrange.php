@@ -103,11 +103,10 @@ class IsbnregistryModelPublisherismnrange extends IsbnregistryModelAbstractPubli
      * @return character check digit of the given ISBN
      */
     public function getCheckDigit($identifier) {
-        // Include helper class
-        //require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/helpers/publisherismnrange.php';
-        // TODO: Calculate check digit
-        //return PublishersisbnrangeHelper::countIsbnCheckDigit($identifier);
-        return "X";
+        // Include ISBN helper class
+        require_once JPATH_ADMINISTRATOR . '/components/com_isbnregistry/helpers/publisherisbnrange.php';
+        // Calculate check digit - use same algorithm that's used with ISBN-13
+        return PublishersisbnrangeHelper::countIsbnCheckDigit($identifier);
     }
 
 }
