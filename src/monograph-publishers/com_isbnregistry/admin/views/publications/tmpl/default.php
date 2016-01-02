@@ -23,13 +23,16 @@ $document->addStyleSheet("components/com_isbnregistry/css/publication.css");
                     <th width="2%">
                         <?php echo JHtml::_('grid.checkall'); ?>
                     </th>
-                    <th width="25%">
+                    <th width="20%">
                         <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_OFFICIAL_NAME'); ?>
                     </th>
-                    <th width="25%">
+                    <th width="20%">
                         <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_TITLE'); ?>
                     </th>	
-                    <th width="35%">
+                    <th width="15%">
+                        <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_IDENTIFIER'); ?>
+                    </th>           
+                    <th width="30%">
                         <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_COMMENTS'); ?>
                     </th>					
                     <th width="2%">
@@ -66,7 +69,10 @@ $document->addStyleSheet("components/com_isbnregistry/css/publication.css");
                                 </a>
                             </td>  
                             <td>
-                                   <?php echo (strlen($row->comments) > 50 ? substr($row->comments, 0, 47) . '...' : $row->comments); ?>
+                                <?php echo $row->publication_identifier; ?>
+                            </td> 
+                            <td>
+                                <?php echo (strlen($row->comments) > 50 ? substr($row->comments, 0, 47) . '...' : $row->comments); ?>
                             </td>   							
                             <td align="center">
                                 <?php echo $row->id; ?>
