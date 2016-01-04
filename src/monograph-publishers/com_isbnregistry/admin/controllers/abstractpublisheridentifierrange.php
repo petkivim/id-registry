@@ -20,12 +20,12 @@ defined('_JEXEC') or die('Restricted access');
 abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JControllerForm {
 
     abstract public function getIdentifierType();
-    
+
     function activate() {
         // Check for request forgeries
         JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
-        // http://pkrete.com/sites/idr/administrator/?option=com_isbnregistry&task=publisherisbnrange.activateIsbnRange&publisherIsbnRangeId=1&publisherId=1
+        // http://{SITE}/administrator/?option=com_isbnregistry&task=publisherisbnrange.activateIsbnRange&publisherIsbnRangeId=1&publisherId=1
         $mainframe = JFactory::getApplication();
         try {
             // Set the MIME type for JSON output.
@@ -66,7 +66,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
         // Check for request forgeries
         JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
-        // http://pkrete.com/sites/idr/administrator/?option=com_isbnregistry&task=publisherisbnranges.getIsbnRanges&publisherId=1
+        // http://{SITE}/administrator/?option=com_isbnregistry&task=publisherisbnranges.getIsbnRanges&publisherId=1
         $mainframe = JFactory::getApplication();
         try {
             // Set the MIME type for JSON output.
@@ -99,7 +99,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
         // Check for request forgeries
         JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
-        // http://pkrete.com/sites/idr/administrator/?option=com_isbnregistry&task=publisherisbnranges.deleteIsbnRange&publisherIsbnRangeId=1
+        // http://{SITE}/administrator/?option=com_isbnregistry&task=publisherisbnranges.deleteIsbnRange&publisherIsbnRangeId=1
         $mainframe = JFactory::getApplication();
         try {
             // Get request parameters
@@ -144,7 +144,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
         // Check for request forgeries
         JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
-        // http://pkrete.com/sites/idr/administrator/?option=com_isbnregistry&task=publisherisbnranges.getIsbnNumbers&publisherId=1&isbnCount=5
+        // http://{SITE}/administrator/?option=com_isbnregistry&task=publisherisbnranges.getIsbnNumbers&publisherId=1&isbnCount=5
         $mainframe = JFactory::getApplication();
         try {
             // Set the MIME type for JSON output.
@@ -160,7 +160,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
 
             // Get array of ISBN numbers
             $result = $this->getModel()->generateIdentifiers($publisherId, $count);
-            
+
             // Check if the array is empty
             if (empty($result)) {
                 $response['success'] = false;
@@ -193,7 +193,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
         // Check for request forgeries
         JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
-        // http://pkrete.com/sites/idr/administrator/?option=com_isbnregistry&task=publisherisbnranges.getIsbnNumbers&publisherId=1&publicationId=5
+        // http://{SITE}/administrator/?option=com_isbnregistry&task=publisherisbnranges.getIsbnNumbers&publisherId=1&publicationId=5
         $mainframe = JFactory::getApplication();
         try {
             // Set the MIME type for JSON output.
@@ -207,27 +207,39 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             $response["publisherId"] = $publisherId;
             $response["publicationId"] = $publicationId;
 
-            // Get array of identifiers numbers
-            $result = $this->getModel()->generateIdentifiers($publisherId, 1);
+            // Init array for results
+            $identifiers = array();
+            // Load publication model
+            $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
+            // Get publication format
+            $publicationFormat = $publicationModel->getPublicationFormat($publicationId);
+            // Generate identifiers only if publication format has been set
+            if (!empty($publicationFormat)) {
+                // Get identifiers count - if 'PRINT_ELECTRONICAL' 2 identifiers are needed
+                $count = strcmp($publicationFormat, 'PRINT_ELECTRONICAL') == 0 ? 2 : 1;
+                // Get array of identifiers numbers
+                $identifiers = $this->getModel()->generateIdentifiers($publisherId, $count);
+            } else {
+                // Set specific error message
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED_NO_FORMAT');
+            }
             // Check if the array is empty
-            if (empty($result)) {
+            if (empty($identifiers)) {
                 $response['success'] = false;
-                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
+                if (!isset($response['message'])) {
+                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
+                }
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             } else {
-                // Load publication model
-                $publicationModel = JModelLegacy::getInstance( 'publication', 'IsbnregistryModel' );
-                // Get generated identifier
-                $identifier = $result[0];
                 // Update publication record
                 // TODO: if this operation fails, the identifier given to it should be freed. Now the identifier is left unused.
-                $updateSuccess = $publicationModel->updateIdentifier($publicationId, $publisherId, $identifier, strtoupper($this->getIdentifierType()));
+                $updateSuccess = $publicationModel->updateIdentifiers($publicationId, $publisherId, $identifiers, strtoupper($this->getIdentifierType()), $publicationFormat);
                 // Check if operation succeeded
                 if ($updateSuccess) {
                     $response['success'] = true;
                     $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_SUCCESS');
                     $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
-                    $response['publication_identifier'] = $identifier;
+                    $response['publication_identifiers'] = $identifiers;
                 } else {
                     // TODO: Updating publication failed, try to delete the generated identifier
                     $response['success'] = false;

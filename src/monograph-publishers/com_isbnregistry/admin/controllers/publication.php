@@ -25,10 +25,12 @@ class IsbnregistryControllerPublication extends JControllerForm {
 
         // http://{SITE}/administrator/?option=com_isbnregistry&task=publication.getPublicationsWithoutIdentifier&publisherId=1&type=(all|isbn|ismn)
         $mainframe = JFactory::getApplication();
+        // Get type parameter
+        $type = JRequest::getVar("type", null, "post", "string");
         try {
             // Get request parameters
             $publisherId = JRequest::getVar("publisherId", null, "post", "int");
-            $type = JRequest::getVar("type", null, "post", "string");
+            
             // Create response array
             $response = array();
             // Add request parameters to response
@@ -40,11 +42,11 @@ class IsbnregistryControllerPublication extends JControllerForm {
             // Check if the array exists
             if (!isset($result)) {
                 $response['success'] = false;
-                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_IDENTIFIERS_FAILED');
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_' . strtoupper($type) . '_IDENTIFIERS_FAILED');
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             } else {
                 $response['success'] = true;
-                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_IDENTIFIERS_SUCCESS');
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_' . strtoupper($type) . '_IDENTIFIERS_SUCCESS');
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
                 $response['publications'] = $result;
             }
@@ -58,7 +60,7 @@ class IsbnregistryControllerPublication extends JControllerForm {
         } catch (Exception $e) {
             http_response_code(500);
             $response['success'] = false;
-            $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_IDENTIFIERS_FAILED');
+            $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_' . strtoupper($type) . '_IDENTIFIERS_FAILED');
             $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             echo json_encode($response);
             if (!is_null($mainframe)) {

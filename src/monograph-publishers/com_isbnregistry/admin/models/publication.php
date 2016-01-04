@@ -109,9 +109,35 @@ class IsbnregistryModelPublication extends JModelAdmin {
         return $dao->getPublicationsWithoutIdentifier($publisherId, $type);
     }
 
-    public function updateIdentifier($publicationId, $publisherId, $identifier, $identifierType) {
+    /**
+     * Loads the publication format specified by the given id.
+     * @param integer $publicationId id of the publication to be fetched
+     * @return mixed publication format string or null
+     */
+    public function getPublicationFormat($publicationId) {
+        // Get DAO for db access
+        $dao = $this->getTable();
+        // Return result
+        return $dao->loadPublicationFormat($publicationId);
+    }
+
+    /**
+     * Updates publication identified by the given publication id. Only
+     * publication identifier(s) and publication identifier type are updated.
+     * @param integer $publicationId id of the publication to be updated
+     * @param integer $publisherId id of the publisher that owns the publication
+     * @param array $identifiers array of new identifier
+     * @param string $identifierType type of the identifier, "ISBN" or "ISMN"
+     * @param string $publicationFormat publication format
+     * @return boolean true on success
+     */
+    public function updateIdentifiers($publicationId, $publisherId, $identifiers, $identifierType, $publicationFormat) {
         // Check that identifier type is valid
         if (!$this->isValidIdentifierType($identifierType)) {
+            return false;
+        }
+        // Check that publication format is valid
+        if (!$this->isValidPublicationFormat($publicationFormat)) {
             return false;
         }
         // Check that publication does not have an identifier yet
@@ -122,7 +148,17 @@ class IsbnregistryModelPublication extends JModelAdmin {
         // Get DAO for db access
         $dao = $this->getTable();
         // Return result
-        return $dao->updateIdentifier($publicationId, $publisherId, $identifier, $identifierType);
+        return $dao->updateIdentifiers($publicationId, $publisherId, $identifiers, $identifierType, $publicationFormat);
+    }
+
+    /**
+     * Validates the given pubalication format. Valid values are "PRINT",
+     * "ELECTRONICAL" and "PRINT_ELECTRONICAL".
+     * @param string $format publication format to be validated
+     * @return boolean true if format is valid; otherwise false
+     */
+    private function isValidPublicationFormat($format) {
+        return preg_match('/^(PRINT|ELECTRONICAL|PRINT_ELECTRONICAL)$/', $format);
     }
 
     /**
@@ -145,11 +181,11 @@ class IsbnregistryModelPublication extends JModelAdmin {
         // Get DAO for db access
         $dao = $this->getTable();
         // Get object
-        $publicationIdentifier = $dao->loadPublicationIdentifier($publicationId);
+        $publication = $dao->loadPublicationIdentifier($publicationId);
 
         // If publication_identifier column length is 0, 
         // publication does not have an identifier yet
-        if ($publicationIdentifier == null || strlen($publicationIdentifier) == 0) {
+        if (empty($publication->publication_identifier_print) && empty($publication->publication_identifier_electronical)) {
             return false;
         }
         return true;

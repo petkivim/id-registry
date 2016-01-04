@@ -30,7 +30,7 @@ JFactory::getDocument()->addScriptDeclaration('
     };
 ');
 // If even one ISBN has been used, this item can't be modified
-if (strlen($this->item->publication_identifier) != 0) {
+if (!empty($this->item->publication_identifier_print) || !empty($this->item->publication_identifier_electronical)) {
     $this->form->setFieldAttribute('publisher_id', 'readonly', 'true');
 }
 ?>				
@@ -101,7 +101,8 @@ if (strlen($this->item->publication_identifier) != 0) {
                 <?php echo $this->form->renderField('subtitle'); ?>	
                 <?php echo $this->form->renderField('map_scale'); ?>
                 <?php echo $this->form->renderField('language'); ?>	
-                <?php echo $this->form->renderField('publication_identifier'); ?>					
+                <?php echo $this->form->renderField('publication_identifier_print'); ?>
+                <?php echo $this->form->renderField('publication_identifier_electronical'); ?>
                 <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED'); ?></h4>
                 <?php echo $this->form->renderField('year'); ?>	
                 <?php echo $this->form->renderField('month'); ?>

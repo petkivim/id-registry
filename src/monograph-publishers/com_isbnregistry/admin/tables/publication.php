@@ -99,7 +99,8 @@ class IsbnRegistryTablePublication extends JTable {
         $conditions = array(
             $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId),
             $this->_db->quoteName('no_identifier_granted') . ' = ' . $this->_db->quote(false),
-            $this->_db->quoteName('publication_identifier') . ' = ' . $this->_db->quote('')
+            $this->_db->quoteName('publication_identifier_print') . ' = ' . $this->_db->quote(''),
+            $this->_db->quoteName('publication_identifier_electronical') . ' = ' . $this->_db->quote('')
         );
 
         // Add conditions related to publication type
@@ -120,15 +121,16 @@ class IsbnRegistryTablePublication extends JTable {
     }
 
     /**
-     * Updates the publication identified by the given publication id. Only
-     * publication identifier and publication identifier type are updated.
+     * Updates publication identified by the given publication id. Only
+     * publication identifier(s) and publication identifier type are updated.
      * @param integer $publicationId id of the publication to be updated
      * @param integer $publisherId id of the publisher that owns the publication
-     * @param string $identifier new identifier
+     * @param array $identifiers array of new identifier
      * @param string $identifierType type of the identifier, "ISBN" or "ISMN"
+     * @param string $publicationFormat publication format
      * @return boolean true on success
      */
-    public function updateIdentifier($publicationId, $publisherId, $identifier, $identifierType) {
+    public function updateIdentifiers($publicationId, $publisherId, $identifiers, $identifierType, $publicationFormat) {
         // Conditions for which records should be updated.
         $conditions = array(
             'id' => $publicationId,
@@ -140,8 +142,17 @@ class IsbnRegistryTablePublication extends JTable {
             return false;
         }
 
-        // Update fields
-        $this->publication_identifier = $identifier;
+        // Update identifier(s)
+        if (strcmp($publicationFormat, 'PRINT') == 0) {
+            $this->publication_identifier_print = $identifiers[0];
+        } else if (strcmp($publicationFormat, 'ELECTRONICAL') == 0) {
+            $this->publication_identifier_electronical = $identifiers[0];
+        } else if (strcmp($publicationFormat, 'PRINT_ELECTRONICAL') == 0) {
+            $this->publication_identifier_print = $identifiers[0];
+            $this->publication_identifier_electronical = $identifiers[1];
+        }
+        
+        // Update identifier type
         $this->publication_identifier_type = $identifierType;
 
         // Update object to DB
@@ -149,15 +160,34 @@ class IsbnRegistryTablePublication extends JTable {
     }
 
     /**
-     * Loads the publication identifier specified by the given id.
+     * Loads publication identifiers specified by the given id.
      * @param integer $publicationId id of the publication to be fetched
-     * @return mixed publication identifier string or null
+     * @return Publication publication object holding 
+     * "publication_identifier_print" and "publication_identifier_electronical"
+     * attributes
      */
     public function loadPublicationIdentifier($publicationId) {
         // Database connection
         $query = $this->_db->getQuery(true);
         // Create query
-        $query->select('publication_identifier');
+        $query->select('publication_identifier_print, publication_identifier_electronical');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($publicationId));
+        $this->_db->setQuery($query);
+        // Return result
+        return $this->_db->loadObject();
+    }
+
+    /**
+     * Loads the publication format specified by the given id.
+     * @param integer $publicationId id of the publication to be fetched
+     * @return mixed publication format string or null
+     */
+    public function loadPublicationFormat($publicationId) {
+        // Database connection
+        $query = $this->_db->getQuery(true);
+        // Create query
+        $query->select('publication_format');
         $query->from($this->_db->quoteName($this->_tbl));
         $query->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($publicationId));
         $this->_db->setQuery($query);

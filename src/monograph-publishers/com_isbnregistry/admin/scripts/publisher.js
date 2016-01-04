@@ -349,7 +349,10 @@ jQuery(document).ready(function ($) {
                             loadPublisherIsbnRanges(type);
                             loadPublicationsWithoutIdentifier(type);
                             var link = '<a href="' + url + '?option=com_isbnregistry&view=publication&layout=edit&id=' + publicationId + '" target="new">';
-                            link += label + ' (' + data.publication_identifier + ')</a>';
+                            link += label + ' (' + data.publication_identifiers[0];
+                            link += data.publication_identifiers.length === 2 ? ', ' + data.publication_identifiers[1] : '';
+                            link += ')</a>';
+
                             $('#jform_link_to_publication_' + type).html(link);
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
