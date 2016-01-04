@@ -218,7 +218,7 @@ class Marc21RecordSerializer implements RecordSerializer {
                 // Add code
                 $buffer .= $subfield->getTag();
                 // Add data
-                $buffer .= $subfield->getData();
+                $buffer .= utf8_encode($subfield->getData());
             }
             // Add field terminator
             $buffer .= $this->fieldTerminator;
