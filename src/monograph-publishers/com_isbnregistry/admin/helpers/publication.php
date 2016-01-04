@@ -37,7 +37,7 @@ class PublicationHelper extends JHelperContent {
         $marc = "";
         if (strcmp($publication->publication_format, 'PRINT_ELECTRONICAL') == 0) {
             $marc = self::process($publication, "PRINT", $serializer);
-            if(!empty($spacer)) {
+            if (!empty($spacer)) {
                 $marc .= $spacer;
             }
             $marc .= self::process($publication, "ELECTRONICAL", $serializer);
@@ -80,7 +80,7 @@ class PublicationHelper extends JHelperContent {
         self::addField263($record, $publication);
         // Add 264 * 2
         self::addField264a($record, $publication);
-        self::addField264b($record, $publication);
+        self::addField264b($record, $publication, $format);
         // Add 336
         self::addField336($record, $publication);
         // Add 337
@@ -210,7 +210,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField245($record, $publication) {
-        $datafield = new DataField('245', '1', '_');
+        $datafield = new DataField('245', '1', '0');
         if (!self::contains($publication->role_1, 'AUTHOR')) {
             $datafield->setInd1('0');
             $datafield->setInd2('0');
@@ -260,11 +260,13 @@ class PublicationHelper extends JHelperContent {
         $record->addDataField($datafield);
     }
 
-    private static function addField264b($record, $publication) {
-        $datafield = new DataField('264', '_', '3');
-        $datafield->addSubfield(new Subfield('a', $publication->printing_house_city . ' :'));
-        $datafield->addSubfield(new Subfield('b', $publication->printing_house));
-        $record->addDataField($datafield);
+    private static function addField264b($record, $publication, $format) {
+        if (!self::isElectronical($format)) {
+            $datafield = new DataField('264', '_', '3');
+            $datafield->addSubfield(new Subfield('a', $publication->printing_house_city . ' :'));
+            $datafield->addSubfield(new Subfield('b', $publication->printing_house));
+            $record->addDataField($datafield);
+        }
     }
 
     private static function addField336($record, $publication) {
