@@ -41,16 +41,6 @@ class IsbnregistryViewPublication extends JViewLegacy {
             return false;
         }
 
-        // Generate MARC record if layout is "edit_generate_marc"
-        if (strcmp(htmlentities(JRequest::getVar('layout')), 'edit_generate_marc') == 0) {
-            // Add publications helper file
-            require_once JPATH_COMPONENT . '/helpers/publication.php';
-            // Generate MARC record
-            $marc = PublicationHelper::toMarc($this->item);
-            // Pass MARC record to the layout
-            $this->assignRef('marc', $marc);
-        }
-
         // Set the toolbar
         $this->addToolBar();
         // Add jQuery
@@ -85,16 +75,22 @@ class IsbnregistryViewPublication extends JViewLegacy {
         JToolbarHelper::apply('publication.apply');
         JToolBarHelper::save('publication.save');
         JToolbarHelper::save2new('publication.save2new');
+
+        if (!$isNew) {
+            // Add custom button for generating MARC record
+            $toolbar = JToolBar::getInstance('toolbar');
+            $layout = new JLayoutFile('joomla.toolbar.popup');
+
+            // Render the popup button
+            $dhtml = $layout->render(array('name' => 'generate-marc', 'text' => JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_PREVIEW_MARC'), 'class' => 'icon-book'));
+            $toolbar->appendButton('Custom', $dhtml);
+
+            JToolBarHelper::custom('publication.download', 'download', 'download', JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_DOWNLOAD_MARC'), false, false);
+        }
+
         JToolBarHelper::cancel(
                 'publication.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );
-        // Add custom button for generating MARC record
-        $toolbar = JToolBar::getInstance('toolbar');
-        $layout = new JLayoutFile('joomla.toolbar.popup');
-
-        // Render the popup button
-        $dhtml = $layout->render(array('name' => 'generate-marc', 'text' => JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_GENERATE_MARC'), 'class' => 'icon-book'));
-        $toolbar->appendButton('Custom', $dhtml);
     }
 
 }

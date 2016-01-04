@@ -44,6 +44,6 @@ jQuery(document).ready(function ($) {
     $("button[data-target='#modal-generate-marc']").click(function () {
         // Get publciation id
         var publication_id = $("#jform_id").val();
-        SqueezeBox.open(url + '?option=com_isbnregistry&task=publication.edit&id=' + publication_id + '&tmpl=component&layout=edit_generate_marc', {handler: 'iframe', size: {x: 800, y: 600}});
+        SqueezeBox.open(url + '?option=com_isbnregistry&view=publication&id=' + publication_id + '&layout=edit&format=preview', {handler: 'iframe', size: {x: 800, y: 600}});
     });
 });

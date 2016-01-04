@@ -30,7 +30,7 @@ class IsbnregistryControllerPublication extends JControllerForm {
         try {
             // Get request parameters
             $publisherId = JRequest::getVar("publisherId", null, "post", "int");
-            
+
             // Create response array
             $response = array();
             // Add request parameters to response
@@ -67,6 +67,14 @@ class IsbnregistryControllerPublication extends JControllerForm {
                 $mainframe->close();
             }
         }
+    }
+
+    public function download() {
+        // Get publication id
+        $id = $this->input->getInt('id');
+        // Redirect to raw format
+        $this->setRedirect('index.php?option=com_isbnregistry&view=publication&id=' . $id . '&layout=edit&format=raw');
+        $this->redirect();
     }
 
 }
