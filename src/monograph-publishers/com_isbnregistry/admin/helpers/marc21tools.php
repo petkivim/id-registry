@@ -226,7 +226,7 @@ class Marc21RecordSerializer implements RecordSerializer {
                 // Add code
                 $buffer .= $subfield->getTag();
                 // Add data
-                $buffer .= utf8_encode($subfield->getData());
+                $buffer .= $subfield->getData();
             }
             // Add field terminator
             $buffer .= $this->fieldTerminator;
@@ -234,9 +234,9 @@ class Marc21RecordSerializer implements RecordSerializer {
             // Field code
             $directory .= $field->getTag();
             // Field length - 4 character positions
-            $directory .= str_pad(mb_strlen($buffer, 'UTF-8'), 4, "0", STR_PAD_LEFT);
+            $directory .= str_pad(mb_strlen(utf8_encode($buffer), 'UTF-8'), 4, "0", STR_PAD_LEFT);
             // Starting character position - 5 positions
-            $directory .= str_pad(mb_strlen($data, 'UTF-8'), 5, "0", STR_PAD_LEFT);
+            $directory .= str_pad(mb_strlen(utf8_encode($data), 'UTF-8'), 5, "0", STR_PAD_LEFT);
             // Add data
             $data .= $buffer;
         }
@@ -260,7 +260,7 @@ class Marc21RecordSerializer implements RecordSerializer {
         // Update base address
         $marc21 = substr_replace($marc21, $base_str, 12, 5);
         // Calculate record length
-        $length = $base + mb_strlen($data, 'UTF-8');
+        $length = $base + mb_strlen(utf8_encode($data), 'UTF-8');
         // Record length - 5 character positions
         $length_str = str_pad($length, 5, "0", STR_PAD_LEFT);
         // Update record length
