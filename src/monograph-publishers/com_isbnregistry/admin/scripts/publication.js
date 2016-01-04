@@ -40,4 +40,10 @@ jQuery(document).ready(function ($) {
             $('#jform_link_to_publisher').html(publisher_link_label);
         }
     }
+
+    $("button[data-target='#modal-generate-marc']").click(function () {
+        // Get publciation id
+        var publication_id = $("#jform_id").val();
+        SqueezeBox.open(url + '?option=com_isbnregistry&task=publication.edit&id=' + publication_id + '&tmpl=component&layout=edit_generate_marc', {handler: 'iframe', size: {x: 800, y: 600}});
+    });
 });

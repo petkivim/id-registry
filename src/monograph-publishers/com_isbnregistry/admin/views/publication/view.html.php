@@ -18,10 +18,8 @@ defined('_JEXEC') or die('Restricted access');
 class IsbnregistryViewPublication extends JViewLegacy {
 
     protected $form = null;
-
-	protected $item = null;
-
-	protected $state = null;
+    protected $item = null;
+    protected $state = null;
 
     /**
      * Display the Publication view
@@ -34,7 +32,7 @@ class IsbnregistryViewPublication extends JViewLegacy {
         // Get the Data
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-		$this->state = $this->get('State');
+        $this->state = $this->get('State');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
@@ -43,11 +41,20 @@ class IsbnregistryViewPublication extends JViewLegacy {
             return false;
         }
 
+        // Generate MARC record if layout is "edit_generate_marc"
+        if (strcmp(htmlentities(JRequest::getVar('layout')), 'edit_generate_marc') == 0) {
+            // Add publications helper file
+            require_once JPATH_COMPONENT . '/helpers/publication.php';
+            // Generate MARC record
+            $marc = PublicationHelper::toMarc($this->item);
+            // Pass MARC record to the layout
+            $this->assignRef('marc', $marc);
+        }
 
         // Set the toolbar
         $this->addToolBar();
-		// Add jQuery
-		JHtml::_('jquery.framework');
+        // Add jQuery
+        JHtml::_('jquery.framework');
         // Display the template
         parent::display($tpl);
     }
@@ -71,7 +78,7 @@ class IsbnregistryViewPublication extends JViewLegacy {
             $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_NEW');
         } else {
             $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_EDIT');
-			$title .= ' : ' . $this->item->title;
+            $title .= ' : ' . $this->item->title;
         }
 
         JToolBarHelper::title($title, 'publication');
@@ -81,6 +88,13 @@ class IsbnregistryViewPublication extends JViewLegacy {
         JToolBarHelper::cancel(
                 'publication.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );
+        // Add custom button for generating MARC record
+        $toolbar = JToolBar::getInstance('toolbar');
+        $layout = new JLayoutFile('joomla.toolbar.popup');
+
+        // Render the popup button
+        $dhtml = $layout->render(array('name' => 'generate-marc', 'text' => JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_GENERATE_MARC'), 'class' => 'icon-book'));
+        $toolbar->appendButton('Custom', $dhtml);
     }
 
 }
