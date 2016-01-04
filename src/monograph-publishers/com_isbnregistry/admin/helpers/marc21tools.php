@@ -124,8 +124,16 @@ class DataField extends Field {
         return $this->ind1;
     }
 
+    public function setInd1($value) {
+        $this->ind1 = $value;
+    }
+
     public function getInd2() {
         return $this->ind2;
+    }
+
+    public function setInd2($value) {
+        $this->ind2 = $value;
     }
 
     public function getSubfields() {
