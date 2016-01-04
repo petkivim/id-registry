@@ -18,18 +18,36 @@ require_once JPATH_COMPONENT . '/helpers/marc21tools.php';
  */
 class PublicationHelper extends JHelperContent {
 
-    public static function toMarc($publication) {
+    public static function previewMarc($publication) {
+        // Create serializer
+        $serializer = new Marc21PreviewSerializer();
+        // Generate MARC
+        return self::toMarc($publication, $serializer, "\n");
+    }
+
+    public static function rawMarc($publication) {
+        // Create serializer
+        $serializer = new Marc21RecordSerializer();
+        // Generate MARC
+        return self::toMarc($publication, $serializer);
+    }
+
+    private static function toMarc($publication, $serializer, $spacer = '') {
+        // Create variable for MARC record(s)
         $marc = "";
         if (strcmp($publication->publication_format, 'PRINT_ELECTRONICAL') == 0) {
-            $marc = self::process($publication, "PRINT");
-            $marc .= self::process($publication, "ELECTRONICAL");
+            $marc = self::process($publication, "PRINT", $serializer);
+            if(!empty($spacer)) {
+                $marc .= $spacer;
+            }
+            $marc .= self::process($publication, "ELECTRONICAL", $serializer);
         } else {
-            $marc = self::process($publication, $publication->publication_format);
+            $marc = self::process($publication, $publication->publication_format, $serializer);
         }
         return $marc;
     }
 
-    private static function process($publication, $format) {
+    private static function process($publication, $format, $serializer) {
         $record = new MARCRecord();
         // Set leader
         $record->setLeader(self::getLeader());
@@ -44,6 +62,8 @@ class PublicationHelper extends JHelperContent {
         // Add data fields
         // Add 020
         self::addField020($record, $publication, $format);
+        // Add 024
+        self::addField024($record, $publication, $format);
         // Add 040
         self::addField040($record);
         // Add 041
@@ -81,8 +101,6 @@ class PublicationHelper extends JHelperContent {
         // Add 700
         self::addField700($record, $publication);
 
-        // Create serializer
-        $serializer = new Marc21RecordSerializer();
         // Serialize record
         return $serializer->serialize($record);
     }
@@ -147,7 +165,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField024($record, $publication, $format) {
-        if (!self::isMusic($publication->publication_type)) {
+        if (self::isMusic($publication->publication_type)) {
             $datafield = new DataField('024', '2', '_');
             if (!self::isElectronical($format)) {
                 $datafield->addSubfield(new Subfield('a', $publication->publication_identifier_print));
@@ -177,7 +195,7 @@ class PublicationHelper extends JHelperContent {
     private static function addField041($record, $publication) {
         if (!empty($publication->language)) {
             $datafield = new DataField('041', '0', '_');
-            $datafield->addSubfield(new Subfield('a', $publication->language));
+            $datafield->addSubfield(new Subfield('a', strtolower($publication->language)));
             $record->addDataField($datafield);
         }
     }

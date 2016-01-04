@@ -32,7 +32,7 @@ class IsbnregistryViewPublication extends JViewLegacy {
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publication.php';
         // Generate MARC record
-        $marc = PublicationHelper::toMarc($this->item);
+        $marc = PublicationHelper::previewMarc($this->item);
 
 
         // Set document properties

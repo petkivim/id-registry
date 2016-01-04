@@ -271,4 +271,47 @@ class Marc21RecordSerializer implements RecordSerializer {
 
 }
 
+/**
+ * The Marc21PreviewSerializer class implements RecordSerializer interface 
+ * and it can be used for previewing MARC records. It returns the records
+ * in a human readable format.
+ */
+class Marc21PreviewSerializer implements RecordSerializer {
+
+    /**
+     * Converts the given record to a human readable format.
+     * @param MARCRecord $record MARC record to be serialized
+     * @return String Record in a human readable format
+     */
+    public function serialize($record) {
+        // Add leader
+        $marc = 'LDR    ' . $record->getLeader() . "\n";
+        // Go through control fields
+        foreach ($record->getControlFields() as $field) {
+            // Field code
+            $marc .= $field->getTag() . '    ';
+            // Field data
+            $marc .= $field->getData() . "\n";
+        }
+        // Go through all the data fields
+        foreach ($record->getDataFields() as $field) {
+            // Field code
+            $marc .= $field->getTag() . ' ';
+            // Add indicators
+            $marc .= $field->getInd1();
+            $marc .= $field->getInd2() . ' ';
+            foreach ($field->getSubfields() as $subfield) {
+                // Add code
+                $marc .= '$' . $subfield->getTag() . ' ';
+                // Add data
+                $marc .= $subfield->getData() . ' ';
+            }
+            $marc .= "\n";
+        }
+        // Return result
+        return $marc;
+    }
+
+}
+
 ?>
