@@ -37,6 +37,9 @@ class PublishersHelper extends JHelperContent {
         );		
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_ISMN_RANGES'), 'index.php?option=com_isbnregistry&view=ismnranges', $vName == 'ismnranges'
+        );	
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISBNREGISTRY_SUBMENU_MESSAGE_TYPES'), 'index.php?option=com_isbnregistry&view=messagetypes', $vName == 'messagetypes'
         );			
     }
 
