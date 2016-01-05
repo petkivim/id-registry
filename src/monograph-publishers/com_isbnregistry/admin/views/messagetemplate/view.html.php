@@ -4,22 +4,24 @@
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
  * @author 		Petteri Kivimäki
- * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
+ * @copyright	Copyright (C) 2016 Petteri Kivimäki. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Publisher View
+ * Message template View
  *
  * @since  1.0.0
  */
-class IsbnregistryViewPublisher extends JViewLegacy {
+class IsbnregistryViewMessagetemplate extends JViewLegacy {
 
     protected $form = null;
-    protected $item = null;
-    protected $state = null;
+
+	protected $item = null;
+
+	protected $state = null;
 
     /**
      * Display the Publisher view
@@ -32,7 +34,7 @@ class IsbnregistryViewPublisher extends JViewLegacy {
         // Get the Data
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-        $this->state = $this->get('State');
+		$this->state = $this->get('State');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
@@ -44,8 +46,8 @@ class IsbnregistryViewPublisher extends JViewLegacy {
 
         // Set the toolbar
         $this->addToolBar();
-        // Add jQuery
-        JHtml::_('jquery.framework');
+		// Add jQuery
+		JHtml::_('jquery.framework');
         // Display the template
         parent::display($tpl);
     }
@@ -66,18 +68,18 @@ class IsbnregistryViewPublisher extends JViewLegacy {
         $isNew = ($this->item->id == 0);
 
         if ($isNew) {
-            $title = JText::_('COM_ISBNREGISTRY_PUBLISHER_NEW');
+            $title = JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATE_NEW');
         } else {
-            $title = JText::_('COM_ISBNREGISTRY_PUBLISHER_EDIT');
-            $title .= ' : ' . $this->item->official_name;
+            $title = JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATE_EDIT');
+            $title .= ' : ' . $this->item->name;
         }
 
-        JToolBarHelper::title($title, 'publisher');
-        JToolbarHelper::apply('publisher.apply');
-        JToolBarHelper::save('publisher.save');
-        JToolbarHelper::save2new('publisher.save2new');
+        JToolBarHelper::title($title, 'messagetemplate');
+        JToolbarHelper::apply('messagetemplate.apply');
+        JToolBarHelper::save('messagetemplate.save');
+        JToolbarHelper::save2new('messagetemplate.save2new');
         JToolBarHelper::cancel(
-                'publisher.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
+                'messagetemplate.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );
     }
 

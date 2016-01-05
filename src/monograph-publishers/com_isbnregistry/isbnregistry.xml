@@ -52,6 +52,7 @@
             <menu link="option=com_isbnregistry&amp;view=publications" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS</menu>
 			<menu link="option=com_isbnregistry&amp;view=isbnranges" view="isbnranges" img="class:isbnranges">COM_ISBNREGISTRY_SUBMENU_ISBN_RANGES</menu>
 			<menu link="option=com_isbnregistry&amp;view=ismnranges" view="ismnranges" img="class:ismnranges">COM_ISBNREGISTRY_SUBMENU_ISMN_RANGES</menu>
+			<menu link="option=com_isbnregistry&amp;view=messagetemplates" view="messagetemplates" img="class:messagetemplates">COM_ISBNREGISTRY_SUBMENU_MESSAGE_TEMPLATES</menu>
 			<menu link="option=com_isbnregistry&amp;view=messagetypes" view="messagetypes" img="class:messagetypes">COM_ISBNREGISTRY_SUBMENU_MESSAGE_TYPES</menu>
         </submenu>
 

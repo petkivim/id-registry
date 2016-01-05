@@ -18,10 +18,8 @@ defined('_JEXEC') or die('Restricted access');
 class IsbnregistryViewMessagetype extends JViewLegacy {
 
     protected $form = null;
-
-	protected $item = null;
-
-	protected $state = null;
+    protected $item = null;
+    protected $state = null;
 
     /**
      * Display the Publisher view
@@ -34,7 +32,7 @@ class IsbnregistryViewMessagetype extends JViewLegacy {
         // Get the Data
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-		$this->state = $this->get('State');
+        $this->state = $this->get('State');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
@@ -46,8 +44,8 @@ class IsbnregistryViewMessagetype extends JViewLegacy {
 
         // Set the toolbar
         $this->addToolBar();
-		// Add jQuery
-		JHtml::_('jquery.framework');
+        // Add jQuery
+        JHtml::_('jquery.framework');
         // Display the template
         parent::display($tpl);
     }
@@ -71,6 +69,7 @@ class IsbnregistryViewMessagetype extends JViewLegacy {
             $title = JText::_('COM_ISBNREGISTRY_MESSAGE_TYPE_NEW');
         } else {
             $title = JText::_('COM_ISBNREGISTRY_MESSAGE_TYPE_EDIT');
+            $title .= ' : ' . $this->item->name;
         }
 
         JToolBarHelper::title($title, 'messagetype');

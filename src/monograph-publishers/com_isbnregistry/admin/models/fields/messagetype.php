@@ -34,7 +34,7 @@ class JFormFieldMessagetype extends JFormFieldList {
     protected function getOptions() {
         $db = JFactory::getDBO();
         $query = $db->getQuery(true);
-        $query->select('id,official_name');
+        $query->select('id,name');
         $query->from('#__isbn_registry_message_type');
 		$query->order('name ASC');
         $db->setQuery((string) $query);

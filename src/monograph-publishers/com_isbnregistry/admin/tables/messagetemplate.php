@@ -11,11 +11,11 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Message type Table class
+ * Message template Table class
  *
  * @since  1.0.0
  */
-class IsbnRegistryTableMessagetype extends JTable {
+class IsbnRegistryTableMessagetemplate extends JTable {
 
     /**
      * Constructor
@@ -23,7 +23,7 @@ class IsbnRegistryTableMessagetype extends JTable {
      * @param   JDatabaseDriver  &$db  A database connector object
      */
     function __construct(&$db) {
-        parent::__construct('#__isbn_registry_message_type', 'id', $db);
+        parent::__construct('#__isbn_registry_message_template', 'id', $db);
     }
 
     /**
@@ -63,24 +63,6 @@ class IsbnRegistryTableMessagetype extends JTable {
     public function delete($pk = null) {
 
         return parent::delete($pk);
-    }
-
-    /**
-     * Returns a list of message type objects that contains all the message
-     * types in the database. Only id and name attributes are loaded.
-     * @return list list of message type objects
-     */
-    public function getMessageTypes() {
-        // Initialize variables.
-        $query = $this->_db->getQuery(true);
-
-        // Create the query
-        $query->select('id, name')
-                ->from($this->_db->quoteName($this->_tbl))
-                ->order('name ASC');
-        $this->_db->setQuery($query);
-        // Execute query
-        return $this->_db->loadObjectList();
     }
 
 }

@@ -11,11 +11,11 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Message type Model
+ * Message template Model
  *
  * @since  1.0.0
  */
-class IsbnregistryModelMessagetype extends JModelAdmin {
+class IsbnregistryModelMessagetemplate extends JModelAdmin {
 
     /**
      * Method to get a table object, load it if necessary.
@@ -28,7 +28,7 @@ class IsbnregistryModelMessagetype extends JModelAdmin {
      *
      * @since   1.6
      */
-    public function getTable($type = 'Messagetype', $prefix = 'IsbnregistryTable', $config = array()) {
+    public function getTable($type = 'Messagetemplate', $prefix = 'IsbnregistryTable', $config = array()) {
         return JTable::getInstance($type, $prefix, $config);
     }
 
@@ -45,7 +45,7 @@ class IsbnregistryModelMessagetype extends JModelAdmin {
     public function getForm($data = array(), $loadData = true) {
         // Get the form.
         $form = $this->loadForm(
-                'com_isbnregistry.messagetype', 'messagetype', array(
+                'com_isbnregistry.messagetemplate', 'messagetemplate', array(
             'control' => 'jform', 'load_data' => $loadData
                 )
         );
@@ -67,7 +67,7 @@ class IsbnregistryModelMessagetype extends JModelAdmin {
     protected function loadFormData() {
         // Check the session for previously entered form data.
         $data = JFactory::getApplication()->getUserState(
-                'com_isbnregistry.edit.messagetype.data', array()
+                'com_isbnregistry.edit.messagetemplate.data', array()
         );
 
         if (empty($data)) {
@@ -75,26 +75,6 @@ class IsbnregistryModelMessagetype extends JModelAdmin {
         }
 
         return $data;
-    }
-
-    /**
-     * Returns an associative array that contains all the message types
-     * in the database as key-value pairs. Id is the key and name is the value.
-     * @return array associative array
-     */
-    public function getMessageTypesHash() {
-        // Get DAO for db access
-        $dao = $this->getTable();
-        // Get types
-        $types = $dao->getMessageTypes();
-        // Array for results
-        $results = array();
-        // Loop through the types
-        foreach ($types as $type) {
-            $results[$type->id] = $type->name;
-        }
-        // Return results
-        return $results;
     }
 
 }

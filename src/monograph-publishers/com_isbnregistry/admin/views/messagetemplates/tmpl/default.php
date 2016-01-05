@@ -9,9 +9,9 @@
 defined('_JEXEC') or die('Restricted Access');
 // Load styles
 $document = JFactory::getDocument();
-$document->addStyleSheet("components/com_isbnregistry/css/messagetype.css");
+$document->addStyleSheet("components/com_isbnregistry/css/messagetemplate.css");
 ?>
-<form action="index.php?option=com_isbnregistry&view=messagetypes" method="post" id="adminForm" name="adminForm">
+<form action="index.php?option=com_isbnregistry&view=messagetemplates" method="post" id="adminForm" name="adminForm">
     <div id="j-sidebar-container" class="span2">
         <?php echo $this->sidebar; ?>
     </div>
@@ -19,18 +19,21 @@ $document->addStyleSheet("components/com_isbnregistry/css/messagetype.css");
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th width="1%"><?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TYPES_NUM'); ?></th>
+                    <th width="1%"><?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATES_NUM'); ?></th>
                     <th width="2%">
                         <?php echo JHtml::_('grid.checkall'); ?>
                     </th>
                     <th width="25%">
-                        <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TYPES_NAME'); ?>
+                        <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATES_NAME'); ?>
                     </th>	
-                    <th width="70%">
-                        <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TYPES_DESCRIPTION'); ?>
-                    </th>						
+                    <th width="25%">
+                        <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATES_MESSAGE_TYPE'); ?>
+                    </th>		
+                    <th width="25%">
+                        <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATES_LANGUAGE'); ?>
+                    </th>											
                     <th width="2%">
-                        <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TYPES_ID'); ?>
+                        <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATES_ID'); ?>
                     </th>
                 </tr>
             </thead>
@@ -45,23 +48,24 @@ $document->addStyleSheet("components/com_isbnregistry/css/messagetype.css");
                 <?php if (!empty($this->items)) : ?>
                     <?php
                     foreach ($this->items as $i => $row) :
-                        $link = JRoute::_('index.php?option=com_isbnregistry&task=messagetype.edit&id=' . $row->id);
+                        $link = JRoute::_('index.php?option=com_isbnregistry&task=messagetemplate.edit&id=' . $row->id);
                         ?>
                         <tr>
                             <td><?php echo $this->pagination->getRowOffset($i); ?></td>
                             <td>
                                 <?php echo JHtml::_('grid.id', $i, $row->id); ?>
                             </td>
-                            <td>
-                                <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_MESSAGE_TYPE'); ?>">
+							<td>
+                                <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_MESSAGE_TEMPLATE'); ?>">
                                     <?php echo $row->name; ?>
                                 </a>
                             </td>   
-                            <td>
-                                <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_MESSAGE_TYPE'); ?>">
-                                    <?php echo (strlen($row->description) > 50 ? substr($row->description, 0, 47) . '...' : $row->description); ?>
-                                </a>
-                            </td> 							
+							<td>
+                                <?php echo $row->message_type_id; ?>
+                            </td>  
+							<td>
+                                <?php echo $this->types[$row->lang_code]; ?>
+                            </td>  							
                             <td align="center">
                                 <?php echo $row->id; ?>
                             </td>
