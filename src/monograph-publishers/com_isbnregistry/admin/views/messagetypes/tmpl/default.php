@@ -7,6 +7,9 @@
  */
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
+// Load styles
+$document = JFactory::getDocument();
+$document->addStyleSheet("components/com_isbnregistry/css/ismnrange.css");
 ?>
 <form action="index.php?option=com_isbnregistry&view=messagetypes" method="post" id="adminForm" name="adminForm">
     <div id="j-sidebar-container" class="span2">
