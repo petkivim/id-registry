@@ -257,6 +257,8 @@ AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
 
+DROP TABLE IF EXISTS `#__isbn_registry_message_type`;
+
 CREATE TABLE `#__isbn_registry_message_type` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
