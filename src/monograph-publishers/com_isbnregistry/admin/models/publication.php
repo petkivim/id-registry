@@ -134,14 +134,17 @@ class IsbnregistryModelPublication extends JModelAdmin {
     public function updateIdentifiers($publicationId, $publisherId, $identifiers, $identifierType, $publicationFormat) {
         // Check that identifier type is valid
         if (!$this->isValidIdentifierType($identifierType)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLICATION_INVALID_IDENTIFIER_TYPE'));
             return false;
         }
         // Check that publication format is valid
         if (!$this->isValidPublicationFormat($publicationFormat)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLICATION_INVALID_PUBLICATION_FORMAT'));
             return false;
         }
         // Check that publication does not have an identifier yet
         if ($this->hasIdentifier($publicationId)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLICATION_HAS_IDENTIFIER'));
             return false;
         }
 
