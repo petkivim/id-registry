@@ -49,10 +49,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             } else {
                 $response['success'] = false;
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_' . strtoupper($this->getIdentifierType()) . '_RANGE_ACTIVATION_FAILED');
                 if ($model->getError()) {
-                    $response['message'] = $model->getError();
-                } else {
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_' . strtoupper($this->getIdentifierType()) . '_RANGE_ACTIVATION_FAILED');
+                    $response['message'] .= ' ' . $model->getError();
                 }
             }
 
@@ -134,10 +133,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
             } else {
                 $response['success'] = false;
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_' . strtoupper($this->getIdentifierType()) . '_RANGE_FAILED');
                 if ($model->getError()) {
-                    $response['message'] = $model->getError();
-                } else {
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_' . strtoupper($this->getIdentifierType()) . '_RANGE_FAILED');
+                    $response['message'] .= ' ' . $model->getError();
                 }
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             }
@@ -185,10 +183,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             // Check if the array is empty
             if (empty($result)) {
                 $response['success'] = false;
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBERS_FAILED');
                 if ($model->getError()) {
-                    $response['message'] = $model->getError();
-                } else {
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBERS_FAILED');
+                    $response['message'] .= ' ' . $model->getError();
                 }
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             } else {
@@ -271,10 +268,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 } else {
                     // TODO: Updating publication failed, try to delete the generated identifier
                     $response['success'] = false;
+                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
                     if ($publicationModel->getError()) {
-                        $response['message'] = $publicationModel->getError();
-                    } else {
-                        $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
+                        $response['message'] .= ' ' . $publicationModel->getError();
                     }
                     $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
                 }

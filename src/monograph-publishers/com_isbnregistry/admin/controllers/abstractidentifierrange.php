@@ -44,12 +44,11 @@ abstract class IsbnregistryControllerAbstractIdentifierRange extends JController
             // Genrate response
             $response['success'] = $result == 0 ? false : true;
             if ($result == 0) {
-                if ($model->getError()) {
-                    $response['message'] = $model->getError();
-                } else {
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_RANGE_FAILED');
-                }              
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_RANGE_FAILED');
+                if ($model->getError()) {
+                    $response['message'] .= ' ' . $model->getError();
+                }
             } else {
                 $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_RANGE_SUCCESS');
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');

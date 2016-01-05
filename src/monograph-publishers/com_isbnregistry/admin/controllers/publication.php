@@ -44,11 +44,10 @@ class IsbnregistryControllerPublication extends JControllerForm {
             // Check if the array exists
             if (!isset($result)) {
                 $response['success'] = false;
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_' . strtoupper($type) . '_IDENTIFIERS_FAILED');
                 if ($model->getError()) {
-                    $response['message'] = $model->getError();
-                } else {
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_' . strtoupper($type) . '_IDENTIFIERS_FAILED');
-                }
+                    $response['message'] .= ' ' . $model->getError();
+                } 
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             } else {
                 $response['success'] = true;
