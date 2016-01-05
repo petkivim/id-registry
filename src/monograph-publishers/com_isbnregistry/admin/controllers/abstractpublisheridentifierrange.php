@@ -38,12 +38,23 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             // Create response array
             $response = array();
 
+            // Get model
+            $model = $this->getModel();
             // Get new publisher identifier
-            $result = $this->getModel()->activateRange($publisherId, $publisherRangeId);
-
-            $response['success'] = $result;
-            $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_' . strtoupper($this->getIdentifierType()) . '_RANGE_ACTIVATION_SUCCESS');
-            $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
+            $result = $model->activateRange($publisherId, $publisherRangeId);
+            if ($result) {
+                $response['success'] = true;
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_' . strtoupper($this->getIdentifierType()) . '_RANGE_ACTIVATION_SUCCESS');
+                $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
+            } else {
+                $response['success'] = false;
+                $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
+                if ($model->getError()) {
+                    $response['message'] = $model->getError();
+                } else {
+                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_' . strtoupper($this->getIdentifierType()) . '_RANGE_ACTIVATION_FAILED');
+                }
+            }
 
             // Return results in JSON
             echo json_encode($response);
@@ -75,8 +86,10 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             // Get request parameters
             $publisherId = JRequest::getVar("publisherId", null, "post", "int");
 
+            // Get model
+            $model = $this->getModel();
             // Get new publisher identifier
-            $result = $this->getModel()->getPublisherIdentifiers($publisherId);
+            $result = $model->getPublisherIdentifiers($publisherId);
 
             // Return results in JSON
             echo json_encode($result);
@@ -109,8 +122,10 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             // Add request parameters to response
             $response["publisherRangeId"] = $publisherRangeId;
 
+            // Get model
+            $model = $this->getModel();
             // Delete the given identifier range
-            $result = $this->getModel()->deleteRange($publisherRangeId);
+            $result = $model->deleteRange($publisherRangeId);
 
             // Check if the result is OK and genrate response
             if ($result) {
@@ -119,7 +134,11 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
             } else {
                 $response['success'] = false;
-                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_' . strtoupper($this->getIdentifierType()) . '_RANGE_FAILED');
+                if ($model->getError()) {
+                    $response['message'] = $model->getError();
+                } else {
+                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_' . strtoupper($this->getIdentifierType()) . '_RANGE_FAILED');
+                }
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             }
             // Set the MIME type for JSON output.
@@ -158,13 +177,19 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             $response["publisherId"] = $publisherId;
             $response["count"] = $count;
 
+            // Get model
+            $model = $this->getModel();
             // Get array of ISBN numbers
-            $result = $this->getModel()->generateIdentifiers($publisherId, $count);
+            $result = $model->generateIdentifiers($publisherId, $count);
 
             // Check if the array is empty
             if (empty($result)) {
                 $response['success'] = false;
-                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBERS_FAILED');
+                if ($model->getError()) {
+                    $response['message'] = $model->getError();
+                } else {
+                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBERS_FAILED');
+                }
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             } else {
                 $response['success'] = true;
@@ -207,6 +232,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             $response["publisherId"] = $publisherId;
             $response["publicationId"] = $publicationId;
 
+            // Get model
+            $model = $this->getModel();
+
             // Init array for results
             $identifiers = array();
             // Load publication model
@@ -218,7 +246,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 // Get identifiers count - if 'PRINT_ELECTRONICAL' 2 identifiers are needed
                 $count = strcmp($publicationFormat, 'PRINT_ELECTRONICAL') == 0 ? 2 : 1;
                 // Get array of identifiers numbers
-                $identifiers = $this->getModel()->generateIdentifiers($publisherId, $count);
+                $identifiers = $model->generateIdentifiers($publisherId, $count);
             } else {
                 // Set specific error message
                 $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED_NO_FORMAT');
@@ -243,7 +271,11 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 } else {
                     // TODO: Updating publication failed, try to delete the generated identifier
                     $response['success'] = false;
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
+                    if ($publicationModel->getError()) {
+                        $response['message'] = $publicationModel->getError();
+                    } else {
+                        $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
+                    }
                     $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
                 }
             }

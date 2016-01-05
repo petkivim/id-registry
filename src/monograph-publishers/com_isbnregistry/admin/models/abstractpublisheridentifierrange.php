@@ -78,6 +78,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         // Check that no other identifiers have been given from the same range 
         // since this one
         if (!$rangeModel->canDeleteIdentifier($this->getRangeId($publisherRange), $publisherRange->publisher_identifier)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_DELETE_FAILED_NOT_LATEST'));
             return false;
         }
 
@@ -85,6 +86,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         $dao = $this->getTable();
         // Return false if deleting the object failed
         if (!$dao->deleteRange($publisherRangeId)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_DELETE_FROM_DB_FAILED'));
             return false;
         }
         // Update the ISBN range accordingly
@@ -112,6 +114,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         if (strcmp($result->range_begin, $result->next) == 0) {
             return $result;
         }
+        $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_POINTER_NOT_ZERO'));
         // Otherwise the item can't be deleted
         return null;
     }
@@ -137,6 +140,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         if ($publisherRange) {
             // Check there are enough free numbers
             if ($publisherRange->free < $count) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_NOT_ENOUGH_FREE_IDENTIFIERS'));
                 // If not enough free numbers, return an empty array
                 return $resultsArray;
             }
@@ -178,6 +182,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 return array();
             }
         }
+        $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_PUBLISHER_HAS_NO_RANGE'));
         return $resultsArray;
     }
 
