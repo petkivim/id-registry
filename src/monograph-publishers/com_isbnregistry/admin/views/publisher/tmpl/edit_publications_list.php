@@ -8,5 +8,7 @@
  */
 // No direct access
 defined('_JEXEC') or die('Restricted access');
+if($this->item->id > 0) :
 ?>
 <iframe src="index.php?option=com_isbnregistry&view=publications&publisherId=<?php echo $this->item->id; ?>&tmpl=component&layout=embed" frameborder="0" height="400" width="80%"></iframe>
+<?php endif; ?>
