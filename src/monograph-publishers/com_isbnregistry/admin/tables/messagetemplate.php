@@ -60,9 +60,67 @@ class IsbnRegistryTableMessagetemplate extends JTable {
         return parent::store($updateNulls);
     }
 
+    /**
+     * Deletes a message template.
+     *
+     * @param   integer  $pk  Primary key of the message template to be deleted.
+     *
+     * @return  boolean  True on success, false on failure.
+     *
+     */
     public function delete($pk = null) {
-
+        // Add configuration helper file
+        require_once JPATH_COMPONENT . '/helpers/configuration.php';
+        // If message template's message type is defined as default in 
+        // configuration, it cannot be removed
+        if (ConfigurationHelper::isMessageTypeUsedInConfiguration($this->message_type_id)) {
+            // Raise a warning
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATE_DELETE_FAILED_SETTINGS'), 'warning');
+            // Return false as the item can't be deleted
+            return false;
+        }
+        // No ISBNs have been used, delete the item
         return parent::delete($pk);
+    }
+
+    /**
+     * Returns a list of message template objects that contains all the message
+     * templates in the database. Only id, name, message_type_id and lang_code 
+     * attributes are loaded.
+     * @return list list of message template objects
+     */
+    public function getMessageTemplates() {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('id, name, message_type_id, lang_code')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->order('name ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Returns the number of message templates that represent the message
+     * type identified by the given message type id.
+     * @param int $messageTypeId id of the message type
+     * @return int number of message templates
+     */
+    public function getMessageTemplatesCountByMessageType($messageTypeId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('count(id)')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('message_type_id') . ' = ' . $this->_db->quote($messageTypeId))
+                ->order('name ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadResult();
+        ;
     }
 
 }

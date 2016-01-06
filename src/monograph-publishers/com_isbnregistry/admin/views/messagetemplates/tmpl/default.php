@@ -61,10 +61,10 @@ $document->addStyleSheet("components/com_isbnregistry/css/messagetemplate.css");
                                 </a>
                             </td>   
 							<td>
-                                <?php echo $row->message_type_id; ?>
+                                <?php echo $this->types[$row->message_type_id]; ?>
                             </td>  
 							<td>
-                                <?php echo $this->types[$row->lang_code]; ?>
+                                <?php echo $row->lang_code; ?>
                             </td>  							
                             <td align="center">
                                 <?php echo $row->id; ?>

@@ -60,8 +60,37 @@ class IsbnRegistryTableMessagetype extends JTable {
         return parent::store($updateNulls);
     }
 
+    /**
+     * Deletes a message type.
+     *
+     * @param   integer  $pk  Primary key of the message type to be deleted.
+     *
+     * @return  boolean  True on success, false on failure.
+     *
+     */
     public function delete($pk = null) {
+        // Add configuration helper file
+        require_once JPATH_COMPONENT . '/helpers/configuration.php';
+        // If message type is defined as default in configuration, it cannot be removed
+        if (ConfigurationHelper::isMessageTypeUsedInConfiguration($this->id)) {
+            // Raise a warning
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_MESSAGE_TYPE_DELETE_FAILED_SETTINGS'), 'warning');
+            // Return false as the item can't be deleted
+            return false;
+        }
+        // Load message template model
+        $messageTemplateModel = JModelLegacy::getInstance('messagetemplate', 'IsbnregistryModel');
+        // Get number of templates that use this message type
+        $templateCount = $messageTemplateModel->getMessageTemplatesCountByMessageType($this->id);
+        // If template count is not zero, message type cannot be deleted
+        if ($templateCount != 0) {
+            // Raise a warning
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_MESSAGE_TYPE_DELETE_FAILED_USED'), 'warning');
+            // Return false as the item can't be deleted
+            return false;
+        }
 
+        // No ISBNs have been used, delete the item
         return parent::delete($pk);
     }
 
@@ -80,6 +109,24 @@ class IsbnRegistryTableMessagetype extends JTable {
                 ->order('name ASC');
         $this->_db->setQuery($query);
         // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Returns an array that contains all the installed languages. Only lang_id
+     * and lang_code attributes are loaded.
+     * @return array installed languages
+     */
+    public function getInstalledLanguages() {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('lang_id, lang_code')
+                ->from($this->_db->quoteName('#__languages'))
+                ->order('lang_code ASC');
+        $this->_db->setQuery($query);
+
         return $this->_db->loadObjectList();
     }
 

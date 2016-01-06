@@ -81,6 +81,8 @@
             <folder>scripts</folder>
             <!-- css files section -->
             <folder>css</folder>
+			<!-- XML config file -->
+			<filename>config.xml</filename>
         </files>
         <languages folder="admin/language">
             <language tag="en-GB">en-GB/en-GB.com_isbnregistry.ini</language>

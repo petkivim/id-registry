@@ -35,15 +35,15 @@ class IsbnregistryViewMessagetypes extends JViewLegacy {
             return false;
         }
 
-		// Add publishers helper file
-		require_once JPATH_COMPONENT . '/helpers/publishers.php';
-		// Add sidebar
-		PublishersHelper::addSubmenu('messagetypes');
-		
+        // Add publishers helper file
+        require_once JPATH_COMPONENT . '/helpers/publishers.php';
+        // Add sidebar
+        PublishersHelper::addSubmenu('messagetypes');
+
         // Set the toolbar
         $this->addToolBar();
-		// Render the sidebar
-		$this->sidebar = JHtmlSidebar::render();
+        // Render the sidebar
+        $this->sidebar = JHtmlSidebar::render();
         // Display the template
         parent::display($tpl);
     }
@@ -55,11 +55,12 @@ class IsbnregistryViewMessagetypes extends JViewLegacy {
      *
      * @since   1.6
      */
-    protected function addToolBar() {		
+    protected function addToolBar() {
         JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_MESSAGE_TYPES'));
         JToolBarHelper::addNew('messagetype.add');
         JToolBarHelper::editList('messagetype.edit');
         JToolBarHelper::deleteList('', 'messagetypes.delete');
+        JToolBarHelper::preferences('com_isbnregistry');
     }
 
 }

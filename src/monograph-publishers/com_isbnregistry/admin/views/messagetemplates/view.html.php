@@ -67,6 +67,7 @@ class IsbnregistryViewMessagetemplates extends JViewLegacy {
         JToolBarHelper::addNew('messagetemplate.add');
         JToolBarHelper::editList('messagetemplate.edit');
         JToolBarHelper::deleteList('', 'messagetemplates.delete');
+		JToolBarHelper::preferences('com_isbnregistry');
     }
 
 }
