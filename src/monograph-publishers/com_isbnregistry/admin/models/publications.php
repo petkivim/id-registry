@@ -36,10 +36,10 @@ class IsbnregistryModelPublications extends JModelList {
         // If publisher id is not null, add where clause and
         // show only publications that belong to the given publisher
         if ($publisherId != null) {
-            $query->where('publisher_id = ' . $publisherId);
+            $query->where($db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId));
             $query->order('title ASC');
         } else {
-            $query->order('official_name ASC');
+            $query->order('official_name ASC, title ASC');
         }
         return $query;
     }

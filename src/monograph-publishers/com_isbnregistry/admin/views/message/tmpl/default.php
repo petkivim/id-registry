@@ -11,6 +11,7 @@ JHTML::_('behavior.modal');
 // Load styles
 $document = JFactory::getDocument();
 $document->addStyleSheet("components/com_isbnregistry/css/message.css");
+// Create link
 $link_begin = '<a href="index.php?option=com_isbnregistry&layout=edit&view=';
 $link_end = '&tmpl=component" class="modal" rel="{size: {x: 1200, y: 600}, handler:\'iframe\'}">' . JText::_('COM_ISBNREGISTRY_MESSAGE_FIELD_SHOW_LABEL') . '</a>';
 ?>

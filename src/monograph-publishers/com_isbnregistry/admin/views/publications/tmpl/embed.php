@@ -54,11 +54,11 @@ defined('_JEXEC') or die('Restricted Access');
                             </a>
                         </td> 
                         <td>
-                            <?php 
+                            <?php
                             $identifier = empty($row->publication_identifier_print) ? '' : $row->publication_identifier_print;
-                            $identifier .= !empty($row->publication_identifier_print) && !empty($row->publication_identifier_electronical) ? ', ' : '';
+                            $identifier .=!empty($row->publication_identifier_print) && !empty($row->publication_identifier_electronical) ? ', ' : '';
                             $identifier .= empty($row->publication_identifier_electronical) ? '' : $row->publication_identifier_electronical;
-                            echo $identifier;              
+                            echo $identifier;
                             ?>
                         </td> 
                         <td>
@@ -90,4 +90,5 @@ defined('_JEXEC') or die('Restricted Access');
             <?php endif; ?>
         </tbody>
     </table>
+    <?php echo JHtml::_('form.token'); ?>
 </form>

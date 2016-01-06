@@ -139,6 +139,11 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->loadTemplate('publications_list'); ?>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?> 
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'messages', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_MESSAGES', true)); ?>
+            <div class="row-fluid form-horizontal-desktop">
+                <?php echo $this->loadTemplate('messages_list'); ?>
+            </div>
+            <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php endif; ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>

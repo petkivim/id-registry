@@ -69,7 +69,12 @@ $document->addStyleSheet("components/com_isbnregistry/css/publication.css");
                                 </a>
                             </td>  
                             <td>
-                                <?php echo $row->publication_identifier; ?>
+                                <?php
+                                $identifier = empty($row->publication_identifier_print) ? '' : $row->publication_identifier_print;
+                                $identifier .=!empty($row->publication_identifier_print) && !empty($row->publication_identifier_electronical) ? ', ' : '';
+                                $identifier .= empty($row->publication_identifier_electronical) ? '' : $row->publication_identifier_electronical;
+                                echo $identifier;
+                                ?>
                             </td> 
                             <td>
                                 <?php echo (strlen($row->comments) > 50 ? substr($row->comments, 0, 47) . '...' : $row->comments); ?>
