@@ -49,6 +49,7 @@
 			buttons="true"
 			hide="readmore,pagebreak,image,article" 
 			class="validate-message"
+			filter="safehtml"
 			/> 		
         <field 
             name="created"

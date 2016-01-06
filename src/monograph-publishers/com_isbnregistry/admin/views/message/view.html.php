@@ -11,20 +11,18 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Message template View
+ * Message View
  *
  * @since  1.0.0
  */
-class IsbnregistryViewMessagetemplate extends JViewLegacy {
+class IsbnregistryViewMessage extends JViewLegacy {
 
     protected $form = null;
-
-	protected $item = null;
-
-	protected $state = null;
+    protected $item = null;
+    protected $state = null;
 
     /**
-     * Display the message template view
+     * Display the Message view
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      *
@@ -34,7 +32,7 @@ class IsbnregistryViewMessagetemplate extends JViewLegacy {
         // Get the Data
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-		$this->state = $this->get('State');
+        $this->state = $this->get('State');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
@@ -43,11 +41,10 @@ class IsbnregistryViewMessagetemplate extends JViewLegacy {
             return false;
         }
 
-
         // Set the toolbar
         $this->addToolBar();
-		// Add jQuery
-		JHtml::_('jquery.framework');
+        // Add jQuery
+        JHtml::_('jquery.framework');
         // Display the template
         parent::display($tpl);
     }
@@ -65,22 +62,16 @@ class IsbnregistryViewMessagetemplate extends JViewLegacy {
         // Hide Joomla Administrator Main menu
         $input->set('hidemainmenu', true);
 
+        $title = JText::_('COM_ISBNREGISTRY_MESSAGE_NEW');
         $isNew = ($this->item->id == 0);
 
-        if ($isNew) {
-            $title = JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATE_NEW');
+        if ($this->getLayout() == 'edit') {
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_MESSAGE_NEW'), 'message');
+            JToolbarHelper::save('message.save', 'COM_ISBNREGISTRY_MESSAGE_BUTTON_SEND');
         } else {
-            $title = JText::_('COM_ISBNREGISTRY_MESSAGE_TEMPLATE_EDIT');
-            $title .= ' : ' . $this->item->name;
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_MESSAGE_SHOW'), 'message');
         }
-
-        JToolBarHelper::title($title, 'messagetemplate');
-        JToolbarHelper::apply('messagetemplate.apply');
-        JToolBarHelper::save('messagetemplate.save');
-        JToolbarHelper::save2new('messagetemplate.save2new');
-        JToolBarHelper::cancel(
-                'messagetemplate.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
-        );
+        JToolbarHelper::cancel('message.cancel', 'COM_ISBNREGISTRY_MESSAGE_BUTTON_CLOSE');
     }
 
 }

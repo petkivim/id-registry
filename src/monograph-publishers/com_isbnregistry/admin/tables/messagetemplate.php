@@ -27,7 +27,7 @@ class IsbnRegistryTableMessagetemplate extends JTable {
     }
 
     /**
-     * Stores a message type.
+     * Stores a message template.
      *
      * @param   boolean  $updateNulls  True to update fields even if they are null.
      *
