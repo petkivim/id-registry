@@ -92,7 +92,7 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
 
     /**
      * Returns identifiers with the given batch id.
-     * @param int $identifierBatchId
+     * @param int $identifierBatchId identifier batch id related to the identifiers
      * @return list of identifier objects
      */
     public function getIdentifiers($identifierBatchId) {
@@ -100,6 +100,24 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
         $table = $this->getTable();
         // Return result
         return $table->getIdentifiers($identifierBatchId);
+    }
+
+    /**
+     * Returns identifiers with the given batch id.
+     * @param int $identifierBatchId
+     * @return array array identifier strings
+     */
+    public function getIdentifiersArray($identifierBatchId) {
+        // Get result
+        $list = $this->getIdentifiers($identifierBatchId);
+        // Results array
+        $results = array();
+        // Loop through the objects list
+        foreach($list as $item) {
+            array_push($results, $item->identifier);
+        }
+        // Return array
+        return $results;
     }
 
 }

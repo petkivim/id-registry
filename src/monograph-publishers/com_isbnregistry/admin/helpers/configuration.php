@@ -47,6 +47,19 @@ class ConfigurationHelper extends JHelperContent {
     }
 
     /**
+     * Checks if identifiers should be added during message generation.
+     * @param string $parameter message type parameter name
+     * @return boolean true if identifiers must be added; otherwise 
+     * false
+     */
+    public static function addIdentifiers($parameter) {
+        if (strcmp($parameter, 'message_type_publisher_registered_isbn') == 0 || strcmp($parameter, 'message_type_publisher_registered_ismn') == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Checks if the given parameter name is valid.
      * @param string $parameter parameter name to be checked
      * @return bool true if name is valid, otherwise false

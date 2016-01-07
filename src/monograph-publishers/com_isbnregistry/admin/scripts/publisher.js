@@ -302,6 +302,7 @@ jQuery(document).ready(function ($) {
                             $("textarea#jform_created_" + type + "s").html(identifiers);
                             $('#system-message-container').html(showNotification('success', data.title, data.message));
                             loadPublisherIsbnRanges(type);
+                            $('#jform_batch_id_' + type + 's').val(data.identifier_batch_id);
                             $('#jform_notify_' + type + 's').prop("disabled", false);
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
@@ -355,6 +356,9 @@ jQuery(document).ready(function ($) {
                             link += ')</a>';
 
                             $('#jform_link_to_publication_' + type).html(link);
+                            $('#jform_batch_id_' + type).val(data.identifier_batch_id);
+                            $('#jform_publication_id_' + type).val(publicationId);
+                            $('#jform_notify_' + type).prop("disabled", false);
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
                             $('#jform_link_to_publication_' + type).html('');
@@ -413,8 +417,19 @@ jQuery(document).ready(function ($) {
     $("#jform_notify_isbns, #jform_notify_ismns").click(function () {
         var id = $(this).attr('id');
         type = id.match(/isbns$/) ? 'isbn' : 'ismn';
+        var batchId = $('#jform_batch_id_' + type + 's').val();
         SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=big_publisher_'
-                + type + '&publisherId=' + publisher_id, {handler: 'iframe', size: {x: 800, y: 600}}
+                + type + '&publisherId=' + publisher_id + '&batchId=' + batchId, {handler: 'iframe', size: {x: 800, y: 600}}
+        );
+    });
+
+    $("#jform_notify_isbn, #jform_notify_ismn").click(function () {
+        var id = $(this).attr('id');
+        var type = id.match(/isbn$/) ? 'isbn' : 'ismn';
+        var batchId = $('#jform_batch_id_' + type).val();
+        var publication_id = $('#jform_publication_id_' + type).val();
+        SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=identifier_created_'
+                + type + '&publisherId=' + publisher_id + '&batchId=' + batchId + '&publicationId=' + publication_id, {handler: 'iframe', size: {x: 800, y: 600}}
         );
     });
 });

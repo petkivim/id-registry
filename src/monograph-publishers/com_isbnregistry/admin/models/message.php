@@ -85,14 +85,16 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $publisherId = $input->get('publisherId', 0, 'int');
             // Get publication id
             $publicationId = $input->get('publicationId', 0, 'int');
+            // Get identifier batch id
+            $identifierBatchId = $input->get('batchId', 0, 'int');
             // Update $data variables values
-            $this->loadTemplate($data, $code, $publisherId, $publicationId);
+            $this->loadTemplate($data, $code, $publisherId, $publicationId, $identifierBatchId);
         }
 
         return $data;
     }
 
-    private function loadTemplate($message, $code, $publisherId, $publicationId) {
+    private function loadTemplate($message, $code, $publisherId, $publicationId, $identifierBatchId) {
         // Add configuration helper file
         require_once JPATH_COMPONENT . '/helpers/configuration.php';
         // Check that code is valid
@@ -150,6 +152,17 @@ class IsbnregistryModelMessage extends JModelAdmin {
         if (!$template) {
             return false;
         }
+        // Check if identifiers should be added to the message
+        $addIdentifiers = ConfigurationHelper::addIdentifiers($code);
+        // Add identifiers if needed
+        if ($addIdentifiers) {
+            // Load identifier model
+            $identifierModel = JModelLegacy::getInstance('identifier', 'IsbnregistryModel');
+            // Get identifiers
+            $identifiers = $identifierModel->getIdentifiersArray($identifierBatchId);
+            // Add identifiers
+            $template->message = $this->filterIdentifiers($template->message, $identifiers);
+        }
         // Update template id
         $message->message_template_id = $template->id;
         // Set subject
@@ -168,6 +181,10 @@ class IsbnregistryModelMessage extends JModelAdmin {
      */
     private function filterMessage($messageBody) {
         return $messageBody;
+    }
+
+    private function filterIdentifiers($messageBody, $identifiers) {
+        return str_replace("#IDENTIFIERS#", implode('<br />', $identifiers), $messageBody);
     }
 
 }

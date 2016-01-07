@@ -6,6 +6,36 @@
             type="hidden"
         />
         <field
+            name="batch_id_isbns"
+            default="0"
+            type="hidden"
+        />
+        <field
+            name="batch_id_ismns"
+            default="0"
+            type="hidden"
+        />
+        <field
+            name="batch_id_isbn"
+            default="0"
+            type="hidden"
+        />
+        <field
+            name="batch_id_ismn"
+            default="0"
+            type="hidden"
+        />
+        <field
+            name="publication_id_isbn"
+            default="0"
+            type="hidden"
+        />
+        <field
+            name="publication_id_ismn"
+            default="0"
+            type="hidden"
+        />
+        <field
             name="official_name"
             type="text"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_LABEL"
@@ -331,34 +361,34 @@
             <option value="940">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_940</option>
             <option value="950">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_950</option>
         </field>
-		<field name="previous_names"
-			type="Repeatable"
-			icon="list"
-            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAMES_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAMES_DESC"
-			select="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAME_EDIT"
-			class="validate-previousnames"
-			default="">
-			<fieldset hidden="true" name="list_previous_names_modal" repeat="true">
-				<field name="name"
-					label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAME_LABEL"
-					size="30"
-					type="text" />
-			</fieldset>
-		</field>	
+        <field name="previous_names"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAMES_LABEL"
+               description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAMES_DESC"
+               select="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAME_EDIT"
+               class="validate-previousnames"
+               default="">
+            <fieldset hidden="true" name="list_previous_names_modal" repeat="true">
+                <field name="name"
+                       label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PREVIOUS_NAME_LABEL"
+                       size="30"
+                       type="text" />
+            </fieldset>
+        </field>	
         <field
             name="isbn_range"
             type="Isbnrange"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_RANGE_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_RANGE_DESC"
-			default=""
+            default=""
         />	
         <field
             name="get_publisher_identifier_isbn"
             type="Button"
             label=""
             description=""
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER_ISBN"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER_ISBN"
         />
         <field
             name="isbn_count"
@@ -366,14 +396,14 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_COUNT_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISBN_COUNT_DESC"
             default="0"
-			min="0"
+            min="0"
         />	
         <field
             name="get_isbns"
             type="Button"
             label=""
             description=""
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBERS"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBERS"
         />		
         <field
             name="created_isbns"
@@ -389,8 +419,8 @@
             type="Button"
             label=""
             description=""
-			readonly="true"
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISBN_NUMBERS"
+            readonly="true"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISBN_NUMBERS"
         />			
         <field
             name="publications_without_isbn"
@@ -398,58 +428,58 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISBN_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISBN_DESC"
         >
-			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
-		</field>
+            <option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+        </field>
         <field
             name="get_isbn"
             type="Button"
             label=""
             description=""
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBER"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBER"
         />	
         <field
             name="link_to_publication_isbn"
             type="Span"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISBN_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISBN_DESC"
-			default="-"
+            default="-"
         />	
         <field
             name="notify_isbn"
             type="Button"
             label=""
             description=""
-			readonly="true"
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISBN_NUMBER"
+            readonly="true"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISBN_NUMBER"
         />		
         <field
             name="ismn_range"
             type="Ismnrange"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISMN_RANGE_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISMN_RANGE_DESC"
-			default=""
+            default=""
         />	
         <field
             name="get_publisher_identifier_ismn"
             type="Button"
             label=""
             description=""
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER_ISMN"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_IDENTIFIER_ISMN"
         />		
-       <field
+        <field
             name="ismn_count"
             type="number"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISMN_COUNT_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ISMN_COUNT_DESC"
             default="0"
-			min="0"
+            min="0"
         />	
         <field
             name="get_ismns"
             type="Button"
             label=""
             description=""
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISMN_NUMBERS"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISMN_NUMBERS"
         />		
         <field
             name="created_ismns"
@@ -465,8 +495,8 @@
             type="Button"
             label=""
             description=""
-			readonly="true"
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISMN_NUMBERS"
+            readonly="true"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISMN_NUMBERS"
         />			
         <field
             name="publications_without_ismn"
@@ -474,29 +504,29 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISMN_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISMN_DESC"
         >
-			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
-		</field>
+            <option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+        </field>
         <field
             name="get_ismn"
             type="Button"
             label=""
             description=""
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISMN_NUMBER"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISMN_NUMBER"
         />	
         <field
             name="link_to_publication_ismn"
             type="Span"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISMN_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISMN_DESC"
-			default="-"
+            default="-"
         />	
         <field
             name="notify_ismn"
             type="Button"
             label=""
             description=""
-			readonly="true"
-			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISMN_NUMBER"
+            readonly="true"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISMN_NUMBER"
         />			
     </fieldset>
 </form>

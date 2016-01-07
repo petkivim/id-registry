@@ -152,6 +152,12 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
         <?php endif; ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>
+    <?php echo $this->form->renderField('batch_id_isbns'); ?>
+    <?php echo $this->form->renderField('batch_id_ismns'); ?>
+    <?php echo $this->form->renderField('batch_id_isbn'); ?>
+    <?php echo $this->form->renderField('batch_id_ismn'); ?>
+    <?php echo $this->form->renderField('publication_id_isbn'); ?>
+    <?php echo $this->form->renderField('publication_id_ismn'); ?>
     <input type="hidden" name="task" value="publisher.edit" />
     <?php echo JHtml::_('form.token'); ?>
 </form>
