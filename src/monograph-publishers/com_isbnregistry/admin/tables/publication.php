@@ -151,7 +151,7 @@ class IsbnRegistryTablePublication extends JTable {
             $this->publication_identifier_print = $identifiers[0];
             $this->publication_identifier_electronical = $identifiers[1];
         }
-        
+
         // Update identifier type
         $this->publication_identifier_type = $identifierType;
 
@@ -171,6 +171,23 @@ class IsbnRegistryTablePublication extends JTable {
         $query = $this->_db->getQuery(true);
         // Create query
         $query->select('publication_identifier_print, publication_identifier_electronical');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($publicationId));
+        $this->_db->setQuery($query);
+        // Return result
+        return $this->_db->loadObject();
+    }
+
+    /**
+     * Returns a publication mathcing the given id.
+     * @param int $publicationId id of the publication
+     * @return Publication publication matching the given id
+     */
+    public function getPublicationById($publicationId) {
+        // Database connection
+        $query = $this->_db->getQuery(true);
+        // Create query
+        $query->select('*');
         $query->from($this->_db->quoteName($this->_tbl));
         $query->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($publicationId));
         $this->_db->setQuery($query);

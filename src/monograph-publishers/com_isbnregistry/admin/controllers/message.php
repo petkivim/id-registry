@@ -19,4 +19,18 @@ defined('_JEXEC') or die('Restricted access');
  */
 class IsbnregistryControllerMessage extends JControllerForm {
 
+    public function send($key = null, $urlVar = null) {
+        // Save data
+        $return = parent::save($key, $urlVar);
+        // Set redirect
+        $this->setRedirect(JRoute::_('index.php?option=com_isbnregistry&view=message&layout=send_result&tmpl=component', false));
+        // Update response message based on save function's result
+        if($return) {
+            $this->setMessage(JText::_('COM_ISBNREGISTRY_PUBLISHER_MESSAGE_SENT'), 'message');
+        } else {
+            $this->setMessage(JText::_('COM_ISBNREGISTRY_PUBLISHER_MESSAGE_SENT_FAILED'), 'error');
+        }
+        return $return;
+    }
+
 }

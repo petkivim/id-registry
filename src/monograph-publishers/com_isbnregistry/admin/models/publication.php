@@ -122,6 +122,18 @@ class IsbnregistryModelPublication extends JModelAdmin {
     }
 
     /**
+     * Returns a publication mathcing the given id.
+     * @param int $publicationId id of the publication
+     * @return Publication publication matching the given id
+     */
+    public function getPublicationById($publicationId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publication
+        return $table->getPublicationById($publicationId);
+    }
+
+    /**
      * Updates publication identified by the given publication id. Only
      * publication identifier(s) and publication identifier type are updated.
      * @param integer $publicationId id of the publication to be updated

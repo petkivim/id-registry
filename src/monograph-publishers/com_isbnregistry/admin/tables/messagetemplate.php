@@ -123,4 +123,30 @@ class IsbnRegistryTableMessagetemplate extends JTable {
         ;
     }
 
+    /**
+     * Returns the template matching the given message type id and language 
+     * code.
+     * @param int $messageTypeId message type id
+     * @param string $languageCode language code
+     * @return MessageTemplate message template matching the given conditions
+     */
+    public function getMessageTemplateByTypeAndLanguage($messageTypeId, $languageCode) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions for which records should be fetched
+        $conditions = array(
+            $this->_db->quoteName('message_type_id') . ' = ' . $this->_db->quote($messageTypeId),
+            $this->_db->quoteName('lang_code') . ' = ' . $this->_db->quote($languageCode)
+        );
+
+        // Create the query
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObject();
+    }
+
 }

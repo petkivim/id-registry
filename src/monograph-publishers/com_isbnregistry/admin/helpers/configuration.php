@@ -34,6 +34,29 @@ class ConfigurationHelper extends JHelperContent {
     }
 
     /**
+     * Checks if publication language code must be used on message generation.
+     * @param string $parameter message type parameter name
+     * @return boolean true if publication language must be used; otherwise 
+     * false
+     */
+    public static function usePublicationLanguage($parameter) {
+        if (strcmp($parameter, 'message_type_identifier_created_isbn') == 0 || strcmp($parameter, 'message_type_identifier_created_ismn') == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the given parameter name is valid.
+     * @param string $parameter parameter name to be checked
+     * @return bool true if name is valid, otherwise false
+     */
+    public static function isValidParameterName($parameter) {
+        $options = self::getMessageTypeParameterNames();
+        return in_array($parameter, $options);
+    }
+
+    /**
      * Checks if the message type is used in component's configuration.
      * @return boolean true if message type is used in configuration; otherwise
      * false

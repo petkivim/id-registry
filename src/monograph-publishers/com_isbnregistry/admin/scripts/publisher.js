@@ -302,6 +302,7 @@ jQuery(document).ready(function ($) {
                             $("textarea#jform_created_" + type + "s").html(identifiers);
                             $('#system-message-container').html(showNotification('success', data.title, data.message));
                             loadPublisherIsbnRanges(type);
+                            $('#jform_notify_' + type + 's').prop("disabled", false);
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
                         }
@@ -408,6 +409,14 @@ jQuery(document).ready(function ($) {
                     });
         }
     }
+
+    $("#jform_notify_isbns, #jform_notify_ismns").click(function () {
+        var id = $(this).attr('id');
+        type = id.match(/isbns$/) ? 'isbn' : 'ismn';
+        SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=big_publisher_'
+                + type + '&publisherId=' + publisher_id, {handler: 'iframe', size: {x: 800, y: 600}}
+        );
+    });
 });
 
 function pad(num, char) {

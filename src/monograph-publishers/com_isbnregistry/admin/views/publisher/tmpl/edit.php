@@ -10,6 +10,7 @@
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.formvalidator');
 JHtml::_('formbehavior.chosen');
+JHTML::_('behavior.modal');
 
 // Add scripts
 $document = JFactory::getDocument();
@@ -109,12 +110,14 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                     <?php echo $this->form->renderField('isbn_count'); ?>
                     <?php echo $this->form->renderField('get_isbns'); ?>	
                     <?php echo $this->form->renderField('created_isbns'); ?>
+                    <?php echo $this->form->renderField('notify_isbns'); ?>
                 </div>
                 <div class="span6">		
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_2'); ?></legend>
                     <?php echo $this->form->renderField('publications_without_isbn'); ?>
                     <?php echo $this->form->renderField('get_isbn'); ?>		
-                    <?php echo $this->form->renderField('link_to_publication_isbn'); ?>				
+                    <?php echo $this->form->renderField('link_to_publication_isbn'); ?>		
+                    <?php echo $this->form->renderField('notify_isbn'); ?>	
                 </div>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
@@ -125,12 +128,14 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                     <?php echo $this->form->renderField('ismn_count'); ?>
                     <?php echo $this->form->renderField('get_ismns'); ?>	
                     <?php echo $this->form->renderField('created_ismns'); ?>
+                    <?php echo $this->form->renderField('notify_ismns'); ?>
                 </div>
                 <div class="span6">		
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_2'); ?></legend>	
                     <?php echo $this->form->renderField('publications_without_ismn'); ?>
                     <?php echo $this->form->renderField('get_ismn'); ?>		
-                    <?php echo $this->form->renderField('link_to_publication_ismn'); ?>						
+                    <?php echo $this->form->renderField('link_to_publication_ismn'); ?>	
+                    <?php echo $this->form->renderField('notify_ismn'); ?>
                 </div>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>

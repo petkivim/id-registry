@@ -385,6 +385,14 @@
             cols="40"
         /> 	
         <field
+            name="notify_isbns"
+            type="Button"
+            label=""
+            description=""
+			readonly="true"
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISBN_NUMBERS"
+        />			
+        <field
             name="publications_without_isbn"
             type="list"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISBN_LABEL"
@@ -406,6 +414,14 @@
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISBN_DESC"
 			default="-"
         />	
+        <field
+            name="notify_isbn"
+            type="Button"
+            label=""
+            description=""
+			readonly="true"
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISBN_NUMBER"
+        />		
         <field
             name="ismn_range"
             type="Ismnrange"
@@ -445,6 +461,14 @@
             cols="40"
         /> 	
         <field
+            name="notify_ismns"
+            type="Button"
+            label=""
+            description=""
+			readonly="true"
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISMN_NUMBERS"
+        />			
+        <field
             name="publications_without_ismn"
             type="list"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PUBLICATIONS_WITHOUT_ISMN_LABEL"
@@ -465,6 +489,14 @@
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISMN_LABEL"
             description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LINK_TO_PUBLICATION_ISMN_DESC"
 			default="-"
+        />	
+        <field
+            name="notify_ismn"
+            type="Button"
+            label=""
+            description=""
+			readonly="true"
+			default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISMN_NUMBER"
         />			
     </fieldset>
 </form>

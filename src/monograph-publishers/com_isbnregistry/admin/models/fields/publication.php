@@ -36,7 +36,7 @@ class JFormFieldPublication extends JFormFieldList {
         $query = $db->getQuery(true);
         $query->select('id, title');
         $query->from('#__isbn_registry_publication');
-		$query->order('title ASC');
+        $query->order('title ASC');
         $db->setQuery((string) $query);
         $publications = $db->loadObjectList();
         $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT'));

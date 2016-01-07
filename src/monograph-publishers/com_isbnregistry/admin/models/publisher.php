@@ -82,4 +82,16 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         return $data;
     }
 
+    /**
+     * Returns a publisher mathcing the given id.
+     * @param int $publisherId id of the publisher
+     * @return Publisher publisher matching the given id
+     */
+    public function getPublisherById($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publisher
+        return $table->getPublisherById($publisherId);
+    }
+
 }

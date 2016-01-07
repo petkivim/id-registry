@@ -142,4 +142,18 @@ class IsbnregistryModelMessagetemplate extends JModelAdmin {
         return $dao->getMessageTemplatesCountByMessageType($messageTypeId);
     }
 
+    /**
+     * Returns the template matching the given message type id and language 
+     * code.
+     * @param int $messageTypeId message type id
+     * @param string $languageCode language code
+     * @return MessageTemplate message template matching the given conditions
+     */
+    public function getMessageTemplateByTypeAndLanguage($messageTypeId, $languageCode) {
+        // Get db access
+        $table = $this->getTable();
+        // Get template
+        return $table->getMessageTemplateByTypeAndLanguage($messageTypeId, $languageCode);
+    }
+
 }

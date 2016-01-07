@@ -71,10 +71,28 @@ class IsbnRegistryTablePublisher extends JTable {
 
         return parent::store($updateNulls);
     }
-	
-	public function delete($pk = null) {
 
-		return parent::delete($pk);
-	}
+    public function delete($pk = null) {
+
+        return parent::delete($pk);
+    }
+
+    /**
+     * Returns a publisher mathcing the given id.
+     * @param int $publisherId id of the publisher
+     * @return Publisher publisher matching the given id
+     */
+    public function getPublisherById($publisherId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObject();
+    }
 
 }
