@@ -314,3 +314,39 @@ ENGINE =MyISAM
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__isbn_registry_identifier_batch`;
+
+CREATE TABLE `#__isbn_registry_identifier_batch` (
+    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `identifier_type` VARCHAR(4) NOT NULL,
+    `identifier_count` VARCHAR(4) NOT NULL,
+    `publisher_id` INT NOT NULL,
+    `publication_id` INT NOT NULL,
+    `publisher_identifier_range_id` INT NOT NULL,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `created_by` VARCHAR(30),
+    PRIMARY KEY (`id`),
+    INDEX `idx_publisher_id` (`publisher_id`),
+    INDEX `idx_publisher_identifier_range_id` (`publisher_identifier_range_id`),
+    INDEX `idx_publication_id` (`publication_id`)
+)
+ENGINE =MyISAM
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__isbn_registry_identifier`;
+
+CREATE TABLE `#__isbn_registry_identifier` (
+    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `identifier` VARCHAR(20) NOT NULL,
+    `identifier_batch_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `idx_identifier` (`identifier`),
+    INDEX `idx_identifier_batch_id` (`identifier_batch_id`)
+)
+ENGINE =MyISAM
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;

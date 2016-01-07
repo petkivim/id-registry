@@ -296,7 +296,7 @@ jQuery(document).ready(function ($) {
                     .done(function (data) {
                         if (data.success == true) {
                             var identifiers = '';
-                            $.each(data.isbn_numbers, function (key, value) {
+                            $.each(data.identifiers, function (key, value) {
                                 identifiers += value + '\n';
                             });
                             $("textarea#jform_created_" + type + "s").html(identifiers);

@@ -18,11 +18,11 @@ defined('_JEXEC') or die('Restricted access');
 abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelAdmin {
 
     abstract public function getRangeModelName();
-    
+
     abstract public function getRangeId($publisherRange);
-    
+
     abstract public function getCheckDigit($identifier);
-    
+
     /**
      * Method to store a new publisher identifier range into database. 
      * All the other ranges of the same type are disactivated and the new 
@@ -136,6 +136,9 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
 
         // Array for results
         $resultsArray = array();
+        $resultsArray['identifier_batch_id'] = 0;
+        $resultsArray['identifiers'] = array();
+
         // Check that we have a result
         if ($publisherRange) {
             // Check there are enough free numbers
@@ -154,8 +157,8 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 $identifier = str_replace('-', '', $publisherRange->publisher_identifier . $temp);
                 // Calculate check digit
                 $checkDigit = $this->getCheckDigit($identifier);
-                // Push isbn to results arrays
-                array_push($resultsArray, $publisherRange->publisher_identifier . '-' . $temp . '-' . $checkDigit);
+                // Push identifiers to results arrays
+                array_push($resultsArray['identifiers'], $publisherRange->publisher_identifier . '-' . $temp . '-' . $checkDigit);
             }
             // Increase the pointer
             $publisherRange->next += $count;
@@ -175,6 +178,27 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
 
             // Update changed publisher isbn range to the database
             if ($dao->updateToDb($publisherRange)) {
+                // Identifier type
+                $identifierType = substr($this->getRangeModelName(), 0, 4);
+                // Parameters array
+                $params = array(
+                    'identifier_type' => strtoupper($identifierType),
+                    'identifier_count' => $count,
+                    'publisher_id' => $publisherId,
+                    'publication_id' => 0,
+                    'publisher_identifier_range_id' => $publisherRange->id
+                );
+                // Get an instance of identifier batch model
+                $identifierBatchModel = $this->getInstance('Identifierbatch', 'IsbnregistryModel');
+                // Add identifier batch
+                $batchId = $identifierBatchModel->addNew($params);
+                // Add batch id to results array
+                $resultsArray['identifier_batch_id'] = $batchId; 
+                // Get an instance of identifier model
+                $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
+                // Add new identifiers to db
+                $identifierModel->addNew($resultsArray['identifiers'], $batchId);
+                
                 // If update was succesfull, return the generated ISBN numbers
                 return $resultsArray;
             } else {

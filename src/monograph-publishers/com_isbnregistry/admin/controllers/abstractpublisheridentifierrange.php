@@ -181,7 +181,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             $result = $model->generateIdentifiers($publisherId, $count);
 
             // Check if the array is empty
-            if (empty($result)) {
+            if (empty($result['identifiers'])) {
                 $response['success'] = false;
                 $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBERS_FAILED');
                 if ($model->getError()) {
@@ -192,7 +192,8 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 $response['success'] = true;
                 $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBERS_SUCCESS');
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
-                $response['isbn_numbers'] = $result;
+                $response['identifiers'] = $result['identifiers'];
+                $response['identifier_batch_id'] = $result['identifier_batch_id'];
             }
             // Return results in JSON
             echo json_encode($response);
@@ -249,7 +250,7 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
                 $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED_NO_FORMAT');
             }
             // Check if the array is empty
-            if (empty($identifiers)) {
+            if (empty($identifiers['identifiers'])) {
                 $response['success'] = false;
                 if (!isset($response['message'])) {
                     $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
@@ -258,13 +259,19 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             } else {
                 // Update publication record
                 // TODO: if this operation fails, the identifier given to it should be freed. Now the identifier is left unused.
-                $updateSuccess = $publicationModel->updateIdentifiers($publicationId, $publisherId, $identifiers, strtoupper($this->getIdentifierType()), $publicationFormat);
+                $updateSuccess = $publicationModel->updateIdentifiers($publicationId, $publisherId, $identifiers['identifiers'], strtoupper($this->getIdentifierType()), $publicationFormat);
                 // Check if operation succeeded
                 if ($updateSuccess) {
+                    // Load identifier batch model
+                    $identifierBatchModel = JModelLegacy::getInstance('identifierbatch', 'IsbnregistryModel');
+                    // Update publication id
+                    $identifierBatchModel->updatePublicationId($identifiers['identifier_batch_id'], $publicationId);
+                    // Results
                     $response['success'] = true;
                     $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_SUCCESS');
                     $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
-                    $response['publication_identifiers'] = $identifiers;
+                    $response['publication_identifiers'] = $identifiers['identifiers'];
+                    $response['identifier_batch_id'] = $identifiers['identifier_batch_id'];
                 } else {
                     // TODO: Updating publication failed, try to delete the generated identifier
                     $response['success'] = false;
