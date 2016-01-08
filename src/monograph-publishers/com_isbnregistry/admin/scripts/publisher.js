@@ -151,7 +151,7 @@ jQuery(document).ready(function ($) {
                         for (var i = 0; i < data.length; i++) {
                             var padding = pad(data[i].category, 'X');
                             content += '<tr id="row-' + data[i].id + '"';
-                            if (i == 0) {
+                            if (i == 0 && data[i].is_active == 1) {
                                 content += ' class="' + type + '_range_active_row"';
                             } else {
                                 content += ' class="' + type + '_range_row"';
@@ -432,6 +432,19 @@ jQuery(document).ready(function ($) {
                 + type + '&publisherId=' + publisher_id + '&batchId=' + batchId + '&publicationId=' + publication_id, {handler: 'iframe', size: {x: 800, y: 600}}
         );
     });
+
+    $("button[data-target='#modal-generate-message']").click(function () {
+        var isbnRows = $('.isbn_range_active_row').length;
+        var ismnRows = $('.ismn_range_active_row').length;
+        var type = 'isbn';
+        if (isbnRows == 0 && ismnRows > 0) {
+            type = 'ismn';
+        }
+        SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=publisher_registered_'
+                + type + '&publisherId=' + publisher_id, {handler: 'iframe', size: {x: 800, y: 600}}
+        );
+    });
+
 });
 
 function pad(num, char) {

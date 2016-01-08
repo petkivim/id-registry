@@ -76,6 +76,15 @@ class IsbnregistryViewPublisher extends JViewLegacy {
         JToolbarHelper::apply('publisher.apply');
         JToolBarHelper::save('publisher.save');
         JToolbarHelper::save2new('publisher.save2new');
+        if (!$isNew) {
+            // Add custom button for sending a message
+            $toolbar = JToolBar::getInstance('toolbar');
+            $layout = new JLayoutFile('joomla.toolbar.popup');
+
+            // Render the popup button
+            $dhtml = $layout->render(array('name' => 'generate-message', 'text' => JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_SEND_MESSAGE'), 'class' => 'icon-envelope'));
+            $toolbar->appendButton('Custom', $dhtml);
+        }        
         JToolBarHelper::cancel(
                 'publisher.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );
