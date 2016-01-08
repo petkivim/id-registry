@@ -6,36 +6,6 @@
             type="hidden"
         />
         <field
-            name="batch_id_isbns"
-            default="0"
-            type="hidden"
-        />
-        <field
-            name="batch_id_ismns"
-            default="0"
-            type="hidden"
-        />
-        <field
-            name="batch_id_isbn"
-            default="0"
-            type="hidden"
-        />
-        <field
-            name="batch_id_ismn"
-            default="0"
-            type="hidden"
-        />
-        <field
-            name="publication_id_isbn"
-            default="0"
-            type="hidden"
-        />
-        <field
-            name="publication_id_ismn"
-            default="0"
-            type="hidden"
-        />
-        <field
             name="official_name"
             type="text"
             label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_LABEL"

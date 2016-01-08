@@ -6,6 +6,13 @@ jQuery(document).ready(function ($) {
     var url = window.location.pathname;
     // Get session ID
     var sessionId = $("input[type='hidden'][value='1'][name!='jform[id]']").attr('name');
+    // Variables for batch ids
+    var batch_id_isbns = 0;
+    var batch_id_ismns = 0;
+    var batch_id_isbn = 0;
+    var batch_id_ismn = 0;
+    var publication_id_isbn = 0;
+    var publication_id_ismn = 0;
     // Get labels
     var label_active = $("#label_active").text();
     var label_closed = $("#label_closed").text();
@@ -302,7 +309,11 @@ jQuery(document).ready(function ($) {
                             $("textarea#jform_created_" + type + "s").html(identifiers);
                             $('#system-message-container').html(showNotification('success', data.title, data.message));
                             loadPublisherIsbnRanges(type);
-                            $('#jform_batch_id_' + type + 's').val(data.identifier_batch_id);
+                            if (type === 'ismn') {
+                                batch_id_ismns = data.identifier_batch_id;
+                            } else {
+                                batch_id_isbns = data.identifier_batch_id;
+                            }
                             $('#jform_notify_' + type + 's').prop("disabled", false);
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
@@ -356,8 +367,13 @@ jQuery(document).ready(function ($) {
                             link += ')</a>';
 
                             $('#jform_link_to_publication_' + type).html(link);
-                            $('#jform_batch_id_' + type).val(data.identifier_batch_id);
-                            $('#jform_publication_id_' + type).val(publicationId);
+                            if (type === 'ismn') {
+                                batch_id_ismn = data.identifier_batch_id;
+                                publication_id_ismn = publicationId;
+                            } else {
+                                batch_id_isbn = data.identifier_batch_id;
+                                publication_id_isbn = publicationId;
+                            }
                             $('#jform_notify_' + type).prop("disabled", false);
                             // Update publications iframe
                             $('#publications_iframe').attr("src", $('#publications_iframe').attr("src"));
@@ -418,8 +434,8 @@ jQuery(document).ready(function ($) {
 
     $("#jform_notify_isbns, #jform_notify_ismns").click(function () {
         var id = $(this).attr('id');
-        type = id.match(/isbns$/) ? 'isbn' : 'ismn';
-        var batchId = $('#jform_batch_id_' + type + 's').val();
+        var type = id.match(/isbns$/) ? 'isbn' : 'ismn';
+        var batchId = (type === 'ismn' ? batch_id_ismns : batch_id_isbns);
         SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=big_publisher_'
                 + type + '&publisherId=' + publisher_id + '&batchId=' + batchId, {handler: 'iframe', size: {x: 800, y: 600}}
         );
@@ -428,8 +444,8 @@ jQuery(document).ready(function ($) {
     $("#jform_notify_isbn, #jform_notify_ismn").click(function () {
         var id = $(this).attr('id');
         var type = id.match(/isbn$/) ? 'isbn' : 'ismn';
-        var batchId = $('#jform_batch_id_' + type).val();
-        var publication_id = $('#jform_publication_id_' + type).val();
+        var publication_id = (type === 'ismn' ? publication_id_ismn : publication_id_isbn);
+        var batchId = (type === 'ismn' ? batch_id_ismn : batch_id_isbn);
         SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=identifier_created_'
                 + type + '&publisherId=' + publisher_id + '&batchId=' + batchId + '&publicationId=' + publication_id, {handler: 'iframe', size: {x: 800, y: 600}}
         );
