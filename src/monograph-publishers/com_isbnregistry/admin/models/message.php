@@ -99,6 +99,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
         require_once JPATH_COMPONENT . '/helpers/configuration.php';
         // Check that code is valid
         if (!ConfigurationHelper::isValidParameterName($code)) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_INVALID_CODE_PARAMETER'), 'error');
             return false;
         }
         // Get component parameters
@@ -107,6 +108,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
         $messageTypeId = $params->get($code, 0);
         // Check that the value has been defined
         if ($messageTypeId == 0) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_DEFAULT_MESSAGE_TYPE_FOUND'), 'warning');
             return false;
         }
         // Set message type id
@@ -117,6 +119,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
         $publisher = $publisherModel->getPublisherById($publisherId);
         // Check the result
         if (!$publisher) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_PUBLISHER_FOUND'), 'warning');
             return false;
         }
         // Set publisher id
@@ -132,6 +135,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
         $template = $messageTemplateModel->getMessageTemplateByTypeAndLanguage($messageTypeId, $message->lang_code);
         // Check that we found a template
         if (!$template) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_TEMPLATE_FOUND'), 'warning');
             return false;
         }
         // Update template id
@@ -151,6 +155,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $publication = $publicationModel->getPublicationById($publicationId);
             // Check the result
             if (!$publication) {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_PUBLICATION_FOUND'), 'warning');
                 return false;
             }
             // Set publication id
@@ -172,6 +177,8 @@ class IsbnregistryModelMessage extends JModelAdmin {
         if ($publisherIdentifierRange) {
             // Add publisher identifier to the template
             $message->message = $this->filterPublisherIdentifier($message->message, $publisherIdentifierRange->publisher_identifier);
+        } else {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_ACTIVE_PUBLISHER_IDENTIFIERS_FOUND'), 'warning');
         }
 
         // Check if publication identifiers should be added to the message
