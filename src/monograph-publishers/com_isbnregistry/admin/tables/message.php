@@ -47,7 +47,7 @@ class IsbnRegistryTableMessage extends JTable {
         $date = JFactory::getDate();
         $user = JFactory::getUser();
 
-		// New item
+        // New item
         if (!$this->id) {
             // New item
             $this->sent_by = $user->get('username');
@@ -55,6 +55,25 @@ class IsbnRegistryTableMessage extends JTable {
         }
 
         return parent::store($updateNulls);
+    }
+
+    /**
+     * Deletes a message.
+     *
+     * @param   integer  $pk  Primary key of the message template to be deleted.
+     *
+     * @return  boolean  True on success, false on failure.
+     *
+     */
+    public function delete($pk = null) {
+        // Check if message has attachments
+        if($this->has_attachment) {
+            if(!unlink(JPATH_COMPONENT . '/email/' . $this->attachment_name)) {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_DELETE_ATTACHMENT_FAILED'), 'warning');
+            }
+        }
+        // No ISBNs have been used, delete the item
+        return parent::delete($pk);
     }
 
 }

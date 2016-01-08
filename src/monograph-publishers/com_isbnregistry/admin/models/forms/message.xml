@@ -28,6 +28,10 @@
         <field 
             name="batch_id" 
             type="hidden"
+        />  
+        <field 
+            name="has_attachment" 
+            type="hidden"
         />        		
         <field
             name="recipient"

@@ -69,6 +69,22 @@ $link_end = '&tmpl=component" class="modal" rel="{size: {x: 1200, y: 600}, handl
                 <?php echo $this->item->subject; ?>
             </div>
         </div>
+        <div class="control-group">
+            <div class="control-label">
+                <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_FIELD_ATTACHMENT_LABEL'); ?>
+            </div>
+            <div class="controls">
+                <?php
+                if ($this->item->has_attachment) {
+                    $link = '<a href="' . JRoute::_('components/com_isbnregistry/email/' . $this->item->attachment_name);
+                    $link .= '" class="modal" rel="{size: {x: 400, y: 600}, handler:\'iframe\'}">' . JText::_('COM_ISBNREGISTRY_MESSAGE_FIELD_SHOW_LABEL') . '</a>';
+                    echo $link;
+                } else {
+                    echo '-';
+                }
+                ?>
+            </div>
+        </div>
         <?php echo $this->form->renderField('message'); ?>
         <input type="hidden" name="task" value="" />
         <?php echo JHtml::_('form.token'); ?>

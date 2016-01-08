@@ -307,6 +307,8 @@ CREATE TABLE `#__isbn_registry_message` (
     `publisher_id` INT default 0,
     `publication_id` INT default 0,
     `batch_id` INT default 0,
+    `has_attachment` boolean not null default 0,
+    `attachment_name` VARCHAR(30) default '',
     `sent` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `sent_by` VARCHAR(30),
     PRIMARY KEY (`id`)

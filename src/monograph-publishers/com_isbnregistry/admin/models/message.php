@@ -50,9 +50,35 @@ class IsbnregistryModelMessage extends JModelAdmin {
 
             return false;
         }
-
         // Get component parameters
         $params = JComponentHelper::getParams('com_isbnregistry');
+
+        // Init variable for filename
+        $filename = '';
+        // Load identifier model
+        $identifierModel = JModelLegacy::getInstance('identifier', 'IsbnregistryModel');
+        // Get identifiers
+        $identifiers = $identifierModel->getIdentifiersArray($table->batch_id);
+        // Get identifiers attachment limit
+        $attachmentLimit = $params->get('identifiers_attachment_limit', 0);
+        // If number of identifiers is greater than the limit, 
+        // identifiers must be sent as an attachment
+        $table->has_attachment = ($attachmentLimit > 0 && sizeof($identifiers) > $attachmentLimit ? true : false);
+        // Set has attachment value
+        if ($table->has_attachment) {
+            $folder = JPATH_COMPONENT . '/email/';
+            // Get time in milliseconds for filename
+            list($usec, $sec) = explode(" ", microtime());
+            $time = date("YmdHis", $sec) . intval(round($usec * 1000));
+            // Set attachment name
+            $table->attachment_name = $time . '.txt';
+            // Set filename
+            $filename = $folder . $time . '.txt';
+            // Write identifiers to file
+            $this->writeIdentifiersToFile($identifiers, $filename);
+        }
+
+
 
         // Check if email should be sent
         if ($params->get('send_email', false)) {
@@ -77,6 +103,10 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $mailer->isHTML(true);
             $mailer->setBody($table->message);
 
+            if ($table->has_attachment) {
+                $mailer->addAttachment($filename);
+            }
+
             $send = $mailer->Send();
             if ($send !== true) {
                 JFactory::getApplication()->enqueueMessage($send->__toString(), 'error');
@@ -85,6 +115,9 @@ class IsbnregistryModelMessage extends JModelAdmin {
         }
         // Store the data.
         if (!$table->store()) {
+            if ($table->has_attachment) {
+                unlink($filename);
+            }
             $this->setError($table->getError());
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_SAVE_TO_DB_FAILED'), 'error');
             return false;
@@ -251,8 +284,15 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $identifiers = $identifierModel->getIdentifiersArray($identifierBatchId);
             // Set batch id
             $message->batch_id = $identifierBatchId;
+            // Get identifiers attachment limit
+            $attachmentLimit = $params->get('identifiers_attachment_limit', 0);
+            // If number of identifiers is greater than the limit, 
+            // identifiers must be sent as an attachment
+            $useAttachment = ($attachmentLimit > 0 && sizeof($identifiers) > $attachmentLimit ? true : false);
+            // Set has attachment value
+            $message->has_attachment = $useAttachment;
             // Add identifiers
-            $message->message = $this->filterPublicationIdentifiers($message->message, $identifiers);
+            $message->message = $this->filterPublicationIdentifiers($message->message, $identifiers, $useAttachment);
         }
         // Filter message
         $message->message = $this->filterMessage($message->message, $publisher);
@@ -274,8 +314,13 @@ class IsbnregistryModelMessage extends JModelAdmin {
         return $messageBody;
     }
 
-    private function filterPublicationIdentifiers($messageBody, $identifiers) {
-        return str_replace("#IDENTIFIERS#", implode('<br />', $identifiers), $messageBody);
+    private function filterPublicationIdentifiers($messageBody, $identifiers, $useAttachment) {
+        if ($useAttachment) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_MESSAGE_IDENTIFIERS_IN_ATTACHMENT'), 'notice');
+            return str_replace("#IDENTIFIERS#", '', $messageBody);
+        } else {
+            return str_replace("#IDENTIFIERS#", implode('<br />', $identifiers), $messageBody);
+        }
     }
 
     private function filterPublisherIdentifier($messageBody, $identifier) {
@@ -295,6 +340,21 @@ class IsbnregistryModelMessage extends JModelAdmin {
 
     private function filterAddress($messageBody, $street, $zip, $city) {
         return str_replace("#ADDRESS#", $street . '<br />' . $zip . ' ' . $city, $messageBody);
+    }
+
+    /**
+     * Writes the given identifiers to a file.
+     * @param array $identifiers identifiers to be written
+     * @param string $filename name of the file
+     * @return boolean true on success
+     */
+    private function writeIdentifiersToFile($identifiers, $filename) {
+        $file = fopen($filename, "w") or die("Unable to open file!");
+        foreach ($identifiers as $identifier) {
+            fwrite($file, $identifier . "\n");
+        }
+        fclose($file);
+        return true;
     }
 
 }
