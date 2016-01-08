@@ -85,6 +85,8 @@
             <folder>css</folder>
 			<!-- folder for email attachments -->
 			<folder>email</folder>
+			<!-- folder for help files -->
+			<folder>help</folder>
         </files>
         <languages folder="admin/language">
             <language tag="en-GB">en-GB/en-GB.com_isbnregistry.ini</language>
