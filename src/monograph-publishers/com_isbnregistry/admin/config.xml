@@ -67,4 +67,38 @@
             description="COM_ISBNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_IDENTIFIER_CREATED_ISMN_DESC"
         />			
 	</fieldset>
+	<fieldset
+		name="mail"
+		label="COM_ISBNREGISTRY_CONFIG_EMAIL_LABEL"
+		description="COM_ISBNREGISTRY_CONFIG_EMAIL_DESC"
+		>	
+        <field
+            name="email_from" 
+            type="email" 
+            default="" 
+			validate="email"
+            label="COM_ISBNREGISTRY_CONFIG_EMAIL_FROM_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EMAIL_FROM_DESC"
+        />	
+        <field
+            name="identifiers_attachment_limit"
+            type="number"
+            label="COM_ISBNREGISTRY_CONFIG_EMAIL_IDENTIFIERS_ATTACHMENT_LIMIT_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EMAIL_IDENTIFIERS_ATTACHMENT_LIMIT_DESC"
+            default="0"
+            min="0"
+        />	
+		<field
+			name="send_email"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="0"
+            label="COM_ISBNREGISTRY_CONFIG_EMAIL_SEND_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EMAIL_SEND_DESC">
+			<option
+				value="1">JYES</option>
+			<option
+				value="0">JNO</option>
+		</field>		
+	</fieldset>
 </config>
