@@ -33,6 +33,66 @@ class IsbnregistryModelMessage extends JModelAdmin {
     }
 
     /**
+     * Method to save the form data.
+     *
+     * @param   array  $data  The form data.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   1.6
+     */
+    public function save($data) {
+        $table = $this->getTable();
+
+        // Bind the data.
+        if (!$table->bind($data)) {
+            $this->setError($table->getError());
+
+            return false;
+        }
+
+        // Get component parameters
+        $params = JComponentHelper::getParams('com_isbnregistry');
+
+        // Check if email should be sent
+        if ($params->get('send_email', false)) {
+            // Get email from address
+            $from = $params->get('email_from', '');
+            // If empty, use site's email address
+            if (empty($from)) {
+                $config = JFactory::getConfig();
+                $from = $config->get('mailfrom');
+            }
+            // Create sender array
+            $sender = array(
+                $from,
+                ''
+            );
+
+            // Get and configure mailer
+            $mailer = JFactory::getMailer();
+            $mailer->setSender($sender);
+            $mailer->addRecipient($table->recipient);
+            $mailer->setSubject($table->subject);
+            $mailer->isHTML(true);
+            $mailer->setBody($table->message);
+
+            $send = $mailer->Send();
+            if ($send !== true) {
+                JFactory::getApplication()->enqueueMessage($send->__toString(), 'error');
+                return false;
+            }
+        }
+        // Store the data.
+        if (!$table->store()) {
+            $this->setError($table->getError());
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_SAVE_TO_DB_FAILED'), 'error');
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Method to get the record form.
      *
      * @param   array    $data      Data for the form.
