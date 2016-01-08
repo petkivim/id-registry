@@ -213,14 +213,26 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
     /**
      * Returns a list of identifier ranges belonging to the publisher
      * identified by the given id.
-     * @param integer $publisherId id of the publisher who owns the identifiers
+     * @param int $publisherId id of the publisher who owns the identifiers
      * @return array list of identifiers
      */
     public function getPublisherIdentifiers($publisherId) {
-        // Get DAO for db access
-        $dao = $this->getTable();
+        // Get db access
+        $table = $this->getTable();
         // Get results 
-        return $dao->getPublisherIdentifiers($publisherId);
+        return $table->getPublisherIdentifiers($publisherId);
     }
 
+    /**
+     * Returns active identifier rangs belonging to the publisher
+     * identified by the given id. 
+     * @param int $publisherId id of the publisher who owns the range
+     * @return object active identifier ranage
+     */
+    public function getActivePublisherIdentifierRange($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->getPublisherRangeByPublisherId($publisherId);
+    }
 }

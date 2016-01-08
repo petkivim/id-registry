@@ -34,25 +34,51 @@ class ConfigurationHelper extends JHelperContent {
     }
 
     /**
-     * Checks if publication language code must be used on message generation.
-     * @param string $parameter message type parameter name
-     * @return boolean true if publication language must be used; otherwise 
-     * false
+     * Checks if the given message type is identifier created.
+     * @param string $messageType message type
+     * @return boolean true if identifier created; otherwise false
      */
-    public static function usePublicationLanguage($parameter) {
-        if (strcmp($parameter, 'message_type_identifier_created_isbn') == 0 || strcmp($parameter, 'message_type_identifier_created_ismn') == 0) {
+    public static function isPublicationIdentifierCreated($messageType) {
+        if (strcmp($messageType, 'message_type_identifier_created_isbn') == 0 || strcmp($messageType, 'message_type_identifier_created_ismn') == 0) {
             return true;
         }
         return false;
     }
 
     /**
-     * Checks if identifiers should be added during message generation.
+     * Checks if the given message type is publisher registered.
+     * @param string $messageType message type
+     * @return boolean true if publisher registered; otherwise false
+     */
+    public static function isPublisherRegistered($messageType) {
+        if (strcmp($messageType, 'message_type_publisher_registered_isbn') == 0 || strcmp($messageType, 'message_type_publisher_registered_ismn') == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the given message type is related to isbn numbers.
+     * @param type $messageType message type to be checked
+     * @return boolean true if message type is related to isbn numbers;
+     * otherwise false;
+     */
+    public static function isIsbn($messageType) {
+        $type = substr($messageType, strlen($messageType) - 4);
+        if (strcmp($type, 'isbn') == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if publication identifiers should be added during message 
+     * generation.
      * @param string $parameter message type parameter name
-     * @return boolean true if identifiers must be added; otherwise 
+     * @return boolean true if publication identifiers must be added; otherwise 
      * false
      */
-    public static function addIdentifiers($parameter) {
+    public static function addPublicationIdentifiers($parameter) {
         if (strcmp($parameter, 'message_type_publisher_registered_isbn') == 0 || strcmp($parameter, 'message_type_publisher_registered_ismn') == 0) {
             return false;
         }

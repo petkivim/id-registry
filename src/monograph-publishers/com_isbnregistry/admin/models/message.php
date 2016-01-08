@@ -125,10 +125,26 @@ class IsbnregistryModelMessage extends JModelAdmin {
         $message->lang_code = $publisher->lang_code;
         // Update recipient
         $message->recipient = $publisher->email;
-        // Check which language value must be used
-        $usePublicationLanguage = ConfigurationHelper::usePublicationLanguage($code);
-        // If publication language must be used, load publication
-        if ($usePublicationLanguage) {
+
+        // Load message template model
+        $messageTemplateModel = JModelLegacy::getInstance('messagetemplate', 'IsbnregistryModel');
+        // Load template
+        $template = $messageTemplateModel->getMessageTemplateByTypeAndLanguage($messageTypeId, $message->lang_code);
+        // Check that we found a template
+        if (!$template) {
+            return false;
+        }
+        // Update template id
+        $message->message_template_id = $template->id;
+        // Set subject
+        $message->subject = $template->subject;
+        // Set message
+        $message->message = $template->message;
+
+        // Check if identifiers are related to a publication
+        $isPublicationIdentifierCreated = ConfigurationHelper::isPublicationIdentifierCreated($code);
+        // If so, load publication
+        if ($isPublicationIdentifierCreated) {
             // Load publication model
             $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
             // Load publication
@@ -144,31 +160,33 @@ class IsbnregistryModelMessage extends JModelAdmin {
             // Update recipient
             $message->recipient = $publication->email;
         }
-        // Load message template model
-        $messageTemplateModel = JModelLegacy::getInstance('messagetemplate', 'IsbnregistryModel');
-        // Load template
-        $template = $messageTemplateModel->getMessageTemplateByTypeAndLanguage($messageTypeId, $message->lang_code);
-        // Check that we found a template
-        if (!$template) {
-            return false;
+
+        // Load publisher identifier
+        // Do we need to load ISBN or ISMN?
+        $type = ConfigurationHelper::isIsbn($code) ? 'isbn' : 'ismn';
+        // Load model
+        $publisherIdentifierRangeModel = JModelLegacy::getInstance('publisher' . $type . 'range', 'IsbnregistryModel');
+        // Load active publisher identifier range
+        $publisherIdentifierRange = $publisherIdentifierRangeModel->getActivePublisherIdentifierRange($publisherId);
+        // Check that we have a result
+        if ($publisherIdentifierRange) {
+            // Add publisher identifier to the template
+            $message->message = $this->filterPublisherIdentifier($message->message, $publisherIdentifierRange->publisher_identifier);
         }
-        // Check if identifiers should be added to the message
-        $addIdentifiers = ConfigurationHelper::addIdentifiers($code);
+
+        // Check if publication identifiers should be added to the message
+        $addPublicationIdentifiers = ConfigurationHelper::addPublicationIdentifiers($code);
         // Add identifiers if needed
-        if ($addIdentifiers) {
+        if ($addPublicationIdentifiers) {
             // Load identifier model
             $identifierModel = JModelLegacy::getInstance('identifier', 'IsbnregistryModel');
             // Get identifiers
             $identifiers = $identifierModel->getIdentifiersArray($identifierBatchId);
             // Add identifiers
-            $template->message = $this->filterIdentifiers($template->message, $identifiers);
+            $message->message = $this->filterPublicationIdentifiers($message->message, $identifiers);
         }
-        // Update template id
-        $message->message_template_id = $template->id;
-        // Set subject
-        $message->subject = $template->subject;
-        // Set message
-        $message->message = $this->filterMessage($template->message);
+        // Filter message
+        $message->message = $this->filterMessage($message->message, $publisher);
         // Operation was successfull
         return true;
     }
@@ -176,15 +194,38 @@ class IsbnregistryModelMessage extends JModelAdmin {
     /**
      * Filters the message body and replaces variables with real values,
      * e.g. date, username etc.
-     * @param type $messageBody message body to be processed
+     * @param string $messageBody message body to be processed
+     * @param Publisher publisher object related to the message
      * @return string processed message body
      */
-    private function filterMessage($messageBody) {
+    private function filterMessage($messageBody, $publisher) {
+        $messageBody = $this->filterDate($messageBody);
+        $messageBody = $this->filterUser($messageBody);
+        $messageBody = $this->filterAddress($messageBody, $publisher->address, $publisher->zip, $publisher->city);
         return $messageBody;
     }
 
-    private function filterIdentifiers($messageBody, $identifiers) {
+    private function filterPublicationIdentifiers($messageBody, $identifiers) {
         return str_replace("#IDENTIFIERS#", implode('<br />', $identifiers), $messageBody);
+    }
+
+    private function filterPublisherIdentifier($messageBody, $identifier) {
+        return str_replace("#IDENTIFIER#", $identifier, $messageBody);
+    }
+
+    private function filterDate($messageBody) {
+        // Get date and user
+        $date = JFactory::getDate()->format('d.m.Y');
+        return str_replace("#DATE#", $date, $messageBody);
+    }
+
+    private function filterUser($messageBody) {
+        $user = JFactory::getUser();
+        return str_replace("#USER#", $user->name, $messageBody);
+    }
+
+    private function filterAddress($messageBody, $street, $zip, $city) {
+        return str_replace("#ADDRESS#", $street . '<br />' . $zip . ' ' . $city, $messageBody);
     }
 
 }

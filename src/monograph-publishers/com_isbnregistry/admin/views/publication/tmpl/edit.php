@@ -125,6 +125,6 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
         <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>
-    <input type="hidden" name="task" value="publisher.edit" />
+    <input type="hidden" name="task" value="publication.edit" />
     <?php echo JHtml::_('form.token'); ?>
 </form>
