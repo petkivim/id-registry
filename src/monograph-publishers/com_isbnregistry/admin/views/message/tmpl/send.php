@@ -48,6 +48,7 @@ JFactory::getDocument()->addScriptDeclaration('
         <?php echo $this->form->renderField('message_type_id'); ?>
         <?php echo $this->form->renderField('publisher_id'); ?>
         <?php echo $this->form->renderField('publication_id'); ?>
+        <?php echo $this->form->renderField('batch_id'); ?>
     </div>
     <input type="hidden" name="task" value="message.send" />
     <?php echo JHtml::_('form.token'); ?>

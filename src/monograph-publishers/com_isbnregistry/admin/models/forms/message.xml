@@ -24,38 +24,42 @@
         <field 
             name="publication_id" 
             type="hidden"
-        />			
-		<field
+        />	
+        <field 
+            name="batch_id" 
+            type="hidden"
+        />        		
+        <field
             name="recipient"
             type="email"
             label="COM_ISBNREGISTRY_MESSAGE_FIELD_RECIPIENT_LABEL"
             description="COM_ISBNREGISTRY_MESSAGE_FIELD_RECIPIENT_DESC"
             size="20"
-			required="true"
+            required="true"
             class="inputbox"
             default=""
             validate="email"
         />	
-		<field
-			name="subject"
-			type="text"
-			label="COM_ISBNREGISTRY_MESSAGE_FIELD_SUBJECT_LABEL"
-			description="COM_ISBNREGISTRY_MESSAGE_FIELD_SUBJECT_DESC"
-			required="true" 
-			class="inputbox validate-subject"
-			/>
-		<field
-			name="message"
-			type="editor"
-			label="COM_ISBNREGISTRY_MESSAGE_FIELD_MESSAGE_LABEL"
-			description="COM_ISBNREGISTRY_MESSAGE_FIELD_MESSAGE_DESC"
-			required="true"
-			buttons="true"
-			hide="readmore,pagebreak,image,article" 
-			class="validate-message"
-			filter="safehtml"
-			/> 		
-	    <field 
+        <field
+            name="subject"
+            type="text"
+            label="COM_ISBNREGISTRY_MESSAGE_FIELD_SUBJECT_LABEL"
+            description="COM_ISBNREGISTRY_MESSAGE_FIELD_SUBJECT_DESC"
+            required="true" 
+            class="inputbox validate-subject"
+        />
+        <field
+            name="message"
+            type="editor"
+            label="COM_ISBNREGISTRY_MESSAGE_FIELD_MESSAGE_LABEL"
+            description="COM_ISBNREGISTRY_MESSAGE_FIELD_MESSAGE_DESC"
+            required="true"
+            buttons="true"
+            hide="readmore,pagebreak,image,article" 
+            class="validate-message"
+            filter="safehtml"
+        /> 		
+        <field 
             name="sent"
             type="calendar"
             label="COM_ISBNREGISTRY_MESSAGE_FIELD_SENT_LABEL"

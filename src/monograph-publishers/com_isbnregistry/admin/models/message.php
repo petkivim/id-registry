@@ -249,6 +249,8 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $identifierModel = JModelLegacy::getInstance('identifier', 'IsbnregistryModel');
             // Get identifiers
             $identifiers = $identifierModel->getIdentifiersArray($identifierBatchId);
+            // Set batch id
+            $message->batch_id = $identifierBatchId;
             // Add identifiers
             $message->message = $this->filterPublicationIdentifiers($message->message, $identifiers);
         }
