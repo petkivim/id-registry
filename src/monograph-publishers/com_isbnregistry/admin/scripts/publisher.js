@@ -359,6 +359,8 @@ jQuery(document).ready(function ($) {
                             $('#jform_batch_id_' + type).val(data.identifier_batch_id);
                             $('#jform_publication_id_' + type).val(publicationId);
                             $('#jform_notify_' + type).prop("disabled", false);
+                            // Update publications iframe
+                            $('#publications_iframe').attr("src", $('#publications_iframe').attr("src"));
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
                             $('#jform_link_to_publication_' + type).html('');

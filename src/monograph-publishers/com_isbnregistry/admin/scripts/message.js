@@ -3,6 +3,8 @@ jQuery(document).ready(function ($) {
         Joomla.submitbutton('message.send');
     });
     $("#jform_close").click(function () {
+        var iframe = window.parent.document.getElementById('messages_iframe');
+        iframe.src = iframe.src;
         window.parent.SqueezeBox.close();
     });
 });
