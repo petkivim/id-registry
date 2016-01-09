@@ -8,7 +8,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
-<form action="index.php?option=com_isbnregistry&view=publications&publisherId=<?php echo $this->item->id; ?>&tmpl=component&layout=embed" method="post" id="adminForm" name="adminForm">
+<form action="index.php?option=com_isbnregistry&view=publications&publisherId=<?php echo JRequest::getVar('publisherId', 0); ?>&tmpl=component&layout=embed" method="post" id="adminForm" name="adminForm">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
