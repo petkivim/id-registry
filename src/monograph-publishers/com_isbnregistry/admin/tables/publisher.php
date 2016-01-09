@@ -95,4 +95,22 @@ class IsbnRegistryTablePublisher extends JTable {
         return $this->_db->loadObject();
     }
 
+    /**
+     * Returns an Object List that contains all the publishers in the
+     * database.
+     * @return ObjectList list of all the publishers
+     */
+    public function getPublishers() {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                 ->order('official_name ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

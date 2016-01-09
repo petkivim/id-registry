@@ -94,4 +94,25 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         return $table->getPublisherById($publisherId);
     }
 
+    /**
+     * Returns an array that contains publisher id and name as key value
+     * pairs.
+     * @return array publisher id and name as key value pairs
+     */
+    public function getPublishersArray() {
+        // Get db access
+        $table = $this->getTable();
+        // Get publishers
+        $publishers = $table->getPublishers();
+        // Check result
+        if (!$publishers) {
+            return array();
+        }
+        $result = array();
+        foreach ($publishers as $publisher) {
+            $result[$publisher->id] = $publisher->official_name;
+        }
+        return $result;
+    }
+
 }

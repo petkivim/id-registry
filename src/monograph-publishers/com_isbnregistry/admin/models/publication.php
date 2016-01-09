@@ -206,4 +206,25 @@ class IsbnregistryModelPublication extends JModelAdmin {
         return true;
     }
 
+    /**
+     * Returns an array that contains publication id and title as key value
+     * pairs.
+     * @return array publication id and title as key value pairs
+     */
+    public function getPublicationsArray() {
+        // Get db access
+        $table = $this->getTable();
+        // Get publications
+        $publications = $table->getPublications();
+        // Check result
+        if (!$publications) {
+            return array();
+        }
+        $result = array();
+        foreach ($publications as $publication) {
+            $result[$publication->id] = $publication->title;
+        }
+        return $result;
+    }
+
 }

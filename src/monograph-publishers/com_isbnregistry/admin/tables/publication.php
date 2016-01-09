@@ -212,4 +212,22 @@ class IsbnRegistryTablePublication extends JTable {
         return $this->_db->loadResult();
     }
 
+    /**
+     * Returns an Object List that contains all the publications in the
+     * database.
+     * @return ObjectList list of all the publications
+     */
+    public function getPublications() {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->order('title ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

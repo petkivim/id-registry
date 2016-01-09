@@ -111,9 +111,11 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                     <?php echo $this->form->renderField('get_isbns'); ?>	
                     <?php echo $this->form->renderField('created_isbns'); ?>
                     <?php echo $this->form->renderField('notify_isbns'); ?>
+                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_2'); ?></legend>
+                    <?php echo $this->loadTemplate('show_isbn_history'); ?>
                 </div>
                 <div class="span6">		
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_2'); ?></legend>
+                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_3'); ?></legend>
                     <?php echo $this->form->renderField('publications_without_isbn'); ?>
                     <?php echo $this->form->renderField('get_isbn'); ?>		
                     <?php echo $this->form->renderField('link_to_publication_isbn'); ?>		
@@ -129,9 +131,11 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                     <?php echo $this->form->renderField('get_ismns'); ?>	
                     <?php echo $this->form->renderField('created_ismns'); ?>
                     <?php echo $this->form->renderField('notify_ismns'); ?>
+                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_2'); ?></legend>
+                    <?php echo $this->loadTemplate('show_ismn_history'); ?>
                 </div>
                 <div class="span6">		
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_2'); ?></legend>	
+                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_3'); ?></legend>	
                     <?php echo $this->form->renderField('publications_without_ismn'); ?>
                     <?php echo $this->form->renderField('get_ismn'); ?>		
                     <?php echo $this->form->renderField('link_to_publication_ismn'); ?>	
