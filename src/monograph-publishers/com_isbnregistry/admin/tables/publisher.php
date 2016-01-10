@@ -107,10 +107,58 @@ class IsbnRegistryTablePublisher extends JTable {
         // Create the query
         $query->select('*')
                 ->from($this->_db->quoteName($this->_tbl))
-                 ->order('official_name ASC');
+                ->order('official_name ASC');
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Updates the active ISBN identifier of the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId id of the publisher to be updated
+     * @param string $identifier ISBN identifier string
+     */
+    public function updateActiveIsbnIdentifier($publisherId, $identifier) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            'id' => $publisherId
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update identifier type
+        $this->active_identifier_isbn = $identifier;
+
+        // Update object to DB
+        return $this->store();
+    }
+
+    /**
+     * Updates the active ISMN identifier of the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId id of the publisher to be updated
+     * @param string $identifier ISMN identifier string
+     */
+    public function updateActiveIsmnIdentifier($publisherId, $identifier) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            'id' => $publisherId
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update identifier type
+        $this->active_identifier_ismn = $identifier;
+
+        // Update object to DB
+        return $this->store();
     }
 
 }

@@ -115,4 +115,30 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         return $result;
     }
 
+    /**
+     * Updates the active ISBN identifier of the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId id of the publisher to be updated
+     * @param string $identifier ISBN identifier string
+     */
+    public function updateActiveIsbnIdentifier($publisherId, $identifier) {
+        // Get db access
+        $table = $this->getTable();
+        // Update
+        return $table->updateActiveIsbnIdentifier($publisherId, $identifier);
+    }
+
+    /**
+     * Updates the active ISMN identifier of the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId id of the publisher to be updated
+     * @param string $identifier ISMN identifier string
+     */
+    public function updateActiveIsmnIdentifier($publisherId, $identifier) {
+        // Get db access
+        $table = $this->getTable();
+        // Update
+        return $table->updateActiveIsmnIdentifier($publisherId, $identifier);
+    }
+
 }

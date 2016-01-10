@@ -109,4 +109,17 @@ class IsbnregistryModelPublisherismnrange extends IsbnregistryModelAbstractPubli
         return PublishersisbnrangeHelper::countIsbnCheckDigit($identifier);
     }
 
+    /**
+     * Updates the active ISMN identifier of the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId id of the publisher to be updated
+     * @param string $identifier ISMN identifier string
+     */
+    public function updateActiveIdentifier($publisherId, $identifier) {
+        // Load publisher model
+        $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
+        // Update identifier
+        return $publisherModel->updateActiveIsmnIdentifier($publisherId, $identifier);
+    }
+
 }

@@ -13,8 +13,10 @@ defined('_JEXEC') or die('Restricted access');
 abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
 
     abstract public function formatPublisherIdentifier($identifierrange, $publisherIdentifier);
-    
+
     abstract public function getPublisherRangeModelName();
+
+    abstract public function updateActiveIdentifier($publisherId, $identifier);
 
     /**
      * Generates a new publisher identifier from the given identifier range and
@@ -57,6 +59,10 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
                 $publisherRangeModel = $this->getInstance($this->getPublisherRangeModelName(), 'IsbnregistryModel');
                 // Insert data into publisher isbn range table
                 if ($publisherRangeModel->saveToDb($range, $publisherId, $result)) {
+                    // Update publisher's active identifier range info
+                    if(!$this->updateActiveIdentifier($publisherId, $result)) {
+                        $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_ACTIVE_IDENTIFIER_RANGE_UPDATE_FAILED'));
+                    }
                     return $result;
                 }
             }

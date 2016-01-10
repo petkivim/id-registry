@@ -25,6 +25,8 @@ CREATE TABLE `#__isbn_registry_publisher` (
     `question_7` VARCHAR(50),
     `question_8` VARCHAR(50),
     `confirmation` VARCHAR(100) NOT NULL,
+    `active_identifier_isbn` VARCHAR(20) default '',
+    `active_identifier_ismn` VARCHAR(20) default '',
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
