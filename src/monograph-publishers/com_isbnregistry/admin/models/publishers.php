@@ -23,7 +23,8 @@ class IsbnregistryModelPublishers extends JModelList {
                 'id', 'a.id',
                 'has_quitted', 'a.has_quitted',
                 'type', 'a.type',
-                'lang_code', 'a.lang_code'
+                'lang_code', 'a.lang_code',
+                'no_identifier', 'a.no_identifier'
             );
         }
 
@@ -63,6 +64,9 @@ class IsbnregistryModelPublishers extends JModelList {
         $langCode = $this->getUserStateFromRequest($this->context . '.filter.lang_code', 'filter_lang_code', '');
         $this->setState('filter.lang_code', $langCode);
 
+        $noIdentifier = $this->getUserStateFromRequest($this->context . '.filter.no_identifier', 'filter_no_identifier', '');
+        $this->setState('filter.no_identifier', $noIdentifier);
+
         // List state information.
         parent::populateState('a.official_name', 'asc');
     }
@@ -85,7 +89,9 @@ class IsbnregistryModelPublishers extends JModelList {
         $type = $this->getState('filter.type');
         // Get language code
         $langCode = $this->getState('filter.lang_code');
-                
+        // Get identifier filter
+        $noIdentifier = $this->getState('filter.no_identifier');
+
         // Create the base select statement.
         $query->select('DISTINCT a.id, a.official_name, a.active_identifier_isbn, a.active_identifier_ismn, a.created')
                 ->from($db->quoteName('#__isbn_registry_publisher') . ' AS a');
@@ -98,9 +104,8 @@ class IsbnregistryModelPublishers extends JModelList {
         // Set lang code
         if (!empty($langCode)) {
             $query->where('a.lang_code = ' . $db->quote($langCode));
-            
         }
-        
+
         // Set type
         if (!empty($type)) {
             if (preg_match('/^ISBN$/', $type) === 1) {
@@ -109,7 +114,22 @@ class IsbnregistryModelPublishers extends JModelList {
                 $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS i ON a.id = i.publisher_id');
             }
         }
-        
+
+        // Set identifiier filter
+        if (is_numeric($noIdentifier)) {
+            switch ($noIdentifier) {
+                case 0:
+                    $query->where('(a.active_identifier_isbn = "" AND a.active_identifier_ismn = "")');
+                    break;
+                case 1:
+                    $query->where('a.active_identifier_isbn = ""');
+                    break;
+                case 2:
+                    $query->where('a.active_identifier_ismn = ""');
+                    break;
+            }
+        }
+
         // Build search
         if (!empty($search)) {
             if (preg_match('/^[\d\-]+$/', $search) === 1) {

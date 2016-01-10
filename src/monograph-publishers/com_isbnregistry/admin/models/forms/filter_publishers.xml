@@ -40,7 +40,18 @@
         >
             <option value="">JOPTION_SELECT_LANGUAGE</option>
         </field>
-   
+        <field
+            name="no_identifier"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_DESC"
+            onchange="this.form.submit();"
+        >
+            <option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_SELECT</option>
+            <option value="0">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER</option>
+            <option value="1">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_ISBN</option>
+            <option value="2">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_ISMN</option>
+        </field>
     </fields>
     <fields name="list">
         <field
