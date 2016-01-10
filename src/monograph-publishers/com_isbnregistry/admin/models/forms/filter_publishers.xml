@@ -1,0 +1,56 @@
+<form>
+    <fields name="filter">
+        <field
+            name="search"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_SEARCH_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_SEARCH_DESC"
+            hint="JSEARCH_FILTER"
+        />
+        <field
+            name="type"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_TYPE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_TYPE_DESC"
+            onchange="this.form.submit();"
+        >
+            <option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_TYPE_SELECT</option>
+            <option value="ISBN">ISBN</option>
+            <option value="ISMN">ISMN</option>
+        </field>
+        <field
+            name="has_quitted"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_STATE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_STATE_DESC"
+            onchange="this.form.submit();"
+        >
+            <option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_STATE_SELECT</option>
+            <option value="0">COM_ISBNREGISTRY_PUBLISHER_FILTER_STATE_ACTIVE</option>
+            <option value="1">COM_ISBNREGISTRY_PUBLISHER_FILTER_STATE_QUITTED</option>
+        </field>  
+        <field 
+            name="lang_code" 
+            type="language" 
+            client="site" 
+            default="" 
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_LANGUAGE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_LANGUAGE_DESC"
+            onchange="this.form.submit();"
+        >
+            <option value="">JOPTION_SELECT_LANGUAGE</option>
+        </field>
+   
+    </fields>
+    <fields name="list">
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            default="25"
+            label="COM_ISBNREGISTRY_LIST_LIMIT"
+            description="COM_ISBNREGISTRY_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />
+    </fields>
+</form>

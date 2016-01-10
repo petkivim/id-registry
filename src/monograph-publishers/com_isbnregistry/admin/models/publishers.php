@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
@@ -14,24 +15,122 @@ defined('_JEXEC') or die('Restricted access');
  *
  * @since  1.0.0
  */
-class IsbnregistryModelPublishers extends JModelList
-{
-	/**
-	 * Method to build an SQL query to load the list data.
-	 *
-	 * @return      string  An SQL query
-	 */
-	protected function getListQuery()
-	{
-		// Initialize variables.
-		$db    = JFactory::getDbo();
-		$query = $db->getQuery(true);
+class IsbnregistryModelPublishers extends JModelList {
 
-		// Create the base select statement.
-		$query->select('*')
-			  ->from($db->quoteName('#__isbn_registry_publisher'))
-			  ->order('official_name ASC');
+    public function __construct($config = array()) {
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = array(
+                'id', 'a.id',
+                'has_quitted', 'a.has_quitted',
+                'type', 'a.type',
+                'lang_code', 'a.lang_code'
+            );
+        }
 
-		return $query;
-	}
+        parent::__construct($config);
+    }
+
+    /**
+     * Method to auto-populate the model state.
+     *
+     * This method should only be called once per instantiation and is designed
+     * to be called on the first call to the getState() method unless the model
+     * configuration flag to ignore the request is set.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @param   string  $ordering   An optional ordering field.
+     * @param   string  $direction  An optional direction (asc|desc).
+     *
+     * @return  void
+     *
+     * @since   1.6
+     */
+    protected function populateState($ordering = null, $direction = null) {
+        // Load the filter state.
+        $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
+
+        $state = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_state', '', 'string');
+        $this->setState('filter.state', $state);
+
+        $hasQuitted = $this->getUserStateFromRequest($this->context . '.filter.has_quitted', 'filter_has_quitted', '');
+        $this->setState('filter.has_quitted', $hasQuitted);
+
+        $type = $this->getUserStateFromRequest($this->context . '.filter.type', 'filter_type', '');
+        $this->setState('filter.type', $type);
+
+        $langCode = $this->getUserStateFromRequest($this->context . '.filter.lang_code', 'filter_lang_code', '');
+        $this->setState('filter.lang_code', $langCode);
+
+        // List state information.
+        parent::populateState('a.official_name', 'asc');
+    }
+
+    /**
+     * Method to build an SQL query to load the list data.
+     *
+     * @return      string  An SQL query
+     */
+    protected function getListQuery() {
+        // Initialize variables.
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        // Get search string        
+        $search = $this->getState('filter.search');
+        // Get has quitted value
+        $hasQuitted = $this->getState('filter.has_quitted');
+        // Get type
+        $type = $this->getState('filter.type');
+        // Get language code
+        $langCode = $this->getState('filter.lang_code');
+                
+        // Create the base select statement.
+        $query->select('DISTINCT a.id, a.official_name, a.created')
+                ->from($db->quoteName('#__isbn_registry_publisher') . ' AS a');
+
+        // Set has quitted
+        if (is_numeric($hasQuitted)) {
+            $query->where('a.has_quitted = ' . $hasQuitted);
+        }
+
+        // Set lang code
+        if (!empty($langCode)) {
+            $query->where('a.lang_code = ' . $db->quote($langCode));
+            
+        }
+        
+        // Set type
+        if (!empty($type)) {
+            if (preg_match('/^ISBN$/', $type) === 1) {
+                $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS i ON a.id = i.publisher_id');
+            } else if (preg_match('/^ISMN$/', $type) === 1) {
+                $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS i ON a.id = i.publisher_id');
+            }
+        }
+        
+        // Build search
+        if (!empty($search)) {
+            if (preg_match('/^[\d\-]+$/', $search) === 1) {
+                $search = $db->quote('%' . trim($search) . '%');
+                if (empty($type)) {
+                    $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON a.id = isbn.publisher_id');
+                    $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
+                    $query->where('(isbn.publisher_identifier LIKE ' . $search . ' OR ismn.publisher_identifier LIKE ' . $search . ')');
+                } else {
+                    $query->where('i.publisher_identifier LIKE ' . $search);
+                }
+            } else {
+                $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
+                $query->where('(a.official_name LIKE ' . $search . ' OR a.other_names LIKE ' . $search . ' OR a.previous_names LIKE ' . $search . ')');
+            }
+        }
+
+        // Set order
+        $query->order('official_name ASC');
+
+        return $query;
+    }
+
 }
