@@ -87,7 +87,7 @@ class IsbnregistryModelPublishers extends JModelList {
         $langCode = $this->getState('filter.lang_code');
                 
         // Create the base select statement.
-        $query->select('DISTINCT a.id, a.official_name, a.created')
+        $query->select('DISTINCT a.id, a.official_name, a.active_identifier_isbn, a.active_identifier_ismn, a.created')
                 ->from($db->quoteName('#__isbn_registry_publisher') . ' AS a');
 
         // Set has quitted
