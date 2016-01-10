@@ -20,6 +20,13 @@ JFormHelper::loadFieldClass('list');
 class JFormFieldMessagetypepreferences extends JFormFieldList {
 
     /**
+     * Local cache for db query results.
+     * 
+     * @var Object List
+     */
+    private static $cache;
+
+    /**
      * The field type.
      *
      * @var         string
@@ -32,60 +39,62 @@ class JFormFieldMessagetypepreferences extends JFormFieldList {
      * @return  array  An array of JHtml options.
      */
     protected function getOptions() {
-        // Get all the installed languages
-        $languages = $this->getLanguages();
-        // Get multi dimensional array that contains message type ids and 
-        // language codes as keys:
-        // $result[1]['fi-FI'], $result[1]['en-GB'] etc.
-        $messageTypeIds = $this->getMessageTypeIdsAndLanguages();
+        // Are results already cached?
+        if (!self::$cache) {
+            // Get all the installed languages
+            $languages = $this->getLanguages();
+            // Get multi dimensional array that contains message type ids and 
+            // language codes as keys:
+            // $result[1]['fi-FI'], $result[1]['en-GB'] etc.
+            $messageTypeIds = $this->getMessageTypeIdsAndLanguages();
 
-        // Get message types
-        $db = JFactory::getDBO();
-        $query = $db->getQuery(true);
-        $query->select('id,name');
-        $query->from('#__isbn_registry_message_type');
-        $query->order('name ASC');
-        $db->setQuery((string) $query);
-        $msgTypes = $db->loadObjectList();
-        $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT_MESSAGE_TYPE'));
+            // Get message types
+            $db = JFactory::getDBO();
+            $query = $db->getQuery(true);
+            $query->select('id,name');
+            $query->from('#__isbn_registry_message_type');
+            $query->order('name ASC');
+            $db->setQuery((string) $query);
+            $msgTypes = $db->loadObjectList();
+            $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT_MESSAGE_TYPE'));
 
-        // Check that we have message types, languages and message type ids
-        if ($msgTypes && $languages && $messageTypeIds) {
-            // Go through message types
-            foreach ($msgTypes as $msgType) {
-                // If this message type does not exist in the array -> skip.
-                // Message types that do not have any templates don't exist in
-                // the array
-                if (!$messageTypeIds[$msgType->id]) {
-                    continue;
-                }
-                // Initially message type is OK
-                $ok = true;
-                // Go through all the languages and check that the message 
-                // type has one template in all the installed languages
-                foreach ($languages as $lang) {
-                    if (!array_key_exists($lang->lang_code, $messageTypeIds[$msgType->id])) {
-                        // If message type does not have templates in this language
-                        // => not OK
-                        $ok = false;
-                        break;
-                    } else if ($messageTypeIds[$msgType->id][$lang->lang_code] != 1) {
-                        // If message type has more than one template in this
-                        // language => not OK
-                        $ok = false;
-                        break;
+            // Check that we have message types, languages and message type ids
+            if ($msgTypes && $languages && $messageTypeIds) {
+                // Go through message types
+                foreach ($msgTypes as $msgType) {
+                    // If this message type does not exist in the array -> skip.
+                    // Message types that do not have any templates don't exist in
+                    // the array
+                    if (!$messageTypeIds[$msgType->id]) {
+                        continue;
+                    }
+                    // Initially message type is OK
+                    $ok = true;
+                    // Go through all the languages and check that the message 
+                    // type has one template in all the installed languages
+                    foreach ($languages as $lang) {
+                        if (!array_key_exists($lang->lang_code, $messageTypeIds[$msgType->id])) {
+                            // If message type does not have templates in this language
+                            // => not OK
+                            $ok = false;
+                            break;
+                        } else if ($messageTypeIds[$msgType->id][$lang->lang_code] != 1) {
+                            // If message type has more than one template in this
+                            // language => not OK
+                            $ok = false;
+                            break;
+                        }
+                    }
+                    // If message type is OK, add it to the results
+                    if ($ok) {
+                        $options[] = JHtml::_('select.option', $msgType->id, $msgType->name);
                     }
                 }
-                // If message type is OK, add it to the results
-                if ($ok) {
-                    $options[] = JHtml::_('select.option', $msgType->id, $msgType->name);
-                }
             }
+            // Store results into cache
+            self::$cache = array_merge(parent::getOptions(), $options);
         }
-
-        $options = array_merge(parent::getOptions(), $options);
-
-        return $options;
+        return self::$cache;
     }
 
     /**

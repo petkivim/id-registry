@@ -17,9 +17,9 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
     abstract public function getPublisherRangeModelName();
 
     /**
-     * Generates a new publisher identifier from the given isbn range and
+     * Generates a new publisher identifier from the given identifier range and
      * assigns it to the given publisher.
-     * @param int $rangeId isbn range id that used for generating the identifier
+     * @param int $rangeId identifier range id that used for generating the identifier
      * @param int $publisherId id of the publisher to which the identifier is assigned
      * @return mixed returns 0 if the operation fails; on success the generated
      * publisher identifier string is returned
