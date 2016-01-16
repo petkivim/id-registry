@@ -69,6 +69,26 @@ class IsbnRegistryTablePublication extends JTable {
     }
 
     /**
+     * Deletes a Publication.
+     *
+     * @param   integer  $pk  Primary key of the publication to be deleted.
+     *
+     * @return  boolean  True on success, false on failure.
+     *
+     */
+    public function delete($pk = null) {
+        // Item can be deleted only if it doesn't have identifier yet
+        if (!empty($this->publication_identifier_print) || !empty($this->publication_identifier_electornical)) {
+            // If identifier exists, raise a warning
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_DELETE_FAILED'), 'warning');
+            // Return false as the item can't be deleted
+            return false;
+        }
+        // No identifiers found, delete the item
+        return parent::delete($pk);
+    }
+
+    /**
      * Converts the given array to comma separated string.
      */
     private static function fromArrayToStr($source) {
