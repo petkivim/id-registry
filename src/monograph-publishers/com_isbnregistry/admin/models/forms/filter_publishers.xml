@@ -16,7 +16,7 @@
         >
             <option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_TYPE_SELECT</option>
             <option value="ISBN">ISBN</option>
-            <option value="ISMN">ISMN</option>
+            <option value="ISMN">ISMN</option>           
         </field>
         <field
             name="has_quitted"
@@ -51,6 +51,17 @@
             <option value="0">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER</option>
             <option value="1">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_ISBN</option>
             <option value="2">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_ISMN</option>
+        </field>
+        <field
+            name="additional_info"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_ADDITIONAL_INFO_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_ADDITIONAL_INFO_DESC"
+            onchange="this.form.submit();"
+            default="0"
+        >
+            <option value="0">COM_ISBNREGISTRY_PUBLISHER_FILTER_ADDITIONAL_INFO_SELECT</option>
+            <option value="1">JYES</option>
         </field>
     </fields>
     <fields name="list">

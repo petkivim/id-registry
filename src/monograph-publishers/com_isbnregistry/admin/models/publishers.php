@@ -24,7 +24,8 @@ class IsbnregistryModelPublishers extends JModelList {
                 'has_quitted', 'a.has_quitted',
                 'type', 'a.type',
                 'lang_code', 'a.lang_code',
-                'no_identifier', 'a.no_identifier'
+                'no_identifier', 'a.no_identifier',
+                'additional_info', 'a.additional_info'
             );
         }
 
@@ -67,6 +68,9 @@ class IsbnregistryModelPublishers extends JModelList {
         $noIdentifier = $this->getUserStateFromRequest($this->context . '.filter.no_identifier', 'filter_no_identifier', '');
         $this->setState('filter.no_identifier', $noIdentifier);
 
+        $additionalInfo = $this->getUserStateFromRequest($this->context . '.filter.additional_info', 'filter_additional_info', '');
+        $this->setState('filter.additional_info', $additionalInfo);
+
         // List state information.
         parent::populateState('a.official_name', 'asc');
     }
@@ -91,6 +95,9 @@ class IsbnregistryModelPublishers extends JModelList {
         $langCode = $this->getState('filter.lang_code');
         // Get identifier filter
         $noIdentifier = $this->getState('filter.no_identifier');
+        // Get additional info
+        $additionalInfo = $this->getState('filter.additional_info');
+        $useAdditionalInfo = $additionalInfo == 1 ? true : false;
 
         // Create the base select statement.
         $query->select('DISTINCT a.id, a.official_name, a.active_identifier_isbn, a.active_identifier_ismn, a.created')
@@ -132,8 +139,10 @@ class IsbnregistryModelPublishers extends JModelList {
 
         // Build search
         if (!empty($search)) {
+            // If search string contains only [0-9-], search from identifier field only
             if (preg_match('/^[\d\-]+$/', $search) === 1) {
                 $search = $db->quote('%' . trim($search) . '%');
+                // If type is not defined, search ISBN and ISMN identifiers
                 if (empty($type)) {
                     $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON a.id = isbn.publisher_id');
                     $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
@@ -143,7 +152,12 @@ class IsbnregistryModelPublishers extends JModelList {
                 }
             } else {
                 $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
-                $query->where('(a.official_name LIKE ' . $search . ' OR a.other_names LIKE ' . $search . ' OR a.previous_names LIKE ' . $search . ')');
+                // Search from additional info field or name fields?
+                if ($useAdditionalInfo) {
+                    $query->where('a.additional_info LIKE ' . $search);
+                } else {
+                    $query->where('(a.official_name LIKE ' . $search . ' OR a.other_names LIKE ' . $search . ' OR a.previous_names LIKE ' . $search . ')');
+                }
             }
         }
 
