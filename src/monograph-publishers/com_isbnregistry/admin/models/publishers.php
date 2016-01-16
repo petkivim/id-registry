@@ -134,6 +134,15 @@ class IsbnregistryModelPublishers extends JModelList {
                 case 2:
                     $query->where('a.active_identifier_ismn = ""');
                     break;
+                case 3:
+                    $query->where('(a.active_identifier_isbn != "" AND a.active_identifier_ismn != "")');
+                    break;
+                case 4:
+                    $query->where('a.active_identifier_isbn != ""');
+                    break;
+                case 5:
+                    $query->where('a.active_identifier_ismn != ""');
+                    break;
             }
         }
 
