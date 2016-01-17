@@ -480,32 +480,10 @@ class PublicationHelper extends JHelperContent {
     public static function toCSVArray($publications) {
         // Array for results
         $list = array();
+        // Add publications helper file
+        require_once JPATH_COMPONENT . '/helpers/publishers.php';
         // CSV headers
-        $headers = array(
-            'Registrant_Status_Code', 
-            'Registrant_Prefix_Type', 
-            'Registrant_Prefix_Or_ISBN', 
-            'Registrant_Name', 
-            'ISO_ Country_Code', 
-            'Address_Line_1', 
-            'Address_Line_2', 
-            'Address_Line_3', 
-            'Address_Line_4', 
-            'Admin_Contact_Name', 
-            'Admin_Phone', 
-            'Admin_Fax', 
-            'Admin_Email', 
-            'Alternate_Contact_Type', 
-            'Alternate_Contact_Name', 
-            'Alternate_Phone', 
-            'Alternate_Fax', 
-            'Alternate_Email', 
-            'SAN', 
-            'GLN', 
-            'Website_URL', 
-            'Registrant_ID', 
-            'ISNI'
-        );
+        $headers = PublishersHelper::getPIIDHeaders();
         // Add headers
         array_push($list, $headers);
         // Loop through the publications
@@ -515,9 +493,9 @@ class PublicationHelper extends JHelperContent {
         // Return results
         return $list;
     }
-    
+
     private static function publicationToArray($publication) {
-        
+
         $publisherArr = array(
             'A',
             'A',
@@ -546,7 +524,7 @@ class PublicationHelper extends JHelperContent {
         );
         return $publisherArr;
     }
-    
+
 }
 
 ?>

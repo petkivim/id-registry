@@ -59,31 +59,7 @@ class PublishersHelper extends JHelperContent {
         // Array for results
         $list = array();
         // CSV headers
-        $headers = array(
-            'Registrant_Status_Code', 
-            'Registrant_Prefix_Type', 
-            'Registrant_Prefix_Or_ISBN', 
-            'Registrant_Name', 
-            'ISO_ Country_Code', 
-            'Address_Line_1', 
-            'Address_Line_2', 
-            'Address_Line_3', 
-            'Address_Line_4', 
-            'Admin_Contact_Name', 
-            'Admin_Phone', 
-            'Admin_Fax', 
-            'Admin_Email', 
-            'Alternate_Contact_Type', 
-            'Alternate_Contact_Name', 
-            'Alternate_Phone', 
-            'Alternate_Fax', 
-            'Alternate_Email', 
-            'SAN', 
-            'GLN', 
-            'Website_URL', 
-            'Registrant_ID', 
-            'ISNI'
-        );
+        $headers = self::getPIIDHeaders();
         // Add headers
         array_push($list, $headers);
         // Loop through the publishers
@@ -93,7 +69,40 @@ class PublishersHelper extends JHelperContent {
         // Return results
         return $list;
     }
-    
+
+    /**
+     * Returns an array that contains the headers needed for publishers
+     * and publications file for the International ISBN Directory (PIID).
+     * @return array PIID headers array
+     */
+    public static function getPIIDHeaders() {
+        return array(
+            'Registrant_Status_Code',
+            'Registrant_Prefix_Type',
+            'Registrant_Prefix_Or_ISBN',
+            'Registrant_Name',
+            'ISO_ Country_Code',
+            'Address_Line_1',
+            'Address_Line_2',
+            'Address_Line_3',
+            'Address_Line_4',
+            'Admin_Contact_Name',
+            'Admin_Phone',
+            'Admin_Fax',
+            'Admin_Email',
+            'Alternate_Contact_Type',
+            'Alternate_Contact_Name',
+            'Alternate_Phone',
+            'Alternate_Fax',
+            'Alternate_Email',
+            'SAN',
+            'GLN',
+            'Website_URL',
+            'Registrant_ID',
+            'ISNI'
+        );
+    }
+
     private static function publisherToArray($publisher) {
         $publisherArr = array(
             $publisher->has_quitted ? 'I' : 'A',
