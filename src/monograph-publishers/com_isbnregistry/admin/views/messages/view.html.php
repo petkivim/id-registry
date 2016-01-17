@@ -57,7 +57,7 @@ class IsbnregistryViewMessages extends JViewLegacy {
      */
     protected function addToolBar() {
         JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_MESSAGES'));
-        JToolBarHelper::addNew('message.add');
+        //JToolBarHelper::addNew('message.add');
         JToolBarHelper::deleteList('', 'messages.delete');
         JToolBarHelper::preferences('com_isbnregistry');
     }
