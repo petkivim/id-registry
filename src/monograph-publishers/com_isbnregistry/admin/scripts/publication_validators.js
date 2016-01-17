@@ -28,7 +28,7 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("phone", function (value) {
-        regex = /^(\+){0,1}[0-9 ]{1,30}$/;
+        regex = /^(\+){0,1}[0-9 ()]{1,30}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("year", function (value) {
