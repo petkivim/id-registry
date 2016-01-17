@@ -105,6 +105,7 @@
 		name="export"
 		label="COM_ISBNREGISTRY_CONFIG_EXPORT_LABEL"
 		description="COM_ISBNREGISTRY_CONFIG_EXPORT_DESC"
+		addfieldpath="administrator/components/com_isbnregistry/models/fields"
 		>	
 		<field
 			name="piid_format"
@@ -116,5 +117,12 @@
 			<option value="CSV">CSV</option>
 			<option value="XLS">XLS</option>
 		</field>		
+		<field
+            name="author_publisher_id_isbn"
+            type="Publisher"
+            label="COM_ISBNREGISTRY_CONFIG_EXPORT_AUTHOR_PUBLISHER_ID_ISBN_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EXPORT_AUTHOR_PUBLISHER_ID_ISBN_DESC"
+            default=""
+        />	
 	</fieldset>	
 </config>

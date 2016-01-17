@@ -56,6 +56,10 @@ class PublishersHelper extends JHelperContent {
      * @return array headers and publishes array
      */
     public static function toCSVArray($publishers) {
+        // Get component parameters
+        $params = JComponentHelper::getParams('com_isbnregistry');
+        // Get the id of the publisher that represents author publishers
+        $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
         // Array for results
         $list = array();
         // CSV headers
@@ -64,7 +68,7 @@ class PublishersHelper extends JHelperContent {
         array_push($list, $headers);
         // Loop through the publishers
         foreach ($publishers as $publisher) {
-            array_push($list, self::publisherToArray($publisher));
+            array_push($list, self::publisherToArray($publisher, $authorPublisherId));
         }
         // Return results
         return $list;
@@ -103,10 +107,10 @@ class PublishersHelper extends JHelperContent {
         );
     }
 
-    private static function publisherToArray($publisher) {
+    private static function publisherToArray($publisher, $authorPublisherId) {
         $publisherArr = array(
             $publisher->has_quitted ? 'I' : 'A',
-            'P',
+            $publisher->publisher_id == $authorPublisherId ? 'A' : 'P',
             $publisher->publisher_identifier,
             $publisher->official_name,
             'FI',
