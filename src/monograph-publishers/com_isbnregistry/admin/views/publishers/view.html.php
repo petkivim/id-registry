@@ -30,7 +30,7 @@ class IsbnregistryViewPublishers extends JViewLegacy {
         $this->state = $this->get('State');
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        
+
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             JError::raiseError(500, implode('<br />', $errors));
@@ -63,6 +63,15 @@ class IsbnregistryViewPublishers extends JViewLegacy {
         JToolBarHelper::addNew('publisher.add');
         JToolBarHelper::editList('publisher.edit');
         //JToolBarHelper::deleteList('', 'publishers.delete');
+        
+        // Get component parameters
+        $params = JComponentHelper::getParams('com_isbnregistry');
+        // Get PIID file format
+        $format = $params->get('piid_format', 'XLS');
+
+        JToolBarHelper::custom('publishers.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
+        
+        JToolBarHelper::preferences('com_isbnregistry');
     }
 
 }

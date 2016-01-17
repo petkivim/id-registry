@@ -34,19 +34,94 @@ class PublishersHelper extends JHelperContent {
         );
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_ISBN_RANGES'), 'index.php?option=com_isbnregistry&view=isbnranges', $vName == 'isbnranges'
-        );		
+        );
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_ISMN_RANGES'), 'index.php?option=com_isbnregistry&view=ismnranges', $vName == 'ismnranges'
-        );	
+        );
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_MESSAGES'), 'index.php?option=com_isbnregistry&view=messages', $vName == 'messages'
-        );		
+        );
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_MESSAGE_TEMPLATES'), 'index.php?option=com_isbnregistry&view=messagetemplates', $vName == 'messagetemplates'
-        );			
+        );
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_MESSAGE_TYPES'), 'index.php?option=com_isbnregistry&view=messagetypes', $vName == 'messagetypes'
-        );			
+        );
+    }
+
+    /**
+     * Creates an for generating a CSV file. Adds required headers and
+     * publishers data.
+     * @param array $publishers publishers to be added to the CSV file
+     * @return array headers and publishes array
+     */
+    public static function toCSVArray($publishers) {
+        // Array for results
+        $list = array();
+        // CSV headers
+        $headers = array(
+            'Registrant_Status_Code', 
+            'Registrant_Prefix_Type', 
+            'Registrant_Prefix_Or_ISBN', 
+            'Registrant_Name', 
+            'ISO_ Country_Code', 
+            'Address_Line_1', 
+            'Address_Line_2', 
+            'Address_Line_3', 
+            'Address_Line_4', 
+            'Admin_Contact_Name', 
+            'Admin_Phone', 
+            'Admin_Fax', 
+            'Admin_Email', 
+            'Alternate_Contact_Type', 
+            'Alternate_Contact_Name', 
+            'Alternate_Phone', 
+            'Alternate_Fax', 
+            'Alternate_Email', 
+            'SAN', 
+            'GLN', 
+            'Website_URL', 
+            'Registrant_ID', 
+            'ISNI'
+        );
+        // Add headers
+        array_push($list, $headers);
+        // Loop through the publishers
+        foreach ($publishers as $publisher) {
+            array_push($list, self::publisherToArray($publisher));
+        }
+        // Return results
+        return $list;
+    }
+    
+    private static function publisherToArray($publisher) {
+        $publisherArr = array(
+            $publisher->has_quitted ? 'I' : 'A',
+            'P',
+            $publisher->publisher_identifier,
+            $publisher->official_name,
+            'FI',
+            $publisher->address,
+            $publisher->zip . ' ' . $publisher->city,
+            '',
+            '',
+            $publisher->contact_person,
+            // Add on space after phone that Excel considers it as a string
+            $publisher->phone . ' ',
+            '',
+            $publisher->email,
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            $publisher->www,
+            '',
+            ''
+        );
+        return $publisherArr;
     }
 
 }

@@ -118,6 +118,7 @@ class IsbnRegistryTablePublisher extends JTable {
      * the given publisher id.
      * @param int $publisherId id of the publisher to be updated
      * @param string $identifier ISBN identifier string
+     * @return true on success; false on failure
      */
     public function updateActiveIsbnIdentifier($publisherId, $identifier) {
         // Conditions for which records should be updated.
@@ -142,6 +143,7 @@ class IsbnRegistryTablePublisher extends JTable {
      * the given publisher id.
      * @param int $publisherId id of the publisher to be updated
      * @param string $identifier ISMN identifier string
+     * @return true on success; false on failure
      */
     public function updateActiveIsmnIdentifier($publisherId, $identifier) {
         // Conditions for which records should be updated.
@@ -159,6 +161,27 @@ class IsbnRegistryTablePublisher extends JTable {
 
         // Update object to DB
         return $this->store();
+    }
+
+    /**
+     * Returns a list of publishers and all the publisher ISBN identifiers.
+     * If publisher has multiple identifiers, the publisher is included in the
+     * list multiple times.
+     * @return list of publishers
+     */
+    public function getPublishersAndIsbnIdentifiers() {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+        
+
+        // Create the query
+        $query->select('*');
+        $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
+        $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS pir ON p.id = pir.publisher_id');
+        $query->order('p.official_name ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
     }
 
 }

@@ -141,4 +141,17 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         return $table->updateActiveIsmnIdentifier($publisherId, $identifier);
     }
 
+    /**
+     * Returns a list of publishers and all the publisher ISBN identifiers.
+     * If publisher has multiple identifiers, the publisher is included in the
+     * list multiple times.
+     * @return list of publishers
+     */
+    public function getPublishersAndIsbnIdentifiers() {
+        // Get db access
+        $table = $this->getTable();
+        //   Return result
+        return $table->getPublishersAndIsbnIdentifiers();
+    }
+
 }
