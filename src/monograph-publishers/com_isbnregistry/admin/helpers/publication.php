@@ -488,18 +488,26 @@ class PublicationHelper extends JHelperContent {
         array_push($list, $headers);
         // Loop through the publications
         foreach ($publications as $publication) {
-            array_push($list, self::publicationToArray($publication));
+            if (!empty($publication->publication_identifier_print)) {
+                $identifier = $publication->publication_identifier_print;
+                array_push($list, self::publicationToArray($publication, $identifier));
+            }
+            if (!empty($publication->publication_identifier_electronical)) {
+                $identifier = $publication->publication_identifier_electronical;
+                array_push($list, self::publicationToArray($publication, $identifier));
+            }
+            
         }
         // Return results
         return $list;
     }
 
-    private static function publicationToArray($publication) {
+    private static function publicationToArray($publication, $identifier) {
 
         $publisherArr = array(
             'A',
             'A',
-            empty($publication->publication_identifier_print) ? $publication->publication_identifier_electronical : $publication->publication_identifier_print,
+            $identifier,
             $publication->official_name,
             'FI',
             $publication->address,

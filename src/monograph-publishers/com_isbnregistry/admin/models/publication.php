@@ -229,9 +229,7 @@ class IsbnregistryModelPublication extends JModelAdmin {
 
     /**
      * Returns an array that contains all the publications in the
-     * database that have at least one ISBN identifier. If publication
-     * has both print and electronical identifiers, it's included in the
-     * results two times.
+     * database that have at least one ISBN identifier.
      * @return array array of all the publications that have ISBN
      * identifier
      */
@@ -239,21 +237,7 @@ class IsbnregistryModelPublication extends JModelAdmin {
         // Get db access
         $table = $this->getTable();
         // Get publications
-        $publications = $table->getPublicationsWithIsbnIdentifiers();
-        // Check result
-        if (!$publications) {
-            return array();
-        }
-        $result = array();
-        foreach ($publications as $publication) {
-            if (!empty($publication->publication_identifier_print)) {
-                array_push($result, $publication);
-            }
-            if (!empty($publication->publication_identifier_electronical)) {
-                array_push($result, $publication);
-            }
-        }
-        return $result;
+        return $table->getPublicationsWithIsbnIdentifiers();
     }
 
 }
