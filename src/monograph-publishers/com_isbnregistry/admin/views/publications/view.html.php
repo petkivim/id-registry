@@ -60,6 +60,15 @@ class IsbnregistryViewPublications extends JViewLegacy {
         JToolBarHelper::addNew('publication.add');
         JToolBarHelper::editList('publication.edit');
         JToolBarHelper::deleteList('', 'publications.delete');
+      
+        // Get component parameters
+        $params = JComponentHelper::getParams('com_isbnregistry');
+        // Get PIID file format
+        $format = $params->get('piid_format', 'XLS');
+
+        JToolBarHelper::custom('publications.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
+        
+        JToolBarHelper::preferences('com_isbnregistry');        
     }
 
 }

@@ -250,4 +250,29 @@ class IsbnRegistryTablePublication extends JTable {
         return $this->_db->loadObjectList();
     }
 
+    /**
+     * Returns an Object List that contains all the publications in the
+     * database that have at least one ISBN identifier.
+     * @return ObjectList list of all the publications that have ISBN
+     * identifier
+     */
+    public function getPublicationsWithIsbnIdentifiers() {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions for which records should be fetched
+        $conditions = array(
+            $this->_db->quoteName('publication_identifier_type') . ' = ' . $this->_db->quote('ISBN')
+        );
+
+        // Create the query
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($conditions)
+                ->order('official_name ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

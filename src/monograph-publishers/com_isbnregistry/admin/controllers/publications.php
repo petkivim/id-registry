@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
@@ -14,23 +15,35 @@ defined('_JEXEC') or die('Restricted access');
  *
  * @since  1.0.0
  */
-class IsbnregistryControllerPublications extends JControllerAdmin
-{
-	/**
-	 * Proxy for getModel.
-	 *
-	 * @param   string  $name    The model name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
-	 *
-	 * @return  object  The model.
-	 *
-	 * @since   1.6
-	 */
-	public function getModel($name = 'Publication', $prefix = 'IsbnregistryModel', $config = array('ignore_request' => true))
-	{
-		$model = parent::getModel($name, $prefix, $config);
+class IsbnregistryControllerPublications extends JControllerAdmin {
 
-		return $model;
-	}
+    /**
+     * Proxy for getModel.
+     *
+     * @param   string  $name    The model name. Optional.
+     * @param   string  $prefix  The class prefix. Optional.
+     * @param   array   $config  Configuration array for model. Optional.
+     *
+     * @return  object  The model.
+     *
+     * @since   1.6
+     */
+    public function getModel($name = 'Publication', $prefix = 'IsbnregistryModel', $config = array('ignore_request' => true)) {
+        $model = parent::getModel($name, $prefix, $config);
+
+        return $model;
+    }
+
+    public function getCSV() {
+        // Redirect to CSV format
+        $this->setRedirect('index.php?option=com_isbnregistry&view=publications&format=csv');
+        $this->redirect();
+    }
+
+    public function getXLS() {
+        // Redirect to XML format
+        $this->setRedirect('index.php?option=com_isbnregistry&view=publications&format=xls');
+        $this->redirect();
+    }
+
 }

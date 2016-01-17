@@ -471,6 +471,82 @@ class PublicationHelper extends JHelperContent {
         return '';
     }
 
+    /**
+     * Creates an array for generating a CSV file. Adds required headers and
+     * publications data.
+     * @param array $publications publications to be added to the CSV file
+     * @return array headers and publications array
+     */
+    public static function toCSVArray($publications) {
+        // Array for results
+        $list = array();
+        // CSV headers
+        $headers = array(
+            'Registrant_Status_Code', 
+            'Registrant_Prefix_Type', 
+            'Registrant_Prefix_Or_ISBN', 
+            'Registrant_Name', 
+            'ISO_ Country_Code', 
+            'Address_Line_1', 
+            'Address_Line_2', 
+            'Address_Line_3', 
+            'Address_Line_4', 
+            'Admin_Contact_Name', 
+            'Admin_Phone', 
+            'Admin_Fax', 
+            'Admin_Email', 
+            'Alternate_Contact_Type', 
+            'Alternate_Contact_Name', 
+            'Alternate_Phone', 
+            'Alternate_Fax', 
+            'Alternate_Email', 
+            'SAN', 
+            'GLN', 
+            'Website_URL', 
+            'Registrant_ID', 
+            'ISNI'
+        );
+        // Add headers
+        array_push($list, $headers);
+        // Loop through the publications
+        foreach ($publications as $publication) {
+            array_push($list, self::publicationToArray($publication));
+        }
+        // Return results
+        return $list;
+    }
+    
+    private static function publicationToArray($publication) {
+        
+        $publisherArr = array(
+            'A',
+            'A',
+            empty($publication->publication_identifier_print) ? $publication->publication_identifier_electronical : $publication->publication_identifier_print,
+            $publication->official_name,
+            'FI',
+            $publication->address,
+            $publication->zip . ' ' . $publication->city,
+            '',
+            '',
+            $publication->contact_person,
+            // Add on space after phone that Excel considers it as a string
+            $publication->phone . ' ',
+            '',
+            $publication->email,
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            $publication->www,
+            '',
+            ''
+        );
+        return $publisherArr;
+    }
+    
 }
 
 ?>
