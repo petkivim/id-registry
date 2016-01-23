@@ -113,11 +113,24 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
         // Results array
         $results = array();
         // Loop through the objects list
-        foreach($list as $item) {
+        foreach ($list as $item) {
             array_push($results, $item->identifier);
         }
         // Return array
         return $results;
+    }
+
+    /**
+     * Delete all identifiers related to the batch identified by
+     * the given batch id.
+     * @param int $batchId batch id
+     * @return int number of deleted rows
+     */
+    public function deleteByBatchId($batchId) {
+        // Get db access
+        $table = $this->getTable();
+        // Return result
+        return $table->deleteByBatchId($batchId);
     }
 
 }

@@ -99,4 +99,47 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
         return $this->store();
     }
 
+    /**
+     * Get all batch ids related to the publisher identified by the given
+     * publisher id.
+     * @param int $publisherId publisher id
+     * @return array array of batch ids
+     */
+    public function getBatchIdsByPublisher($publisherId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('id')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));;
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadColumn();
+    }
+
+    /**
+     * Delete all identifier batches related to the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId publisher id
+     * @return int number of deleted rows
+     */
+    public function deleteByPublisherId($publisherId) {
+        $query = $this->_db->getQuery(true);
+
+        // Delete all batches related to the publisher
+        $conditions = array(
+            $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId)
+        );
+
+        $query->delete($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of deleted batches
+        return $this->_db->getAffectedRows();
+    }
+
 }

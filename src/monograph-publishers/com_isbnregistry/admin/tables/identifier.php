@@ -101,4 +101,28 @@ class IsbnRegistryTableIdentifier extends JTable {
         return $this->_db->loadObjectList();
     }
 
+    /**
+     * Delete all identifiers related to the batch identified by
+     * the given batch id.
+     * @param int $batchId batch id
+     * @return int number of deleted rows
+     */
+    public function deleteByBatchId($batchId) {
+        $query = $this->_db->getQuery(true);
+
+        // Delete all identifiers related to the batch
+        $conditions = array(
+            $this->_db->quoteName('identifier_batch_id') . ' = ' . $this->_db->quote($batchId)
+        );
+
+        $query->delete($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of deleted rows
+        return $this->_db->getAffectedRows();
+    }
+
 }

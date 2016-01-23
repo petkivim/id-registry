@@ -269,10 +269,10 @@ class IsbnRegistryTablePublication extends JTable {
             $this->_db->quoteName('publication_identifier_type') . ' = ' . $this->_db->quote('ISBN')
         );
 
-        if($publisherId > 0) {
+        if ($publisherId > 0) {
             array_push($conditions, $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
         }
-        
+
         // Create the query
         $query->select('*')
                 ->from($this->_db->quoteName($this->_tbl))
@@ -281,6 +281,30 @@ class IsbnRegistryTablePublication extends JTable {
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Delete all publications related to the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId publisher id
+     * @return int number of deleted rows
+     */
+    public function deleteByPublisherId($publisherId) {
+        $query = $this->_db->getQuery(true);
+
+        // Delete all publications related to the publisher
+        $conditions = array(
+            $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId)
+        );
+
+        $query->delete($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of deleted rows
+        return $this->_db->getAffectedRows();
     }
 
 }

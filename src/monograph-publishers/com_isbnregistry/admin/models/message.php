@@ -357,4 +357,28 @@ class IsbnregistryModelMessage extends JModelAdmin {
         return true;
     }
 
+    /**
+     * Get all message ids related to the publisher identified by the given
+     * publisher id.
+     * @param int $publisherId publisher id
+     * @return array array of message ids
+     */
+    public function getMessageIdsByPublisher($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->getMessageIdsByPublisher($publisherId);
+    }
+
+    /**
+     * Delete all messages related to the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId publisher id
+     * @return int number of deleted rows
+     */
+    public function deleteByPublisherId($publisherId) {
+        $messageIds = $this->getMessageIdsByPublisher($publisherId);
+        $this->delete($messageIds);
+    }
+
 }

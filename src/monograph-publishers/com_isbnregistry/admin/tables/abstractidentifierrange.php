@@ -173,4 +173,28 @@ abstract class IsbnRegistryTableAbstractIdentifierRange extends JTable {
         return false;
     }
 
+    /**
+     * Delete all identifier ranges related to the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId publisher id
+     * @return int number of deleted rows
+     */
+    public function deleteByPublisherId($publisherId) {
+        $query = $this->_db->getQuery(true);
+
+        // Delete all identifier ranges related to the publisher
+        $conditions = array(
+            $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId)
+        );
+
+        $query->delete($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of deleted rows
+        return $this->_db->getAffectedRows();
+    }
+
 }

@@ -73,7 +73,23 @@ class IsbnRegistryTablePublisher extends JTable {
     }
 
     public function delete($pk = null) {
-
+        if ($pk != null) {
+            // Delete publications
+            $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
+            $publicationModel->deleteByPublisherId($pk);
+            // Delete ISBN ranges
+            $publisherIsbnRangeModel = JModelLegacy::getInstance('publisherisbnrange', 'IsbnregistryModel');
+            $publisherIsbnRangeModel->deleteByPublisherId($pk);
+            // Delete ISMN ranges
+            $publisherIsmnRangeModel = JModelLegacy::getInstance('publisherismnrange', 'IsbnregistryModel');
+            $publisherIsmnRangeModel->deleteByPublisherId($pk);
+            // Delete messages
+            $messageModel = JModelLegacy::getInstance('message', 'IsbnregistryModel');
+            $messageModel->deleteByPublisherId($pk);
+            // Delete identifier batches
+            $identifierBatchModel = JModelLegacy::getInstance('identifierbatch', 'IsbnregistryModel');
+            $identifierBatchModel->deleteByPublisherId($pk);
+        }
         return parent::delete($pk);
     }
 
@@ -172,7 +188,7 @@ class IsbnRegistryTablePublisher extends JTable {
     public function getPublishersAndIsbnIdentifiers() {
         // Initialize variables.
         $query = $this->_db->getQuery(true);
-        
+
 
         // Create the query
         $query->select('*');

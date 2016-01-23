@@ -244,4 +244,17 @@ class IsbnregistryModelPublication extends JModelAdmin {
         return $table->getPublicationsWithIsbnIdentifiers($publisherId);
     }
 
+    /**
+     * Delete all publications related to the publisher identified by
+     * the given publisher id.
+     * @param int $publisherId publisher id
+     * @return int number of deleted rows
+     */
+    public function deleteByPublisherId($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publications
+        return $table->deleteByPublisherId($publisherId);
+    }
+
 }

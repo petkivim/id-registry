@@ -115,4 +115,29 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         return $table->delete($id);
     }
 
+    /**
+     * Deletes all the batches related to the publisher identified by the
+     * given publisher id. Also all the identifiers related to the batches
+     * are deleted.
+     * @param int $publisherId publisher id
+     * @return boolean true on success; otherwise false
+     */
+    public function deleteByPublisherId($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get batch ids related to the publisher
+        $batchIds = $table->getBatchIdsByPublisher($publisherId);
+        // If batches are deleted, also identifiers must be deleted
+        if ($table->deleteByPublisherId($publisherId) > 0) {
+            // Get an instance of identifier model
+            $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
+            // Delete identifiers
+            foreach($batchIds as $batchId) {
+                $identifierModel->deleteByBatchId($batchId);
+            }
+            return true;
+        }
+        return false;
+    }
+
 }

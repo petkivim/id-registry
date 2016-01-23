@@ -60,20 +60,40 @@ class IsbnRegistryTableMessage extends JTable {
     /**
      * Deletes a message.
      *
-     * @param   integer  $pk  Primary key of the message template to be deleted.
+     * @param   integer  $pk  Primary key of the message to be deleted.
      *
      * @return  boolean  True on success, false on failure.
      *
      */
     public function delete($pk = null) {
         // Check if message has attachments
-        if($this->has_attachment) {
-            if(!unlink(JPATH_COMPONENT . '/email/' . $this->attachment_name)) {
+        if ($this->has_attachment) {
+            if (!unlink(JPATH_COMPONENT . '/email/' . $this->attachment_name)) {
                 JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_DELETE_ATTACHMENT_FAILED'), 'warning');
             }
         }
-        // No ISBNs have been used, delete the item
+
         return parent::delete($pk);
+    }
+
+    /**
+     * Get all message ids related to the publisher identified by the given
+     * publisher id.
+     * @param int $publisherId publisher id
+     * @return array array of message ids
+     */
+    public function getMessageIdsByPublisher($publisherId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('id')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
+        ;
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadColumn();
     }
 
 }
