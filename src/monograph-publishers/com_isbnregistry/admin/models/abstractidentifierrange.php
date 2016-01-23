@@ -52,7 +52,7 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
             // Increase used numbers pointer
             $range->taken += 1;
             // Update new values to database
-            if ($dao->updateRange($range)) {
+            if ($dao->updateIncrease($range)) {
                 // Format publisher identifier
                 $result = $this->formatPublisherIdentifier($range, $publisherIdentifier);
                 // Get an instance of a ISBN range model
@@ -64,6 +64,9 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
                         $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_ACTIVE_IDENTIFIER_RANGE_UPDATE_FAILED'));
                     }
                     return $result;
+                } else {
+                    // Rollback 
+                    $this->decreaseByOne($range->id);
                 }
             }
         }
@@ -135,7 +138,7 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
                 $range->is_active = true;
             }
             // Update to db
-            if ($dao->updateRange($range)) {
+            if ($dao->updateDecrease($range)) {
                 return true;
             }
         }

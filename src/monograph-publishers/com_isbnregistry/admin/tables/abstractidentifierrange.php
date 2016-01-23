@@ -93,9 +93,9 @@ abstract class IsbnRegistryTableAbstractIdentifierRange extends JTable {
      */
     public function getRange($rangeId, $mustBeActive) {
         $conditions = array(
-            $this->_db->quoteName('id') . " = " . $this->_db->quote($rangeId)          
+            $this->_db->quoteName('id') . " = " . $this->_db->quote($rangeId)
         );
-        if($mustBeActive) {
+        if ($mustBeActive) {
             array_push($conditions, $this->_db->quoteName('is_active') . " = " . $this->_db->quote(true));
             array_push($conditions, $this->_db->quoteName('is_closed') . " = " . $this->_db->quote(false));
         }
@@ -110,25 +110,67 @@ abstract class IsbnRegistryTableAbstractIdentifierRange extends JTable {
     }
 
     /**
-     * Updates the given identifier range to the database.
+     * Updates the given identifier range to the database. This method must
+     * be used when the number of used identifiers is being increased.
      * @param Object $range object to be updated
      * @return boolean true on success
      */
-    public function updateRange($range) {
-        // Load object
-        if (!$this->load($range->id)) {
-            return false;
+    public function updateIncrease($range) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($range->id),
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote(($range->free + 1)),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote(($range->taken - 1))
+        );
+        return $this->updateRange($range, $conditions);
+    }
+
+    /**
+     * Updates the given identifier range to the database. This method must
+     * be used when the number of used identifiers is being decreased.
+     * @param Object $range object to be updated
+     * @return boolean true on success
+     */
+    public function updateDecrease($range) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($range->id),
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote(($range->free - 1)),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote(($range->taken + 1))
+        );
+        return $this->updateRange($range, $conditions);
+    }
+
+    /**
+     * Updates the given identifier range to the database.
+     * @param Object $range object to be updated
+     * @param array $conditions conditions for the update operation
+     * @return boolean true on success
+     */
+    protected function updateRange($range, $conditions) {
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote($range->free),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote($range->taken),
+            $this->_db->quoteName('next') . ' = ' . $this->_db->quote($range->next),
+            $this->_db->quoteName('is_active') . ' = ' . $this->_db->quote($range->is_active),
+            $this->_db->quoteName('is_closed') . ' = ' . $this->_db->quote($range->is_closed)
+        );
+
+        // Set update query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+
+        // Execute query
+        $result = $this->_db->execute();
+
+        // If operation succeeded, one row was affected
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
         }
-
-        // Update fields
-        $this->free = $range->free;
-        $this->taken = $range->taken;
-        $this->next = $range->next;
-        $this->is_active = $range->is_active;
-        $this->is_closed = $range->is_closed;
-
-        // Update object to DB
-        return $this->store();
+        return false;
     }
 
 }
