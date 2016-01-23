@@ -192,7 +192,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             }
 
             // Update changed publisher isbn range to the database
-            if ($table->updateToDb($publisherRange)) {
+            if ($table->updateIncrease($publisherRange, $count)) {
                 // Identifier type
                 $identifierType = substr($this->getRangeModelName(), 0, 4);
                 // Parameters array
@@ -212,7 +212,14 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 // Get an instance of identifier model
                 $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
                 // Add new identifiers to db
-                $identifierModel->addNew($resultsArray['identifiers'], $batchId);
+                if (!$identifierModel->addNew($resultsArray['identifiers'], $batchId)) {
+                    // If adding new identifiers to DB failed, rollback
+                    $this->decreaseByCount($publisherRange->id, $count);
+                    // Delete batch
+                    $identifierBatchModel->delete($batchId);
+                    // Return an empty array
+                    return array();
+                }
 
                 // If update was succesfull, return the generated ISBN numbers
                 return $resultsArray;
@@ -251,4 +258,42 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         return $table->getPublisherRangeByPublisherId($publisherId);
     }
 
+        /**
+     * Updates the range matching the given identifier id and decreases its
+     * next pointer by one. Also free and taken properties are updated 
+     * accordingly.
+     * @param integer $rangeId id of the range to be updated
+     * @return boolean true if and only if the operation succeeds; otherwise
+     * false
+     */
+    public function decreaseByCount($publisherRangeId, $count) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publisher range object
+        $publisherRange = $table->getPublisherRange($publisherRangeId, false);
+
+        // Check that we have a result
+        if ($publisherRange != null) {
+            // Decrease next pointer
+            $publisherRange->next = $publisherRange->next - $count;
+            // Next pointer is a string, add left padding
+            $publisherRange->next = str_pad($publisherRange->next, $publisherRange->category, "0", STR_PAD_LEFT);
+            // Update free
+            $publisherRange->free += $count;
+            // Update taken
+            $publisherRange->taken -= $count;
+            // Check if closed
+            if ($publisherRange->is_closed) {
+                // Update is_closed and is_active
+                $publisherRange->is_closed = false;
+                $publisherRange->is_active = true;
+            }
+            // Update to db
+            if ($table->updateDecrease($publisherRange, $count)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

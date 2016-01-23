@@ -103,4 +103,16 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         return $table->updatePublicationId($identifierBatchId, $publicationId);
     }
 
+    /**
+     * Deletes the batch identified by the given id.
+     * @param int $id batch id
+     * @return boolean true on success; otherwise false
+     */
+    public function delete($id) {
+        // Get db access
+        $table = $this->getTable();
+        // Return result
+        return $table->delete($id);
+    }
+
 }

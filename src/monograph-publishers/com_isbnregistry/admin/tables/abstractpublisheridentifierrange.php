@@ -239,25 +239,70 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRange extends JTable 
     }
 
     /**
-     * Updates the given publisher identifier range to the database.
-     * @param publisherRange $publisherRange object to be updated
-     * @return boolean true on success; false on failure
+     * Updates the given publisher identifier range to the database. This 
+     * method must be used when the number of used identifiers is being 
+     * increased.
+     * @param Object $publisherRange object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
      */
-    public function updateToDb($publisherRange) {
-        // Load object
-        if (!$this->load($publisherRange->id)) {
-            return false;
+    public function updateIncrease($publisherRange, $count) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherRange->id),
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote(($publisherRange->free + $count)),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote(($publisherRange->taken - $count))
+        );
+        return $this->updateRange($publisherRange, $conditions);
+    }
+
+    /**
+     * Updates the given publisher identifier range to the database. This method 
+     * must be used when the number of used identifiers is being decreased.
+     * @param Object $publisherRange object to be updated
+     * @param int $count how much value is decreased
+     * @return boolean true on success
+     */
+    public function updateDecrease($publisherRange, $count) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherRange->id),
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote(($publisherRange->free - $count)),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote(($publisherRange->taken + $count))
+        );
+        return $this->updateRange($publisherRange, $conditions);
+    }
+
+    /**
+     * Updates the given publisher identifier range to the database.
+     * @param Object $publisherRange object to be updated
+     * @param array $conditions conditions for the update operation
+     * @return boolean true on success
+     */
+    protected function updateRange($publisherRange, $conditions) {
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote($publisherRange->free),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote($publisherRange->taken),
+            $this->_db->quoteName('next') . ' = ' . $this->_db->quote($publisherRange->next),
+            $this->_db->quoteName('is_active') . ' = ' . $this->_db->quote($publisherRange->is_active),
+            $this->_db->quoteName('is_closed') . ' = ' . $this->_db->quote($publisherRange->is_closed)
+        );
+
+        // Set update query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+
+        // Execute query
+        $result = $this->_db->execute();
+
+        // If operation succeeded, one row was affected
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
         }
-
-        // Update fields
-        $this->free = $publisherRange->free;
-        $this->taken = $publisherRange->taken;
-        $this->next = $publisherRange->next;
-        $this->is_active = $publisherRange->is_active;
-        $this->is_closed = $publisherRange->is_closed;
-
-        // Update object to DB
-        return $this->store();
+        return false;
     }
 
     /**
