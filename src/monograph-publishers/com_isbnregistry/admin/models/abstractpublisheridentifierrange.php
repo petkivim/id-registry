@@ -246,7 +246,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
     }
 
     /**
-     * Returns active identifier rangs belonging to the publisher
+     * Returns active identifier range belonging to the publisher
      * identified by the given id. 
      * @param int $publisherId id of the publisher who owns the range
      * @return object active identifier ranage

@@ -463,6 +463,10 @@ jQuery(document).ready(function ($) {
         );
     });
 
+    $("button[data-target='#modal-print']").click(function () {
+        SqueezeBox.open(url + '?option=com_isbnregistry&view=publisher&layout=print&tmpl=component&id=' + publisher_id, {handler: 'iframe', size: {x: 1200, y: 600}}
+        );
+    });
 });
 
 function pad(num, char) {

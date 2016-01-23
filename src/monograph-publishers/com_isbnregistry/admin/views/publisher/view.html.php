@@ -41,6 +41,16 @@ class IsbnregistryViewPublisher extends JViewLegacy {
             return false;
         }
 
+        if ($this->getLayout() == 'print') {
+            // Get publisher identifiers for ISBNs
+            $publisherIsbnRangeModel = JModelLegacy::getInstance('publisherisbnrange', 'IsbnregistryModel');
+            $isbns = $publisherIsbnRangeModel->getPublisherIdentifiers($this->item->id);
+            $this->assignRef('isbns', $isbns);
+            // Get publisher identifiers for ISMNs
+            $publisherIsmnRangeModel = JModelLegacy::getInstance('publisherismnrange', 'IsbnregistryModel');
+            $ismns = $publisherIsmnRangeModel->getPublisherIdentifiers($this->item->id);
+            $this->assignRef('ismns', $ismns);
+        }
 
         // Set the toolbar
         $this->addToolBar();
@@ -84,7 +94,11 @@ class IsbnregistryViewPublisher extends JViewLegacy {
             // Render the popup button
             $dhtml = $layout->render(array('name' => 'generate-message', 'text' => JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_SEND_MESSAGE'), 'class' => 'icon-envelope'));
             $toolbar->appendButton('Custom', $dhtml);
-        }        
+
+            // Render the popup button
+            $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_PRINT'), 'class' => 'icon-print'));
+            $toolbar->appendButton('Custom', $dhtml);
+        }
         JToolBarHelper::cancel(
                 'publisher.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );
