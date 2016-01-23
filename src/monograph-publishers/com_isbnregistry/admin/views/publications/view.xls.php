@@ -26,10 +26,15 @@ class IsbnregistryViewPublications extends JViewLegacy {
     function display($tpl = null) {
         // Get data from the model
         $this->items = $this->get('Items');
+        
+        // Get component parameters
+        $params = JComponentHelper::getParams('com_isbnregistry');
+        // Get the id of the publisher that represents author publishers
+        $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
         // Get publication model
         $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
         // Get list of publications
-        $list = $publicationModel->getPublicationsWithIsbnIdentifiers();
+        $list = $publicationModel->getPublicationsWithIsbnIdentifiers($authorPublisherId);
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publication.php';
         // Convert list to CSV array

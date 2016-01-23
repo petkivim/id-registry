@@ -251,12 +251,16 @@ class IsbnRegistryTablePublication extends JTable {
     }
 
     /**
-     * Returns an Object List that contains all the publications in the
-     * database that have at least one ISBN identifier.
-     * @return ObjectList list of all the publications that have ISBN
+     * Returns an array that contains all the publications own by the publisher
+     * spesified by the publisher id that have at least one ISBN identifier.
+     * If publisher id is not given, all the publications that have at least
+     * one ISBN identifier are returned.
+     * @return array array of all the publications that have ISBN
      * identifier
+     * @param integer $publisherId id of the publisher that owns the
+     * publications
      */
-    public function getPublicationsWithIsbnIdentifiers() {
+    public function getPublicationsWithIsbnIdentifiers($publisherId = 0) {
         // Initialize variables.
         $query = $this->_db->getQuery(true);
 
@@ -265,6 +269,10 @@ class IsbnRegistryTablePublication extends JTable {
             $this->_db->quoteName('publication_identifier_type') . ' = ' . $this->_db->quote('ISBN')
         );
 
+        if($publisherId > 0) {
+            array_push($conditions, $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
+        }
+        
         // Create the query
         $query->select('*')
                 ->from($this->_db->quoteName($this->_tbl))

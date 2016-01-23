@@ -228,16 +228,20 @@ class IsbnregistryModelPublication extends JModelAdmin {
     }
 
     /**
-     * Returns an array that contains all the publications in the
-     * database that have at least one ISBN identifier.
+     * Returns an array that contains all the publications own by the publisher
+     * spesified by the publisher id that have at least one ISBN identifier.
+     * If publisher id is not given, all the publications that have at least
+     * one ISBN identifier are returned.
      * @return array array of all the publications that have ISBN
      * identifier
+     * @param integer $publisherId id of the publisher that owns the
+     * publications
      */
-    public function getPublicationsWithIsbnIdentifiers() {
+    public function getPublicationsWithIsbnIdentifiers($publisherId = 0) {
         // Get db access
         $table = $this->getTable();
         // Get publications
-        return $table->getPublicationsWithIsbnIdentifiers();
+        return $table->getPublicationsWithIsbnIdentifiers($publisherId);
     }
 
 }
