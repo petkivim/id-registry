@@ -351,7 +351,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
     private function writeIdentifiersToFile($identifiers, $filename) {
         $file = fopen($filename, "w") or die("Unable to open file!");
         foreach ($identifiers as $identifier) {
-            fwrite($file, $identifier . "\n");
+            fwrite($file, $identifier . "\r\n");
         }
         fclose($file);
         return true;
