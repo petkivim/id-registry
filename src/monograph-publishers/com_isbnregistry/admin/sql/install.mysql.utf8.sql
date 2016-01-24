@@ -34,7 +34,7 @@ CREATE TABLE `#__isbn_registry_publisher` (
     PRIMARY KEY (`id`),
     INDEX `idx_official_name` (`official_name`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -108,7 +108,7 @@ CREATE TABLE `#__isbn_registry_publication` (
     INDEX `idx_official_name` (`official_name`),
     INDEX `idx_publisher_id` (`publisher_id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -140,7 +140,7 @@ CREATE TABLE `#__isbn_registry_isbn_range` (
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -174,7 +174,7 @@ CREATE TABLE `#__isbn_registry_publisher_isbn_range` (
     INDEX `idx_publisher_id` (`publisher_id`),
     INDEX `idx_isbn_range_id` (`isbn_range_id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -198,7 +198,7 @@ CREATE TABLE `#__isbn_registry_isbn_used` (
     INDEX `idx_publisher_isbn_range_id` (`publisher_isbn_range_id`),
     INDEX `idx_publication_id` (`publication_id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -222,7 +222,7 @@ CREATE TABLE `#__isbn_registry_ismn_range` (
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -254,7 +254,7 @@ CREATE TABLE `#__isbn_registry_publisher_ismn_range` (
     INDEX `idx_publisher_id` (`publisher_id`),
     INDEX `idx_ismn_range_id` (`ismn_range_id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -271,7 +271,7 @@ CREATE TABLE `#__isbn_registry_message_type` (
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -291,7 +291,7 @@ CREATE TABLE `#__isbn_registry_message_template` (
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -315,7 +315,7 @@ CREATE TABLE `#__isbn_registry_message` (
     `sent_by` VARCHAR(30),
     PRIMARY KEY (`id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -336,7 +336,7 @@ CREATE TABLE `#__isbn_registry_identifier_batch` (
     INDEX `idx_publisher_identifier_range_id` (`publisher_identifier_range_id`),
     INDEX `idx_publication_id` (`publication_id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
@@ -351,7 +351,7 @@ CREATE TABLE `#__isbn_registry_identifier` (
     INDEX `idx_identifier` (`identifier`),
     INDEX `idx_identifier_batch_id` (`identifier_batch_id`)
 )
-ENGINE =MyISAM
+ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
