@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_isbnregistry/models/rules">	
+    <fieldset>
+        <field
+            name="id"
+            type="hidden"
+        />
+        <field
+            name="official_name"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_OFFICIAL_NAME_DESC"
+            size="20"
+            class="inputbox validate-officialname"
+            default=""
+            required="true"
+        />
+        <field
+            name="other_names"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_OTHER_NAMES_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_OTHER_NAMES_DESC"
+            size="20"
+            class="inputbox validate-othernames"
+            default=""
+        />
+        <field
+            name="contact_person"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_DESC"
+            size="20"
+            class="inputbox validate-contactperson"
+            default=""
+        />
+        <field 
+            name="created"
+            type="calendar"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_DESC"
+            readonly="true"
+            class="readonly"
+            format="%Y-%m-%d %H:%M:%S"
+            filter="server_utc"
+        />
+        <field
+            name="created_by"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_BY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CREATED_BY_DESC"
+            size="20"
+            readonly="true"
+            class="readonly"
+        />	
+        <field
+            name="address"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDRESS_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDRESS_DESC"
+            size="20"
+            class="inputbox validate-address"
+            default=""
+        />	
+        <field
+            name="zip"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ZIP_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ZIP_DESC"
+            size="20"
+            class="inputbox validate-zip"
+            default=""
+        />	
+        <field
+            name="city"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CITY_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CITY_DESC"
+            size="20"
+            class="inputbox validate-city"
+            default=""
+        />	
+        <field
+            name="phone"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PHONE_DESC"
+            size="20"
+            class="inputbox validate-phone"
+            default=""
+        />						
+        <field
+            name="email"
+            type="email"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_EMAIL_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_EMAIL_DESC"
+            size="20"
+            class="inputbox"
+            default=""
+            validate="email"
+        />
+        <field
+            name="www"
+            type="URL"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_WWW_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_WWW_DESC"
+            size="20"
+            class="inputbox validate-www"
+            default=""
+            validate="url"
+        />
+        
+        <field
+            name="question_1"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_1_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_1_DESC"
+            size="20"
+            class="inputbox validate-question1"
+            default=""
+        />
+        <field
+            name="question_2"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_2_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_2_DESC"
+            size="20"
+            class="inputbox validate-question2"
+            default=""
+        />
+        <field
+            name="question_3"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_3_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_3_DESC"
+            size="20"
+            class="inputbox validate-question3"
+            default=""
+        />
+        <field
+            name="question_4"
+            type="textarea"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_4_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_4_DESC"
+            class="validate-question4"
+            rows="3"
+            cols="40"/> 
+        <field
+            name="question_5"
+            type="textarea"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_5_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_5_DESC"
+            class="validate-question5"
+            rows="3"
+            cols="40"
+        />        
+        <field
+            name="question_6"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_6_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_6_DESC"
+            size="20"
+            class="inputbox validate-question6"
+            default=""
+        />
+        <field
+            name="question_8"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_8_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_8_DESC"
+            size="20"
+            class="inputbox validate-question8"
+            default=""
+        />
+        <field
+            name="confirmation"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_CONFIRMATION_DESC"
+            size="20"
+            class="inputbox validate-confirmation"
+            default=""
+        />      
+        <field 
+            name="lang_code" 
+            type="language" 
+            client="site" 
+            default="fi-FI" 
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_LANGUAGE_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_LANGUAGE_DESC"
+            readonly="true"
+        />     
+        <field
+            name="question_7"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_7_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_QUESTION_7_DESC"
+            multiple="true"
+            class="validate-question7"
+            readonly="true"
+        >		
+            <option value="000">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_000</option>
+            <option value="015">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_015</option>
+            <option value="030">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_030</option>
+            <option value="035">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_035</option>
+            <option value="040">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_040</option>
+            <option value="045">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_045</option>
+            <option value="050">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_050</option>
+            <option value="055">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_055</option>
+            <option value="100">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_100</option>
+            <option value="120">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_120</option>
+            <option value="130">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_130</option>
+            <option value="200">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_200</option>
+            <option value="210">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_210</option>
+            <option value="211">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_211</option>
+            <option value="270">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_270</option>
+            <option value="300">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_300</option>
+            <option value="310">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_310</option>
+            <option value="315">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_315</option>
+            <option value="316">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_316</option>
+            <option value="320">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_320</option>
+            <option value="330">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_330</option>
+            <option value="340">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_340</option>
+            <option value="350">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_350</option>
+            <option value="370">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_370</option>
+            <option value="375">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_375</option>
+            <option value="380">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_380</option>
+            <option value="390">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_390</option>
+            <option value="400">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_400</option>
+            <option value="410">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_410</option>
+            <option value="420">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_420</option>
+            <option value="440">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_440</option>
+            <option value="450">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_450</option>
+            <option value="460">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_460</option>
+            <option value="470">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_470</option>
+            <option value="480">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_480</option>
+            <option value="490">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_490</option>
+            <option value="500">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_500</option>
+            <option value="510">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_510</option>
+            <option value="520">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_520</option>
+            <option value="530">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_530</option>
+            <option value="540">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_540</option>
+            <option value="550">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_550</option>
+            <option value="560">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_560</option>
+            <option value="570">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_570</option>
+            <option value="580">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_580</option>
+            <option value="590">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_590</option>
+            <option value="600">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_600</option>
+            <option value="610">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_610</option>
+            <option value="620">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_620</option>
+            <option value="621">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_621</option>
+            <option value="622">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_622</option>
+            <option value="630">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_630</option>
+            <option value="640">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_640</option>
+            <option value="650">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_650</option>
+            <option value="660">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_660</option>
+            <option value="670">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_670</option>
+            <option value="672">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_672</option>
+            <option value="680">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_680</option>
+            <option value="690">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_690</option>
+            <option value="700">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_700</option>
+            <option value="710">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_710</option>
+            <option value="720">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_720</option>
+            <option value="730">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_730</option>
+            <option value="740">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_740</option>
+            <option value="750">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_750</option>
+            <option value="760">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_760</option>
+            <option value="765">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_765</option>
+            <option value="770">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_770</option>
+            <option value="780">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_780</option>
+            <option value="790">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_790</option>
+            <option value="800">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_800</option>
+            <option value="810">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_810</option>
+            <option value="820">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_820</option>
+            <option value="830">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_830</option>
+            <option value="840">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_840</option>
+            <option value="850">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_850</option>
+            <option value="860">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_860</option>
+            <option value="870">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_870</option>
+            <option value="880">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_880</option>
+            <option value="890">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_890</option>
+            <option value="900">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_900</option>
+            <option value="910">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_910</option>
+            <option value="920">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_920</option>
+            <option value="930">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_930</option>
+            <option value="940">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_940</option>
+            <option value="950">COM_ISBNREGISTRY_PUBLISHER_FIELD_CLASS_950</option>
+        </field>		
+    </fieldset>
+</form>

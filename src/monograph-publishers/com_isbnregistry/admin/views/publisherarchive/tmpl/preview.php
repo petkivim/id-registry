@@ -15,9 +15,6 @@ $document = JFactory::getDocument();
 $document->addScript("components/com_isbnregistry/scripts/publisher_print.js");
 // Add css
 $document->addStyleSheet("components/com_isbnregistry/css/publisher.css");
-$this->form->setFieldAttribute( 'lang_code', 'readonly', 'true' );
-$this->form->setFieldAttribute( 'has_quitted', 'readonly', 'true' );
-$this->form->setFieldAttribute( 'question_7', 'readonly', 'true' );
 ?>
 
 <button name="print" id="print"><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_PRINT'); ?></button>
@@ -42,7 +39,6 @@ $this->form->setFieldAttribute( 'question_7', 'readonly', 'true' );
                     <?php echo $this->item->other_names; ?>
                 </div>
             </div>
-            <?php echo $this->form->renderField('previous_names'); ?>
             <div class="control-group">
                 <div class="control-label">
                     <?php echo $this->form->getLabel('contact_person'); ?>
@@ -52,23 +48,6 @@ $this->form->setFieldAttribute( 'question_7', 'readonly', 'true' );
                 </div>
             </div>
             <?php echo $this->form->renderField('lang_code'); ?>
-            <?php echo $this->form->renderField('has_quitted'); ?>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('year_quitted'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->year_quitted; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('additional_info'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->additional_info; ?>
-                </div>
-            </div>
             <?php echo $this->form->renderField('created'); ?>
             <div class="control-group">
                 <div class="control-label">
@@ -76,70 +55,6 @@ $this->form->setFieldAttribute( 'question_7', 'readonly', 'true' );
                 </div>
                 <div class="controls">
                     <?php echo $this->item->created_by; ?>
-                </div>
-            </div>
-            <?php echo $this->form->renderField('modified'); ?>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('modified_by'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->modified_by; ?>
-                </div>
-            </div>
-            <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_2'); ?></legend>							
-            <?php echo $this->loadTemplate('isbn_ranges'); ?>				
-            <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_4'); ?></legend>							
-            <?php echo $this->loadTemplate('ismn_ranges'); ?>	
-        </div>
-        <div class="span6">
-            <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_LABEL_CONTACT_INFO'); ?></legend>	
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('address'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->address; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('zip'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->zip; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('city'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->city; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('phone'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->phone; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('email'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->email; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('www'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->www; ?>
                 </div>
             </div>
             <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_ADDITIONAL'); ?></legend>	
@@ -208,6 +123,57 @@ $this->form->setFieldAttribute( 'question_7', 'readonly', 'true' );
                     <?php echo $this->item->confirmation; ?>
                 </div>
             </div>
+        </div>
+        <div class="span6">
+            <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_LABEL_CONTACT_INFO'); ?></legend>	
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('address'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->address; ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('zip'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->zip; ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('city'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->city; ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('phone'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->phone; ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('email'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->email; ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('www'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->www; ?>
+                </div>
+            </div>           
         </div>
     </div>
 </div>

@@ -48,6 +48,7 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->form->renderField('has_quitted'); ?>
                 <?php echo $this->form->renderField('year_quitted'); ?>
                 <?php echo $this->form->renderField('additional_info'); ?>
+                <?php echo $this->loadTemplate('link_to_archive_record'); ?>
                 <?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
                 <?php echo $this->form->renderField('modified'); ?>

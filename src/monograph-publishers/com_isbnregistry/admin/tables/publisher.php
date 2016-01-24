@@ -74,6 +74,9 @@ class IsbnRegistryTablePublisher extends JTable {
 
     public function delete($pk = null) {
         if ($pk != null) {
+            // Delete publisher Archive
+            $publisherArchiveModel = JModelLegacy::getInstance('publisherarchive', 'IsbnregistryModel');
+            $publisherArchiveModel->deleteByPublisherId($pk);
             // Delete publications
             $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
             $publicationModel->deleteByPublisherId($pk);

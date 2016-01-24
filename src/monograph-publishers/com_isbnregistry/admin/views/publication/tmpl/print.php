@@ -15,7 +15,23 @@ $document = JFactory::getDocument();
 $document->addScript("components/com_isbnregistry/scripts/publication_print.js");
 // Add css
 $document->addStyleSheet("components/com_isbnregistry/css/publication.css");
-
+$this->form->setFieldAttribute( 'lang_code', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'no_identifier_granted', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'publisher_id', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'no_identifier_granted', 'disabled', 'true' );
+$this->form->setFieldAttribute( 'published_before', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'publications_public', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'publications_intra', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'publishing_activity', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'language', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'publication_type', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'publication_format', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'role_1', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'role_2', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'role_3', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'role_4', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'type', 'readonly', 'true' );
+$this->form->setFieldAttribute( 'fileformat', 'readonly', 'true' );
 ?>				
 
 <button name="print" id="print"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_PRINT'); ?></button>

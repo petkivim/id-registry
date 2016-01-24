@@ -46,6 +46,40 @@ INSERT INTO `#__isbn_registry_publisher` (`official_name`, `other_names`, `addre
 ('Testikustantamo', 'Test, Koe', 'Hiisikuja 5', '04230', 'Kerava', '050 12346789', 'teppo.testaaja@pkrete.com','http://www.test.com', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', '030', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', false, UTC_TIMESTAMP(), 'SYSTEM'),
 ('Edita', '', 'Kaikukatu 6', '00530', 'Helsinki', '09 123 4556', 'tiina.teekkari@pkrete.com','http://www.edita.fi', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', '000,030,050,950', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'en-GB', false, UTC_TIMESTAMP(), 'SYSTEM');
 
+DROP TABLE IF EXISTS `#__isbn_registry_publisher_archive`;
+
+CREATE TABLE `#__isbn_registry_publisher_archive` (
+    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `publisher_id` INT NOT NULL,
+    `official_name` VARCHAR(100) NOT NULL,
+    `other_names` VARCHAR(200),
+    `address` VARCHAR(50) NOT NULL,
+    `zip` VARCHAR(10) NOT NULL,
+    `city` VARCHAR(50) NOT NULL,
+    `phone` VARCHAR(30),
+    `email` VARCHAR(100) NOT NULL,
+    `www` VARCHAR(100),
+    `lang_code` VARCHAR(8),
+    `contact_person` VARCHAR(100),
+    `question_1` VARCHAR(50),
+    `question_2` VARCHAR(50),
+    `question_3` VARCHAR(50),
+    `question_4` VARCHAR(200),
+    `question_5` VARCHAR(200),
+    `question_6` VARCHAR(50),
+    `question_7` VARCHAR(50),
+    `question_8` VARCHAR(50),
+    `confirmation` VARCHAR(100) NOT NULL,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `created_by` VARCHAR(30),
+    PRIMARY KEY (`id`),
+    INDEX `idx_publisher_id` (`publisher_id`)
+)
+ENGINE =InnoDB
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;
+
 DROP TABLE IF EXISTS `#__isbn_registry_publication`;
 
 CREATE TABLE `#__isbn_registry_publication` (
