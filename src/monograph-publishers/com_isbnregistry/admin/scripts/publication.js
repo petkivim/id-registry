@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+    var publication_id = $("#jform_id").val();
     var publisher_link_label = $('#jform_link_to_publisher').text();
     var show_label = publisher_link_label.split('|')[0];
     var edit_label = publisher_link_label.split('|')[1];
@@ -42,8 +43,11 @@ jQuery(document).ready(function ($) {
     }
 
     $("button[data-target='#modal-generate-marc']").click(function () {
-        // Get publciation id
-        var publication_id = $("#jform_id").val();
         SqueezeBox.open(url + '?option=com_isbnregistry&view=publication&id=' + publication_id + '&layout=edit&format=preview', {handler: 'iframe', size: {x: 800, y: 600}});
+    });
+
+    $("button[data-target='#modal-print']").click(function () {
+        SqueezeBox.open(url + '?option=com_isbnregistry&view=publication&layout=print&tmpl=component&id=' + publication_id, {handler: 'iframe', size: {x: 1200, y: 600}}
+        );
     });
 });

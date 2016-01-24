@@ -86,6 +86,10 @@ class IsbnregistryViewPublication extends JViewLegacy {
             $toolbar->appendButton('Custom', $dhtml);
 
             JToolBarHelper::custom('publication.download', 'download', 'download', JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_DOWNLOAD_MARC'), false, false);
+
+            // Render print button
+            $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_PRINT'), 'class' => 'icon-print'));
+            $toolbar->appendButton('Custom', $dhtml);
         }
 
         JToolBarHelper::cancel(
