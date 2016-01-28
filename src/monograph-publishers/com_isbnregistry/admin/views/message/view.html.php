@@ -70,6 +70,9 @@ class IsbnregistryViewMessage extends JViewLegacy {
             JToolbarHelper::save('message.save', 'COM_ISBNREGISTRY_MESSAGE_BUTTON_SEND');
         } else {
             JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_MESSAGE_SHOW'), 'message');
+            if(!$isNew) {
+                JToolBarHelper::custom('message.resend', 'mail', 'mail', JText::_('COM_ISBNREGISTRY_MESSAGE_BUTTON_RESEND'), false, false);
+            }
         }
         JToolbarHelper::cancel('message.cancel', 'COM_ISBNREGISTRY_MESSAGE_BUTTON_CLOSE');
     }
