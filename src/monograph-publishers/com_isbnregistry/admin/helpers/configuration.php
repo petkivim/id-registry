@@ -29,7 +29,9 @@ class ConfigurationHelper extends JHelperContent {
             'message_type_publisher_registered_isbn',
             'message_type_publisher_registered_ismn',
             'message_type_identifier_created_isbn',
-            'message_type_identifier_created_ismn'
+            'message_type_identifier_created_ismn',
+            'message_type_attachment_header_isbn',
+            'message_type_attachment_header_ismn'
         );
     }
 

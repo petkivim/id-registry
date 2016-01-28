@@ -74,8 +74,27 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $table->attachment_name = $time . '.txt';
             // Set filename
             $filename = $folder . $time . '.txt';
+            // Load identifier batch model
+            $identifierBatchModel = JModelLegacy::getInstance('identifierbatch', 'IsbnregistryModel');
+            // Get identifier type
+            $identifierType = $identifierBatchModel->getIdentifierType($table->batch_id);
+            // Get template for attchment header
+            $attachmentTemplateId = $params->get('message_type_attachment_header_' . strtolower($identifierType), 0);
+            // Variable for attachmen header
+            $attachmentHeader = '';
+            // Get template
+            if ($attachmentTemplateId > 0) {
+                // Load message template model
+                $messageTemplateModel = JModelLegacy::getInstance('messagetemplate', 'IsbnregistryModel');
+                // Load template
+                $template = $messageTemplateModel->getMessageTemplateByTypeAndLanguage($attachmentTemplateId, $table->lang_code);
+                // Check that we found a template
+                if ($template) {
+                    $attachmentHeader = strip_tags($template->message);
+                }
+            }
             // Write identifiers to file
-            $this->writeIdentifiersToFile($identifiers, $filename);
+            $this->writeIdentifiersToFile($identifiers, $filename, $attachmentHeader);
         }
 
 
@@ -346,10 +365,12 @@ class IsbnregistryModelMessage extends JModelAdmin {
      * Writes the given identifiers to a file.
      * @param array $identifiers identifiers to be written
      * @param string $filename name of the file
+     * @param $attachmentHeader header that's written before identifiers
      * @return boolean true on success
      */
-    private function writeIdentifiersToFile($identifiers, $filename) {
+    private function writeIdentifiersToFile($identifiers, $filename, $attachmentHeader) {
         $file = fopen($filename, "w") or die("Unable to open file!");
+        fwrite($file, $attachmentHeader . "\r\n\r\n");
         foreach ($identifiers as $identifier) {
             fwrite($file, $identifier . "\r\n");
         }

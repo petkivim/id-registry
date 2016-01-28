@@ -65,6 +65,24 @@
             default="" 
             label="COM_ISBNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_IDENTIFIER_CREATED_ISMN_LABEL"
             description="COM_ISBNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_IDENTIFIER_CREATED_ISMN_DESC"
+        />	
+		<field type="spacer" name="spacer7" hr="true" />
+		
+		<field type="spacer" name="spacer8" label="COM_ISBNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_ATTACHMENT_HEADER" />
+		
+        <field
+            name="message_type_attachment_header_isbn" 
+            type="MessageTypePreferences" 
+            default="" 
+            label="COM_ISBNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_ATTACHMENT_HEADER_ISBN_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_ATTACHMENT_HEADER_ISBN_DESC"
+        />	
+        <field
+            name="message_type_attachment_header_ismn" 
+            type="MessageTypePreferences" 
+            default="" 
+            label="COM_ISBNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_ATTACHMENT_HEADER_ISMN_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_ATTACHMENT_HEADER_ISMN_DESC"
         />			
 	</fieldset>
 	<fieldset

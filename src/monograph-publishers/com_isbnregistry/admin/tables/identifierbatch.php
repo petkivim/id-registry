@@ -112,7 +112,7 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
         // Create the query
         $query->select('id')
                 ->from($this->_db->quoteName($this->_tbl))
-                ->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));;
+                ->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadColumn();
@@ -140,6 +140,25 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
         $result = $this->_db->execute();
         // Return the number of deleted batches
         return $this->_db->getAffectedRows();
+    }
+
+    /**
+     * Get the identfier type of the batch identified by the given
+     * identifier batch id.
+     * @param int $identifierBatchId identifier batch id
+     * @return string identifier type: ISBN or ISMN
+     */
+    public function getIdentifierType($identifierBatchId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('identifier_type')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($identifierBatchId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadResult();
     }
 
 }

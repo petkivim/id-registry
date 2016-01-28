@@ -132,12 +132,25 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
             // Get an instance of identifier model
             $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
             // Delete identifiers
-            foreach($batchIds as $batchId) {
+            foreach ($batchIds as $batchId) {
                 $identifierModel->deleteByBatchId($batchId);
             }
             return true;
         }
         return false;
+    }
+
+    /**
+     * Get the identfier type of the batch identified by the given
+     * identifier batch id.
+     * @param int $identifierBatchId identifier batch id
+     * @return string identifier type: ISBN or ISMN
+     */
+    public function getIdentifierType($identifierBatchId) {
+        // Get db access
+        $table = $this->getTable();
+        // Return identifier type
+        return $table->getIdentifierType($identifierBatchId);
     }
 
 }
