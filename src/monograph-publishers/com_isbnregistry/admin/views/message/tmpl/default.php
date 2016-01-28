@@ -30,7 +30,8 @@ JFactory::getDocument()->addScriptDeclaration('
 $link_begin = '<a href="index.php?option=com_isbnregistry&layout=edit&view=';
 $link_end = '&tmpl=component" class="modal" rel="{size: {x: 1200, y: 600}, handler:\'iframe\'}">' . JText::_('COM_ISBNREGISTRY_MESSAGE_FIELD_SHOW_LABEL') . '</a>';
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_isbnregistry&view=message&id' . (int) $this->item->id); ?>" method="post" name="adminForm" id="adminForm" class="form-horizontal">
+<form action="<?php echo JRoute::_('index.php?option=com_isbnregistry&view=message&id' . (int) $this->item->id); ?>" 
+      method="post" name="adminForm" id="adminForm" class="form-validate form-horizontal">
     <fieldset>
         <?php echo $this->form->renderField('recipient'); ?>
         <div class="control-group">
@@ -93,7 +94,7 @@ $link_end = '&tmpl=component" class="modal" rel="{size: {x: 1200, y: 600}, handl
         <?php echo $this->form->renderField('publisher_id'); ?>
         <?php echo $this->form->renderField('publication_id'); ?>
         <?php echo $this->form->renderField('batch_id'); ?>
-        <input type="hidden" name="task" value="" />
+        <input type="hidden" name="task" value="message.resend" />
         <?php echo JHtml::_('form.token'); ?>
     </fieldset>
 </form>
