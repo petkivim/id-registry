@@ -90,10 +90,28 @@ class IsbnRegistryTableMessage extends JTable {
         $query->select('id')
                 ->from($this->_db->quoteName($this->_tbl))
                 ->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
-        ;
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadColumn();
+    }
+
+    /**
+     * Return the number of messages related to the batch identified by the
+     * given id
+     * @param integer $batchId batch id
+     * @return integer number of messages related to the given batch id
+     */
+    public function getMessageCountByBatchId($batchId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('count(id)')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('batch_id') . ' = ' . $this->_db->quote($batchId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadResult();
     }
 
 }

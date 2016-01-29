@@ -402,4 +402,17 @@ class IsbnregistryModelMessage extends JModelAdmin {
         $this->delete($messageIds);
     }
 
+    /**
+     * Return the number of messages related to the batch identified by the
+     * given id
+     * @param integer $batchId batch id
+     * @return integer number of messages related to the given batch id
+     */
+    public function getMessageCountByBatchId($batchId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->getMessageCountByBatchId($batchId);
+    }
+
 }

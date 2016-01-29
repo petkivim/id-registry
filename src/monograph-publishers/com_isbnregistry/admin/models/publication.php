@@ -257,4 +257,17 @@ class IsbnregistryModelPublication extends JModelAdmin {
         return $table->deleteByPublisherId($publisherId);
     }
 
+    /**
+     * Removes both of the identifiers and identifier type replacing them
+     * with an empty string.
+     * @param integer $publicationId id of the publication to be updated
+     * @return boolean true on success, false on failure
+     */
+    public function removeIdentifiers($publicationId) {
+        // Get db access
+        $table = $this->getTable();
+        // Update
+        return $table->removeIdentifiers($publicationId);
+    }
+
 }

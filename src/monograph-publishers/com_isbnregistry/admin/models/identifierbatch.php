@@ -153,4 +153,81 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         return $table->getIdentifierType($identifierBatchId);
     }
 
+    /**
+     * Deletes the batch identified by the given id. The batch is deleted
+     * if and only if it's the last batch generated from the same publisher
+     * identifier range.
+     * @param int $identifierBatchId batch id
+     * @return boolean true on success; otherwise false
+     */
+    public function safeDelete($identifierBatchId) {
+        // Get db access
+        $table = $this->getTable();
+        // Load batch
+        $identifierBatch = $table->getIdentifierBatch($identifierBatchId);
+        if (!$identifierBatch) {
+            return false;
+        }
+        // Get the id of last batch from the same publisher identifier range
+        $lastId = $table->getLast($identifierBatch->publisher_identifier_range_id);
+        // Check that the last id and the id to be deleted match
+        if ($identifierBatch->id != $lastId) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_IDENTIFIER_BATCH_DELETE_FAILED_NOT_LATEST'));
+            return false;
+        }
+        // Load message model
+        $messageModel = JModelLegacy::getInstance('message', 'IsbnregistryModel');
+        // Check that we have a model
+        if (!$messageModel) {
+            return false;
+        }
+        // Check that there's no messages related to this batch
+        if ($messageModel->getMessageCountByBatchId($identifierBatch->id) > 0) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_IDENTIFIER_BATCH_DELETE_FAILED_MESSAGES_EXIST'));
+            return false;
+        }
+        // Load publisher identifier range model
+        $rangeModel = JModelLegacy::getInstance('publisher' . strtolower($identifierBatch->identifier_type) . 'range', 'IsbnregistryModel');
+        // Check that we have a model
+        if (!$rangeModel) {
+            return false;
+        }
+        // Start transaction
+        $table->transactionStart();
+        // Decrease range models' counters
+        if (!$rangeModel->decreaseByCount($identifierBatch->publisher_identifier_range_id, $identifierBatch->identifier_count)) {
+            $table->transactionRollback();
+            return false;
+        }
+        // Check if there's a publication related to the batch
+        if ($identifierBatch->publication_id > 0) {
+            // Load publication model
+            $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
+            // Check that we have a model
+            if (!$publicationModel) {
+                return false;
+            }
+            // Try to update publication's identifiers
+            if (!$publicationModel->removeIdentifiers($identifierBatch->publication_id)) {
+                $table->transactionRollback();
+                return false;
+            }
+        }
+        // Get an instance of identifier model
+        $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
+        // Delete identifiers
+        if (!$identifierModel->deleteByBatchId($identifierBatch->id)) {
+            $table->transactionRollback();
+            return false;
+        }
+        // Delete batch
+        if (!$table->deleteBatch($identifierBatch->id)) {
+            $table->transactionRollback();
+            return false;
+        }
+        // Commit
+        $table->transactionCommit();
+        return true;
+    }
+
 }

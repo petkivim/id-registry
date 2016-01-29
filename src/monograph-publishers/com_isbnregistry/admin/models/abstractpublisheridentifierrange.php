@@ -260,9 +260,10 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
 
     /**
      * Updates the range matching the given identifier id and decreases its
-     * next pointer by one. Also free and taken properties are updated 
+     * next pointer by the given number. Also free and taken properties are updated 
      * accordingly.
-     * @param integer $rangeId id of the range to be updated
+     * @param integer $publisherRangeId id of the range to be updated
+     * @param integer $count how must counters are increased/decreased
      * @return boolean true if and only if the operation succeeds; otherwise
      * false
      */
@@ -307,6 +308,18 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         $table = $this->getTable();
         // Get results 
         return $table->deleteByPublisherId($publisherId);
+    }
+
+    /**
+     * Returns the publisher range identified by the given id.
+     * @param id $rangeId id of the publisher range
+     * @return Object publisher range
+     */
+    public function getRange($rangeId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->getPublisherRange($rangeId, false);
     }
 
 }

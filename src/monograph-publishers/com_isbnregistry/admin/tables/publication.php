@@ -180,6 +180,32 @@ class IsbnRegistryTablePublication extends JTable {
     }
 
     /**
+     * Removes both of the identifiers and identifier type replacing them
+     * with an empty string.
+     * @param integer $publicationId id of the publication to be updated
+     * @return boolean true on success, false on failure
+     */
+    public function removeIdentifiers($publicationId) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            'id' => $publicationId
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update identifier(s)
+        $this->publication_identifier_print = '';
+        $this->publication_identifier_electronical = '';
+        $this->publication_identifier_type = '';
+
+        // Update object to DB
+        return $this->store();
+    }
+
+    /**
      * Loads publication identifiers specified by the given id.
      * @param integer $publicationId id of the publication to be fetched
      * @return Publication publication object holding 

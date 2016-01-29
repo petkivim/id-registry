@@ -143,6 +143,33 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
     }
 
     /**
+     * Delete the batch identified by the given batch id
+     * @param int $batchId batch id
+     * @return boolean true on success, false on failure
+     */
+    public function deleteBatch($batchId) {
+        $query = $this->_db->getQuery(true);
+
+        // Delete the batch
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($batchId)
+        );
+
+        $query->delete($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // If affected rows returns 1, operation succeeded
+        if($this->_db->getAffectedRows() == 1) {
+            return true;
+        }
+        // Otherwise return false
+        return false;
+    }
+
+    /**
      * Get the identfier type of the batch identified by the given
      * identifier batch id.
      * @param int $identifierBatchId identifier batch id
@@ -159,6 +186,67 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadResult();
+    }
+
+    /**
+     * Returns an identifier batch mathcing the given id.
+     * @param int $identifierBatchId id of the identifier batch
+     * @return Identifierbatch identifier batch matching the given id
+     */
+    public function getIdentifierBatch($identifierBatchId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($identifierBatchId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObject();
+    }
+
+    /**
+     * Returns the id of the last batch from the publisher identifier range
+     * identified by the given id.
+     * @param int $publisherIdentifierRangeId publisher identifier range id
+     * @return int id of the last batch from the publisher identifier range
+     * identified by the given id
+     */
+    public function getLast($publisherIdentifierRangeId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('id')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('publisher_identifier_range_id') . ' = ' . $this->_db->quote($publisherIdentifierRangeId))
+                ->order('id DESC')
+                ->setLimit('1');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadResult();
+    }
+
+    /**
+     * Starts a transaction.
+     */
+    public function transactionStart() {
+        $this->_db->transactionStart();
+    }
+
+    /**
+     * Commits a transaction.
+     */
+    public function transactionCommit() {
+        $this->_db->transactionCommit();
+    }
+
+    /**
+     * Transaction rollback.
+     */
+    public function transactionRollback() {
+        $this->_db->transactionRollback();
     }
 
 }

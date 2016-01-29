@@ -108,8 +108,15 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
             <div class="row-fluid form-horizontal-desktop">
                 <div class="span6">
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_1'); ?></legend>
-                    <?php echo $this->form->renderField('isbn_count'); ?>
-                    <?php echo $this->form->renderField('get_isbns'); ?>	
+                    <?php echo $this->form->renderField('isbn_count'); ?>	
+                    <div class="control-group">
+                        <div class="control-label">
+                        </div>
+                        <div class="controls">
+                            <?php echo $this->form->getInput('get_isbns'); ?>
+                            <?php echo $this->form->getInput('delete_isbns'); ?>
+                        </div>
+                    </div>
                     <?php echo $this->form->renderField('created_isbns'); ?>
                     <?php echo $this->form->renderField('notify_isbns'); ?>
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_2'); ?></legend>
@@ -117,8 +124,15 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 </div>
                 <div class="span6">		
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_3'); ?></legend>
-                    <?php echo $this->form->renderField('publications_without_isbn'); ?>
-                    <?php echo $this->form->renderField('get_isbn'); ?>		
+                    <?php echo $this->form->renderField('publications_without_isbn'); ?>	
+                    <div class="control-group">
+                        <div class="control-label">
+                        </div>
+                        <div class="controls">
+                            <?php echo $this->form->getInput('get_isbn'); ?>
+                            <?php echo $this->form->getInput('delete_isbn'); ?>
+                        </div>
+                    </div>
                     <?php echo $this->form->renderField('link_to_publication_isbn'); ?>		
                     <?php echo $this->form->renderField('notify_isbn'); ?>	
                 </div>
@@ -128,8 +142,15 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
             <div class="row-fluid form-horizontal-desktop">
                 <div class="span6">
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_1'); ?></legend>
-                    <?php echo $this->form->renderField('ismn_count'); ?>
-                    <?php echo $this->form->renderField('get_ismns'); ?>	
+                    <?php echo $this->form->renderField('ismn_count'); ?>	
+                    <div class="control-group">
+                        <div class="control-label">
+                        </div>
+                        <div class="controls">
+                            <?php echo $this->form->getInput('get_ismns'); ?>
+                            <?php echo $this->form->getInput('delete_ismns'); ?>
+                        </div>
+                    </div>
                     <?php echo $this->form->renderField('created_ismns'); ?>
                     <?php echo $this->form->renderField('notify_ismns'); ?>
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_2'); ?></legend>
@@ -138,7 +159,14 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <div class="span6">		
                     <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_3'); ?></legend>	
                     <?php echo $this->form->renderField('publications_without_ismn'); ?>
-                    <?php echo $this->form->renderField('get_ismn'); ?>		
+                    <div class="control-group">
+                        <div class="control-label">
+                        </div>
+                        <div class="controls">
+                            <?php echo $this->form->getInput('get_ismn'); ?>
+                            <?php echo $this->form->getInput('delete_ismn'); ?>
+                        </div>
+                    </div>
                     <?php echo $this->form->renderField('link_to_publication_ismn'); ?>	
                     <?php echo $this->form->renderField('notify_ismn'); ?>
                 </div>

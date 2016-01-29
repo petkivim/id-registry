@@ -315,6 +315,7 @@ jQuery(document).ready(function ($) {
                                 batch_id_isbns = data.identifier_batch_id;
                             }
                             $('#jform_notify_' + type + 's').prop("disabled", false);
+                            $('#jform_delete_' + type + 's').prop("disabled", false);
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
                         }
@@ -375,6 +376,7 @@ jQuery(document).ready(function ($) {
                                 publication_id_isbn = publicationId;
                             }
                             $('#jform_notify_' + type).prop("disabled", false);
+                            $('#jform_delete_' + type).prop("disabled", false);
                             // Update publications iframe
                             $('#publications_iframe').attr("src", $('#publications_iframe').attr("src"));
                         } else {
@@ -432,6 +434,74 @@ jQuery(document).ready(function ($) {
         }
     }
 
+    $("#jform_delete_isbn").click(function () {
+        deleteIdentifierBatch('isbn', batch_id_isbn, false);
+    });
+
+    $("#jform_delete_ismn").click(function () {
+        deleteIdentifierBatch('ismn', batch_id_ismn, false);
+    });
+
+    $("#jform_delete_isbns").click(function () {
+        deleteIdentifierBatch('isbn', batch_id_isbns, true);
+    });
+
+    $("#jform_delete_ismns").click(function () {
+        deleteIdentifierBatch('ismn', batch_id_ismns, true);
+    });
+
+    function deleteIdentifierBatch(type, batchId, isPlural) {
+        // Set post parameterts
+        var postData = {};
+        // Session ID
+        postData[sessionId] = 1;
+        // Component that's called
+        postData['option'] = 'com_isbnregistry';
+        postData['task'] = 'identifierbatch.delete';
+        // Set publisher isbn range id
+        postData['batchId'] = batchId;
+        // Add request parameters
+        $.post(url, postData)
+                .done(function (data) {
+                    // If operation was successfull, update view
+                    if (data.success == true) {
+                        $('#system-message-container').html(showNotification('success', data.title, data.message));
+                        loadPublisherIsbnRanges(type);
+                        deleteBatchSuccess(type, isPlural);
+                    } else {
+                        $('#system-message-container').html(showNotification('error', data.title, data.message));
+                    }
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    var json = jQuery.parseJSON(xhr.responseText);
+                    $('#system-message-container').html(showNotification('error', json.title, json.message));
+                });
+    }
+
+    function deleteBatchSuccess(type, isPlural) {
+        if (isPlural) {
+            if (type === 'isbn') {
+                batch_id_isbns = 0;
+            } else {
+                batch_id_ismns = 0;
+            }
+            $('#jform_delete_' + type + 's').prop("disabled", true);
+            $('#jform_notify_' + type + 's').prop("disabled", true);
+            $('textarea#jform_created_' + type + 's').html('');
+        } else {
+            if (type === 'isbn') {
+                batch_id_isbn = 0;
+            } else {
+                batch_id_ismn = 0;
+            }
+            loadPublicationsWithoutIdentifier(type);
+            $('#jform_delete_' + type).prop("disabled", true);
+            $('#jform_notify_' + type).prop("disabled", true);
+            $('#jform_link_to_publication_' + type).html('-');
+            // Update publications iframe
+            $('#publications_iframe').attr("src", $('#publications_iframe').attr("src"));
+        }
+    }
     $("#jform_notify_isbns, #jform_notify_ismns").click(function () {
         var id = $(this).attr('id');
         var type = id.match(/isbns$/) ? 'isbn' : 'ismn';

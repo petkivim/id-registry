@@ -374,7 +374,15 @@
             label=""
             description=""
             default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBERS"
-        />		
+        />	
+        <field
+            name="delete_isbns"
+            type="Button"
+            label=""
+            description=""
+            readonly="true"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_DELETE_ISBN_NUMBERS"
+        />        	
         <field
             name="created_isbns"
             type="textarea"
@@ -407,6 +415,14 @@
             description=""
             default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISBN_NUMBER"
         />	
+        <field
+            name="delete_isbn"
+            type="Button"
+            label=""
+            description=""
+            readonly="true"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_DELETE_ISBN_NUMBER"
+        />
         <field
             name="link_to_publication_isbn"
             type="Span"
@@ -450,6 +466,14 @@
             label=""
             description=""
             default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISMN_NUMBERS"
+        />	
+        <field
+            name="delete_ismns"
+            type="Button"
+            label=""
+            description=""
+            readonly="true"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_DELETE_ISMN_NUMBERS"
         />		
         <field
             name="created_ismns"
@@ -483,6 +507,14 @@
             description=""
             default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_GET_ISMN_NUMBER"
         />	
+        <field
+            name="delete_ismn"
+            type="Button"
+            label=""
+            description=""
+            readonly="true"
+            default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_DELETE_ISMN_NUMBER"
+        />        
         <field
             name="link_to_publication_ismn"
             type="Span"
