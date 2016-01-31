@@ -143,7 +143,7 @@ class IsbnregistryModelMessagetemplate extends JModelAdmin {
     }
 
     /**
-     * Returns the template matching the given message type id and language 
+     * Returns templates matching the given message type id and language 
      * code.
      * @param int $messageTypeId message type id
      * @param string $languageCode language code
@@ -154,6 +154,18 @@ class IsbnregistryModelMessagetemplate extends JModelAdmin {
         $table = $this->getTable();
         // Get template
         return $table->getMessageTemplateByTypeAndLanguage($messageTypeId, $languageCode);
+    }
+
+    /**
+     * Returns the template matching the given message.
+     * @param int $messageTypeId message type id
+     * @return MessageTemplate message templates matching the given conditions
+     */
+    public function getMessageTemplatesByType($messageTypeId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get template
+        return $table->getMessageTemplatesByType($messageTypeId);
     }
 
 }

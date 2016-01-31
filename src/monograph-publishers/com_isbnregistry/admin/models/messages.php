@@ -25,6 +25,8 @@ class IsbnregistryModelMessages extends JModelList {
     protected function getListQuery() {
         // Get publisher id URL parameter
         $publisherId = JFactory::getApplication()->input->getInt('publisherId');
+        // Get group message id URL parameter
+        $groupMessageId = JFactory::getApplication()->input->getInt('groupMessageId');		
         // Initialize variables.
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
@@ -36,6 +38,8 @@ class IsbnregistryModelMessages extends JModelList {
         // show only publications that belong to the given publisher
         if ($publisherId != null) {
             $query->where($db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId));
+        } else if ($groupMessageId != null) {
+            $query->where($db->quoteName('group_message_id') . ' = ' . $db->quote($groupMessageId ));
         }
         $query->order('sent DESC');
 

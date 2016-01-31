@@ -67,7 +67,7 @@ $link_end = '&tmpl=component" class="modal" rel="{size: {x: 1200, y: 600}, handl
                 <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_FIELD_SENT_LABEL'); ?>
             </div>
             <div class="controls">
-                <?php echo JHtml::date($this->item->sent, 'd.m.Y H:m:s') . ' (' . $this->item->sent_by . ')'; ?> 
+                <?php echo JHtml::date($this->item->sent, 'd.m.Y H:i:s') . ' (' . $this->item->sent_by . ')'; ?> 
             </div>
         </div>
         <?php echo $this->form->renderField('subject'); ?> 

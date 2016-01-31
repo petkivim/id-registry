@@ -33,20 +33,23 @@ class PublishersHelper extends JHelperContent {
                 JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS'), 'index.php?option=com_isbnregistry&view=publications', $vName == 'publications'
         );
         JHtmlSidebar::addEntry(
-                JText::_('COM_ISBNREGISTRY_SUBMENU_ISBN_RANGES'), 'index.php?option=com_isbnregistry&view=isbnranges', $vName == 'isbnranges'
-        );
-        JHtmlSidebar::addEntry(
-                JText::_('COM_ISBNREGISTRY_SUBMENU_ISMN_RANGES'), 'index.php?option=com_isbnregistry&view=ismnranges', $vName == 'ismnranges'
-        );
-        JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_MESSAGES'), 'index.php?option=com_isbnregistry&view=messages', $vName == 'messages'
         );
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISBNREGISTRY_SUBMENU_GROUP_MESSAGES'), 'index.php?option=com_isbnregistry&view=groupmessages', $vName == 'groupmessages'
+        );		
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_MESSAGE_TEMPLATES'), 'index.php?option=com_isbnregistry&view=messagetemplates', $vName == 'messagetemplates'
         );
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_MESSAGE_TYPES'), 'index.php?option=com_isbnregistry&view=messagetypes', $vName == 'messagetypes'
         );
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISBNREGISTRY_SUBMENU_ISBN_RANGES'), 'index.php?option=com_isbnregistry&view=isbnranges', $vName == 'isbnranges'
+        );
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISBNREGISTRY_SUBMENU_ISMN_RANGES'), 'index.php?option=com_isbnregistry&view=ismnranges', $vName == 'ismnranges'
+        );		
     }
 
     /**

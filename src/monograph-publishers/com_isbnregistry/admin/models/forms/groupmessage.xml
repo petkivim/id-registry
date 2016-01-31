@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_isbnregistry/models/rules">	
+    <fieldset>
+        <field
+            name="id"
+            type="hidden"
+        />	
+        <field 
+            name="message_type_id" 
+            type="MessageTypePreferences" 
+            default="" 
+            label="COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_MESSAGE_TYPE_LABEL"
+            description="COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_MESSAGE_TYPE_DESC"
+			required="true"
+        />	
+		<field 
+			name="isbn_categories" 
+			type="list" 
+			default="" 
+			multiple="true"
+			class="validate-isbncategories"
+			label="COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISBN_CATEGORIES_LABEL" 
+			description="COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISBN_CATEGORIES_DESC">
+			<option value="1">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISBN_CATEGORIES_1</option>
+			<option value="2">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISBN_CATEGORIES_2</option>
+			<option value="3">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISBN_CATEGORIES_3</option>
+			<option value="4">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISBN_CATEGORIES_4</option>
+			<option value="5">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISBN_CATEGORIES_5</option>
+		</field>		
+		<field 
+			name="ismn_categories" 
+			type="list" 
+			default="" 
+			multiple="true"
+			class="validate-ismncategories"
+			label="COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISMN_CATEGORIES_LABEL" 
+			description="COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISMN_CATEGORIES_DESC">
+			<option value="3">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISMN_CATEGORIES_3</option>
+			<option value="4">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISMN_CATEGORIES_4</option>
+			<option value="5">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISMN_CATEGORIES_5</option>
+			<option value="6">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISMN_CATEGORIES_6</option>
+			<option value="7">COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_ISMN_CATEGORIES_7</option>
+		</field>	
+        <field
+            name="has_quitted"
+            type="radio"
+            label="COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_HAS_QUITTED_LABEL"
+            description="COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_HAS_QUITTED_DESC"
+            default="0"
+            validate="boolean"
+        >	
+            <option value="1">JYES</option>
+            <option value="0">JNO</option>        
+        </field>		
+    </fieldset>
+</form>

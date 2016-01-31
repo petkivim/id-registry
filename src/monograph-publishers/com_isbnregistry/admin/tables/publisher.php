@@ -192,12 +192,55 @@ class IsbnRegistryTablePublisher extends JTable {
         // Initialize variables.
         $query = $this->_db->getQuery(true);
 
-
         // Create the query
         $query->select('*');
         $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
         $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS pir ON p.id = pir.publisher_id');
         $query->order('p.official_name ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Returns a list of publishers that belong to the given categories,
+     * match the has quitted condition and are of the given type (isbn/ismn). 
+     * @param array $categories allowed categories
+     * @param boolean $hasQuitted has the publisher quitted
+     * @param string $type publisher's type: isbn or ismn
+     * @return ObjectList list of publishers matching the conditions
+     */
+    public function getPublishersByCategory($categories, $hasQuitted, $type) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Array length must be five
+        for ($i = sizeof($categories); $i < 5; $i++) {
+            $categories[$i] = 0;
+        }
+
+        // Set conditions
+        $conditions = array(
+            $this->_db->quoteName('pir.is_active') . ' = ' . $this->_db->quote(true),
+            $this->_db->quoteName('p.has_quitted') . ' = ' . $this->_db->quote($hasQuitted)
+        );
+
+        // Create the query
+        $query->select('p.*');
+        $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
+        if (strcmp($type, 'isbn') == 0) {
+            $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS pir ON p.id = pir.publisher_id');
+        } else {
+            $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS pir ON p.id = pir.publisher_id');
+        }
+        $query->where('(' .
+                $this->_db->quoteName('pir.category') . ' = ' . $this->_db->quote($categories[0]) . ' OR ' .
+                $this->_db->quoteName('pir.category') . ' = ' . $this->_db->quote($categories[1]) . ' OR ' .
+                $this->_db->quoteName('pir.category') . ' = ' . $this->_db->quote($categories[2]) . ' OR ' .
+                $this->_db->quoteName('pir.category') . ' = ' . $this->_db->quote($categories[3]) . ' OR ' .
+                $this->_db->quoteName('pir.category') . ' = ' . $this->_db->quote($categories[4]) .
+                ')');
+        $query->where($conditions);
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();

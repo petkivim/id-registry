@@ -149,4 +149,27 @@ class IsbnRegistryTableMessagetemplate extends JTable {
         return $this->_db->loadObject();
     }
 
+    /**
+     * Returns templates matching the given message type
+     * @param int $messageTypeId message type id
+     * @return MessageTemplate message templates matching the given conditions
+     */
+    public function getMessageTemplatesByType($messageTypeId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions for which records should be fetched
+        $conditions = array(
+            $this->_db->quoteName('message_type_id') . ' = ' . $this->_db->quote($messageTypeId)
+        );
+
+        // Create the query
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

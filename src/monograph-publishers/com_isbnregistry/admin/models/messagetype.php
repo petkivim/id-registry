@@ -83,10 +83,10 @@ class IsbnregistryModelMessagetype extends JModelAdmin {
      * @return array associative array
      */
     public function getMessageTypesHash() {
-        // Get DAO for db access
-        $dao = $this->getTable();
+        // Get db access
+        $table = $this->getTable();
         // Get types
-        $types = $dao->getMessageTypes();
+        $types = $table->getMessageTypes();
         // Array for results
         $results = array();
         // Loop through the types
@@ -116,16 +116,16 @@ class IsbnregistryModelMessagetype extends JModelAdmin {
         if (!$messageTypesLanguages) {
             return $result;
         }
-        // Get DAO for db access
-        $dao = $this->getTable();
+        // Get db access
+        $table = $this->getTable();
         // Get installed languages
-        $languages = $dao->getInstalledLanguages();
+        $languages = $table->getInstalledLanguages();
         // Check languages
         if (!$languages) {
             return $result;
         }
         // Get message types
-        $messageTypes = $dao->getMessageTypes();
+        $messageTypes = $table->getMessageTypes();
         // Check languages
         if (!$messageTypes) {
             return $result;
@@ -199,10 +199,22 @@ class IsbnregistryModelMessagetype extends JModelAdmin {
         // Get number of templates that use this message type
         $templateCount = $messageTemplateModel->getMessageTemplatesCountByMessageType($messageTypeId);
         // If template count is not zero, message type cannot be deleted
-        if($templateCount != 0) {
+        if ($templateCount != 0) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Returns an array that contains all the installed languages. Only lang_id
+     * and lang_code attributes are loaded.
+     * @return array installed languages
+     */
+    public function getInstalledLanguages() {
+        // Get db access
+        $table = $this->getTable();
+        // Get installed languages
+        return $table->getInstalledLanguages();
     }
 
 }

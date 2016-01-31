@@ -345,6 +345,7 @@ CREATE TABLE `#__isbn_registry_message` (
     `batch_id` INT default 0,
     `has_attachment` boolean not null default 0,
     `attachment_name` VARCHAR(30) default '',
+    `group_message_id` INT NOT NULL,
     `sent` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `sent_by` VARCHAR(30),
     PRIMARY KEY (`id`)
@@ -384,6 +385,27 @@ CREATE TABLE `#__isbn_registry_identifier` (
     PRIMARY KEY (`id`),
     INDEX `idx_identifier` (`identifier`),
     INDEX `idx_identifier_batch_id` (`identifier_batch_id`)
+)
+ENGINE =InnoDB
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__isbn_registry_group_message`;
+
+CREATE TABLE `#__isbn_registry_group_message` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `isbn_categories` VARCHAR(20) default '',
+    `isbn_publishers_count` INT NOT NULL,
+    `ismn_categories` VARCHAR(20) default '',
+    `ismn_publishers_count` INT NOT NULL,
+    `publishers_count` INT NOT NULL,
+    `has_quitted` boolean not null default 0,
+    `message_type_id` INT NOT NULL,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `created_by` VARCHAR(30),
+    PRIMARY KEY (`id`),
+    INDEX `idx_message_template_id` (`message_template_id`)
 )
 ENGINE =InnoDB
 AUTO_INCREMENT =0

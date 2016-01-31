@@ -326,7 +326,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
      * @param Publisher publisher object related to the message
      * @return string processed message body
      */
-    private function filterMessage($messageBody, $publisher) {
+    public function filterMessage($messageBody, $publisher) {
         $messageBody = $this->filterDate($messageBody);
         $messageBody = $this->filterUser($messageBody);
         $messageBody = $this->filterAddress($messageBody, $publisher->address, $publisher->zip, $publisher->city);

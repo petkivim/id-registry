@@ -58,12 +58,12 @@ class IsbnRegistryTablePublication extends JTable {
         }
 
         // From array to comma separated string
-        $this->role_1 = IsbnRegistryTablePublication::fromArrayToStr($this->role_1);
-        $this->role_2 = IsbnRegistryTablePublication::fromArrayToStr($this->role_2);
-        $this->role_3 = IsbnRegistryTablePublication::fromArrayToStr($this->role_3);
-        $this->role_4 = IsbnRegistryTablePublication::fromArrayToStr($this->role_4);
-        $this->type = IsbnRegistryTablePublication::fromArrayToStr($this->type);
-        $this->fileformat = IsbnRegistryTablePublication::fromArrayToStr($this->fileformat);
+        $this->role_1 = $this->fromArrayToStr($this->role_1);
+        $this->role_2 = $this->fromArrayToStr($this->role_2);
+        $this->role_3 = $this->fromArrayToStr($this->role_3);
+        $this->role_4 = $this->fromArrayToStr($this->role_4);
+        $this->type = $this->fromArrayToStr($this->type);
+        $this->fileformat = $this->fromArrayToStr($this->fileformat);
 
         return parent::store($updateNulls);
     }
@@ -91,7 +91,7 @@ class IsbnRegistryTablePublication extends JTable {
     /**
      * Converts the given array to comma separated string.
      */
-    private static function fromArrayToStr($source) {
+    private function fromArrayToStr($source) {
         if (is_array($source)) {
             if (count($source) > 0) {
                 $source = implode(',', $source);

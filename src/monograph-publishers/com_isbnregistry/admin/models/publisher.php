@@ -154,4 +154,19 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         return $table->getPublishersAndIsbnIdentifiers();
     }
 
+    /**
+     * Returns a list of publishers that belong to the given categories,
+     * match the has quitted condition and are of the given type (isbn/ismn). 
+     * @param array $categories allowed categories
+     * @param boolean $hasQuitted has the publisher quitted
+     * @param string $type publisher's type: isbn or ismn
+     * @return ObjectList list of publishers matching the conditions
+     */
+    public function getPublishersByCategory($categories, $hasQuitted, $type) {
+        // Get db access
+        $table = $this->getTable();
+        //   Return result
+        return $table->getPublishersByCategory($categories, $hasQuitted, $type);
+    }
+
 }
