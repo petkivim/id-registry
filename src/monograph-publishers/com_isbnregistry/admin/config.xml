@@ -117,7 +117,15 @@
 				value="1">JYES</option>
 			<option
 				value="0">JNO</option>
-		</field>		
+		</field>
+        <field
+            name="email_interval_microseconds"
+            type="number"
+            label="COM_ISBNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_DESC"
+            default="500000"
+            min="0"
+        />			
 	</fieldset>
 	<fieldset
 		name="export"

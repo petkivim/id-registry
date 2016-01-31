@@ -402,8 +402,12 @@ CREATE TABLE `#__isbn_registry_group_message` (
     `publishers_count` INT NOT NULL,
     `has_quitted` boolean not null default 0,
     `message_type_id` INT NOT NULL,
+    `success_count` INT NOT NULL,
+    `fail_count` INT NOT NULL,
+    `no_email_count` INT NOT NULL,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
+    `finished` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (`id`),
     INDEX `idx_message_template_id` (`message_template_id`)
 )

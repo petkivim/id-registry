@@ -67,12 +67,52 @@ if ($this->item->id > 0) {
                         <?php echo JText::_('COM_ISBNREGISTRY_GROUP_MESSAGES_FIELD_PUBLISHER_COUNT_LABEL'); ?>
                     </div>
                     <div class="controls">
+                        <?php echo $this->item->publishers_count; ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?php echo JText::_('COM_ISBNREGISTRY_GROUP_MESSAGES_FIELD_SUCCESS_COUNT_LABEL'); ?>
+                    </div>
+                    <div class="controls">
                         <?php
-                        echo $this->item->publishers_count;
+                        echo $this->item->success_count;
                         $link = ' (<a href="index.php?option=com_isbnregistry&layout=group_messages&view=messages&groupMessageId=' . $this->item->id;
                         $link .= '&tmpl=component" class="modal" rel="{size: {x: 1200, y: 600}, handler:\'iframe\'}">' . JText::_('COM_ISBNREGISTRY_GROUP_MESSAGE_FIELD_SHOW_LABEL') . '</a>)';
                         echo $link;
                         ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?php echo JText::_('COM_ISBNREGISTRY_GROUP_MESSAGES_FIELD_FAIL_COUNT_LABEL'); ?>
+                    </div>
+                    <div class="controls">
+                        <?php echo $this->item->fail_count; ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?php echo JText::_('COM_ISBNREGISTRY_GROUP_MESSAGES_FIELD_NO_EMAIL_COUNT_LABEL'); ?>
+                    </div>
+                    <div class="controls">
+                        <?php echo $this->item->no_email_count; ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?php echo JText::_('COM_ISBNREGISTRY_GROUP_MESSAGES_FIELD_MESSAGES_CREATED'); ?>
+                    </div>
+                    <div class="controls">
+                        <?php echo JHtml::date($this->item->created, 'd.m.Y H:i:s') . ' (' . $this->item->created_by . ')'; ?>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?php echo JText::_('COM_ISBNREGISTRY_GROUP_MESSAGES_FIELD_MESSAGES_SENT'); ?>
+                    </div>
+                    <div class="controls">
+                        <?php echo $this->item->finished == 0 ? '-' : JHtml::date($this->item->finished, 'd.m.Y H:i:s'); ?>
                     </div>
                 </div>
             <?php endif; ?>

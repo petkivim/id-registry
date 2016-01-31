@@ -88,4 +88,40 @@ class IsbnRegistryTableGroupmessage extends JTable {
         return $source;
     }
 
+    /**
+     * Updates the given values to the database.
+     * @param integer $groupMessageId group message id
+     * @param integer $successCount how many messages were succesfully send
+     * @param integer $failCount how many failed messages
+     * @param integer $noEmailCount how many publishers without email
+     * @return integer number of affected rows
+     */
+    public function updateResults($groupMessageId, $successCount, $failCount, $noEmailCount) {
+        // Get date and user
+        $date = JFactory::getDate();
+
+        // Database connection
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('success_count') . ' = ' . $this->_db->quote($successCount),
+            $this->_db->quoteName('fail_count') . ' = ' . $this->_db->quote($failCount),
+            $this->_db->quoteName('no_email_count') . ' = ' . $this->_db->quote($noEmailCount),
+            $this->_db->quoteName('finished') . ' = ' . $this->_db->quote($date->toSql())
+        );
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($groupMessageId)
+        );
+        // Create query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of rows that was updated
+        return $this->_db->getAffectedRows();
+    }
+
 }

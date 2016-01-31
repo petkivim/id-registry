@@ -75,8 +75,10 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
         }
 
         // From comma separated string to array
-        if ($data->isbn_categories && $data->ismn_categories) {
+        if ($data->isbn_categories) {
             $data->isbn_categories = $this->fromStrToArray($data->isbn_categories);
+        }
+        if ($data->ismn_categories) {
             $data->ismn_categories = $this->fromStrToArray($data->ismn_categories);
         }
 
@@ -86,7 +88,7 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
     /**
      * Converts the given comma separated string to array.
      */
-    private function fromStrToArray($source) {
+    public function fromStrToArray($source) {
         if ($source && !is_array($source)) {
             $source = explode(',', $source);
         }
@@ -114,8 +116,8 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
 
         // Load publisher model
         $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
-        //
-        // Store the data.
+
+        // Check that at least one category has been selected
         if (empty($table->isbn_categories) && empty($table->ismn_categories)) {
             $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_GROUP_MESSAGE_NO_RECIPIENTS'));
             return false;
@@ -155,12 +157,13 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
         }
 
         // Send messages
-        $this->sendMessages($publishers, $templateHash, $table->id);
+        $cmd = 'nohup nice -n 10 ' . PHP_BINDIR . '/php ' . JPATH_COMPONENT_ADMINISTRATOR . '/helpers/groupmessages-script.php ' . $table->id . ' >> /dev/null &';
+        exec($cmd);
 
         return true;
     }
 
-    private function prepareForQuery($array, $digit) {
+    public function prepareForQuery($array, $digit) {
         $result = array();
         if (!$array) {
             return $result;
@@ -171,7 +174,7 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
         return $result;
     }
 
-    private function checkTemplatesAndLanguages($templates, $languages) {
+    public function checkTemplatesAndLanguages($templates, $languages) {
         $result = array();
         // Create associative array where language code is the key and
         // template is the value
@@ -188,7 +191,7 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
         return $result;
     }
 
-    private function mergePublisherArrays($isbnPublishers, $ismnPublishers) {
+    public function mergePublisherArrays($isbnPublishers, $ismnPublishers) {
         $publishers = array();
         foreach ($isbnPublishers as $publisher) {
             if (!array_key_exists($publisher->id, $publishers)) {
@@ -203,30 +206,24 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
         return $publishers;
     }
 
-    private function sendMessages($publishers, $templates, $groupMessageId) {
-        // Load message  model
-        $messageModel = JModelLegacy::getInstance('message', 'IsbnregistryModel');
-        // Loop through publishers
-        foreach ($publishers as $publisher) {
-            if (empty($publisher->email)) {
-                continue;
-            }
-            // Get template
-            $template = $templates[$publisher->lang_code];
-            // Create array for message data
-            $message = array(
-                'publisher_id' => $publisher->id,
-                'message_type_id' => $template->message_type_id,
-                'message_template_id' => $template->id,
-                'group_message_id' => $groupMessageId,
-                'recipient' => $publisher->email,
-                'subject' => $template->subject,
-                'message' => $messageModel->filterMessage($template->message, $publisher),
-                'lang_code' => $publisher->lang_code,
-            );
-            // Save message
-            $messageModel->save($message);
+    /**
+     * Updates the given values to the database.
+     * @param integer $groupMessageId group message id
+     * @param integer $successCount how many messages were succesfully send
+     * @param integer $failCount how many failed messages
+     * @param integer $noEmailCount how many publishers without email
+     * @return boolean true on success, false on failure
+     */
+    public function updateResults($groupMessageId, $successCount, $failCount, $noEmailCount) {
+        // Get DB access
+        $table = $this->getTable();
+        // Run update
+        $result = $table->updateResults($groupMessageId, $successCount, $failCount, $noEmailCount);
+        // Return result
+        if ($result == 1) {
+            return true;
         }
+        return false;
     }
 
 }

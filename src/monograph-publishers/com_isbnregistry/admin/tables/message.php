@@ -50,7 +50,8 @@ class IsbnRegistryTableMessage extends JTable {
         // New item
         if (!$this->id) {
             // New item
-            $this->sent_by = $user->get('username');
+            $username = $user->get('username');
+            $this->sent_by = empty($username) ? 'SYSTEM' : $username;
             $this->sent = $date->toSql();
         }
 
