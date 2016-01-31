@@ -221,10 +221,12 @@ class IsbnRegistryTablePublisher extends JTable {
 
         // Set conditions
         $conditions = array(
-            $this->_db->quoteName('pir.is_active') . ' = ' . $this->_db->quote(true),
-            $this->_db->quoteName('p.has_quitted') . ' = ' . $this->_db->quote($hasQuitted)
+            $this->_db->quoteName('pir.is_active') . ' = ' . $this->_db->quote(true)
         );
 
+        if (!$hasQuitted) {
+            array_push($conditions, $this->_db->quoteName('p.has_quitted') . ' = ' . $this->_db->quote($hasQuitted));
+        }
         // Create the query
         $query->select('p.*');
         $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
