@@ -415,4 +415,19 @@ class IsbnregistryModelMessage extends JModelAdmin {
         return $table->getMessageCountByBatchId($batchId);
     }
 
+    /**
+     * Delete all messages related to the group message identified by
+     * the given group message id.
+     * @param int $groupMessageId group message id
+     * @return int number of deleted rows
+     */
+    public function deleteByGroupMessageId($groupMessageId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get message ids
+        $messageIds = $table->getMessageIdsByGroupMessageId($groupMessageId);
+        // Delete messages
+        $this->delete($messageIds);
+    }
+
 }

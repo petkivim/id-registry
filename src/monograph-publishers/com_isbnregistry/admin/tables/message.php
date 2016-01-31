@@ -114,4 +114,23 @@ class IsbnRegistryTableMessage extends JTable {
         return $this->_db->loadResult();
     }
 
+    /**
+     * Get all message ids related to the group message identified by the given
+     * group message id.
+     * @param int $groupMessageId group message id
+     * @return array array of message ids
+     */
+    public function getMessageIdsByGroupMessageId($groupMessageId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('id')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('group_message_id') . ' = ' . $this->_db->quote($groupMessageId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadColumn();
+    }
+
 }

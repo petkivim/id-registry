@@ -66,6 +66,9 @@ class IsbnRegistryTableGroupmessage extends JTable {
      *
      */
     public function delete($pk = null) {
+        // Delete messages
+        $messageModel = JModelLegacy::getInstance('message', 'IsbnregistryModel');
+        $messageModel->deleteByGroupMessageId($pk);
         return parent::delete($pk);
     }
 

@@ -75,8 +75,10 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
         }
 
         // From comma separated string to array
-        $data->isbn_categories = $this->fromStrToArray($data->isbn_categories);
-        $data->ismn_categories = $this->fromStrToArray($data->ismn_categories);
+        if ($data->isbn_categories && $data->ismn_categories) {
+            $data->isbn_categories = $this->fromStrToArray($data->isbn_categories);
+            $data->ismn_categories = $this->fromStrToArray($data->ismn_categories);
+        }
 
         return $data;
     }
@@ -112,6 +114,12 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
 
         // Load publisher model
         $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
+        //
+        // Store the data.
+        if (empty($table->isbn_categories) && empty($table->ismn_categories)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_GROUP_MESSAGE_NO_RECIPIENTS'));
+            return false;
+        }
         // Get ISBN publishers matching the conditions
         $isbnPublishers = $publisherModel->getPublishersByCategory($this->prepareForQuery($table->isbn_categories, 6), $table->has_quitted, 'isbn');
         // Get ISMN publishers matching the conditions
@@ -132,7 +140,7 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
         $templateHash = $this->checkTemplatesAndLanguages($templates, $languages);
         // If result is empty, templates are missing
         if (empty($templateHash)) {
-            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_GROUP_MESSAGE_INVALID_MESSAGE_TYPE'), 'error');
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_GROUP_MESSAGE_INVALID_MESSAGE_TYPE'));
             return false;
         }
         // Merge publisher arrays
@@ -154,6 +162,9 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
 
     private function prepareForQuery($array, $digit) {
         $result = array();
+        if (!$array) {
+            return $result;
+        }
         foreach ($array as $value) {
             array_push($result, $digit - $value);
         }
