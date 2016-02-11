@@ -27,6 +27,9 @@ class IsbnregistryViewPublications extends JViewLegacy {
         // Get data from the model
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
+        $this->state = $this->get('State');
+        $this->filterForm = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
@@ -34,12 +37,16 @@ class IsbnregistryViewPublications extends JViewLegacy {
 
             return false;
         }
-
+        // Get filter status
+        $filterStatus = $this->state->get('filter.status');
         // Add publishers helper file
         require_once JPATH_COMPONENT . '/helpers/publishers.php';
         // Add sidebar
-        PublishersHelper::addSubmenu('publications');
-
+        if ($filterStatus == 1) {
+            PublishersHelper::addSubmenu('publications_received');
+        } else if ($filterStatus == 2) {
+            PublishersHelper::addSubmenu('publications_on_process');
+        }              
         // Set the toolbar
         $this->addToolBar();
         // Render the sidebar
@@ -60,15 +67,15 @@ class IsbnregistryViewPublications extends JViewLegacy {
         JToolBarHelper::addNew('publication.add');
         JToolBarHelper::editList('publication.edit');
         JToolBarHelper::deleteList('', 'publications.delete');
-      
+
         // Get component parameters
         $params = JComponentHelper::getParams('com_isbnregistry');
         // Get PIID file format
         $format = $params->get('piid_format', 'XLS');
 
         JToolBarHelper::custom('publications.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
-        
-        JToolBarHelper::preferences('com_isbnregistry');        
+
+        JToolBarHelper::preferences('com_isbnregistry');
     }
 
 }

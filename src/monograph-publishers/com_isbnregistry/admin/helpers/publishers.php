@@ -30,8 +30,11 @@ class PublishersHelper extends JHelperContent {
                 JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLISHERS'), 'index.php?option=com_isbnregistry&view=publishers', $vName == 'publishers'
         );
         JHtmlSidebar::addEntry(
-                JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS'), 'index.php?option=com_isbnregistry&view=publications', $vName == 'publications'
+                JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_RECEIVED'), 'index.php?option=com_isbnregistry&view=publications&filter_status=1', $vName == 'publications_received'
         );
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_ON_PROCESS'), 'index.php?option=com_isbnregistry&view=publications&filter_status=2', $vName == 'publications_on_process'
+        );		
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_MESSAGES'), 'index.php?option=com_isbnregistry&view=messages', $vName == 'messages'
         );
