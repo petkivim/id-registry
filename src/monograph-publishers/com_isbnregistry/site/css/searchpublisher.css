@@ -1,0 +1,40 @@
+#searchStr {
+    width: 17em;
+}
+
+th, td {
+    vertical-align: middle!important;
+}
+
+.intro {
+    margin-bottom: 1.5em;
+}
+
+.modal {
+    display: inline;
+    overflow: visible;
+    position: inherit;
+}
+
+iframe {
+    width: 95%;
+    height: 95%;
+}
+
+.identifiers {
+    width: 25em;
+}
+
+.identifier {
+    width: 35%;
+}
+
+.description {
+    width: 65%;
+}
+
+.subtitle {
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+

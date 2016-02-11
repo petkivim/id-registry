@@ -11,7 +11,7 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Get an instance of the controller prefixed by Isbnregistry
-$controller = JControllerLegacy::getInstance('Isbnregistry');
+$controller = JControllerLegacy::getInstance('IsbnRegistry');
 
 // Perform the Request task
 $input = JFactory::getApplication()->input;

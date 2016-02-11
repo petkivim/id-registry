@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * ISBN Registry Component Controller
  */
-class IsbnregistryController extends JControllerLegacy
+class IsbnRegistryController extends JControllerLegacy
 {
 	function display(){
 		parent::display();
