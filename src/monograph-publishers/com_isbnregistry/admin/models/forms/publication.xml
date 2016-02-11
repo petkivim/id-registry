@@ -562,5 +562,18 @@
             description=""
 			default="COM_ISBNREGISTRY_PUBLICATION_FIELD_LINK_TO_PUBLISHER"
         />			
+		<field
+			name="on_process"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="0"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_ON_PROCESS_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_ON_PROCESS_DESC"
+			>
+			<option
+				value="1">JYES</option>
+			<option
+				value="0">JNO</option>
+		</field>		
     </fieldset>
 </form>

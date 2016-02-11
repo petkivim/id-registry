@@ -134,6 +134,7 @@ CREATE TABLE `#__isbn_registry_publication` (
     `comments` VARCHAR(500),
     `fileformat` VARCHAR(25),
     `no_identifier_granted` boolean not null default 0,
+    `on_process` boolean not null default 0,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',

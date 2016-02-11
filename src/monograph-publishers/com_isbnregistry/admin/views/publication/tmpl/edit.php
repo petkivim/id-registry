@@ -43,6 +43,7 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
             <div class="span6">              
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_1'); ?></legend>
                 <?php echo $this->form->renderField('id'); ?>
+                <?php echo $this->form->renderField('on_process'); ?>
                 <?php echo $this->form->renderField('official_name'); ?>
                 <?php echo $this->form->renderField('publisher_identifier_str'); ?>
                 <?php echo $this->form->renderField('locality'); ?>
