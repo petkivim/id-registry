@@ -121,25 +121,25 @@ class IsbnregistryFormsHtmlBuilder {
 
     public static function getIsbnApplicationFormPt2($errors = array()) {
         // Information about the publisher
-		if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_HEADER_DISSERTATION') . '</div>';
-		}
+        if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_HEADER_DISSERTATION') . '</div>';
+        }
         $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application" >';
         $html .= '<div class="sub_title">';
-		if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1_1');
-		} else {
-			$html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1');
-		}
-		$html .= '</div>';
+        if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1_1');
+        } else {
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1');
+        }
+        $html .= '</div>';
         $html .= '<form action="' . $_SERVER["REQUEST_URI"] . '" method="post" name="isbnApplicationForm" id="isbnApplicationForm">';
-		$html .= '<table>';
+        $html .= '<table>';
         $html .= '<tr>';
         if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_UNIVERSITY') . ':</td>';
             $html .= '<td><input type="text" name="official_name" id="official_name" size="30" value="' . $_POST['official_name'] . '" /></td>';
             $html .= '<td class="error">* ' . JText::_($errors['official_name']) . '</td>';
-            $html .= '</tr><tr>';			
+            $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_LOCALITY') . ':</td>';
             $html .= '<td><input type="text" name="locality" id="locality" size="30" value="' . $_POST['locality'] . '" /></td>';
             $html .= '<td class="error">* ' . JText::_($errors['locality']) . '</td>';
@@ -148,7 +148,7 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<td><input type="text" name="first_name" id="first_name" size="30" value="' . $_POST['first_name'] . '" /></td>';
             $html .= '<td class="error">* ' . JText::_($errors['first_name']) . '</td>';
             $html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_LAST_NAME') . ':</td>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_LAST_NAME') . ':</td>';
             $html .= '<td><input type="text" name="last_name" id="last_name" size="30" value="' . $_POST['last_name'] . '" /></td>';
             $html .= '<td class="error">* ' . JText::_($errors['last_name']) . '</td>';
             $html .= '</tr><tr>';
@@ -161,37 +161,37 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<td><input type="text" name="publisher_identifier_str" id="publisher_identifier_str" size="30" value="' . $_POST['publisher_identifier_str'] . '" /></td>';
             $html .= '<td class="error">' . JText::_($errors['publisher_identifier_str']) . '</td>';
             $html .= '</tr><tr>';
-		}
-		$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
-		$html .= '<td><input type="text" name="address" id="address" size="30" value="' . $_POST['address'] . '" /></td>';
-		$html .= '<td class="error">* ' . JText::_($errors['address']) . '</td>';
-		$html .= '</tr><tr>';
-		$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ZIP_FIELD') . ':</td>';
-		$html .= '<td><input type="text" name="zip" id="zip" size="5" value="' . $_POST['zip'] . '" /></td>';
-		$html .= '<td class="error">* ' . JText::_($errors['zip']) . '</td>';
-		$html .= '</tr><tr>';
-		$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CITY_FIELD') . ':</td>';
-		$html .= '<td><input type="text" name="city" id="city" size="20" value="' . $_POST['city'] . '" /></td>';
-		$html .= '<td class="error">* ' . JText::_($errors['city']) . '</td>';
-		$html .= '</tr><tr>';
-		if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="contact_person" id="contact_person" size="30" value="' . $_POST['contact_person'] . '" /></td>';
-			$html .= '<td class="error">* ' . JText::_($errors['contact_person']) . '</td>';
-			$html .= '</tr><tr>';
-		}
-		$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PHONE_FIELD') . ':</td>';
-		$html .= '<td><input type="text" name="phone" id="phone" size="15" value="' . $_POST['phone'] . '" /></td>';
-		$html .= '<td class="error">* ' . JText::_($errors['phone']) . '</td>';
-		$html .= '</tr><tr>';
-		$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD') . ':</td>';
-		// Content - Email Cloaking plugin must be disabled to get this work
-		$html .= '<td><input type="text" id="email" name="email" size="30" value="' . $_POST['email'] . '" maxlength="100"/></td>';
-		$html .= '<td class="error">* ' . JText::_($errors['email']) . '</td>';
-		$html .= '</tr>';
-		$html .= '</table>';
-		// These fields are for for all the other publication types, but not for dissertations
-		if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+        }
+        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
+        $html .= '<td><input type="text" name="address" id="address" size="30" value="' . $_POST['address'] . '" /></td>';
+        $html .= '<td class="error">* ' . JText::_($errors['address']) . '</td>';
+        $html .= '</tr><tr>';
+        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ZIP_FIELD') . ':</td>';
+        $html .= '<td><input type="text" name="zip" id="zip" size="5" value="' . $_POST['zip'] . '" /></td>';
+        $html .= '<td class="error">* ' . JText::_($errors['zip']) . '</td>';
+        $html .= '</tr><tr>';
+        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CITY_FIELD') . ':</td>';
+        $html .= '<td><input type="text" name="city" id="city" size="20" value="' . $_POST['city'] . '" /></td>';
+        $html .= '<td class="error">* ' . JText::_($errors['city']) . '</td>';
+        $html .= '</tr><tr>';
+        if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="contact_person" id="contact_person" size="30" value="' . $_POST['contact_person'] . '" /></td>';
+            $html .= '<td class="error">* ' . JText::_($errors['contact_person']) . '</td>';
+            $html .= '</tr><tr>';
+        }
+        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PHONE_FIELD') . ':</td>';
+        $html .= '<td><input type="text" name="phone" id="phone" size="15" value="' . $_POST['phone'] . '" /></td>';
+        $html .= '<td class="error">* ' . JText::_($errors['phone']) . '</td>';
+        $html .= '</tr><tr>';
+        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD') . ':</td>';
+        // Content - Email Cloaking plugin must be disabled to get this work
+        $html .= '<td><input type="text" id="email" name="email" size="30" value="' . $_POST['email'] . '" maxlength="100"/></td>';
+        $html .= '<td class="error">* ' . JText::_($errors['email']) . '</td>';
+        $html .= '</tr>';
+        $html .= '</table>';
+        // These fields are for for all the other publication types, but not for dissertations
+        if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
             // Information about publishing activities
             $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_2') . '</div>';
             $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_BEFORE_FIELD') . '</div>';
@@ -242,100 +242,100 @@ class IsbnregistryFormsHtmlBuilder {
     }
 
     public static function getIsbnApplicationFormPt3($errors = array()) {
-        $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application" >';            
+        $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application" >';
         $html .= '<form action = "' . $_SERVER["REQUEST_URI"] . '" method = "post" name="isbnApplicationForm" id="isbnApplicationForm">';
-		// Author info is not needed for dissertations - for other publication types it's mandatory		
-		if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			// Information about the authors
-			$html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_4') . '</div>';
-			$html .= '<table>';
-			$html .= '<tr>';
-			$html .= '<th></th>';
-			$html .= '<th>' . JText::_('PLG_ISBNREGISTRY_FORMS_AUTHOR_FIELD') . '</th>';
-			$html .= '<th></th>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="first_name_1" id="first_name_1" size="30" value="' . $_POST['first_name_1'] . '" /></td>';
-			$html .= '<td class="error">* ' . JText::_($errors['first_name_1']) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="last_name_1" id="last_name_1" size="30" value="' . $_POST['last_name_1'] . '" /></td>';
-			$html .= '<td class="error">* ' . JText::_($errors['last_name_1']) . '</td>';
-			$html .= '</tr><tr class="spacer_bottom">';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
-			$html .= '<td>';
-			$html .= '<input type="checkbox" name="role_1[]" value="AUTHOR"' . (isset($_POST['role_1']) && in_array('AUTHOR', $_POST['role_1']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_AUTHOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_1[]" value="ILLUSTRATOR"' . (isset($_POST['role_1']) && in_array('ILLUSTRATOR', $_POST['role_1']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_ILLUSTRATOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_1[]" value="TRANSLATOR"' . (isset($_POST['role_1']) && in_array('TRANSLATOR', $_POST['role_1']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_1[]" value="EDITOR"' . (isset($_POST['role_1']) && in_array('EDITOR', $_POST['role_1']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
-			$html .= '</td>';
-			$html .= '<td class="error">* ' . JText::_($errors['role_1']) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<th></th>';
-			$html .= '<th>' . JText::_('PLG_ISBNREGISTRY_FORMS_OTHER_AUTHORS_FIELD') . '</th>';
-			$html .= '<th></th>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="first_name_2" id="first_name_2" size="30" value="' . $_POST['first_name_2'] . '" /></td>';
-			$html .= '<td class="error">' . JText::_($errors['first_name_2']) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="last_name_2" id="last_name_2" size="30" value="' . $_POST['last_name_2'] . '" /></td>';
-			$html .= '<td class="error">' . JText::_($errors['last_name_2']) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
-			$html .= '<td>';
-			$html .= '<input type="checkbox" name="role_2[]" value="AUTHOR"' . (isset($_POST['role_2']) && in_array('AUTHOR', $_POST['role_2']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_AUTHOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_2[]" value="ILLUSTRATOR"' . (isset($_POST['role_2']) && in_array('ILLUSTRATOR', $_POST['role_2']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_ILLUSTRATOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_2[]" value="TRANSLATOR"' . (isset($_POST['role_2']) && in_array('TRANSLATOR', $_POST['role_2']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_2[]" value="EDITOR"' . (isset($_POST['role_2']) && in_array('EDITOR', $_POST['role_2']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
-			$html .= '</td>';
-			$html .= '<td class="error">' . JText::_($errors['role_2']) . '</td>';
-			$html .= '</tr><tr class="spacer_top">';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="first_name_3" id="first_name_3" size="30" value="' . $_POST['first_name_3'] . '" /></td>';
-			$html .= '<td class="error">' . JText::_($errors['first_name_3']) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="last_name_3" id="last_name_3" size="30" value="' . $_POST['last_name_3'] . '" /></td>';
-			$html .= '<td class="error">' . JText::_($errors['last_name_3']) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
-			$html .= '<td>';
-			$html .= '<input type="checkbox" name="role_3[]" value="AUTHOR"' . (isset($_POST['role_3']) && in_array('AUTHOR', $_POST['role_3']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_AUTHOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_3[]" value="ILLUSTRATOR"' . (isset($_POST['role_3']) && in_array('ILLUSTRATOR', $_POST['role_3']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_ILLUSTRATOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_3[]" value="TRANSLATOR"' . (isset($_POST['role_3']) && in_array('TRANSLATOR', $_POST['role_3']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_3[]" value="EDITOR"' . (isset($_POST['role_3']) && in_array('EDITOR', $_POST['role_3']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
-			$html .= '</td>';
-			$html .= '<td class="error">' . JText::_($errors['role_3']) . '</td>';
-			$html .= '</tr><tr class="spacer_top">';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="first_name_4" id="first_name_4" size="30" value="' . $_POST['first_name_4'] . '" /></td>';
-			$html .= '<td class="error">' . JText::_($errors['first_name_4']) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="last_name_4" id="last_name_4" size="30" value="' . $_POST['last_name_4'] . '" /></td>';
-			$html .= '<td class="error">' . JText::_($errors['last_name_4']) . '</td>';
-			$html .= '</tr><tr class="spacer_bottom">';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
-			$html .= '<td>';
-			$html .= '<input type="checkbox" name="role_4[]" value="AUTHOR"' . (isset($_POST['role_4']) && in_array('AUTHOR', $_POST['role_4']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_AUTHOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_4[]" value="ILLUSTRATOR"' . (isset($_POST['role_4']) && in_array('ILLUSTRATOR', $_POST['role_4']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_ILLUSTRATOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_4[]" value="TRANSLATOR"' . (isset($_POST['role_4']) && in_array('TRANSLATOR', $_POST['role_4']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
-			$html .= '<input class="role_checkbox" type="checkbox" name="role_4[]" value="EDITOR"' . (isset($_POST['role_4']) && in_array('EDITOR', $_POST['role_4']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
-			$html .= '</td>';
-			$html .= '<td class="error">' . JText::_($errors['role_4']) . '</td>';
-			$html .= '</tr>';
-			$html .= '</table>';
-		} 
+        // Author info is not needed for dissertations - for other publication types it's mandatory		
+        if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            // Information about the authors
+            $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_4') . '</div>';
+            $html .= '<table>';
+            $html .= '<tr>';
+            $html .= '<th></th>';
+            $html .= '<th>' . JText::_('PLG_ISBNREGISTRY_FORMS_AUTHOR_FIELD') . '</th>';
+            $html .= '<th></th>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="first_name_1" id="first_name_1" size="30" value="' . $_POST['first_name_1'] . '" /></td>';
+            $html .= '<td class="error">* ' . JText::_($errors['first_name_1']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="last_name_1" id="last_name_1" size="30" value="' . $_POST['last_name_1'] . '" /></td>';
+            $html .= '<td class="error">* ' . JText::_($errors['last_name_1']) . '</td>';
+            $html .= '</tr><tr class="spacer_bottom">';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
+            $html .= '<td>';
+            $html .= '<input type="checkbox" name="role_1[]" value="AUTHOR"' . (isset($_POST['role_1']) && in_array('AUTHOR', $_POST['role_1']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_AUTHOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_1[]" value="ILLUSTRATOR"' . (isset($_POST['role_1']) && in_array('ILLUSTRATOR', $_POST['role_1']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_ILLUSTRATOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_1[]" value="TRANSLATOR"' . (isset($_POST['role_1']) && in_array('TRANSLATOR', $_POST['role_1']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_1[]" value="EDITOR"' . (isset($_POST['role_1']) && in_array('EDITOR', $_POST['role_1']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
+            $html .= '</td>';
+            $html .= '<td class="error">* ' . JText::_($errors['role_1']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<th></th>';
+            $html .= '<th>' . JText::_('PLG_ISBNREGISTRY_FORMS_OTHER_AUTHORS_FIELD') . '</th>';
+            $html .= '<th></th>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="first_name_2" id="first_name_2" size="30" value="' . $_POST['first_name_2'] . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['first_name_2']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="last_name_2" id="last_name_2" size="30" value="' . $_POST['last_name_2'] . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['last_name_2']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
+            $html .= '<td>';
+            $html .= '<input type="checkbox" name="role_2[]" value="AUTHOR"' . (isset($_POST['role_2']) && in_array('AUTHOR', $_POST['role_2']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_AUTHOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_2[]" value="ILLUSTRATOR"' . (isset($_POST['role_2']) && in_array('ILLUSTRATOR', $_POST['role_2']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_ILLUSTRATOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_2[]" value="TRANSLATOR"' . (isset($_POST['role_2']) && in_array('TRANSLATOR', $_POST['role_2']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_2[]" value="EDITOR"' . (isset($_POST['role_2']) && in_array('EDITOR', $_POST['role_2']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
+            $html .= '</td>';
+            $html .= '<td class="error">' . JText::_($errors['role_2']) . '</td>';
+            $html .= '</tr><tr class="spacer_top">';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="first_name_3" id="first_name_3" size="30" value="' . $_POST['first_name_3'] . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['first_name_3']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="last_name_3" id="last_name_3" size="30" value="' . $_POST['last_name_3'] . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['last_name_3']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
+            $html .= '<td>';
+            $html .= '<input type="checkbox" name="role_3[]" value="AUTHOR"' . (isset($_POST['role_3']) && in_array('AUTHOR', $_POST['role_3']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_AUTHOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_3[]" value="ILLUSTRATOR"' . (isset($_POST['role_3']) && in_array('ILLUSTRATOR', $_POST['role_3']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_ILLUSTRATOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_3[]" value="TRANSLATOR"' . (isset($_POST['role_3']) && in_array('TRANSLATOR', $_POST['role_3']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_3[]" value="EDITOR"' . (isset($_POST['role_3']) && in_array('EDITOR', $_POST['role_3']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
+            $html .= '</td>';
+            $html .= '<td class="error">' . JText::_($errors['role_3']) . '</td>';
+            $html .= '</tr><tr class="spacer_top">';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="first_name_4" id="first_name_4" size="30" value="' . $_POST['first_name_4'] . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['first_name_4']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="last_name_4" id="last_name_4" size="30" value="' . $_POST['last_name_4'] . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['last_name_4']) . '</td>';
+            $html .= '</tr><tr class="spacer_bottom">';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
+            $html .= '<td>';
+            $html .= '<input type="checkbox" name="role_4[]" value="AUTHOR"' . (isset($_POST['role_4']) && in_array('AUTHOR', $_POST['role_4']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_AUTHOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_4[]" value="ILLUSTRATOR"' . (isset($_POST['role_4']) && in_array('ILLUSTRATOR', $_POST['role_4']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_ILLUSTRATOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_4[]" value="TRANSLATOR"' . (isset($_POST['role_4']) && in_array('TRANSLATOR', $_POST['role_4']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
+            $html .= '<input class="role_checkbox" type="checkbox" name="role_4[]" value="EDITOR"' . (isset($_POST['role_4']) && in_array('EDITOR', $_POST['role_4']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
+            $html .= '</td>';
+            $html .= '<td class="error">' . JText::_($errors['role_4']) . '</td>';
+            $html .= '</tr>';
+            $html .= '</table>';
+        }
         // Information about the publication
         $html .= '<div class="sub_title">';
-		if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_5_1');
-		} else {
-			$html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_5');
-		}
-		$html .= '</div>';
+        if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_5_1');
+        } else {
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_5');
+        }
+        $html .= '</div>';
         $html .= '<table>';
         $html .= '<tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TITLE_FIELD') . ':</td>';
@@ -346,12 +346,12 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td><input type="text" name="subtitle" id="title" size="50" value="' . $_POST['subtitle'] . '" /></td>';
         $html .= '<td class="error">' . JText::_($errors['subtitle']) . '</td>';
         $html .= '</tr><tr>';
-		if (IsbnregistryFormsHelper::isMap($_POST['publication_type'])) {
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_MAP_SCALE_FIELD') . ':</td>';
-			$html .= '<td><input type="text" name="map_scale" id="map_scale" size="15" value="' . $_POST['map_scale'] . '" /></td>';
-			$html .= '<td class="error">' . JText::_($errors['map_scale']) . '</td>';
-			$html .= '</tr><tr>';			
-		}
+        if (IsbnregistryFormsHelper::isMap($_POST['publication_type'])) {
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_MAP_SCALE_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="map_scale" id="map_scale" size="15" value="' . $_POST['map_scale'] . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['map_scale']) . '</td>';
+            $html .= '</tr><tr>';
+        }
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
         $html .= '<td>';
         $html .= IsbnregistryFormsHtmlBuilder::getLanguageMenu();
@@ -400,21 +400,21 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<td><input type="text" name="printing_house_city" id="printing_house_city" size="50" value="' . $_POST['printing_house_city'] . '" /></td>';
             $html .= '<td class="error">' . JText::_($errors['printing_house_city']) . '</td>';
             $html .= '</tr>';
-			// Copies and edition fields are shown only if the publication is not a dissertation
-			if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-				$html .= '<tr>';
-				$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_COPIES_FIELD') . ':</td>';
-				$html .= '<td><input type="text" name="copies" id="copies" size="4" value="' . $_POST['copies'] . '" /></td>';
-				$html .= '<td class="error">' . JText::_($errors['copies']) . '</td>';
-				$html .= '</tr><tr>';
-				$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EDITION_FIELD') . ':</td>';
-				$html .= '<td>';
-				$html .= IsbnregistryFormsHtmlBuilder::getEditionMenu();
-				$html .= '</td>';
-				$html .= '<td class="error">' . JText::_($errors['edition']) . '</td>';
-				$html .= '</tr>';
-			}
-			$html .= '<tr class="spacer_bottom">';
+            // Copies and edition fields are shown only if the publication is not a dissertation
+            if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+                $html .= '<tr>';
+                $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_COPIES_FIELD') . ':</td>';
+                $html .= '<td><input type="text" name="copies" id="copies" size="4" value="' . $_POST['copies'] . '" /></td>';
+                $html .= '<td class="error">' . JText::_($errors['copies']) . '</td>';
+                $html .= '</tr><tr>';
+                $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EDITION_FIELD') . ':</td>';
+                $html .= '<td>';
+                $html .= IsbnregistryFormsHtmlBuilder::getEditionMenu();
+                $html .= '</td>';
+                $html .= '<td class="error">' . JText::_($errors['edition']) . '</td>';
+                $html .= '</tr>';
+            }
+            $html .= '<tr class="spacer_bottom">';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_FIELD') . ':</td>';
             $html .= '<td>';
             $html .= '<input type="checkbox" name="type[]" value="PAPERBACK"' . (isset($_POST['type']) && in_array('PAPERBACK', $_POST['type']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_PAPERBACK');
@@ -443,6 +443,10 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="OTHER"' . (isset($_POST['fileformat']) && in_array('OTHER', $_POST['fileformat']) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_OTHER');
             $html .= '</td>';
             $html .= '<td class="error">* ' . JText::_($errors['fileformat']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_OTHER_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="fileformat_other" id="fileformat_other" size="25" value="' . $_POST['fileformat_other'] . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['fileformat_other']) . '</td>';
             $html .= '</tr>';
             $html .= '</table>';
         }
@@ -459,33 +463,33 @@ class IsbnregistryFormsHtmlBuilder {
         // Information about the publisher
         $html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUMMARY_HEADER') . '</div>';
         $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application_summary" >';
-		$html .= '<div class="sub_title">';
-		if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1_1');
-		} else {
-			$html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1');
-		}		
-		$html .= '</div>';
+        $html .= '<div class="sub_title">';
+        if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1_1');
+        } else {
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1');
+        }
+        $html .= '</div>';
         $html .= '<table>';
         $html .= '<tr>';
         if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_UNIVERSITY') . ':</td>';
-			$html .= '<td>' . $_POST['official_name'] . '</td>';
-			$html .= '</tr><tr>';		
+            $html .= '<td>' . $_POST['official_name'] . '</td>';
+            $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_LOCALITY') . ':</td>';
-			$html .= '<td>' . $_POST['locality'] . '</td>';
-			$html .= '</tr><tr>';		
+            $html .= '<td>' . $_POST['locality'] . '</td>';
+            $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_DOCTOR_CANDIDATE') . ':</td>';
-			$html .= '<td>' . $_POST['first_name'] . ' ' . $_POST['last_name'] . '</td>';
-			$html .= '</tr><tr>';			
+            $html .= '<td>' . $_POST['first_name'] . ' ' . $_POST['last_name'] . '</td>';
+            $html .= '</tr><tr>';
         } else {
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHER_FIELD') . ':</td>';
-			$html .= '<td>' . $_POST['official_name'] . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHER_IDENTIFIER_FIELD') . ':</td>';
-			$html .= '<td>' . $_POST['publisher_identifier_str'] . '</td>';
-			$html .= '</tr><tr>';
-		}		
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHER_FIELD') . ':</td>';
+            $html .= '<td>' . $_POST['official_name'] . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHER_IDENTIFIER_FIELD') . ':</td>';
+            $html .= '<td>' . $_POST['publisher_identifier_str'] . '</td>';
+            $html .= '</tr><tr>';
+        }
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
         $html .= '<td>' . $_POST['address'] . '</td>';
         $html .= '</tr><tr>';
@@ -495,11 +499,11 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CITY_FIELD') . ':</td>';
         $html .= '<td>' . $_POST['city'] . '</td>';
         $html .= '</tr><tr>';
-		if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
-			$html .= '<td>' . $_POST['contact_person'] . '</td>';
-			$html .= '</tr><tr>';
-		}
+        if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
+            $html .= '<td>' . $_POST['contact_person'] . '</td>';
+            $html .= '</tr><tr>';
+        }
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PHONE_FIELD') . ':</td>';
         $html .= '<td>' . $_POST['phone'] . '</td>';
         $html .= '</tr><tr class="spacer_bottom">';
@@ -507,43 +511,43 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td>' . $_POST['email'] . '</td>';
         $html .= '</tr>';
         $html .= '</table>';
-		if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			// Information about publishing activities
-			$html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_2') . '</div>';
-			$html .= '<table>';
-			$html .= '<tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_BEFORE_SUMMARY_FIELD') . ':</td>';
-			$html .= '<td>' . ($_POST['published_before'] ? JText::_('PLG_ISBNREGISTRY_FORMS_YES') : JText::_('PLG_ISBNREGISTRY_FORMS_NO')) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_PUBLIC_SUMMARY_FIELD') . ':</td>';
-			$html .= '<td>' . ($_POST['publications_public'] ? JText::_('PLG_ISBNREGISTRY_FORMS_YES') : JText::_('PLG_ISBNREGISTRY_FORMS_NO')) . '</td>';
-			$html .= '</tr><tr>';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_INTRA_SUMMARY_FIELD') . ':</td>';
-			$html .= '<td>' . ($_POST['publications_intra'] ? JText::_('PLG_ISBNREGISTRY_FORMS_YES') : JText::_('PLG_ISBNREGISTRY_FORMS_NO')) . '</td>';
-			$html .= '</tr><tr class="spacer_bottom">';
-			$html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_SUMMARY_FIELD') . ':</td>';
-			$html .= '<td>' . (($_POST['publishing_activity'] == 'OCCASIONAL') ? JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_OCCASIONAL') : JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_CONTINUOUS')) . '</td>';
-			$html .= '</tr>';
-			$html .= '</table>';
-		}
+        if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            // Information about publishing activities
+            $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_2') . '</div>';
+            $html .= '<table>';
+            $html .= '<tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_BEFORE_SUMMARY_FIELD') . ':</td>';
+            $html .= '<td>' . ($_POST['published_before'] ? JText::_('PLG_ISBNREGISTRY_FORMS_YES') : JText::_('PLG_ISBNREGISTRY_FORMS_NO')) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_PUBLIC_SUMMARY_FIELD') . ':</td>';
+            $html .= '<td>' . ($_POST['publications_public'] ? JText::_('PLG_ISBNREGISTRY_FORMS_YES') : JText::_('PLG_ISBNREGISTRY_FORMS_NO')) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_INTRA_SUMMARY_FIELD') . ':</td>';
+            $html .= '<td>' . ($_POST['publications_intra'] ? JText::_('PLG_ISBNREGISTRY_FORMS_YES') : JText::_('PLG_ISBNREGISTRY_FORMS_NO')) . '</td>';
+            $html .= '</tr><tr class="spacer_bottom">';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_SUMMARY_FIELD') . ':</td>';
+            $html .= '<td>' . (($_POST['publishing_activity'] == 'OCCASIONAL') ? JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_OCCASIONAL') : JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_CONTINUOUS')) . '</td>';
+            $html .= '</tr>';
+            $html .= '</table>';
+        }
         // Information about the publication
         $html .= '<div class="sub_title">';
-		if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_5_1');
-		} else {
-			$html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_5');
-		}
-		$html .= '</div>';
+        if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_5_1');
+        } else {
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_5');
+        }
+        $html .= '</div>';
         $html .= '<table>';
         $html .= '<tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_AUTHORS_FIELD') . ':</td>';
         $html .= '<td>';
-		if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= $_POST['first_name'] . ' ' . $_POST['last_name'];	
-		} else {
-			$html .= IsbnregistryFormsHelper::buildAuthorsField();
-		}		
-		$html .= '</td>';
+        if (IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= $_POST['first_name'] . ' ' . $_POST['last_name'];
+        } else {
+            $html .= IsbnregistryFormsHelper::buildAuthorsField();
+        }
+        $html .= '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TITLE_SUMMARY_FIELD') . ':</td>';
         $html .= '<td>' . $_POST['title'] . '</td>';
@@ -588,59 +592,59 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<input type="hidden" name="official_name" value="' . $_POST['official_name'] . '" />';
         $html .= '<input type="hidden" name="address" value="' . $_POST['address'] . '" />';
         $html .= '<input type="hidden" name="zip" value="' . $_POST['zip'] . '" />';
-        $html .= '<input type="hidden" name="city" value="' . $_POST['city'] . '" />';      
+        $html .= '<input type="hidden" name="city" value="' . $_POST['city'] . '" />';
         $html .= '<input type="hidden" name="phone" value="' . $_POST['phone'] . '" />';
         $html .= '<input type="hidden" name="email" value="' . $_POST['email'] . '" />';
-		if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= '<input type="hidden" name="contact_person" value="' . $_POST['contact_person'] . '" />';
-			$html .= '<input type="hidden" name="publisher_identifier_str" value="' . $_POST['publisher_identifier_str'] . '" />';
-			$html .= '<input type="hidden" name="published_before" value="' . $_POST['published_before'] . '" />';
-			$html .= '<input type="hidden" name="publications_public" value="' . $_POST['publications_public'] . '" />';
-			$html .= '<input type="hidden" name="publications_intra" value="' . $_POST['publications_intra'] . '" />';
-			$html .= '<input type="hidden" name="publishing_activity" value="' . $_POST['publishing_activity'] . '" />';
-			$html .= '<input type="hidden" name="publishing_activity_amount" value="' . $_POST['publishing_activity_amount'] . '" />';
-		} else {
-			$html .= '<input type="hidden" name="first_name" value="' . $_POST['first_name'] . '" />';
-			$html .= '<input type="hidden" name="last_name" value="' . $_POST['last_name'] . '" />';
-			$html .= '<input type ="hidden" name ="locality" value="' . $_POST['locality'] . '" />';
-		}
+        if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= '<input type="hidden" name="contact_person" value="' . $_POST['contact_person'] . '" />';
+            $html .= '<input type="hidden" name="publisher_identifier_str" value="' . $_POST['publisher_identifier_str'] . '" />';
+            $html .= '<input type="hidden" name="published_before" value="' . $_POST['published_before'] . '" />';
+            $html .= '<input type="hidden" name="publications_public" value="' . $_POST['publications_public'] . '" />';
+            $html .= '<input type="hidden" name="publications_intra" value="' . $_POST['publications_intra'] . '" />';
+            $html .= '<input type="hidden" name="publishing_activity" value="' . $_POST['publishing_activity'] . '" />';
+            $html .= '<input type="hidden" name="publishing_activity_amount" value="' . $_POST['publishing_activity_amount'] . '" />';
+        } else {
+            $html .= '<input type="hidden" name="first_name" value="' . $_POST['first_name'] . '" />';
+            $html .= '<input type="hidden" name="last_name" value="' . $_POST['last_name'] . '" />';
+            $html .= '<input type ="hidden" name ="locality" value="' . $_POST['locality'] . '" />';
+        }
         $html .= '<input type="hidden" name="publication_format" value="' . $_POST['publication_format'] . '" />';
         return $html;
     }
 
     private static function getIsbnApplicationFormPt3Hidden() {
-		// Author info is included only if the publication is not a dissertation
-		if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-			$html .= '<input type="hidden" name="first_name_1" value="' . $_POST['first_name_1'] . '" />';
-			$html .= '<input type="hidden" name="last_name_1" value="' . $_POST['last_name_1'] . '" />';
-			$html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="AUTHOR"' . (isset($_POST['role_1']) && in_array('AUTHOR', $_POST['role_1']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="ILLUSTRATOR"' . (isset($_POST['role_1']) && in_array('ILLUSTRATOR', $_POST['role_1']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="TRANSLATOR"' . (isset($_POST['role_1']) && in_array('TRANSLATOR', $_POST['role_1']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="EDITOR"' . (isset($_POST['role_1']) && in_array('EDITOR', $_POST['role_1']) ? ' checked' : '') . '/>';
-			$html .= '<input type="hidden" name="first_name_2" value="' . $_POST['first_name_2'] . '" />';
-			$html .= '<input type="hidden" name="last_name_2" value="' . $_POST['last_name_2'] . '" />';
-			$html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="AUTHOR"' . (isset($_POST['role_2']) && in_array('AUTHOR', $_POST['role_2']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="ILLUSTRATOR"' . (isset($_POST['role_2']) && in_array('ILLUSTRATOR', $_POST['role_2']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="TRANSLATOR"' . (isset($_POST['role_2']) && in_array('TRANSLATOR', $_POST['role_2']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="EDITOR"' . (isset($_POST['role_2']) && in_array('EDITOR', $_POST['role_2']) ? ' checked' : '') . '/>';
-			$html .= '<input type="hidden" name="first_name_3" value="' . $_POST['first_name_3'] . '" />';
-			$html .= '<input type="hidden" name="last_name_3" value="' . $_POST['last_name_3'] . '" />';
-			$html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="AUTHOR"' . (isset($_POST['role_3']) && in_array('AUTHOR', $_POST['role_3']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="ILLUSTRATOR"' . (isset($_POST['role_3']) && in_array('ILLUSTRATOR', $_POST['role_3']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="TRANSLATOR"' . (isset($_POST['role_3']) && in_array('TRANSLATOR', $_POST['role_3']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="EDITOR"' . (isset($_POST['role_3']) && in_array('EDITOR', $_POST['role_3']) ? ' checked' : '') . '/>';
-			$html .= '<input type="hidden" name="first_name_4" value="' . $_POST['first_name_4'] . '" />';
-			$html .= '<input type="hidden" name="last_name_4" value="' . $_POST['last_name_4'] . '" />';
-			$html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="AUTHOR"' . (isset($_POST['role_4']) && in_array('AUTHOR', $_POST['role_4']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="ILLUSTRATOR"' . (isset($_POST['role_4']) && in_array('ILLUSTRATOR', $_POST['role_4']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="TRANSLATOR"' . (isset($_POST['role_4']) && in_array('TRANSLATOR', $_POST['role_4']) ? ' checked' : '') . '/>';
-			$html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="EDITOR"' . (isset($_POST['role_4']) && in_array('EDITOR', $_POST['role_4']) ? ' checked' : '') . '/>';
-		}
-		$html .= '<input type="hidden" name="title" value="' . $_POST['title'] . '" />';
+        // Author info is included only if the publication is not a dissertation
+        if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+            $html .= '<input type="hidden" name="first_name_1" value="' . $_POST['first_name_1'] . '" />';
+            $html .= '<input type="hidden" name="last_name_1" value="' . $_POST['last_name_1'] . '" />';
+            $html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="AUTHOR"' . (isset($_POST['role_1']) && in_array('AUTHOR', $_POST['role_1']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="ILLUSTRATOR"' . (isset($_POST['role_1']) && in_array('ILLUSTRATOR', $_POST['role_1']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="TRANSLATOR"' . (isset($_POST['role_1']) && in_array('TRANSLATOR', $_POST['role_1']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_1[]" value="EDITOR"' . (isset($_POST['role_1']) && in_array('EDITOR', $_POST['role_1']) ? ' checked' : '') . '/>';
+            $html .= '<input type="hidden" name="first_name_2" value="' . $_POST['first_name_2'] . '" />';
+            $html .= '<input type="hidden" name="last_name_2" value="' . $_POST['last_name_2'] . '" />';
+            $html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="AUTHOR"' . (isset($_POST['role_2']) && in_array('AUTHOR', $_POST['role_2']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="ILLUSTRATOR"' . (isset($_POST['role_2']) && in_array('ILLUSTRATOR', $_POST['role_2']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="TRANSLATOR"' . (isset($_POST['role_2']) && in_array('TRANSLATOR', $_POST['role_2']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_2[]" value="EDITOR"' . (isset($_POST['role_2']) && in_array('EDITOR', $_POST['role_2']) ? ' checked' : '') . '/>';
+            $html .= '<input type="hidden" name="first_name_3" value="' . $_POST['first_name_3'] . '" />';
+            $html .= '<input type="hidden" name="last_name_3" value="' . $_POST['last_name_3'] . '" />';
+            $html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="AUTHOR"' . (isset($_POST['role_3']) && in_array('AUTHOR', $_POST['role_3']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="ILLUSTRATOR"' . (isset($_POST['role_3']) && in_array('ILLUSTRATOR', $_POST['role_3']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="TRANSLATOR"' . (isset($_POST['role_3']) && in_array('TRANSLATOR', $_POST['role_3']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_3[]" value="EDITOR"' . (isset($_POST['role_3']) && in_array('EDITOR', $_POST['role_3']) ? ' checked' : '') . '/>';
+            $html .= '<input type="hidden" name="first_name_4" value="' . $_POST['first_name_4'] . '" />';
+            $html .= '<input type="hidden" name="last_name_4" value="' . $_POST['last_name_4'] . '" />';
+            $html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="AUTHOR"' . (isset($_POST['role_4']) && in_array('AUTHOR', $_POST['role_4']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="ILLUSTRATOR"' . (isset($_POST['role_4']) && in_array('ILLUSTRATOR', $_POST['role_4']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="TRANSLATOR"' . (isset($_POST['role_4']) && in_array('TRANSLATOR', $_POST['role_4']) ? ' checked' : '') . '/>';
+            $html .= '<input style="display:none;" type="checkbox" name="role_4[]" value="EDITOR"' . (isset($_POST['role_4']) && in_array('EDITOR', $_POST['role_4']) ? ' checked' : '') . '/>';
+        }
+        $html .= '<input type="hidden" name="title" value="' . $_POST['title'] . '" />';
         $html .= '<input type="hidden" name="subtitle" value="' . $_POST['subtitle'] . '" />';
-		if (IsbnregistryFormsHelper::isMap($_POST['publication_type'])) {
-				$html .= '<input type="hidden" name="map_scale" value="' . $_POST['map_scale'] . '" />';
-		}
+        if (IsbnregistryFormsHelper::isMap($_POST['publication_type'])) {
+            $html .= '<input type="hidden" name="map_scale" value="' . $_POST['map_scale'] . '" />';
+        }
         $html .= '<input type="hidden" name="language" value="' . $_POST['language'] . '" />';
         $html .= '<input type="hidden" name="year" value="' . $_POST['year'] . '" />';
         $html .= '<input type="hidden" name="month" value="' . $_POST['month'] . '" />';
@@ -651,11 +655,11 @@ class IsbnregistryFormsHtmlBuilder {
             // Information about the printed publication
             $html .= '<input type="hidden" name="printing_house" value="' . $_POST['printing_house'] . '" />';
             $html .= '<input type="hidden" name="printing_house_city" value="' . $_POST['printing_house_city'] . '" />';
-			// Copies and edition fields are included only if the publication is not a dissertation
-			if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
-				$html .= '<input type="hidden" name="copies" value="' . $_POST['copies'] . '" />';
-				$html .= '<input type="hidden" name="edition" value="' . $_POST['edition'] . '" />';
-			}
+            // Copies and edition fields are included only if the publication is not a dissertation
+            if (!IsbnregistryFormsHelper::isDissertation($_POST['publication_type'])) {
+                $html .= '<input type="hidden" name="copies" value="' . $_POST['copies'] . '" />';
+                $html .= '<input type="hidden" name="edition" value="' . $_POST['edition'] . '" />';
+            }
             $html .= '<input style="display:none;" type="checkbox" name="type[]" value="PAPERBACK"' . (isset($_POST['type']) && in_array('PAPERBACK', $_POST['type']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="type[]" value="HARDBACK"' . (isset($_POST['type']) && in_array('HARDBACK', $_POST['type']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($_POST['type']) && in_array('SPIRAL_BINDING', $_POST['type']) ? ' checked' : '') . '/>';
@@ -667,6 +671,7 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($_POST['fileformat']) && in_array('EPUB', $_POST['fileformat']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="CD_ROM"' . (isset($_POST['fileformat']) && in_array('CD_ROM', $_POST['fileformat']) ? ' checked' : '') . '/>';
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="OTHER"' . (isset($_POST['fileformat']) && in_array('OTHER', $_POST['fileformat']) ? ' checked' : '') . '/>';
+            $html .= '<input type="hidden" name="fileformat_other" value="' . $_POST['fileformat_other'] . '" />';
         }
         return $html;
     }

@@ -196,7 +196,7 @@ class IsbnregistryFormsHelper {
             $errors['email'] = "PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD_INVALID";
         }
         // Is the publication dissetation or not?
-        if (!IsbnregistryFormsHelper::isDissertation($publicationType)) {
+        if (!self::isDissertation($publicationType)) {
             // Publisher identifier - optional
             $publisherId = $post->get('publisher_identifier_str', null, 'string');
             if (strlen($publisherId) > 20) {
@@ -286,7 +286,7 @@ class IsbnregistryFormsHelper {
         $publicationType = $post->get('publication_type', null, 'string');
 
         // Authors are validated onle if the publication is not a dissertation
-        if (!IsbnregistryFormsHelper::isDissertation($publicationType)) {
+        if (!self::isDissertation($publicationType)) {
             // 1st first name - required
             $firstName = $post->get('first_name_1', null, 'string');
             if (empty($firstName) == true) {
@@ -307,7 +307,7 @@ class IsbnregistryFormsHelper {
                 $errors['role_1'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ROLE_FIELD_EMPTY";
             } else if (count($roles) > 4) {
                 $errors['role_1'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
-            } else if (!IsbnregistryFormsHelper::validateRoles($roles)) {
+            } else if (!self::validateRoles($roles)) {
                 $errors['role_1'] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ROLE_FIELD_INVALID";
             }
             // Loop through other authors
@@ -332,7 +332,7 @@ class IsbnregistryFormsHelper {
                 // Role
                 if (count($roles) > 4) {
                     $errors["role_$x"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
-                } else if (isset($roles) && !IsbnregistryFormsHelper::validateRoles($roles)) {
+                } else if (isset($roles) && !self::validateRoles($roles)) {
                     $errors["role_$x"] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ROLE_FIELD_INVALID";
                 } else if (count($roles) == 0 && (strlen($firstName) > 0 || strlen($lastName) > 0)) {
                     $errors["role_$x"] = "PLG_ISBNREGISTRY_FORMS_PUBLICATION_ROLE_FIELD_INVALID";
@@ -352,7 +352,7 @@ class IsbnregistryFormsHelper {
             $errors['subtitle'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
         // If publication is a map, validate map scale
-        if (IsbnregistryFormsHelper::isMap($publicationType)) {
+        if (self::isMap($publicationType)) {
             // Map scale - optional
             $mapScale = $post->get('map_scale', null, 'string');
             if (strlen($mapScale) > 50) {
@@ -363,7 +363,7 @@ class IsbnregistryFormsHelper {
         $language = $post->get('language', null, 'string');
         if (strlen($language) == 0) {
             $errors['language'] = "PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD_EMPTY";
-        } else if (!IsbnregistryFormsHelper::validateLanguage($language)) {
+        } else if (!self::validateLanguage($language)) {
             $errors['language'] = "PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD_INVALID";
         }
         // Year - required
@@ -410,7 +410,7 @@ class IsbnregistryFormsHelper {
                 $errors["printing_house_city"] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
             }
             // Copies and edition are validated only the publication is not a dissertation
-            if (!IsbnregistryFormsHelper::isDissertation($publicationType)) {
+            if (!self::isDissertation($publicationType)) {
                 // Copies - optional
                 $copies = $post->get("copies", null, 'string');
                 if (strlen($copies) > 10) {
@@ -428,7 +428,7 @@ class IsbnregistryFormsHelper {
                 $errors['type'] = "PLG_ISBNREGISTRY_FORMS_TYPE_FIELD_EMPTY";
             } else if (count($types) > 3) {
                 $errors['type'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
-            } else if (!IsbnregistryFormsHelper::validateTypes($types)) {
+            } else if (!self::validateTypes($types)) {
                 $errors['type'] = "PLG_ISBNREGISTRY_FORMS_TYPE_FIELD_INVALID";
             }
         }
@@ -444,8 +444,17 @@ class IsbnregistryFormsHelper {
                 $errors['fileformat'] = "PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_FIELD_EMPTY";
             } else if (count($fileFormats) > 4) {
                 $errors['fileformat'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
-            } else if (!IsbnregistryFormsHelper::validateFileFormats($fileFormats)) {
+            } else if (!self::validateFileFormats($fileFormats)) {
                 $errors['fileformat'] = "PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_FIELD_INVALID";
+            }
+            // If OTHER is selected, fileformat_other field can not be empty
+            if (in_array('OTHER', $fileFormats)) {
+                $fileFormatOther = $post->get('fileformat_other', null, 'string');
+                if (strlen($fileFormatOther) == 0) {
+                    $errors['fileformat_other'] = "PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_OTHER_FIELD_EMPTY";
+                } else if (strlen($fileFormatOther) > 100) {
+                    $errors['fileformat_other'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+                }
             }
         }
         return $errors;
@@ -574,10 +583,11 @@ class IsbnregistryFormsHelper {
         $comments = $post->get('comments', null, 'string');
         // Other information
         $fileformat = $post->get('fileformat', null, 'array');
+        $fileformatOther = $post->get('fileformat_other', null, 'string');
         // Date
         $created = JFactory::getDate();
         // Is dissertation?
-        $is_dissertation = IsbnregistryFormsHelper::isDissertation($publication_type);
+        $is_dissertation = self::isDissertation($publication_type);
 
         // From array to comma separated string
         if ($is_dissertation) {
@@ -587,14 +597,14 @@ class IsbnregistryFormsHelper {
             $role_1_str = 'AUTHOR';
         } else {
             // From array to comma separated string
-            $role_1_str = IsbnregistryFormsHelper::fromArrayToStr($role_1);
-            $role_2_str = IsbnregistryFormsHelper::fromArrayToStr($role_2);
-            $role_3_str = IsbnregistryFormsHelper::fromArrayToStr($role_3);
-            $role_4_str = IsbnregistryFormsHelper::fromArrayToStr($role_4);
+            $role_1_str = self::fromArrayToStr($role_1);
+            $role_2_str = self::fromArrayToStr($role_2);
+            $role_3_str = self::fromArrayToStr($role_3);
+            $role_4_str = self::fromArrayToStr($role_4);
         }
         // From array to comma separated string
-        $type_str = IsbnregistryFormsHelper::fromArrayToStr($type);
-        $fileformat_str = IsbnregistryFormsHelper::fromArrayToStr($fileformat);
+        $type_str = self::fromArrayToStr($type);
+        $fileformat_str = self::fromArrayToStr($fileformat);
 
         // database connection
         $db = JFactory::getDbo();
@@ -616,7 +626,7 @@ class IsbnregistryFormsHelper {
         }
 
         // If printed
-        if (IsbnregistryFormsHelper::isPrint($publication_format)) {
+        if (self::isPrint($publication_format)) {
             array_push($columns, 'printing_house', 'printing_house_city', 'type');
             array_push($values, $db->quote($printing_house), $db->quote($printing_house_city), $db->quote($type_str));
             if (!$is_dissertation) {
@@ -625,12 +635,12 @@ class IsbnregistryFormsHelper {
             }
         }
         // If electronical
-        if (IsbnregistryFormsHelper::isElectronical($publication_format)) {
-            array_push($columns, 'fileformat');
-            array_push($values, $db->quote($fileformat_str));
+        if (self::isElectronical($publication_format)) {
+            array_push($columns, 'fileformat', 'fileformat_other');
+            array_push($values, $db->quote($fileformat_str), $db->quote($fileformatOther));
         }
         // If map
-        if (IsbnregistryFormsHelper::isMap($publication_type)) {
+        if (self::isMap($publication_type)) {
             array_push($columns, 'map_scale');
             array_push($values, $db->quote($map_scale));
         }
@@ -687,7 +697,7 @@ class IsbnregistryFormsHelper {
     }
 
     private static function validateLanguage($language) {
-        $languages = IsbnregistryFormsHelper::getLanguageList();
+        $languages = self::getLanguageList();
         if (!in_array($language, $languages)) {
             return false;
         }
@@ -771,7 +781,7 @@ class IsbnregistryFormsHelper {
         $lastName = $post->get('last_name_1', null, 'string');
         $html .= ' ' . $lastName;
         $roles = $post->get("role_1", null, 'array');
-        $html .= ' (' . IsbnregistryFormsHelper::getRoleLabelsString($roles) . ')';
+        $html .= ' (' . self::getRoleLabelsString($roles) . ')';
 
         // Loop through other authors
         for ($x = 2; $x <= 4; $x++) {
@@ -788,7 +798,7 @@ class IsbnregistryFormsHelper {
             // 2-4 role - optional
             $roles = $post->get("role_$x", null, 'array');
             if (count($roles) > 0) {
-                $html .= ' (' . IsbnregistryFormsHelper::getRoleLabelsString($roles) . ')';
+                $html .= ' (' . self::getRoleLabelsString($roles) . ')';
             }
         }
         return $html;

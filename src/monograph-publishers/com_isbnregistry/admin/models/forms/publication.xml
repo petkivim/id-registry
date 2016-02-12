@@ -556,6 +556,15 @@
 			<option value="OTHER">COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_OTHER</option>
 		</field>	
         <field
+            name="fileformat_other"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_OTHER_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_FILEFORMAT_OTHER_DESC"
+            size="20"
+            class="inputbox validate-fileformatother"
+            default=""
+        />		
+        <field
             name="link_to_publisher"
             type="Span"
             label=""

@@ -120,7 +120,8 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_9'); ?></legend>
                 <?php echo $this->form->renderField('comments'); ?>
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_10'); ?></legend>
-                <?php echo $this->form->renderField('fileformat'); ?>				
+                <?php echo $this->form->renderField('fileformat'); ?>
+                <?php echo $this->form->renderField('fileformat_other'); ?>
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>

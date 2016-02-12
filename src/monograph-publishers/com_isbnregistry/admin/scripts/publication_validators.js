@@ -10,7 +10,7 @@ jQuery(document).ready(function () {
     document.formvalidator.setHandler("locality", function (value) {
         regex = /^.{0,50}$/;
         return regex.test(value);
-    });	
+    });
     document.formvalidator.setHandler("address", function (value) {
         regex = /^.{0,50}$/;
         return regex.test(value);
@@ -86,7 +86,7 @@ jQuery(document).ready(function () {
     document.formvalidator.setHandler("mapscale", function (value) {
         regex = /^.{0,50}$/;
         return regex.test(value);
-    });	
+    });
     document.formvalidator.setHandler("language", function (value) {
         regex = /^.{3}$/;
         return regex.test(value);
@@ -137,6 +137,10 @@ jQuery(document).ready(function () {
     });
     document.formvalidator.setHandler("fileformat", function (value) {
         regex = /^.{0,25}$/;
+        return regex.test(value);
+    });
+    document.formvalidator.setHandler("fileformatother", function (value) {
+        regex = /^.{0,100}$/;
         return regex.test(value);
     });
 });

@@ -133,6 +133,7 @@ CREATE TABLE `#__isbn_registry_publication` (
     `type` VARCHAR(35),
     `comments` VARCHAR(500),
     `fileformat` VARCHAR(25),
+    `fileformat_other` VARCHAR(100),
     `no_identifier_granted` boolean not null default 0,
     `on_process` boolean not null default 0,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
