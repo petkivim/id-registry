@@ -81,7 +81,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<span  class="error">' . JText::_($errors['question_6']) . '</span></div>';
         $html .= '<div class="pre_field">' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_7_PRE_FIELD') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_7_FIELD') . '</div>';
-        $html .= IsbnregistryFormsHtmlBuilder::getClassificationMenu($errors);
+        $html .= self::getClassificationMenu($errors);
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_8_FIELD') . '</div>';
         $html .= '<div><input type="text" name="question_8" id="question_8" class="question" size="30" value="' . $post->get('question_8', null, 'string') . '" />';
         $html .= '<span class="error">' . JText::_($errors['question_8']) . '</span></div>';
@@ -117,11 +117,11 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<option value="OTHER"' . (($post->get('publication_type', null, 'string') == 'OTHER') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_OTHER') . '</option>';
         $html .= '</select><span class="error">* ' . JText::_($errors['publication_type']) . '</span></div>';
         $html .= '<div><input type="submit" name="submit_application_pt1" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
-        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2Hidden();
+        $html .= self::getIsbnApplicationFormPt2Hidden();
         $backApplicationPt2 = $post->get('back_application_pt2', null, 'string');
         $submitApplicationPt4 = $post->get('submit_application_pt4', null, 'string');
         if (isset($backApplicationPt2) || isset($submitApplicationPt4)) {
-            $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3Hidden();
+            $html .= self::getIsbnApplicationFormPt3Hidden();
         }
         $html .= JHTML::_('form.token');
         $html .= '</form></div>';
@@ -246,8 +246,8 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_POST_FIELD') . '</div>';
         $html .= '<div><input type="submit" name="back_application_pt2" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_BACK_BTN') . '" />';
         $html .= '<input type="submit" name="submit_application_pt2" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
-        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1Hidden();
-        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3Hidden();
+        $html .= self::getIsbnApplicationFormPt1Hidden();
+        $html .= self::getIsbnApplicationFormPt3Hidden();
         $html .= JHTML::_('form.token');
         $html .= '</form></div>';
         return $html;
@@ -373,14 +373,14 @@ class IsbnregistryFormsHtmlBuilder {
         }
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
         $html .= '<td>';
-        $html .= IsbnregistryFormsHtmlBuilder::getLanguageMenu();
+        $html .= self::getLanguageMenu();
         $html .= '</td>';
         $html .= '<td class="error">* ' . JText::_($errors['language']) . '</td>';
         $html .= '</tr><tr class="spacer_bottom">';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_FIELD') . ':</td>';
         $html .= '<td>';
-        $html .= IsbnregistryFormsHtmlBuilder::getPublishedYearMenu();
-        $html .= IsbnregistryFormsHtmlBuilder::getPublishedMonthMenu();
+        $html .= self::getPublishedYearMenu();
+        $html .= self::getPublishedMonthMenu();
         $html .= '</td>';
         $html .= '<td class="error">* ' . JText::_($errors['published']) . '</td>';
         $html .= '</tr>';
@@ -428,7 +428,7 @@ class IsbnregistryFormsHtmlBuilder {
                 $html .= '</tr><tr>';
                 $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EDITION_FIELD') . ':</td>';
                 $html .= '<td>';
-                $html .= IsbnregistryFormsHtmlBuilder::getEditionMenu();
+                $html .= self::getEditionMenu();
                 $html .= '</td>';
                 $html .= '<td class="error">' . JText::_($errors['edition']) . '</td>';
                 $html .= '</tr>';
@@ -471,8 +471,8 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '</tr>';
             $html .= '</table>';
         }
-        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1Hidden();
-        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2Hidden();
+        $html .= self::getIsbnApplicationFormPt1Hidden();
+        $html .= self::getIsbnApplicationFormPt2Hidden();
         $html .= '<div><input type="submit" name="back_application_pt3" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_BACK_BTN') . '" />';
         $html .= '<input type="submit" name="submit_application_pt3" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
         $html .= JHTML::_('form.token');
@@ -597,9 +597,9 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '</tr>';
         $html .= '</table><br />';
         $html .= '<form action = "' . JURI::getInstance()->toString() . '" method = "post" name="isbnApplicationForm" id="isbnApplicationForm">';
-        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1Hidden();
-        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2Hidden();
-        $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3Hidden();
+        $html .= self::getIsbnApplicationFormPt1Hidden();
+        $html .= self::getIsbnApplicationFormPt2Hidden();
+        $html .= self::getIsbnApplicationFormPt3Hidden();
         $html .= '<div><input type="submit" name="back_application_pt4" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_BACK_BTN') . '" />';
         $html .= '<input type="submit" name="submit_application_pt4" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_SEND_BTN') . '" /></div>';
         $html .= JHTML::_('form.token');
