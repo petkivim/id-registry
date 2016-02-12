@@ -40,11 +40,10 @@ class plgContentIsbnregistry_forms extends JPlugin {
 
                 // Add plugin css
                 $document = JFactory::getDocument();
-                $document->addStyleSheet("plugins/content/isbnregistry_forms/scripts/chosen/chosen.css");
                 $document->addStyleSheet("plugins/content/isbnregistry_forms/css/style.css");
                 // Add plugin scripts
                 JHtml::_('jquery.framework');
-                $document->addScript("plugins/content/isbnregistry_forms/scripts/chosen/chosen.jquery.js");
+                JHtml::_('formbehavior.chosen');
                 $document->addScript("plugins/content/isbnregistry_forms/scripts/custom.js");
 
                 // Email settings
