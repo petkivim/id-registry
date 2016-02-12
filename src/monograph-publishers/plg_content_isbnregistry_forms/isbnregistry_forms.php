@@ -56,9 +56,13 @@ class plgContentIsbnregistry_forms extends JPlugin {
                 // Load the language file in the current site language
                 $lang->load('plg_content_isbnregistry_forms', JPATH_ADMINISTRATOR, $lang->getTag(), true);
 
-                // TODO: create and process forms
+                // Get the post variables
+                $post = JFactory::getApplication()->input->post;
+
+                // Process forms
                 if (strpos($value, 'registration') !== false) {
-                    if (JSession::checkToken() && isset($_POST['submit_registration'])) {
+                    $submitRegistration = $post->get('submit_registration', null, 'string');
+                    if (JSession::checkToken() && isset($submitRegistration)) {
                         // Validate input data
                         $errors = IsbnregistryFormsHelper::validateRegistrationForm();
                         // If there are no errors, continue processing
@@ -82,7 +86,17 @@ class plgContentIsbnregistry_forms extends JPlugin {
                         $html .= IsbnregistryFormsHtmlBuilder::getRegisterMonographPublisherForm();
                     }
                 } else if (strpos($value, 'application') !== false) {
-                    if (JSession::checkToken() && isset($_POST['submit_application_pt1'])) {
+                    // Get submit button values
+                    $submitApplicationPt1 = $post->get('submit_application_pt1', null, 'string');
+                    $submitApplicationPt2 = $post->get('submit_application_pt2', null, 'string');
+                    $submitApplicationPt3 = $post->get('submit_application_pt3', null, 'string');
+                    $submitApplicationPt4 = $post->get('submit_application_pt4', null, 'string');
+                    // Get back button values
+                    $backApplicationPt3 = $post->get('back_application_pt3', null, 'string');
+                    $backApplicationPt4 = $post->get('back_application_pt4', null, 'string');
+                    
+                    // Process
+                    if (JSession::checkToken() && isset($submitApplicationPt1)) {
                         // Validate input data
                         $errors = IsbnregistryFormsHelper::validateApplicationFormPt1();
                         // If there are no errors, continue processing
@@ -93,7 +107,7 @@ class plgContentIsbnregistry_forms extends JPlugin {
                             // Show the first page with error messages
                             $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1($errors);
                         }
-                    } else if (JSession::checkToken() && isset($_POST['submit_application_pt2'])) {
+                    } else if (JSession::checkToken() && isset($submitApplicationPt2)) {
                         // Validate input data
                         $errors = IsbnregistryFormsHelper::validateApplicationFormPt2();
                         // If there are no errors, continue processing
@@ -104,7 +118,7 @@ class plgContentIsbnregistry_forms extends JPlugin {
                             // Show the first page with error messages
                             $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2($errors);
                         }
-                    } else if (JSession::checkToken() && isset($_POST['submit_application_pt3'])) {
+                    } else if (JSession::checkToken() && isset($submitApplicationPt3)) {
                         // Validate input data
                         $errors = IsbnregistryFormsHelper::validateApplicationFormPt3();
                         if (empty($errors)) {
@@ -114,7 +128,7 @@ class plgContentIsbnregistry_forms extends JPlugin {
                             // Show the second page with error messages
                             $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3($errors);
                         }
-                    } else if (JSession::checkToken() && isset($_POST['submit_application_pt4'])) {
+                    } else if (JSession::checkToken() && isset($submitApplicationPt4)) {
                         // Validate input data
                         $errorsPt1 = IsbnregistryFormsHelper::validateApplicationFormPt1();
                         $errorsPt2 = IsbnregistryFormsHelper::validateApplicationFormPt2();
@@ -142,10 +156,10 @@ class plgContentIsbnregistry_forms extends JPlugin {
                                 $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3($errorsPt3);
                             }
                         }
-                    } else if (JSession::checkToken() && isset($_POST['back_application_pt3'])) {
+                    } else if (JSession::checkToken() && isset($backApplicationPt3)) {
                         // Back button has been pressed - generate form
                         $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt2();
-                    } else if (JSession::checkToken() && isset($_POST['back_application_pt4'])) {
+                    } else if (JSession::checkToken() && isset($backApplicationPt4)) {
                         // Back button has been pressed - generate form
                         $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt3();
                     } else {

@@ -448,7 +448,7 @@ class IsbnregistryFormsHelper {
                 $errors['fileformat'] = "PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_FIELD_INVALID";
             }
             // If OTHER is selected, fileformat_other field can not be empty
-            if (in_array('OTHER', $fileFormats)) {
+            if (isset($fileFormats) && in_array('OTHER', $fileFormats)) {
                 $fileFormatOther = $post->get('fileformat_other', null, 'string');
                 if (strlen($fileFormatOther) == 0) {
                     $errors['fileformat_other'] = "PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_OTHER_FIELD_EMPTY";
@@ -735,15 +735,17 @@ class IsbnregistryFormsHelper {
     }
 
     public static function savePublisherToSession() {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
         // Store publisher data to session
         $session = JFactory::getSession();
-        $session->set('official_name', $_POST['official_name']);
-        $session->set('address', $_POST['address']);
-        $session->set('zip', $_POST['zip']);
-        $session->set('city', $_POST['city']);
-        $session->set('contact_person', $_POST['contact_person']);
-        $session->set('phone', $_POST['phone']);
-        $session->set('email', $_POST['email']);
+        $session->set('official_name', $post->get('official_name', null, 'string'));
+        $session->set('address', $post->get('address', null, 'string'));
+        $session->set('zip', $post->get('zip', null, 'string'));
+        $session->set('city', $post->get('city', null, 'string'));
+        $session->set('contact_person', $post->get('contact_person', null, 'string'));
+        $session->set('phone', $post->get('phone', null, 'string'));
+        $session->set('email', $post->get('email', null, 'string'));
     }
 
     public static function loadPublisherFromSession() {
@@ -752,14 +754,15 @@ class IsbnregistryFormsHelper {
         $officialName = $session->get('official_name');
         // If variable is not empty, read all the values from session
         if (!empty($officialName)) {
-            // Load publisher data from sessios to $_POST super global
-            $_POST['official_name'] = $officialName;
-            $_POST['address'] = $session->get('address');
-            $_POST['zip'] = $session->get('zip');
-            $_POST['city'] = $session->get('city');
-            $_POST['contact_person'] = $session->get('contact_person');
-            $_POST['phone'] = $session->get('phone');
-            $_POST['email'] = $session->get('email');
+            // Load publisher data from session to JInput
+            $jinput = JFactory::getApplication()->input;
+            $jinput->post->set('official_name', $officialName);
+            $jinput->post->set('address', $session->get('address'));
+            $jinput->post->set('zip', $session->get('zip'));
+            $jinput->post->set('city', $session->get('city'));
+            $jinput->post->set('contact_person', $session->get('contact_person'));
+            $jinput->post->set('phone', $session->get('phone'));
+            $jinput->post->set('email', $session->get('email'));
             // Remove values from session
             $session->clear('official_name');
             $session->clear('address');
