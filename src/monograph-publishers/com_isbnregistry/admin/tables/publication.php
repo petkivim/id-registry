@@ -174,6 +174,8 @@ class IsbnRegistryTablePublication extends JTable {
 
         // Update identifier type
         $this->publication_identifier_type = $identifierType;
+        // On process must set to false
+        $this->on_process = false;
 
         // Update object to DB
         return $this->store();
@@ -200,6 +202,9 @@ class IsbnRegistryTablePublication extends JTable {
         $this->publication_identifier_print = '';
         $this->publication_identifier_electronical = '';
         $this->publication_identifier_type = '';
+
+        // On process must set to true
+        $this->on_process = true;
 
         // Update object to DB
         return $this->store();

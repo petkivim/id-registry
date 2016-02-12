@@ -32,6 +32,8 @@ JFactory::getDocument()->addScriptDeclaration('
 // If even one ISBN has been used, this item can't be modified
 if (!empty($this->item->publication_identifier_print) || !empty($this->item->publication_identifier_electronical)) {
     $this->form->setFieldAttribute('publisher_id', 'readonly', 'true');
+    $this->form->setFieldAttribute('publication_type', 'readonly', 'true');
+    $this->form->setFieldAttribute('publication_format', 'readonly', 'true');
 }
 ?>				
 <form action="<?php echo JRoute::_('index.php?option=com_isbnregistry&layout=edit&id=' . (int) $this->item->id); ?>"
