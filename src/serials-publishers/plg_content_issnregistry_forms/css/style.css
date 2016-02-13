@@ -1,0 +1,69 @@
+.error {
+    color: red;
+}
+
+.form_header {
+    margin-bottom: 1.5em;
+}
+
+div.sub_title {
+    font-size: 105%;
+    font-weight: bold;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+td.sub_title {
+    font-weight: bold;
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+
+.pre_field {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.post_field {
+    margin-bottom: 1em;
+}
+
+.field_info {
+    font-size: 80%;
+    font-style: italic;
+    margin-bottom: 1em;
+}
+
+.button_row {
+    padding-top: 1em;
+}
+
+#button_row_form3 {
+    padding-left: 20%;
+}
+
+#button_row_form4 {
+    padding-left: 30%;
+}
+
+input[type="text"].publication_type_other, 
+input[type="text"].medium_other {
+    display:inline;
+}
+
+.form3_col1 {
+    width: 20%;
+}
+
+.form3_col2, .form4_col1, .form4_col2 {
+    width: 30%;
+}
+
+.additional_info {
+    width: 100%;
+    height: 5em;
+}
+
+hr {
+    border-top: 2px solid #eeeeee !important;
+}

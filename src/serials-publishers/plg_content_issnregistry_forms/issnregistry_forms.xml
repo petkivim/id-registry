@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="content" version="2.5" method="upgrade">
+    <name>PLG_ISSNREGISTRY_FORMS</name>
+    <author>Petteri Kivimäki</author>
+    <creationDate>12 February 2016</creationDate>
+    <copyright>(C)2016 Petteri Kivimaki</copyright>
+    <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
+    <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
+    <version>0.0.1</version>
+    <description>PLG_ISSNREGISTRY_FORMS_DESC</description>
+    <files>
+        <filename plugin="issnregistry_forms">issnregistry_forms.php</filename>
+        <filename>issnregistryFormsHtmlBuilder.php</filename>
+        <filename>issnregistryFormsHelper.php</filename>
+        <filename>issnregistryFormsLogger.php</filename>
+        <folder>css</folder>
+        <folder>scripts</folder>
+        <folder>language</folder>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_issnregistry_forms.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_issnregistry_forms.sys.ini</language>
+        <language tag="fi-FI">language/fi-FI/fi-FI.plg_content_issnregistry_forms.ini</language>
+        <language tag="fi-FI">language/fi-FI/fi-FI.plg_content_issnregistry_forms.sys.ini</language>
+        <language tag="sv-SE">language/sv-SE/sv-SE.plg_content_issnregistry_forms.ini</language>
+        <language tag="sv-SE">language/sv-SE/sv-SE.plg_content_issnregistry_forms.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">	
+                <field name="email" type="text"
+                       default=""
+                       size="60"
+                       description="PLG_ISSNREGISTRY_FORMS_EMAIL_DESC"
+                       label="PLG_ISSNREGISTRY_FORMS_EMAIL_LBL"
+                />	
+                <field name="notify_admin" type="radio"
+                       default="1"
+                       description="PLG_ISSNREGISTRY_FORMS_NOTIFY_ADMIN_DESC"
+                       label="PLG_ISSNREGISTRY_FORMS_NOTIFY_ADMIN_LBL"
+                >
+                    <option value="1">PLG_ISSNREGISTRY_FORMS_YES</option>
+                    <option value="0">PLG_ISSNREGISTRY_FORMS_NO</option>			
+                </field>								
+            </fieldset>
+        </fields>    
+    </config>				
+	
+</extension>
