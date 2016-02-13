@@ -32,12 +32,6 @@ class plgContentIsbnregistry_forms extends JPlugin {
             foreach ($matches[0] as $value) {
                 $html = "";
 
-                // This section generates and processes forms that are 
-                // needed for giving donations.
-                // Get admin email from Joomla config
-                $dVar = new JConfig();
-                $adminEmail = $dVar->mailfrom;
-
                 // Add plugin css
                 $document = JFactory::getDocument();
                 $document->addStyleSheet("plugins/content/isbnregistry_forms/css/style.css");
@@ -47,7 +41,7 @@ class plgContentIsbnregistry_forms extends JPlugin {
                 $document->addScript("plugins/content/isbnregistry_forms/scripts/custom.js");
 
                 // Email settings
-                $email = $this->params->def('email', $adminEmail);
+                $email = $this->params->def('email', '');
                 $notifyAdmin = $this->params->def('notify_admin', true);
 
                 // Language settings
@@ -77,6 +71,10 @@ class plgContentIsbnregistry_forms extends JPlugin {
                                 $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_SUCCESS') . '</div>';
                                 // Save publisher to session
                                 IsbnregistryFormsHelper::savePublisherToSession();
+                                // Notify admin if necessary
+                                if ($notifyAdmin) {
+                                    IsbnregistryFormsHelper::notifyAdmin($email, $publisherId, true);
+                                }
                             }
                         } else {
                             $html .= IsbnregistryFormsHtmlBuilder::getRegisterMonographPublisherForm($errors);
@@ -93,7 +91,7 @@ class plgContentIsbnregistry_forms extends JPlugin {
                     // Get back button values
                     $backApplicationPt3 = $post->get('back_application_pt3', null, 'string');
                     $backApplicationPt4 = $post->get('back_application_pt4', null, 'string');
-                    
+
                     // Process
                     if (JSession::checkToken() && isset($submitApplicationPt1)) {
                         // Validate input data
@@ -134,14 +132,18 @@ class plgContentIsbnregistry_forms extends JPlugin {
                         $errorsPt3 = IsbnregistryFormsHelper::validateApplicationFormPt3();
                         if (empty($errorsPt1) && empty($errorsPt2) && empty($errorsPt3)) {
                             // Save to DB
-                            $publisherId = IsbnregistryFormsHelper::saveApplicationToDb($lang->getTag());
+                            $publicationId = IsbnregistryFormsHelper::saveApplicationToDb($lang->getTag());
                             // If publisherId is 0 saving donation to DB failed
-                            if ($publisherId == 0) {
+                            if ($publicationId == 0) {
                                 // Return error page
                                 $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_ERROR') . '</div>';
                             } else {
                                 // Return success page
                                 $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUCCESS') . '</div>';
+                                // Notify admin if necessary
+                                if ($notifyAdmin) {
+                                    IsbnregistryFormsHelper::notifyAdmin($email, $publicationId, false);
+                                }
                             }
                         } else {
                             if (!empty($errorsPt1)) {

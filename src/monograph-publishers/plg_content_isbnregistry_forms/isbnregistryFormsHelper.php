@@ -886,6 +886,43 @@ class IsbnregistryFormsHelper {
         return preg_match('/^MAP$/', $publicationType);
     }
 
+    public static function notifyAdmin($recipient, $id, $isPublisher) {
+        // Get site's email address
+        $config = JFactory::getConfig();
+        $from = $config->get('mailfrom');
+
+        // If $recipient is empty, send mail to site admin
+        if (empty($recipient)) {
+            $recipient = $from;
+        }
+
+        // Sender and recipient can't be the same
+        if (strcmp($from, $recipient) == 0) {
+            $from = 'donotreply@example.com';
+        }
+
+        // Create sender array
+        $sender = array(
+            $from,
+            ''
+        );
+        // Build link to the new form
+        $url = JURI::base() . 'administrator/index.php?option=com_isbnregistry&view=' . ($isPublisher ? 'publisher' : 'publication') . '&layout=edit&id=' . $id;
+        // Build message
+        $message = $isPublisher ? JText::_('PLG_ISBNREGISTRY_FORMS_NOTIFY_ADMIN_PUBLISHER_EMAIL_MESSAGE') : JText::_('PLG_ISBNREGISTRY_FORMS_NOTIFY_ADMIN_PUBLICATION_EMAIL_MESSAGE');
+        $message .= '<br /><br /><a href="' . $url . '" target="new">' . $url . '</a>';
+
+        // Get and configure mailer
+        $mailer = JFactory::getMailer();
+        $mailer->setSender($sender);
+        $mailer->addRecipient($recipient);
+        $mailer->setSubject(($isPublisher ? JText::_('PLG_ISBNREGISTRY_FORMS_NOTIFY_ADMIN_PUBLISHER_EMAIL_SUBJECT') : JText::_('PLG_ISBNREGISTRY_FORMS_NOTIFY_ADMIN_PUBLICATION_EMAIL_SUBJECT')));
+        $mailer->isHTML(true);
+        $mailer->setBody($message);
+
+        return $mailer->Send();
+    }
+
 }
 
 ?>
