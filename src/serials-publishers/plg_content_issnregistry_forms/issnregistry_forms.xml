@@ -41,7 +41,15 @@
                 >
                     <option value="1">PLG_ISSNREGISTRY_FORMS_YES</option>
                     <option value="0">PLG_ISSNREGISTRY_FORMS_NO</option>			
-                </field>								
+                </field>	
+                <field name="max_publications_count" 
+					   type="integer"
+					   first="1"
+					   last="10"
+					   step="1"
+                       description="PLG_ISSNREGISTRY_FORMS_MAX_PUBLICATIONS_COUNT_DESC"
+                       label="PLG_ISSNREGISTRY_FORMS_MAX_PUBLICATIONS_COUNT_LBL"
+                />					
             </fieldset>
         </fields>    
     </config>				

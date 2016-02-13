@@ -63,10 +63,15 @@ class IssnregistryFormsHtmlBuilder {
         return $html;
     }
 
-    public static function getIssnApplicationFormPt2($errors = array()) {
+    public static function getIssnApplicationFormPt2($maxPublicationsCount = 1, $errors = array()) {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
+        // Get publication count
         $publicationCount = $post->get('publication_count', 0, 'integer');
+        // Sanity check for publication count
+        if ($publicationCount > $maxPublicationsCount) {
+            $publicationCount = $maxPublicationsCount;
+        }
 
         $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_2') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_FORMATS_INFO') . '</div>';
@@ -79,12 +84,9 @@ class IssnregistryFormsHtmlBuilder {
         $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="issnApplicationForm" id="issnApplicationForm">';
         $html .= '<div><select name="publication_count" id="publication_count">';
         $html .= '<option value="0"' . ($publicationCount == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
-        $html .= '<option value="1"' . ($publicationCount == 1 ? ' selected' : '') . '>1</option>';
-        $html .= '<option value="2"' . ($publicationCount == 2 ? ' selected' : '') . '>2</option>';
-        $html .= '<option value="3"' . ($publicationCount == 3 ? ' selected' : '') . '>3</option>';
-        $html .= '<option value="4"' . ($publicationCount == 4 ? ' selected' : '') . '>4</option>';
-        $html .= '<option value="5"' . ($publicationCount == 5 ? ' selected' : '') . '>5</option>';
-        $html .= '<option value="6"' . ($publicationCount == 6 ? ' selected' : '') . '>6</option>';
+        for ($i = 1; $i <= $maxPublicationsCount; $i++) {
+            $html .= '<option value="' . $i . '"' . ($publicationCount == $i ? ' selected' : '') . '>' . $i . '</option>';
+        }
         $html .= '</select>';
         $html .= '<span class="error">* ' . JText::_($errors['publication_count']) . '</span></div>';
         $html .= '<div class="button_row"><input type="submit" name="back_application_pt2" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_BACK_BTN') . '" />';
@@ -96,11 +98,15 @@ class IssnregistryFormsHtmlBuilder {
         return $html;
     }
 
-    public static function getIssnApplicationFormPt3($errors = array()) {
+    public static function getIssnApplicationFormPt3($maxPublicationsCount = 1, $errors = array()) {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
         // Get publication count
         $publicationCount = $post->get('publication_count', 0, 'integer');
+        // Sanity check for publication count
+        if ($publicationCount > $maxPublicationsCount) {
+            $publicationCount = $maxPublicationsCount;
+        }
 
         $html .= '<div class="form_header">' . JText::_('PLG_ISSNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
         $html .= '<div class="plg_issnregistry_forms" id="plg_issnregistry_forms_application" >';
@@ -225,11 +231,15 @@ class IssnregistryFormsHtmlBuilder {
         return $html;
     }
 
-    public static function getIssnApplicationFormPt4() {
+    public static function getIssnApplicationFormPt4($maxPublicationsCount = 1) {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
         // Get publication count
         $publicationCount = $post->get('publication_count', 0, 'integer');
+        // Sanity check for publication count
+        if ($publicationCount > $maxPublicationsCount) {
+            $publicationCount = $maxPublicationsCount;
+        }
 
         // Information about the publisher
         $html .= '<div class="form_header">' . JText::_('PLG_ISSNREGISTRY_FORMS_APPLICATION_SUMMARY_HEADER') . '</div>';

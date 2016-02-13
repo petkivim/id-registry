@@ -43,7 +43,9 @@ class plgContentIssnregistry_forms extends JPlugin {
                 // Email settings
                 $email = $this->params->def('email', '');
                 $notifyAdmin = $this->params->def('notify_admin', true);
-
+                // Get max publications count
+                $maxPublicationsCount = $this->params->def('max_publications_count', 1);
+                
                 // Language settings
                 $lang = & JFactory::getLanguage();
                 // Load the language file in the current site language
@@ -68,7 +70,7 @@ class plgContentIssnregistry_forms extends JPlugin {
                     // If there are no errors, continue processing
                     if (empty($errors)) {
                         // Show the second page
-                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2();
+                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($maxPublicationsCount);
                     } else {
                         // Show the first page with error messages
                         $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt1($errors);
@@ -79,20 +81,20 @@ class plgContentIssnregistry_forms extends JPlugin {
                     // If there are no errors, continue processing
                     if (empty($errors)) {
                         // Show the second page
-                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3();
+                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount);
                     } else {
                         // Show the first page with error messages
-                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($errors);
+                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($maxPublicationsCount, $errors);
                     }
                 } else if (JSession::checkToken() && isset($submitApplicationPt3)) {
                     // Validate input data
                     $errors = IssnregistryFormsHelper::validateApplicationFormPt3();
                     if (empty($errors)) {
                         // Show overview form
-                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt4();
+                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt4($maxPublicationsCount);
                     } else {
                         // Show the second page with error messages
-                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($errors);
+                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount, $errors);
                     }
                 } else if (JSession::checkToken() && isset($submitApplicationPt4)) {
                     // Validate input data
@@ -120,18 +122,18 @@ class plgContentIssnregistry_forms extends JPlugin {
                             $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt1($errorsPt1);
                         } else if (!empty($errorsPt2)) {
                             // Show the second page with error messages
-                            $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($errorsPt2);
+                            $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($maxPublicationsCount, $errorsPt2);
                         } else {
                             // Show the third page with error messages
-                            $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($errorsPt3);
+                            $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount, $errorsPt3);
                         }
                     }
                 } else if (JSession::checkToken() && isset($backApplicationPt3)) {
                     // Back button has been pressed - generate form
-                    $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2();
+                    $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($maxPublicationsCount);
                 } else if (JSession::checkToken() && isset($backApplicationPt4)) {
                     // Back button has been pressed - generate form
-                    $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3();
+                    $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount);
                 } else {
                     // Generate form
                     $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt1();
