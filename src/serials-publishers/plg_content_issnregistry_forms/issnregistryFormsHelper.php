@@ -255,7 +255,7 @@ class IssnregistryFormsHelper {
     public static function saveApplicationToDb($lang_code) {
         return 1;
     }
-    
+
     private static function isValidPublicationType($publicationType) {
         return preg_match('/^(JOURNAL|NEWSLETTER|STAFF_MAGAZINE|MEMBERSHIP_BASED_MAGAZINE|CARTOON|NEWSPAPER|FREE_PAPER|MONOGRAPHY_SERIES|OTHER_SERIAL)$/', $publicationType);
     }
@@ -266,6 +266,43 @@ class IssnregistryFormsHelper {
 
     private static function isValidIssn($issn) {
         return preg_match('/^(\d){4}\-(\d){3}[0-9X]{1}$/i', $issn);
+    }
+
+    public static function notifyAdmin($recipient, $formId) {
+        // Get site's email address
+        $config = JFactory::getConfig();
+        $from = $config->get('mailfrom');
+
+        // If $recipient is empty, send mail to site admin
+        if (empty($recipient)) {
+            $recipient = $from;        
+        }
+
+        // Sender and recipient can't be the same
+        if(strcmp($from, $recipient) == 0) {
+            $from = 'donotreply@example.com';
+        }
+        
+        // Create sender array
+        $sender = array(
+            $from,
+            ''
+        );
+        // Build link to the new form
+        $url = JURI::base() . 'administrator/index.php?option=com_issnregistry&view=forms&layout=edit&id=' . $formId;
+        // Build message
+        $message = JText::_('PLG_ISSNREGISTRY_FORMS_NOTIFY_ADMIN_EMAIL_MESSAGE');
+        $message .= '<br /><br /><a href="' . $url . '" target="new">' . $url . '</a>';
+
+        // Get and configure mailer
+        $mailer = JFactory::getMailer();
+        $mailer->setSender($sender);
+        $mailer->addRecipient($recipient);
+        $mailer->setSubject(JText::_('PLG_ISSNREGISTRY_FORMS_NOTIFY_ADMIN_EMAIL_SUBJECT'));
+        $mailer->isHTML(true);
+        $mailer->setBody($message);
+
+        return $mailer->Send();
     }
 
 }

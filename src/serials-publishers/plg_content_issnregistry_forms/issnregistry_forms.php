@@ -32,12 +32,6 @@ class plgContentIssnregistry_forms extends JPlugin {
             foreach ($matches[0] as $value) {
                 $html = "";
 
-                // This section generates and processes forms that are 
-                // needed for giving donations.
-                // Get admin email from Joomla config
-                $dVar = new JConfig();
-                $adminEmail = $dVar->mailfrom;
-
                 // Add plugin css
                 $document = JFactory::getDocument();
                 $document->addStyleSheet("plugins/content/issnregistry_forms/css/style.css");
@@ -47,7 +41,7 @@ class plgContentIssnregistry_forms extends JPlugin {
                 $document->addScript("plugins/content/issnregistry_forms/scripts/custom.js");
 
                 // Email settings
-                $email = $this->params->def('email', $adminEmail);
+                $email = $this->params->def('email', '');
                 $notifyAdmin = $this->params->def('notify_admin', true);
 
                 // Language settings
@@ -115,6 +109,10 @@ class plgContentIssnregistry_forms extends JPlugin {
                         } else {
                             // Return success page
                             $html .= '<div>' . JText::_('PLG_ISSNREGISTRY_FORMS_APPLICATION_SUCCESS') . '</div>';
+                            // Notify admin if necessary
+                            if ($notifyAdmin) {
+                                IssnregistryFormsHelper::notifyAdmin($email, $formId);
+                            }
                         }
                     } else {
                         if (!empty($errorsPt1)) {
