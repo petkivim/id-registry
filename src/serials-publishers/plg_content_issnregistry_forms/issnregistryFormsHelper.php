@@ -105,7 +105,7 @@ class IssnregistryFormsHelper {
             $title = $post->get('title_' . $i, null, 'string');
             if (empty($title) == true) {
                 $errors['title_' . $i] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
-            } else if (strlen($title) > 100) {
+            } else if (strlen($title) > 200) {
                 $errors['title_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
             }
             // Place of publication - required
