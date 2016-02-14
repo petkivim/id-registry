@@ -277,11 +277,6 @@ class IssnregistryFormsHelper {
         if (empty($recipient)) {
             $recipient = $from;        
         }
-
-        // Sender and recipient can't be the same
-        if(strcmp($from, $recipient) == 0) {
-            $from = 'donotreply@example.com';
-        }
         
         // Create sender array
         $sender = array(
