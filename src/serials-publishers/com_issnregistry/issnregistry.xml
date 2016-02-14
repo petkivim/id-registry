@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.1.0" method="upgrade">
+
+    <name>COM_ISSNREGISTRY</name>
+    <!-- The following elements are optional and free of formatting constraints -->
+    <creationDate>14 February 2016</creationDate>
+    <author>Petteri Kivimaki</author>
+    <copyright>(C)2016 Petteri Kivimaki</copyright>
+    <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
+    <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
+    <!--  The version string is recorded in the components table -->
+    <version>1.0.0</version>
+    <!-- The description is optional and defaults to the name -->
+    <description>COM_ISSNREGISTRY_DESCRIPTION</description>
+
+    <!-- Runs on install -->
+    <install> 
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <!-- Runs on uninstall -->
+    <uninstall> 
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <!-- Runs on update; New since J2.5 -->
+    <update> 
+        <!--
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+        -->
+    </update>
+		
+    <administration>
+        <!-- Administration Menu Section -->
+        <menu img="class:isbnregistry">COM_ISSNREGISTRY_MENU</menu>
+        <submenu>
+			
+        </submenu>
+
+        <!-- Administration Main File Copy Section -->
+        <!-- Note the folder attribute: This attribute describes the folder
+        to copy FROM in the package to install therefore files copied
+        in this section are copied from /admin/ in the package -->
+        <files folder="admin">
+            <!-- Admin Main File Copy Section -->
+            <filename>index.html</filename>
+            <filename>issnregistry.php</filename>
+            <filename>controller.php</filename>
+			<filename>config.xml</filename>
+            <!-- SQL files section -->
+            <folder>sql</folder>
+            <!-- tables files section -->
+            <folder>tables</folder>
+            <!-- models files section -->
+            <folder>models</folder>
+            <!-- views files section -->
+            <folder>views</folder>
+            <!-- controllers files section -->
+            <folder>controllers</folder>
+            <!-- helpers files section -->
+            <folder>helpers</folder>
+            <!-- scripts files section -->
+            <folder>scripts</folder>
+            <!-- css files section -->
+            <folder>css</folder>
+			<!-- folder for email attachments -->
+			<folder>email</folder>
+			<!-- folder for help files -->
+			<folder>help</folder>
+        </files>
+        <languages folder="admin/language">
+            <language tag="en-GB">en-GB/en-GB.com_issnregistry.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_issnregistry.sys.ini</language>
+            <language tag="fi-FI">fi-FI/fi-FI.com_issnregistry.ini</language>
+            <language tag="fi-FI">fi-FI/fi-FI.com_issnregistry.sys.ini</language>
+        </languages>
+    </administration>
+
+</extension>

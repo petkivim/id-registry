@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset
+		name="mail"
+		label="COM_ISBNREGISTRY_CONFIG_EMAIL_LABEL"
+		description="COM_ISBNREGISTRY_CONFIG_EMAIL_DESC"
+		>	
+        <field
+            name="email_from" 
+            type="email" 
+            default="" 
+			validate="email"
+            label="COM_ISBNREGISTRY_CONFIG_EMAIL_FROM_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EMAIL_FROM_DESC"
+        />		
+		<field
+			name="send_email"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="0"
+            label="COM_ISBNREGISTRY_CONFIG_EMAIL_SEND_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EMAIL_SEND_DESC">
+			<option
+				value="1">JYES</option>
+			<option
+				value="0">JNO</option>
+		</field>
+        <field
+            name="email_interval_microseconds"
+            type="number"
+            label="COM_ISBNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_DESC"
+            default="500000"
+            min="0"
+        />			
+	</fieldset>
+</config>
