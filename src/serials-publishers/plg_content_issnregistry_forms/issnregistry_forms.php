@@ -103,7 +103,7 @@ class plgContentIssnregistry_forms extends JPlugin {
                     $errorsPt3 = IssnregistryFormsHelper::validateApplicationFormPt3();
                     if (empty($errorsPt1) && empty($errorsPt2) && empty($errorsPt3)) {
                         // Save to DB
-                        $formId = IssnregistryFormsHelper::saveApplicationToDb($lang->getTag());
+                        $formId = IssnregistryFormsHelper::saveApplicationToDb($lang->getTag(), $maxPublicationsCount);
                         // If formId is 0 saving donation to DB failed
                         if ($formId == 0) {
                             // Return error page

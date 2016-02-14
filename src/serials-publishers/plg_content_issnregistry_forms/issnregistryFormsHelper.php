@@ -252,8 +252,118 @@ class IssnregistryFormsHelper {
         return $errors;
     }
 
-    public static function saveApplicationToDb($lang_code) {
-        return 1;
+    public static function saveApplicationToDb($lang_code, $maxPublicationsCount) {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        // Get Form object
+        $publisher = $post->get('publisher', null, 'string');
+        $contactPerson = $post->get('contact_person', null, 'string');
+        $email = $post->get('email', null, 'string');
+        $phone = $post->get('phone', null, 'string');
+        $address = $post->get('address', null, 'string');
+        $zip = $post->get('zip', null, 'string');
+        $city = $post->get('city', null, 'string');
+        $publicationCount = $post->get('publication_count', 0, 'integer');
+        $formCreated = JFactory::getDate();
+
+        // Sanity check for publication count
+        if ($publicationCount > $maxPublicationsCount) {
+            // If true, the value is tampered => exit
+            return 0;
+        }
+
+        // Variable for form id
+        $formId = 0;
+        // Get database connection
+        $db = JFactory::getDbo();
+        try {
+            // Start transaction
+            $db->transactionStart();
+
+            // Insert columns
+            $columns = array('publisher', 'contact_person', 'email', 'phone', 'address', 'zip', 'city', 'publication_count', 'created', 'created_by');
+            // Insert values
+            $values = array($db->quote($publisher), $db->quote($contactPerson), $db->quote($email), $db->quote($phone), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($publicationCount), $db->quote($formCreated->toSql()), $db->quote('WWW'));
+            // Create a new query object.
+            $query = $db->getQuery(true);
+            // Prepare the insert query
+            $query->insert($db->quoteName('#__issn_registry_form'))
+                    ->columns($db->quoteName($columns))
+                    ->values(implode(',', $values));
+            // Set the query using our newly populated query object and execute it
+            $db->setQuery($query);
+            $db->execute();
+            $formId = $db->insertid();
+
+            // Loop through the publications
+            for ($i = 0; $i < $publicationCount; $i++) {
+                // Get publication data from form
+                $title = $post->get('title_' . $i, null, 'string');
+                $placeOfPublication = $post->get('place_of_publication_' . $i, null, 'string');
+                $printer = $post->get('printer_' . $i, null, 'string');
+                $issuedFromYear = $post->get('issued_from_year_' . $i, null, 'string');
+                $issuedFromNumber = $post->get('issued_from_number_' . $i, null, 'string');
+                $frequency = $post->get('frequency_' . $i, null, 'string');
+                $language = $post->get('language_' . $i, null, 'string');
+                $publicationType = $post->get('publication_type_' . $i, null, 'string');
+                $publicationTypeOther = $post->get('publication_type_other_' . $i, null, 'string');
+                $medium = $post->get('medium_' . $i, null, 'string');
+                $mediumOther = $post->get('medium_other_' . $i, null, 'string');
+                $url = $post->get('url_' . $i, null, 'string');
+                $previousTitle = $post->get('previous_title_' . $i, null, 'string');
+                $previousIssn = $post->get('previous_issn_' . $i, null, 'string');
+                $previousTitleLastIssue = $post->get('previous_title_last_issue_' . $i, null, 'string');
+                $mainSeriesTitle = $post->get('main_series_title_' . $i, null, 'string');
+                $mainSeriesIssn = $post->get('main_series_issn_' . $i, null, 'string');
+                $subseriesTitle = $post->get('subseries_title_' . $i, null, 'string');
+                $subseriesIssn = $post->get('subseries_issn_' . $i, null, 'string');
+                $anotherMediumTitle = $post->get('another_medium_title_' . $i, null, 'string');
+                $anotherMediumIssn = $post->get('another_medium_issn_' . $i, null, 'string');
+                $additionalInfo = $post->get('additional_info_' . $i, null, 'string');
+                $publicationCreated = JFactory::getDate();
+                
+                // Insert columns
+                $pubColumns = array(
+                    'title', 'place_of_publication', 'printer', 'issued_from_year',
+                    'issued_from_number', 'frequency', 'language', 'publication_type', 'publication_type_other',
+                    'medium', 'medium_other', 'url', 'previous_title', 'previous_issn',
+                    'previous_title_last_issue', 'main_series_title', 'main_series_issn',
+                    'subseries_title', 'subseries_issn', 'another_medium_title',
+                    'another_medium_issn', 'additional_info', 'form_id',
+                    'created', 'created_by');
+                // Insert values
+                $pubValues = array(
+                    $db->quote($title), $db->quote($placeOfPublication), $db->quote($printer), $db->quote($issuedFromYear),
+                    $db->quote($issuedFromNumber), $db->quote($frequency), $db->quote($language), $db->quote($publicationType), $db->quote($publicationTypeOther),
+                    $db->quote($medium), $db->quote($mediumOther), $db->quote($url), $db->quote($previousTitle), $db->quote($previousIssn),
+                    $db->quote($previousTitleLastIssue), $db->quote($mainSeriesTitle), $db->quote($mainSeriesIssn),
+                    $db->quote($subseriesTitle), $db->quote($subseriesIssn), $db->quote($anotherMediumTitle),
+                    $db->quote($anotherMediumIssn), $db->quote($additionalInfo), $db->quote($formId),
+                    $db->quote($publicationCreated->toSql()), $db->quote('WWW'));
+
+                // Create a new query object.
+                $query = $db->getQuery(true);
+                // Prepare the insert query
+                $query->insert($db->quoteName('#__issn_registry_publication'))
+                        ->columns($db->quoteName($pubColumns))
+                        ->values(implode(',', $pubValues));
+                // Set the query using our newly populated query object and execute it
+                $db->setQuery($query);
+                $db->execute();
+                // Check that operation succeeded
+                if ($db->insertid() == 0) {
+                    // If operation failed, do rollback
+                    $db->transactionRollback();
+                    return 0;
+                }
+            }
+            $db->transactionCommit();
+        } catch (Exception $e) {
+            // Catch any database errors
+            $db->transactionRollback();
+            return 0;
+        }
+        return $formId;
     }
 
     private static function isValidPublicationType($publicationType) {
@@ -275,9 +385,9 @@ class IssnregistryFormsHelper {
 
         // If $recipient is empty, send mail to site admin
         if (empty($recipient)) {
-            $recipient = $from;        
+            $recipient = $from;
         }
-        
+
         // Create sender array
         $sender = array(
             $from,
