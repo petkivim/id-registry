@@ -52,6 +52,7 @@ DROP TABLE IF EXISTS `#__issn_registry_publication`;
 CREATE TABLE `#__issn_registry_publication` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(200) NOT NULL,
+    `issn` VARCHAR(9) DEFAULT '',
     `place_of_publication` VARCHAR(100) NOT NULL,
     `printer` VARCHAR(100),
     `issued_from_year` VARCHAR(4),
@@ -81,6 +82,7 @@ CREATE TABLE `#__issn_registry_publication` (
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`),
     INDEX `idx_title` (`title`),
+    INDEX `idx_issn` (`issn`),
     INDEX `idx_form_id` (`form_id`),
     INDEX `idx_publisher_id` (`publisher_id`)
 )
@@ -154,7 +156,7 @@ COLLATE utf8_swedish_ci;
 DROP TABLE IF EXISTS `#__issn_registry_issn_range`;
 
 CREATE TABLE `#__issn_registry_issn_range` (
-    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
     `block` VARCHAR(4) NOT NULL,
     `range_begin` VARCHAR(4) NOT NULL,
     `range_end` VARCHAR(4) NOT NULL,
