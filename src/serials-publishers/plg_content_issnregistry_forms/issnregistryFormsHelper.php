@@ -295,6 +295,33 @@ class IssnregistryFormsHelper {
             $db->execute();
             $formId = $db->insertid();
 
+            // Check that operation succeeded
+            if ($formId == 0) {
+                // If operation failed, do rollback
+                $db->transactionRollback();
+                return 0;
+            }
+
+            // Create archive entry
+            array_push($columns, 'form_id');
+            array_push($values, $formId);
+            // Create a new query object.
+            $query = $db->getQuery(true);
+            // Prepare the insert query
+            $query->insert($db->quoteName('#__issn_registry_form_archive'))
+                    ->columns($db->quoteName($columns))
+                    ->values(implode(',', $values));
+            // Set the query using our newly populated query object and execute it
+            $db->setQuery($query);
+            $db->execute();
+
+            // Check that operation succeeded
+            if ($db->insertid() == 0) {
+                // If operation failed, do rollback
+                $db->transactionRollback();
+                return 0;
+            }
+
             // Loop through the publications
             for ($i = 0; $i < $publicationCount; $i++) {
                 // Get publication data from form
@@ -321,7 +348,7 @@ class IssnregistryFormsHelper {
                 $anotherMediumIssn = $post->get('another_medium_issn_' . $i, null, 'string');
                 $additionalInfo = $post->get('additional_info_' . $i, null, 'string');
                 $publicationCreated = JFactory::getDate();
-                
+
                 // Insert columns
                 $pubColumns = array(
                     'title', 'place_of_publication', 'printer', 'issued_from_year',
@@ -350,6 +377,29 @@ class IssnregistryFormsHelper {
                 // Set the query using our newly populated query object and execute it
                 $db->setQuery($query);
                 $db->execute();
+                // Get publication id
+                $publicationId = $db->insertid();
+
+                // Check that operation succeeded
+                if ($publicationId == 0) {
+                    // If operation failed, do rollback
+                    $db->transactionRollback();
+                    return 0;
+                }
+
+                // Create archive entry
+                array_push($pubColumns, 'publication_id');
+                array_push($pubValues, $publicationId);
+                // Create a new query object.
+                $query = $db->getQuery(true);
+                // Prepare the insert query
+                $query->insert($db->quoteName('#__issn_registry_publication_archive'))
+                        ->columns($db->quoteName($pubColumns))
+                        ->values(implode(',', $pubValues));
+                // Set the query using our newly populated query object and execute it
+                $db->setQuery($query);
+                $db->execute();
+
                 // Check that operation succeeded
                 if ($db->insertid() == 0) {
                     // If operation failed, do rollback
@@ -357,6 +407,7 @@ class IssnregistryFormsHelper {
                     return 0;
                 }
             }
+            // Commit transaction
             $db->transactionCommit();
         } catch (Exception $e) {
             // Catch any database errors
