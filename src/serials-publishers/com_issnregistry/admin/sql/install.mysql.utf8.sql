@@ -150,3 +150,26 @@ ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__issn_registry_issn_range`;
+
+CREATE TABLE `#__issn_registry_issn_range` (
+    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `block` VARCHAR(4) NOT NULL,
+    `range_begin` VARCHAR(4) NOT NULL,
+    `range_end` VARCHAR(4) NOT NULL,
+    `free` INT NOT NULL,
+    `taken` INT NOT NULL DEFAULT 0,
+    `next` VARCHAR(4) NOT NULL,
+    `is_active` boolean not null default 1,
+    `is_closed` boolean not null default 0,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `created_by` VARCHAR(30),
+    `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `modified_by` VARCHAR(30),
+    PRIMARY KEY (`id`)
+)
+ENGINE =InnoDB
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;
