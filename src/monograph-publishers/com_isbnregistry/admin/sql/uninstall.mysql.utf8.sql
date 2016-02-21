@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS `#__isbn_registry_publisher_archive`;
 DROP TABLE IF EXISTS `#__isbn_registry_publication`;
 DROP TABLE IF EXISTS `#__isbn_registry_isbn_range`;
 DROP TABLE IF EXISTS `#__isbn_registry_publisher_isbn_range`;
-DROP TABLE IF EXISTS `#__isbn_registry_isbn_used`;
 DROP TABLE IF EXISTS `#__isbn_registry_ismn_range`;
 DROP TABLE IF EXISTS `#__isbn_registry_publisher_ismn_range`;
 DROP TABLE IF EXISTS `#__isbn_registry_message_type`;

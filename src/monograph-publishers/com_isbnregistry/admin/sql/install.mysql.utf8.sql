@@ -215,30 +215,6 @@ AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
 
-DROP TABLE IF EXISTS `#__isbn_registry_isbn_used`;
-
-CREATE TABLE `#__isbn_registry_isbn_used` (
-    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
-    `publisher_isbn_range_id` INT NOT NULL,
-    `publication_identifier` INT NOT NULL,
-    `isbn_full` VARCHAR(17) NOT NULL,
-    `publisher_id` INT NOT NULL,
-    `publication_id` INT NOT NULL,
-    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-    `created_by` VARCHAR(30),
-    `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-    `modified_by` VARCHAR(30),
-    PRIMARY KEY (`id`),
-    INDEX `idx_isbn_full` (`isbn_full`),
-    INDEX `idx_publisher_id` (`publisher_id`),
-    INDEX `idx_publisher_isbn_range_id` (`publisher_isbn_range_id`),
-    INDEX `idx_publication_id` (`publication_id`)
-)
-ENGINE =InnoDB
-AUTO_INCREMENT =0
-DEFAULT CHARSET =utf8
-COLLATE utf8_swedish_ci;
-
 DROP TABLE IF EXISTS `#__isbn_registry_ismn_range`;
 
 CREATE TABLE `#__isbn_registry_ismn_range` (
