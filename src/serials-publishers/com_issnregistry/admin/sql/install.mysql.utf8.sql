@@ -175,3 +175,22 @@ ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__issn_registry_issn_used`;
+
+CREATE TABLE `#__issn_registry_issn_used` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `issn` VARCHAR(9) NOT NULL,
+    `publication_id` INT NOT NULL,
+    `issn_range_id` INT NOT NULL,
+    `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `created_by` VARCHAR(30),
+    PRIMARY KEY (`id`),
+    INDEX `idx_publisher_id` (`publisher_id`),
+    INDEX `idx_issn_range_id` (`issn_range_id`),
+    INDEX `idx_publication_id` (`publication_id`)
+)
+ENGINE =InnoDB
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;

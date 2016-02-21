@@ -137,4 +137,134 @@ class IssnRegistryTableIssnrange extends JTable {
         return $this->_db->getAffectedRows();
     }
 
+    /**
+     * Returns the ISSN range identified by the given id. The range must
+     * be marked as active.
+     * @param integer $rangeId id of the range to be fetched
+     * @param boolean $mustBeActive must range be active
+     * @return object identifier range object on success; null on failure
+     */
+    public function getRange($rangeId, $mustBeActive) {
+        $conditions = array(
+            $this->_db->quoteName('id') . " = " . $this->_db->quote($rangeId)
+        );
+        if ($mustBeActive) {
+            array_push($conditions, $this->_db->quoteName('is_active') . " = " . $this->_db->quote(true));
+            array_push($conditions, $this->_db->quoteName('is_closed') . " = " . $this->_db->quote(false));
+        }
+        // Database query
+        $query = $this->_db->getQuery(true);
+        $query->select('*');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+        $this->_db->setQuery((string) $query);
+
+        return $this->_db->loadObject();
+    }
+
+    /**
+     * Returns the currently active ISSN range. Only one range can be active
+     * at a time.
+     * @return object identifier range object on success; null on failure
+     */
+    public function getActiveRange() {
+        $conditions = array(
+            $this->_db->quoteName('is_active') . " = " . $this->_db->quote(true),
+            $this->_db->quoteName('is_closed') . " = " . $this->_db->quote(false)
+        );
+        // Database query
+        $query = $this->_db->getQuery(true);
+        $query->select('*');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+        $this->_db->setQuery((string) $query);
+
+        return $this->_db->loadObject();
+    }
+
+    /**
+     * Updates the given ISSN range to the database. This method must
+     * be used when the number of used identifiers is being increased.
+     * @param Object $range object to be updated
+     * @return boolean true on success
+     */
+    public function updateIncrease($range) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($range->id),
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote(($range->free + 1)),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote(($range->taken - 1))
+        );
+        return $this->updateRange($range, $conditions);
+    }
+
+    /**
+     * Updates the given ISSN range to the database. This method must
+     * be used when the number of used identifiers is being decreased.
+     * @param Object $range object to be updated
+     * @return boolean true on success
+     */
+    public function updateDecrease($range) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($range->id),
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote(($range->free - 1)),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote(($range->taken + 1))
+        );
+        return $this->updateRange($range, $conditions);
+    }
+
+    /**
+     * Updates the given ISSN range to the database.
+     * @param Object $range object to be updated
+     * @param array $conditions conditions for the update operation
+     * @return boolean true on success
+     */
+    private function updateRange($range, $conditions) {
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('free') . ' = ' . $this->_db->quote($range->free),
+            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote($range->taken),
+            $this->_db->quoteName('next') . ' = ' . $this->_db->quote($range->next),
+            $this->_db->quoteName('is_active') . ' = ' . $this->_db->quote($range->is_active),
+            $this->_db->quoteName('is_closed') . ' = ' . $this->_db->quote($range->is_closed)
+        );
+
+        // Set update query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+
+        // Execute query
+        $result = $this->_db->execute();
+
+        // If operation succeeded, one row was affected
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Starts a transaction.
+     */
+    public function transactionStart() {
+        $this->_db->transactionStart();
+    }
+
+    /**
+     * Commits a transaction.
+     */
+    public function transactionCommit() {
+        $this->_db->transactionCommit();
+    }
+
+    /**
+     * Transaction rollback.
+     */
+    public function transactionRollback() {
+        $this->_db->transactionRollback();
+    }
+
 }
