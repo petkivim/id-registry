@@ -11,11 +11,11 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * ISSN Used Model
+ * ISSN Canceled Model
  *
  * @since  1.0.0
  */
-class IssnregistryModelIssnused extends JModelAdmin {
+class IssnregistryModelIssncanceled extends JModelAdmin {
 
     /**
      * Method to get a table object, load it if necessary.
@@ -28,7 +28,7 @@ class IssnregistryModelIssnused extends JModelAdmin {
      *
      * @since   1.6
      */
-    public function getTable($type = 'Issnused', $prefix = 'IssnregistryTable', $config = array()) {
+    public function getTable($type = 'Issncanceled', $prefix = 'IssnregistryTable', $config = array()) {
         return JTable::getInstance($type, $prefix, $config);
     }
 
@@ -45,7 +45,7 @@ class IssnregistryModelIssnused extends JModelAdmin {
     public function getForm($data = array(), $loadData = true) {
         // Get the form.
         $form = $this->loadForm(
-                'com_isbnregistry.issnused', 'issnused', array(
+                'com_isbnregistry.issncanceled', 'issncanceled', array(
             'control' => 'jform', 'load_data' => $loadData
                 )
         );
@@ -67,7 +67,7 @@ class IssnregistryModelIssnused extends JModelAdmin {
     protected function loadFormData() {
         // Check the session for previously entered form data.
         $data = JFactory::getApplication()->getUserState(
-                'com_isbnregistry.edit.issnused.data', array()
+                'com_isbnregistry.edit.issncanceled.data', array()
         );
 
         if (empty($data)) {
@@ -78,27 +78,15 @@ class IssnregistryModelIssnused extends JModelAdmin {
     }
 
     /**
-     * Adds new issn used to the database.
+     * Adds new issn canceled to the database.
      * @param array $params array that contains the parameters
-     * @return int id of the new issn used entry
+     * @return int id of the new issn canceled entry
      */
     public function addNew($params) {
         // Get db access
         $table = $this->getTable();
         // Return result
         return $table->addNew($params);
-    }
-
-    /**
-     * Delete ISSN identified by the given publication id.
-     * @param int $publicationId publication id
-     * @return int number of deleted rows
-     */
-    public function deleteByPublicationId($publicationId) {
-        // Get db access
-        $table = $this->getTable();
-        // Return result
-        return $table->deleteByPublicationId($publicationId);
     }
 
     /**
@@ -115,29 +103,18 @@ class IssnregistryModelIssnused extends JModelAdmin {
     }
 
     /**
-     * Returns the row identified by the given ISSN number.
-     * @param string $issn ISSN to be searched
-     * @return object ISSN used object mathing the given ISSN or null
-     */
-    public function findByIssn($issn) {
-        // Get db access
-        $table = $this->getTable();
-        // Return result
-        return $table->findByIssn($issn);
-    }
-
-    /**
-     * Returns the last ISSN that was given from the range identified by the 
-     * given id. 
+     * Returns the smallest canceled ISSN object (fifo) that was given from the 
+     * range identified by the given id. If id is not defined, the smallest
+     * issn from any range is returned.
      * @param int $rangeId ISSN range id
-     * @return string last ISSN that was given from the ISSN range identified
+     * @return string smallest ISSN that was given from the ISSN range identified
      * by the given id
      */
-    public function getLast($rangeId) {
+    public function getIssn($rangeId = 0) {
         // Get db access
         $table = $this->getTable();
         // Return result
-        return $table->getLast($rangeId);
+        return $table->getIssn($rangeId);
     }
 
 }

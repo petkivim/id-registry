@@ -98,42 +98,69 @@ class IssnregistryModelIssnrange extends JModelAdmin {
             $table->transactionRollback();
             return '';
         }
+        // Set range id
+        $rangeId = $range->id;
 
-        // Get the next available number
-        $issn = $range->block . '-' . $range->next;
-        // Is this the last value of the range
-        if (strcmp($range->next, $range->range_end) == 0) {
-            // This is the last value -> range becames inactive
-            $range->is_active = false;
-            // Range becomes closed
-            $range->is_closed = true;
-        }
-        // Increase next pointer
-        $range->next = substr($range->next, 0, 3) + 1;
-        // Next pointer is a string, add left padding
-        $range->next = str_pad($range->next, 3, "0", STR_PAD_LEFT);
         // Add ISSN range helper file
         require_once JPATH_COMPONENT . '/helpers/issnrange.php';
-        // Get next pointer check digit
-        $rangeNextCheckDigit = IssnrangeHelper::countIssnCheckDigit($range->block . $range->next);
-        // Set next pointer check digit
-        $range->next .= $rangeNextCheckDigit;
-        // Validate next pointer
-        if (!IssnrangeHelper::validateIssn($range->block . $range->next)) {
-            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_RANGE_UPDATE_INVALID_NEXT_POINTER'));
-            $table->transactionRollback();
-            return '';
-        }
 
-        // Decrease free numbers pointer 
-        $range->free -= 1;
-        // Increase used numbers pointer
-        $range->taken += 1;
-        // Update new values to database
-        if (!$table->updateIncrease($range)) {
-            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_RANGE_UPDATE_FAILED'));
-            $table->transactionRollback();
-            return '';
+        // Get an instance of issn canceled model
+        $issnCanceledModel = $this->getInstance('issncanceled', 'IssnregistryModel');
+        // Try to get the smallest canceled issn object
+        $canceledIssn = $issnCanceledModel->getIssn();
+        // Check if a canceled issn was found
+        if ($canceledIssn != null) {
+            // Get the canceled issn value
+            $issn = $canceledIssn->issn;
+            // Validate issn
+            if (!IssnrangeHelper::validateIssn($issn)) {
+                $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_CANCELED_ISSN_INVALID'));
+                $table->transactionRollback();
+                return '';
+            }
+            // Try to delete the canceled issn from db
+            if (!$issnCanceledModel->delete($canceledIssn->id)) {
+                $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_CANCELED_ISSN_DELETE_FAILED'));
+                $table->transactionRollback();
+                return '';
+            }
+            // Set range id
+            $rangeId = $canceledIssn->issn_range_id;
+        } else {
+            // Get the next available number
+            $issn = $range->block . '-' . $range->next;
+            // Is this the last value of the range
+            if (strcmp($range->next, $range->range_end) == 0) {
+                // This is the last value -> range becames inactive
+                $range->is_active = false;
+                // Range becomes closed
+                $range->is_closed = true;
+            }
+            // Increase next pointer
+            $range->next = substr($range->next, 0, 3) + 1;
+            // Next pointer is a string, add left padding
+            $range->next = str_pad($range->next, 3, "0", STR_PAD_LEFT);
+            // Get next pointer check digit
+            $rangeNextCheckDigit = IssnrangeHelper::countIssnCheckDigit($range->block . $range->next);
+            // Set next pointer check digit
+            $range->next .= $rangeNextCheckDigit;
+            // Validate next pointer
+            if (!IssnrangeHelper::validateIssn($range->block . $range->next)) {
+                $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_RANGE_UPDATE_INVALID_NEXT_POINTER'));
+                $table->transactionRollback();
+                return '';
+            }
+
+            // Decrease free numbers pointer 
+            $range->free -= 1;
+            // Increase used numbers pointer
+            $range->taken += 1;
+            // Update new values to database
+            if (!$table->updateIncrease($range)) {
+                $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_RANGE_UPDATE_FAILED'));
+                $table->transactionRollback();
+                return '';
+            }
         }
 
         // Get an instance of a publication model
@@ -149,7 +176,7 @@ class IssnregistryModelIssnrange extends JModelAdmin {
         $issnUsed = array();
         $issnUsed['issn'] = $issn;
         $issnUsed['publication_id'] = $publicationId;
-        $issnUsed['issn_range_id'] = $range->id;
+        $issnUsed['issn_range_id'] = $rangeId;
 
         // Get an instance of issn used model
         $issnUsedModel = $this->getInstance('issnused', 'IssnregistryModel');
@@ -198,16 +225,27 @@ class IssnregistryModelIssnrange extends JModelAdmin {
         // Get the last ISSN from the same range
         $lastIssn = $issnUsedModel->getLast($issnUsed->issn_range_id);
         // Check that ISSN numbers match
-        if (strcmp($issn, $lastIssn) != 0) {
-            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_NOT_LAST'));
-            $table->transactionRollback();
-            return false;
-        }
-        // Try to decrease the ISSN range counter
-        if (!$this->decreaseByOne($issnUsed->issn_range_id)) {
-            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_DELETE_FAILED'));
-            $table->transactionRollback();
-            return false;
+        if (strcmp($issn, $lastIssn) == 0) {
+            // Try to decrease the ISSN range counter
+            if (!$this->decreaseByOne($issnUsed->issn_range_id)) {
+                $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_DELETE_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
+        } else {
+            // Add issn canceled entry
+            // Get an instance of issn canceled model
+            $issnCanceledModel = $this->getInstance('issncanceled', 'IssnregistryModel');
+            // Create ISSN canceled object
+            $issnCanceled = array();
+            $issnCanceled['issn'] = $issn;
+            $issnCanceled['issn_range_id'] = $issnUsed->issn_range_id;
+            // Add new issn canceled entry
+            if ($issnCanceledModel->addNew($issnCanceled) == 0) {
+                $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_CANCELED_ENTRY_CREATION_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
         }
         // Try to delete the ISSN used entry
         if (!$issnUsedModel->deleteIssn($issnUsed->issn_range_id, $issn)) {

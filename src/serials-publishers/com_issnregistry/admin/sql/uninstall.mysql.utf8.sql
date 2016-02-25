@@ -5,3 +5,4 @@ DROP TABLE IF EXISTS `#__issn_registry_publication_archive`;
 DROP TABLE IF EXISTS `#__issn_registry_publisher`;
 DROP TABLE IF EXISTS `#__issn_registry_issn_range`;
 DROP TABLE IF EXISTS `#__issn_registry_issn_used`;
+DROP TABLE IF EXISTS `#__issn_registry_issn_canceled`;

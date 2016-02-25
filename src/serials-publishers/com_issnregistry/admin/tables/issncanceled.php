@@ -11,11 +11,11 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * ISSN Used Table class
+ * ISSN Canceled Table class
  *
  * @since  1.0.0
  */
-class IssnRegistryTableIssnused extends JTable {
+class IssnRegistryTableIssncanceled extends JTable {
 
     /**
      * Constructor
@@ -23,7 +23,7 @@ class IssnRegistryTableIssnused extends JTable {
      * @param   JDatabaseDriver  &$db  A database connector object
      */
     function __construct(&$db) {
-        parent::__construct('#__issn_registry_issn_used', 'id', $db);
+        parent::__construct('#__issn_registry_issn_canceled', 'id', $db);
     }
 
     /**
@@ -48,51 +48,27 @@ class IssnRegistryTableIssnused extends JTable {
             $date = JFactory::getDate();
             $user = JFactory::getUser();
             // New item
-            $this->created_by = $user->get('username');
-            $this->created = $date->toSql();
+            $this->canceled_by = $user->get('username');
+            $this->canceled = $date->toSql();
         }
 
         return parent::store($updateNulls);
     }
 
     /**
-     * Adds new ISSN Used object to the database.
+     * Adds new issn canceled to the database.
      * @param array $params array that contains the parameters
-     * @return int id of the new issn used entry
+     * @return int id of the new issn canceled entry
      */
     public function addNew($params) {
         // Set values
         $this->issn = $params['issn'];
-        $this->publication_id = $params['publication_id'];
         $this->issn_range_id = $params['issn_range_id'];
         // Add object to db
         if (!$this->store()) {
             return 0;
         }
         return $this->id;
-    }
-
-    /**
-     * Delete ISSN identified by the given publication id.
-     * @param int $publicationId publication id
-     * @return int number of deleted rows
-     */
-    public function deleteByPublicationId($publicationId) {
-        $query = $this->_db->getQuery(true);
-
-        // Delete all batches related to the publisher
-        $conditions = array(
-            $this->_db->quoteName('publication_id') . ' = ' . $this->_db->quote($publicationId)
-        );
-
-        $query->delete($this->_db->quoteName($this->_tbl));
-        $query->where($conditions);
-
-        $this->_db->setQuery($query);
-        // Execute query
-        $result = $this->_db->execute();
-        // Return the number of deleted batches
-        return $this->_db->getAffectedRows();
     }
 
     /**
@@ -125,42 +101,26 @@ class IssnRegistryTableIssnused extends JTable {
     }
 
     /**
-     * Returns the row identified by the given ISSN number.
-     * @param string $issn ISSN to be searched
-     * @return object ISSN used object mathing the given ISSN or null
-     */
-    public function findByIssn($issn) {
-        // Database connection
-        $query = $this->_db->getQuery(true);
-        // Create query
-        $query->select('*');
-        $query->from($this->_db->quoteName($this->_tbl));
-        $query->where($this->_db->quoteName('issn') . ' = ' . $this->_db->quote($issn));
-        $this->_db->setQuery($query);
-        // Return result
-        return $this->_db->loadObject();
-    }
-
-    /**
-     * Returns the last ISSN that was given from the range identified by the 
-     * given id. 
+     * Returns the smallest canceled ISSN object (fifo) that was given from the 
+     * range identified by the given id. If id is not defined, the smallest
+     * issn from any range is returned.
      * @param int $rangeId ISSN range id
-     * @return string last ISSN that was given from the ISSN range identified
+     * @return string smallest ISSN that was given from the ISSN range identified
      * by the given id
      */
-    public function getLast($rangeId) {
-        // Initialize variables.
+    public function getIssn($rangeId = 0) {
+        // Get query
         $query = $this->_db->getQuery(true);
 
         // Create the query
-        $query->select('issn')
-                ->from($this->_db->quoteName($this->_tbl))
-                ->where($this->_db->quoteName('issn_range_id') . ' = ' . $this->_db->quote($rangeId))
-                ->order('issn DESC')
-                ->setLimit('1');
+        $query->select('*')->from($this->_db->quoteName($this->_tbl));
+        if ($rangeId > 0) {
+            $query->where($this->_db->quoteName('issn_range_id') . ' = ' . $this->_db->quote($rangeId));
+        }
+        $query->order('issn ASC')->setLimit('1');
         $this->_db->setQuery($query);
         // Execute query
-        return $this->_db->loadResult();
+        return $this->_db->loadObject();
     }
 
 }
