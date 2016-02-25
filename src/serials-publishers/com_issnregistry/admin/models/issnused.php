@@ -45,7 +45,7 @@ class IssnregistryModelIssnused extends JModelAdmin {
     public function getForm($data = array(), $loadData = true) {
         // Get the form.
         $form = $this->loadForm(
-                'com_isbnregistry.issnused', 'issnused', array(
+                'com_issnregistry.issnused', 'issnused', array(
             'control' => 'jform', 'load_data' => $loadData
                 )
         );
@@ -67,7 +67,7 @@ class IssnregistryModelIssnused extends JModelAdmin {
     protected function loadFormData() {
         // Check the session for previously entered form data.
         $data = JFactory::getApplication()->getUserState(
-                'com_isbnregistry.edit.issnused.data', array()
+                'com_issnregistry.edit.issnused.data', array()
         );
 
         if (empty($data)) {

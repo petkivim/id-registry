@@ -50,6 +50,9 @@ class MenuHelper extends JHelperContent {
         );
          */
         JHtmlSidebar::addEntry(
+                JText::_('COM_ISSNREGISTRY_SUBMENU_FORMS'), 'index.php?option=com_issnregistry&view=forms', $vName == 'forms'
+        );
+        JHtmlSidebar::addEntry(
                 JText::_('COM_ISSNREGISTRY_SUBMENU_ISSN_RANGES'), 'index.php?option=com_issnregistry&view=issnranges', $vName == 'issnranges'
         );		
     }
