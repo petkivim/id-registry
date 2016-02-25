@@ -138,7 +138,7 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td class="error">' . JText::_($errors['issued_from_number_' . $i]) . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_FIELD') . ':</td>';
-            $html .= '<td><input type="text" name="frequency_' . $i . '" id="frequency_' . $i . '" size="15" value="' . $post->get('frequency_' . $i, null, 'string') . '" /></td>';
+            $html .= '<td>' . self::getFrequencyMenu($i) . '</td>';
             $html .= '<td class="error">* ' . JText::_($errors['frequency_' . $i]) . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
@@ -291,7 +291,7 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td>' . $post->get('issued_from_number_' . $i, null, 'string') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_FIELD') . ':</td>';
-            $html .= '<td>' . $post->get('frequency_' . $i, null, 'string') . '</td>';
+            $html .= '<td>' . self::getFrequencyLabel($i) . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
             $html .= '<td>' . self::getLanguageLabel($i) . '</td>';
@@ -500,7 +500,7 @@ class IssnregistryFormsHtmlBuilder {
         $userLanguage = $post->get('language_' . $index, null, 'string');
 
         $html .= '<select class="language" name="language_' . $index . '" id="language_' . $index . '">';
-        $html .= '<option value="-"' . (strcmp($userLanguage, '-') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
+        $html .= '<option value=""' . (strcmp($userLanguage, '') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
         foreach (IssnregistryFormsHelper::getLanguageList() as $language) {
             $html .= '<option value="' . $language . '"' . (strcmp($userLanguage, $language) == 0 ? ' selected' : '') . '>' . JText::_("PLG_ISSNREGISTRY_FORMS_LANGUAGE_$language") . '</option>';
         }
@@ -514,6 +514,28 @@ class IssnregistryFormsHtmlBuilder {
         // Get language code
         $langCode = $post->get('language_' . $index, null, 'string');
         return JText::_("PLG_ISSNREGISTRY_FORMS_LANGUAGE_$langCode");
+    }
+
+    private static function getFrequencyMenu($index) {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        $userFrequency = $post->get('frequency_' . $index, null, 'string');
+
+        $html .= '<select class="frequency" name="frequency_' . $index . '" id="frequency_' . $index . '">';
+        $html .= '<option value=""' . (strcmp($userFrequency, '') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
+        foreach (IssnregistryFormsHelper::getFrequencyList() as $frequency) {
+            $html .= '<option value="' . $frequency . '"' . (strcmp($userFrequency, $frequency) == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_' . strtoupper($frequency)) . '</option>';
+        }
+        $html .= '</select>';
+        return $html;
+    }
+
+    private static function getFrequencyLabel($index) {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        // Get language code
+        $frequency = $post->get('frequency_' . $index, null, 'string');
+        return JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_' . strtoupper($frequency));
     }
 
 }

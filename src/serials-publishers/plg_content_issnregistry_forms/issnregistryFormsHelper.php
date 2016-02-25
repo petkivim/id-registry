@@ -138,8 +138,10 @@ class IssnregistryFormsHelper {
             $frequency = $post->get('frequency_' . $i, null, 'string');
             if (empty($frequency) == true) {
                 $errors['frequency_' . $i] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
-            } else if (strlen($frequency) > 30) {
+            } else if (strlen($frequency) > 1) {
                 $errors['frequency_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
+            } else if (!self::validateFrequency($frequency)) {
+                $errors['frequency_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_INVALID";
             }
             // Language - required
             $language = $post->get('language_' . $i, null, 'string');
@@ -442,6 +444,21 @@ class IssnregistryFormsHelper {
     private static function validateLanguage($language) {
         $languages = self::getLanguageList();
         if (!in_array($language, $languages)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static function getFrequencyList() {
+        $languages = array(
+            'h', 'g', 'a', 'f', 't', 'q', 'b', 'm', 's', 'j', 'w', 'c', 'i', 'd', 'k', 'z', 'u'
+        );
+        return $languages;
+    }
+
+    private static function validateFrequency($frequency) {
+        $frequencies = self::getFrequencyList();
+        if (!in_array($frequency, $frequencies)) {
             return false;
         }
         return true;
