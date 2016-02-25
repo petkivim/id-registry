@@ -254,7 +254,7 @@ class IssnregistryFormsHelper {
         return $errors;
     }
 
-    public static function saveApplicationToDb($lang_code, $maxPublicationsCount) {
+    public static function saveApplicationToDb($maxPublicationsCount) {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
         // Get Form object
@@ -267,6 +267,7 @@ class IssnregistryFormsHelper {
         $city = $post->get('city', null, 'string');
         $publicationCount = $post->get('publication_count', 0, 'integer');
         $formCreated = JFactory::getDate();
+        $langCode = JFactory::getLanguage()->getTag();
 
         // Sanity check for publication count
         if ($publicationCount > $maxPublicationsCount) {
@@ -283,9 +284,9 @@ class IssnregistryFormsHelper {
             $db->transactionStart();
 
             // Insert columns
-            $columns = array('publisher', 'contact_person', 'email', 'phone', 'address', 'zip', 'city', 'publication_count', 'created', 'created_by');
+            $columns = array('publisher', 'contact_person', 'email', 'phone', 'address', 'zip', 'city', 'publication_count', 'lang_code', 'created', 'created_by');
             // Insert values
-            $values = array($db->quote($publisher), $db->quote($contactPerson), $db->quote($email), $db->quote($phone), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($publicationCount), $db->quote($formCreated->toSql()), $db->quote('WWW'));
+            $values = array($db->quote($publisher), $db->quote($contactPerson), $db->quote($email), $db->quote($phone), $db->quote($address), $db->quote($zip), $db->quote($city), $db->quote($publicationCount), $db->quote($langCode), $db->quote($formCreated->toSql()), $db->quote('WWW'));
             // Create a new query object.
             $query = $db->getQuery(true);
             // Prepare the insert query

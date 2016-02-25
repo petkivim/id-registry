@@ -47,7 +47,7 @@ class plgContentIssnregistry_forms extends JPlugin {
                 $maxPublicationsCount = $this->params->def('max_publications_count', 1);
                 
                 // Language settings
-                $lang = & JFactory::getLanguage();
+                $lang = JFactory::getLanguage();
                 // Load the language file in the current site language
                 $lang->load('plg_content_issnregistry_forms', JPATH_ADMINISTRATOR, $lang->getTag(), true);
 
@@ -103,7 +103,7 @@ class plgContentIssnregistry_forms extends JPlugin {
                     $errorsPt3 = IssnregistryFormsHelper::validateApplicationFormPt3();
                     if (empty($errorsPt1) && empty($errorsPt2) && empty($errorsPt3)) {
                         // Save to DB
-                        $formId = IssnregistryFormsHelper::saveApplicationToDb($lang->getTag(), $maxPublicationsCount);
+                        $formId = IssnregistryFormsHelper::saveApplicationToDb($maxPublicationsCount);
                         // If formId is 0 saving donation to DB failed
                         if ($formId == 0) {
                             // Return error page
