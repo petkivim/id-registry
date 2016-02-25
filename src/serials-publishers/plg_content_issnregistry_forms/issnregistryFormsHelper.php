@@ -147,6 +147,8 @@ class IssnregistryFormsHelper {
                 $errors['language_' . $i] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
             } else if (strlen($language) > 50) {
                 $errors['language_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
+            } else if (!self::validateLanguage($language)) {
+                $errors['language_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_INVALID";
             }
             // Publication type - required
             $publicationType = $post->get('publication_type_' . $i, null, 'string');
@@ -427,6 +429,21 @@ class IssnregistryFormsHelper {
 
     private static function isValidIssn($issn) {
         return preg_match('/^(\d){4}\-(\d){3}[0-9X]{1}$/i', $issn);
+    }
+
+    public static function getLanguageList() {
+        $languages = array(
+            'FIN', 'SWE', 'ENG', 'SMI', 'SPA', 'FRE', 'RUS', 'GER', 'MUL'
+        );
+        return $languages;
+    }
+
+    private static function validateLanguage($language) {
+        $languages = self::getLanguageList();
+        if (!in_array($language, $languages)) {
+            return false;
+        }
+        return true;
     }
 
     public static function notifyAdmin($recipient, $formId) {

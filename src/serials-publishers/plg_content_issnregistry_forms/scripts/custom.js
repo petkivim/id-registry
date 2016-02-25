@@ -3,7 +3,7 @@ jQuery(document).ready(function ($) {
         disable_search_threshold: 10,
         width: "9em"
     });
-    $(".publication_type").chosen({
+    $(".publication_type, .language").chosen({
         disable_search_threshold: 10,
         width: "100%"
     });

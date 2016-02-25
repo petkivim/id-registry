@@ -142,7 +142,7 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td class="error">* ' . JText::_($errors['frequency_' . $i]) . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
-            $html .= '<td><input type="text" name="language_' . $i . '" id="language_' . $i . '" size="15" value="' . $post->get('language_' . $i, null, 'string') . '" /></td>';
+            $html .= '<td>' . self::getLanguageMenu($i) . '</td>';
             $html .= '<td class="error">* ' . JText::_($errors['language_' . $i]) . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD') . ':</td>';
@@ -294,7 +294,7 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td>' . $post->get('frequency_' . $i, null, 'string') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
-            $html .= '<td>' . $post->get('language_' . $i, null, 'string') . '</td>';
+            $html .= '<td>' . self::getLanguageLabel($i) . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD') . ':</td>';
             $html .= '<td>' . self::getPublicationTypeString($post->get('publication_type_' . $i, null, 'string')) . '</td>';
@@ -492,6 +492,28 @@ class IssnregistryFormsHtmlBuilder {
             return $values[$medium];
         }
         return "";
+    }
+
+    private static function getLanguageMenu($index) {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        $userLanguage = $post->get('language_' . $index, null, 'string');
+
+        $html .= '<select class="language" name="language_' . $index . '" id="language_' . $index . '">';
+        $html .= '<option value="-"' . (strcmp($userLanguage, '-') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
+        foreach (IssnregistryFormsHelper::getLanguageList() as $language) {
+            $html .= '<option value="' . $language . '"' . (strcmp($userLanguage, $language) == 0 ? ' selected' : '') . '>' . JText::_("PLG_ISSNREGISTRY_FORMS_LANGUAGE_$language") . '</option>';
+        }
+        $html .= '</select>';
+        return $html;
+    }
+
+    private static function getLanguageLabel($index) {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        // Get language code
+        $langCode = $post->get('language_' . $index, null, 'string');
+        return JText::_("PLG_ISSNREGISTRY_FORMS_LANGUAGE_$langCode");
     }
 
 }
