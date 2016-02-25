@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-    $("#publication_count").chosen({
+    $("#publication_count, .issued_from_year").chosen({
         disable_search_threshold: 10,
         width: "9em"
     });

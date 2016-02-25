@@ -130,7 +130,7 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td class="error">' . JText::_($errors['printer_' . $i]) . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ISSUED_FROM_YEAR_FIELD') . ':</td>';
-            $html .= '<td><input type="text" name="issued_from_year_' . $i . '" id="issued_from_year_' . $i . '" size="4" value="' . $post->get('issued_from_year_' . $i, null, 'string') . '" /></td>';
+            $html .= '<td>' . self::getIssuedFromYearMenu($i) . '</td>';
             $html .= '<td class="error">* ' . JText::_($errors['issued_from_year_' . $i]) . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ISSUED_FROM_NUMBER_FIELD') . ':</td>';
@@ -536,6 +536,22 @@ class IssnregistryFormsHtmlBuilder {
         // Get language code
         $frequency = $post->get('frequency_' . $index, null, 'string');
         return JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_' . strtoupper($frequency));
+    }
+
+    private static function getIssuedFromYearMenu($index) {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+        $year = $post->get('issued_from_year_' . $index, null, 'string');
+        // Get current year
+        $currentYear = date("Y");
+
+        $html .= '<select class="issued_from_year" name="issued_from_year_' . $index . '" id="issued_from_year_' . $index . '">';
+        $html .= '<option value=""' . (strcmp($year, '') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
+        for ($i = $currentYear; $i >= 1900; $i--) {
+            $html .= '<option value="' . $i . '"' . (($year == $i) ? ' selected' : '') . '>' . $i . '</option>';
+        }
+        $html .= '</select>';
+        return $html;
     }
 
 }
