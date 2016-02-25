@@ -36,7 +36,7 @@ class IsbnregistryViewPublication extends JViewLegacy {
 
 
         // Set document properties
-        $document = &JFactory::getDocument();
+        $document = JFactory::getDocument();
         $document->setMimeEncoding('text/plain');
 
         echo $marc;
