@@ -1,3 +1,35 @@
 .header {
-	background-color: #440884!important;
+    background-color: #440884!important;
+}
+
+table#publications {
+    width: 100%;
+}
+
+.publications_col_1 {
+    width: 35%;
+}
+
+.publications_col_2 {
+    width: 15%;
+    text-align: center;
+}
+
+.publications_col_3 {
+    width: 20%;
+    text-align: center;
+}
+
+.publications_col_4 {
+    width: 20%;
+    text-align: center;
+}
+
+.publications_col_5 {
+    width: 10%;
+    text-align: center;
+}
+
+td.info_row {
+    padding-top: 1em;
 }

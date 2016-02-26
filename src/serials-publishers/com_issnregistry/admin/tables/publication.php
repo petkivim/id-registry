@@ -79,7 +79,6 @@ class IssnRegistryTablePublication extends JTable {
         return parent::delete($pk);
     }
 
-
     /**
      * Updates publication identified by the given publication id. Only
      * publication ISSN is updated.
@@ -143,6 +142,24 @@ class IssnRegistryTablePublication extends JTable {
         $this->_db->setQuery($query);
         // Return result
         return $this->_db->loadObject();
+    }
+
+    /**
+     * Returns all the publications that are related to the given form id.
+     * @param int $formId id of the form
+     * @return array publications matching the given form id
+     */
+    public function getPublicationsByFormId($formId) {
+        // Database connection
+        $query = $this->_db->getQuery(true);
+        // Create query
+        $query->select('*');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId));
+        $query->order('title ASC');
+        $this->_db->setQuery($query);
+        // Return result
+        return $this->_db->loadObjectList();
     }
 
     /**

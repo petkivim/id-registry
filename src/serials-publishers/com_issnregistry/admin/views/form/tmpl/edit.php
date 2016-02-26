@@ -57,15 +57,17 @@ JFactory::getDocument()->addScriptDeclaration('
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publications', JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS', true)); ?>
-        <div class="row-fluid form-horizontal-desktop">
-            <div class="span6">        
-                <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS_SUBTITLE_1'); ?></legend>           
+        <?php if ($this->item->id != 0) : ?>
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publications', JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS', true)); ?>
+            <div class="row-fluid form-horizontal-desktop">
+                <div class="span6">        
+                    <?php echo $this->loadTemplate('publications'); ?>	               
+                </div>
+                <div class="span6">
+                </div>
             </div>
-            <div class="span6">
-            </div>
-        </div>
-        <?php echo JHtml::_('bootstrap.endTab'); ?>
+            <?php echo JHtml::_('bootstrap.endTab'); ?>
+        <?php endif; ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>
     <input type="hidden" name="task" value="form.edit" />
