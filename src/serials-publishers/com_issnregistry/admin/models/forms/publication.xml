@@ -302,6 +302,13 @@
             default=""
 			readonly="true"
         />	
+		<field
+            name="link_to_publisher"
+            type="Span"
+            label=""
+            description=""
+			default="COM_ISSNREGISTRY_PUBLICATION_FIELD_LINK_TO_PUBLISHER"
+        />	
         <field 
             name="created"
             type="calendar"

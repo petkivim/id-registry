@@ -43,6 +43,7 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('title'); ?>
                 <?php echo $this->form->renderField('issn'); ?>
                 <?php echo $this->form->renderField('publisher_id'); ?> 
+                <?php echo $this->form->renderField('link_to_publisher'); ?>
                 <?php echo $this->form->renderField('place_of_publication'); ?>
                 <?php echo $this->form->renderField('printer'); ?>               
                 <?php echo $this->form->renderField('issued_from_year'); ?>
