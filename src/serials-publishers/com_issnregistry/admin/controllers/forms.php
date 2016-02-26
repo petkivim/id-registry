@@ -14,7 +14,7 @@ defined('_JEXEC') or die('Restricted access');
  *
  * @since  1.0.0
  */
-class IssnregistryControllerForm extends JControllerAdmin
+class IssnregistryControllerForms extends JControllerAdmin
 {
 	/**
 	 * Proxy for getModel.
