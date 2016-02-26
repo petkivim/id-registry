@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
     document.formvalidator.setHandler("publisher", function (value) {
-        regex = /^.{1,100}$/;
+        regex = /^.{0,100}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("contactperson", function (value) {

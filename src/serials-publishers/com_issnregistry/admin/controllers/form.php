@@ -19,4 +19,17 @@ defined('_JEXEC') or die('Restricted access');
  */
 class IssnregistryControllerForm extends JControllerForm {
 
+    protected function postSaveHook($model, $validData) {
+        $item = $model->getItem();
+        $formId = $item->get('id');
+        $publisherId = $item->get('publisher_id');
+        // Get publication model
+        $publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
+        // Update publisher id to all the publications
+        // The result is not checked, because the publisher is not changed
+        // every time which is why the result may be zero even if
+        // there's no error
+        $publicationModel->updatePublisherId($formId, $publisherId); 
+    }
+
 }

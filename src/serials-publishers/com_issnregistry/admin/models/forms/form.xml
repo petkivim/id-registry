@@ -9,11 +9,10 @@
             name="publisher"
             type="text"
             label="COM_ISSNREGISTRY_FORM_FIELD_PUBLISHER_LABEL"
-            description="COM_ISSNREGISTRYFORM_FIELD_PUBLISHER_DESC"
+            description="COM_ISSNREGISTRY_FORM_FIELD_PUBLISHER_DESC"
             size="20"
             class="inputbox validate-publisher"
             default=""
-			required="true"
         />
         <field
             name="contact_person"
@@ -101,6 +100,14 @@
             readonly="true"
             class="readonly"
 			default="0"
+        />	
+        <field
+            name="publisher_id"
+            type="Publisher"
+            label="COM_ISSNREGISTRY_FORM_FIELD_PUBLISHER_ID_LABEL"
+            description="COM_ISSNREGISTRY_FORM_FIELD_PUBLISHER_ID_DESC"
+            class="validate-publisherid"
+            default=""
         />			
         <field 
             name="created"

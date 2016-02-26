@@ -204,4 +204,33 @@ class IssnRegistryTablePublication extends JTable {
         return $this->_db->getAffectedRows();
     }
 
+    /**
+     * Updates all the given publisher id to all the publications that
+     * have the given form id.
+     * @param int $formId id of the form
+     * @param int $publisherId publisher id
+     * @return int number of updated rows
+     */
+    public function updatePublisherId($formId, $publisherId) {
+        // Database connection
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId),
+        );
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId)
+        );
+        // Create query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of rows that was updated
+        return $this->_db->getAffectedRows();
+    }
+
 }

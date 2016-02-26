@@ -48,6 +48,8 @@ JFactory::getDocument()->addScriptDeclaration('
             </div>
             <div class="span6">
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
+                <?php echo $this->form->renderField('publisher_id'); ?>
+                <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
                 <?php echo $this->form->renderField('status'); ?>
                 <?php echo $this->form->renderField('publication_count'); ?>
                 <?php echo $this->form->renderField('created'); ?>

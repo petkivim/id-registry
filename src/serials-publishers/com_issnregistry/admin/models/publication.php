@@ -102,6 +102,20 @@ class IssnregistryModelPublication extends JModelAdmin {
     }
 
     /**
+     * Updates all the given publisher id to all the publications that
+     * have the given form id.
+     * @param int $formId id of the form
+     * @param int $publisherId publisher id
+     * @return int number of publications to be updated
+     */
+    public function updatePublisherId($formId, $publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Update publications
+        return $table->updatePublisherId($formId, $publisherId);
+    }
+
+    /**
      * Updates publication identified by the given publication id. Only
      * publication ISSN is updated.
      * @param integer $publicationId id of the publication to be updated
