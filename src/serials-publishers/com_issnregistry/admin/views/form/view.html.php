@@ -41,14 +41,6 @@ class IssnregistryViewForm extends JViewLegacy {
             return false;
         }
 
-        if ($this->item->id > 0) {
-            // Get an instance of a publication model
-            $publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
-            // Get publications related to this form
-            $publications = $publicationModel->getPublicationsByFormId($this->item->id);
-            // Pass publcations to the view
-            $this->publications = $publications;
-        }
         // Set the toolbar
         $this->addToolBar();
         // Add jQuery
