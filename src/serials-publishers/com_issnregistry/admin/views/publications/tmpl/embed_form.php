@@ -8,7 +8,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
-<form action="index.php?option=com_issnregistry&view=publications&publisherId=<?php echo JRequest::getVar('publisherId', 0); ?>&tmpl=component&layout=embed" method="post" id="adminForm" name="adminForm">
+<form action="index.php?option=com_issnregistry&view=publications&formId=<?php echo JRequest::getVar('formId', 0); ?>&tmpl=component&layout=embed_form" method="post" id="adminForm" name="adminForm">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
