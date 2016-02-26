@@ -23,8 +23,11 @@ defined('_JEXEC') or die('Restricted Access');
                     <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_MEDIUM'); ?>
                 </th>
                 <th width="10%">
-                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_FORM'); ?>
+                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_PREPUBLICATION_RECORD_CREATED'); ?>
                 </th>	
+                <th width="10%">
+                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_CONTROL_COPY_RECEIVED'); ?>
+                </th>
                 <th width="2%">
                     <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_ID'); ?>
                 </th>
@@ -58,10 +61,11 @@ defined('_JEXEC') or die('Restricted Access');
                             <?php echo (empty($row->medium) ? '' : JText::_('COM_ISSNREGISTRY_PUBLICATION_MEDIUM_' . $row->medium)); ?>
                         </td>
                         <td>
-                            <a href="<?php echo $linkForm; ?>" title="<?php echo JText::_('COM_ISSNREGISTRY_FORM_EDIT'); ?>" target="new">
-                                <?php echo JText::_('COM_ISSNREGISTRY_FIELD_EDIT'); ?>
-                            </a>
-                        </td>	                                
+                            <?php echo ($row->prepublication_record_created ? JText::_('JYES') : JText::_('JNO')); ?>
+                        </td> 
+                        <td>
+                            <?php echo ($row->control_copy_received ? JText::_('JYES') : JText::_('JNO')); ?>
+                        </td>                               
                         <td align="center">
                             <?php echo $row->id; ?>
                         </td>

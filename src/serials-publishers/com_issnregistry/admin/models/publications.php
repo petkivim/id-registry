@@ -68,6 +68,8 @@ class IssnregistryModelPublications extends JModelList {
 
         // Get publisher id URL parameter
         $publisherId = JFactory::getApplication()->input->getInt('publisherId');
+        // Get form id URL parameter
+        $formId = JFactory::getApplication()->input->getInt('formId');
 
         // If publisher id is not null, the request comes from embed
         // layout and no other filtering is needed
@@ -76,6 +78,14 @@ class IssnregistryModelPublications extends JModelList {
             $query->select('*')
                     ->from($db->quoteName('#__issn_registry_publication'));
             $query->where($db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId));
+            $query->order('title ASC');
+
+            return $query;
+        } else if ($formId != null) {
+            // Create the base select statement.
+            $query->select('*')
+                    ->from($db->quoteName('#__issn_registry_publication'));
+            $query->where($db->quoteName('form_id') . ' = ' . $db->quote($formId));
             $query->order('title ASC');
 
             return $query;
