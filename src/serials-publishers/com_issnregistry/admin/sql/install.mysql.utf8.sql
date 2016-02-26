@@ -77,6 +77,9 @@ CREATE TABLE `#__issn_registry_publication` (
     `another_medium_title` VARCHAR(100),
     `another_medium_issn` VARCHAR(9),
     `additional_info` VARCHAR(500),
+    `prepublication_record_created` boolean not null default 0,
+    `control_copy_received` boolean not null default 0,
+    `issn_frozen` boolean not null default 0,
     `form_id` INT DEFAULT 0,
     `publisher_id` INT DEFAULT 0,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -137,7 +140,7 @@ DROP TABLE IF EXISTS `#__issn_registry_publisher`;
 
 CREATE TABLE `#__issn_registry_publisher` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `publisher` VARCHAR(100) NOT NULL,
+    `official_name` VARCHAR(100) NOT NULL,
     `contact_person` VARCHAR(100),
     `email` VARCHAR(100) NOT NULL,
     `phone` VARCHAR(30),
@@ -167,7 +170,7 @@ CREATE TABLE `#__issn_registry_issn_range` (
     `free` INT NOT NULL,
     `taken` INT NOT NULL DEFAULT 0,
     `next` VARCHAR(4) NOT NULL,
-    `is_active` boolean not null default 1,
+    `is_active` boolean not null default 0,
     `is_closed` boolean not null default 0,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),

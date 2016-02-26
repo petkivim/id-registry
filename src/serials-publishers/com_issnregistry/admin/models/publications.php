@@ -86,36 +86,46 @@ class IssnregistryModelPublications extends JModelList {
         $status = $this->getState('filter.status');
 
         // Create the base select statement.
-        $query->select('*')
-                ->from($db->quoteName('#__issn_registry_publication') . ' AS a');
+        $query->select('a.*, p.official_name')->from($db->quoteName('#__issn_registry_publication') . ' AS a');
+        $query->join('LEFT', '#__issn_registry_publisher AS p ON p.id = a.publisher_id');
 
         // Check status value
         if (is_numeric($status)) {
             switch ($status) {
                 case 1:
-                    $query->where('(a.publication_identifier_print = "" AND a.publication_identifier_electronical = "")');
-                    $query->where('a.on_process = false');
-                    $query->order('a.created DESC');
+                    $query->where('a.prepublication_record_created = false');
+                    $query->where('a.control_copy_received = false');
+                    $query->where('a.issn_frozen = false');
+                    //$query->order('a.created DESC');
                     break;
                 case 2:
-                    $query->where('(a.publication_identifier_print = "" AND a.publication_identifier_electronical = "")');
-                    $query->where('a.on_process = true');
-                    $query->order('a.created DESC');
+                    $query->where('a.prepublication_record_created = true');
+                    $query->where('a.control_copy_received = false');
+                    $query->where('a.issn_frozen = false');
+                    //$query->order('a.created DESC');
                     break;
                 case 3:
-                    $query->where('(a.publication_identifier_print != "" OR a.publication_identifier_electronical != "")');
-                    $query->order('a.title ASC');
+                    $query->where('a.prepublication_record_created = true');
+                    $query->where('a.control_copy_received = true');
+                    $query->where('a.issn_frozen = false');
+                    //$query->order('a.created DESC');
+                    break;
+                case 4:
+                    $query->where('a.issn_frozen = true');
+                    //$query->order('a.title ASC');
                     break;
             }
         } else {
-            $query->order('a.title ASC');
+            //$query->order('a.title ASC');
         }
 
         // Build search
         if (!empty($search)) {
             $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
-            $query->where('a.title LIKE ' . $search);
+            $query->where('(a.title LIKE ' . $search . ' OR a.issn LIKE ' . $search . ' OR p.official_name LIKE ' . $search . ')');
         }
+
+        $query->order('a.created DESC');
 
         return $query;
     }

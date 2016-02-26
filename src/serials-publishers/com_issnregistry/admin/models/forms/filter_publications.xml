@@ -1,0 +1,35 @@
+<form>
+    <fields name="filter">
+        <field
+            name="search"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLICATION_FILTER_SEARCH_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FILTER_SEARCH_DESC"
+            hint="JSEARCH_FILTER"
+        />
+        <field
+            name="status"
+            type="list"
+            label="COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_DESC"
+            onchange="this.form.submit();"
+        >
+            <option value="">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_SELECT</option>
+            <option value="1">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_NO_PREPUBLICATION</option>
+            <option value="2">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_NO_CONTROL_COPY</option>       
+			<option value="3">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_READY</option>
+			<option value="4">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_FROZEN</option>
+        </field>
+    </fields>
+    <fields name="list">
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            default="25"
+            label="COM_ISSNREGISTRY_LIST_LIMIT"
+            description="COM_ISSNREGISTRY_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />
+    </fields>
+</form>

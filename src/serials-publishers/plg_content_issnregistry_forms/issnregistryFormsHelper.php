@@ -450,10 +450,10 @@ class IssnregistryFormsHelper {
     }
 
     public static function getFrequencyList() {
-        $languages = array(
+        $frequencies = array(
             'h', 'g', 'a', 'f', 't', 'q', 'b', 'm', 's', 'j', 'w', 'c', 'i', 'd', 'k', 'z', 'u'
         );
-        return $languages;
+        return $frequencies;
     }
 
     private static function validateFrequency($frequency) {
