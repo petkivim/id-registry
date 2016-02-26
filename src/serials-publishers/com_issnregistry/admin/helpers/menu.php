@@ -56,6 +56,9 @@ class MenuHelper extends JHelperContent {
                 JText::_('COM_ISSNREGISTRY_SUBMENU_PUBLICATIONS'), 'index.php?option=com_issnregistry&view=publications', $vName == 'publications'
         );
         JHtmlSidebar::addEntry(
+                JText::_('COM_ISSNREGISTRY_SUBMENU_PUBLISHERS'), 'index.php?option=com_issnregistry&view=publishers', $vName == 'publishers'
+        );
+        JHtmlSidebar::addEntry(
                 JText::_('COM_ISSNREGISTRY_SUBMENU_ISSN_RANGES'), 'index.php?option=com_issnregistry&view=issnranges', $vName == 'issnranges'
         );
     }
