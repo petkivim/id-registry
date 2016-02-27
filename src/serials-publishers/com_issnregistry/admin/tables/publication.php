@@ -222,12 +222,18 @@ class IssnRegistryTablePublication extends JTable {
      * @return int number of updated rows
      */
     public function updatePublisherId($formId, $publisherId) {
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
         // Database connection
         $query = $this->_db->getQuery(true);
 
         // Fields to update.
         $fields = array(
             $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId),
+            $this->_db->quoteName('modified') . ' = ' . $this->_db->quote($date->toSql()),
+            $this->_db->quoteName('modified_by') . ' = ' . $this->_db->quote($user->get('username'))
         );
 
         // Conditions for which records should be updated.

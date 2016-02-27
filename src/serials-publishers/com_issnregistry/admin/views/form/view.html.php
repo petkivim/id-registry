@@ -75,6 +75,9 @@ class IssnregistryViewForm extends JViewLegacy {
         JToolbarHelper::apply('form.apply');
         JToolBarHelper::save('form.save');
         JToolbarHelper::save2new('form.save2new');
+        if (!$isNew && !$this->item->publisher_created && $this->item->publisher_id == 0) {
+            JToolBarHelper::custom('form.createPublisher', 'new', 'new', JText::_('COM_ISSNREGISTRY_FORM_BUTTON_CREATE_PUBLISHER'), false, false);
+        }
         JToolBarHelper::cancel(
                 'form.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );

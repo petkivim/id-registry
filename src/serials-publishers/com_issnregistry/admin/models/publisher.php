@@ -110,4 +110,16 @@ class IssnregistryModelPublisher extends JModelAdmin {
         return $result;
     }
 
+    /**
+     * Returns a publisher identified by the given form id.
+     * @param int $formId id of the form
+     * @return Publisher publisher matching the given form id
+     */
+    public function getByFormId($formId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publisher
+        return $table->getByFormId($formId);
+    }
+
 }

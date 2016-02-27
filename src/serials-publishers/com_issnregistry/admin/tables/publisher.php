@@ -73,7 +73,7 @@ class IssnRegistryTablePublisher extends JTable {
     }
 
     /**
-     * Returns a publisher mathcing the given id.
+     * Returns a publisher matching the given id.
      * @param int $publisherId id of the publisher
      * @return Publisher publisher matching the given id
      */
@@ -107,4 +107,23 @@ class IssnRegistryTablePublisher extends JTable {
         // Execute query
         return $this->_db->loadObjectList();
     }
+
+    /**
+     * Returns a publisher identified by the given form id.
+     * @param int $formId id of the form
+     * @return Publisher publisher matching the given form id
+     */
+    public function getByFormId($formId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObject();
+    }
+
 }
