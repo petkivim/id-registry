@@ -225,4 +225,46 @@ class IssnRegistryTablePublication extends JTable {
         return $this->_db->getAffectedRows();
     }
 
+    /**
+     * Return the number of publications related to he form identified by the
+     * given id that have ISSN.
+     * @param int $formId id of the form
+     * @return int number of publications related to the given form that have
+     * ISSN
+     */
+    public function getIssnCountByFormId($formId) {
+        $query = $this->_db->getQuery(true);
+
+        $conditions = array(
+            $this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId),
+            $this->_db->quoteName('issn') . ' != ' . $this->_db->quote('')
+        );
+
+        // Create the query
+        $query->select('count(id)')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadResult();
+    }
+
+    /**
+     * Returns an array containing ids of publications related to 
+     * the form identified by the given id.
+     * @param int $formId id of the form
+     * @return array an array containing ids of publications related to the
+     * given form
+     */
+    public function getPublicationIdsByFormId($formId) {
+        $query = $this->_db->getQuery(true);
+        // Create the query
+        $query->select('id')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadColumn();
+    }
+
 }

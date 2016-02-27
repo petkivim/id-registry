@@ -189,4 +189,32 @@ class IssnregistryModelPublication extends JModelAdmin {
         return $table->removeIssn($publicationId);
     }
 
+    /**
+     * Return the number of publications related to he form identified by the
+     * given id that have ISSN.
+     * @param int $formId id of the form
+     * @return int number of publications related to the given form that have
+     * ISSN
+     */
+    public function getIssnCountByFormId($formId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publication count
+        return $table->getIssnCountByFormId($formId);
+    }
+
+    /**
+     * Returns an array containing ids of publications related to 
+     * the form identified by the given id.
+     * @param int $formId id of the form
+     * @return array an array containing ids of publications related to the
+     * given form
+     */
+    public function getPublicationIdsByFormId($formId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publication ids
+        return $table->getPublicationIdsByFormId($formId);
+    }
+
 }

@@ -122,4 +122,17 @@ class IssnregistryModelPublisher extends JModelAdmin {
         return $table->getByFormId($formId);
     }
 
+    /**
+     * Removes reference to the form identified by the given id by setting
+     * form id to zero.
+     * @param int $formId id of the form
+     * @return int number of publishers that we updated
+     */
+    public function resetFormId($formId) {
+        // Get db access
+        $table = $this->getTable();
+        // Reset id
+        return $table->resetFormId($formId);
+    }
+
 }

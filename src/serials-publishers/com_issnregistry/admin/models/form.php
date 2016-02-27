@@ -97,7 +97,7 @@ class IssnregistryModelForm extends JModelAdmin {
     public function removePublisherCreated($formId) {
         // Get db access
         $table = $this->getTable();
-        // Get publisher
+        // Set "publisher_created" to false
         return $table->removePublisherCreated($formId);
     }
 

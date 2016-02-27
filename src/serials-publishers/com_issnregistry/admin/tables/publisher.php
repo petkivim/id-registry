@@ -142,4 +142,38 @@ class IssnRegistryTablePublisher extends JTable {
         return $this->_db->loadObject();
     }
 
+    /**
+     * Removes reference to the form identified by the given id by setting
+     * form id to zero.
+     * @param int $formId id of the form
+     * @return int number of affected rows
+     */
+    public function resetFormId($formId) {
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        // Database connection
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('form_id') . ' = ' . $this->_db->quote(0),
+            $this->_db->quoteName('modified') . ' = ' . $this->_db->quote($date->toSql()),
+            $this->_db->quoteName('modified_by') . ' = ' . $this->_db->quote($user->get('username'))
+        );
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId)
+        );
+        // Create query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of rows that was updated
+        return $this->_db->getAffectedRows();
+    }
+
 }
