@@ -90,6 +90,12 @@ class IssnregistryViewPublication extends JViewLegacy {
             // Render print button
             $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PRINT'), 'class' => 'icon-print'));
             $toolbar->appendButton('Custom', $dhtml);
+
+            if (empty($this->item->issn)) {
+                JToolBarHelper::custom('publication.getIssn', 'new', 'new', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_GET_ISSN'), false, false);
+            } else {
+                JToolBarHelper::custom('publication.deleteIssn', 'minus', 'minus', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_DELETE_ISSN'), false, false);
+            }
         }
 
         JToolBarHelper::cancel(

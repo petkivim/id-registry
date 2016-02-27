@@ -193,6 +193,7 @@ CREATE TABLE `#__issn_registry_issn_used` (
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     PRIMARY KEY (`id`),
+    UNIQUE (issn),
     INDEX `idx_issn_range_id` (`issn_range_id`),
     INDEX `idx_publication_id` (`publication_id`)
 )
@@ -210,6 +211,7 @@ CREATE TABLE `#__issn_registry_issn_canceled` (
     `canceled` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `canceled_by` VARCHAR(30),
     PRIMARY KEY (`id`),
+    UNIQUE (issn),
     INDEX `idx_issn_range_id` (`issn_range_id`),
     INDEX `idx_issn` (`issn`)
 )

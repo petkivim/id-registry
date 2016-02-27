@@ -21,13 +21,12 @@ class IssnregistryControllerIssnrange extends JControllerForm {
 
     public function getIssn() {
         // Check for request forgeries
-        //JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
         // http://{SITE}/administrator/index.php?option=com_issnregistry&task=issnrange.getIssn&publicationId=1
         $mainframe = JFactory::getApplication();
         try {
             // Get request parameters
-            //$jinput = JFactory::getApplication()->input->post;
-            $jinput = JFactory::getApplication()->input->get;
+            $jinput = JFactory::getApplication()->input->post;
             $publicationId = $jinput->get('publicationId', 0, 'int');
 
             // Create response array
@@ -75,13 +74,12 @@ class IssnregistryControllerIssnrange extends JControllerForm {
 
     public function deleteIssn() {
         // Check for request forgeries
-        //JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
         // http://{SITE}/administrator/index.php?option=com_issnregistry&task=issnrange.deleteIssn&issn=xxxx-xxxx
         $mainframe = JFactory::getApplication();
         try {
             // Get request parameters
-            //$jinput = JFactory::getApplication()->input->post;
-            $jinput = JFactory::getApplication()->input->get;
+            $jinput = JFactory::getApplication()->input->post;
             $issn = $jinput->get('issn', '', 'string');
 
             // Create response array

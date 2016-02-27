@@ -27,4 +27,59 @@ class IssnregistryControllerPublication extends JControllerForm {
         $this->redirect();
     }
 
+    public function getIssn() {
+        try {
+            // Get publication id
+            $id = $this->input->getInt('id');
+            // Load issn range model
+            $issnRangeModel = JModelLegacy::getInstance('issnrange', 'IssnregistryModel');
+            // Get new ISSN
+            $result = $issnRangeModel->getIssn($id);
+            // Check result, created issn is returned on success, an empty
+            // string on failure
+            if (empty($result)) {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_GET_ISSN_FAILED'), 'error');
+                if ($issnRangeModel->getError()) {
+                    JFactory::getApplication()->enqueueMessage($issnRangeModel->getError(), 'error');
+                }
+            } else {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_GET_ISSN_SUCCESS'));
+            }
+        } catch (Exception $e) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_GET_ISSN_FAILED'), 'error');
+        }
+
+        // Redirect back to edit view
+        $this->setRedirect('index.php?option=com_issnregistry&view=publication&id=' . $id . '&layout=edit');
+        $this->redirect();
+    }
+
+    public function deleteIssn() {
+        try {
+            // Get publication id
+            $id = $this->input->getInt('id');
+            // Get publication 
+            $publication = $this->getModel()->getItem($id);
+            // Load issn range model
+            $issnRangeModel = JModelLegacy::getInstance('issnrange', 'IssnregistryModel');
+            // Delete ISSN
+            $result = $issnRangeModel->deleteIssn($publication->issn);
+            // Check result
+            if (!$result) {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_DELETE_ISSN_FAILED'), 'error');
+                if ($issnRangeModel->getError()) {
+                    JFactory::getApplication()->enqueueMessage($issnRangeModel->getError(), 'error');
+                }
+            } else {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_DELETE_ISSN_SUCCESS'));
+            }
+        } catch (Exception $e) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_DELETE_ISSN_FAILED'), 'error');
+        }
+
+        // Redirect back to edit view
+        $this->setRedirect('index.php?option=com_issnregistry&view=publication&id=' . $id . '&layout=edit');
+        $this->redirect();
+    }
+
 }

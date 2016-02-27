@@ -81,15 +81,19 @@ class IssnRegistryTablePublication extends JTable {
 
     /**
      * Updates publication identified by the given publication id. Only
-     * publication ISSN is updated.
+     * publication ISSN is updated. ISSN can be updated if and only if the
+     * publication does not currently have ISSN.
      * @param integer $publicationId id of the publication to be updated
      * @param string $issn ISSN identifier string
      * @return boolean true on success
      */
     public function updateIssn($publicationId, $issn) {
         // Conditions for which records should be updated.
+        // Issn can be updated if and only if the value is empty, which
+        // means that the publication does not have ISSN yet.
         $conditions = array(
-            'id' => $publicationId
+            'id' => $publicationId,
+            'issn' => ''
         );
 
         // Load object
