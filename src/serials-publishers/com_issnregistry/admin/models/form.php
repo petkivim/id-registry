@@ -77,4 +77,28 @@ class IssnregistryModelForm extends JModelAdmin {
         return $data;
     }
 
+    /**
+     * Returns the number of forms that are linked to the given publisher.
+     * @param int $publisherId id of the publisher
+     * @return int number of forms
+     */
+    public function getFormsCountByPublisherId($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publisher
+        return $table->getFormsCountByPublisherId($publisherId);
+    }
+
+    /**
+     * Sets publisher created attribute to false.
+     * @param int $formId id of the form to be updated
+     * @return boolean true on success; false on failure
+     */
+    public function removePublisherCreated($formId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publisher
+        return $table->removePublisherCreated($formId);
+    }
+
 }

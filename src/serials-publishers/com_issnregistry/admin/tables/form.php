@@ -74,4 +74,45 @@ class IssnRegistryTableForm extends JTable {
         return parent::delete($pk);
     }
 
+    /**
+     * Returns the number of forms that are linked to the given publisher.
+     * @param int $publisherId id of the publisher
+     * @return int number of forms
+     */
+    public function getFormsCountByPublisherId($publisherId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('count(id)')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadResult();
+    }
+
+    /**
+     * Sets publisher created attribute to false.
+     * @param int $formId id of the form to be updated
+     * @return boolean true on success; false on failure
+     */
+    public function removePublisherCreated($formId) {
+        $conditions = array(
+            'id' => $formId,
+            'publisher_created' => true
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update publisher created
+        $this->publisher_created = false;
+
+        // Update object to DB
+        return $this->store();
+    }
+
 }

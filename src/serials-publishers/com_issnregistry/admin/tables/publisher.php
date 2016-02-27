@@ -61,15 +61,31 @@ class IssnRegistryTablePublisher extends JTable {
     }
 
     public function delete($pk = null) {
+        // Get form model
+        $formModel = JModelLegacy::getInstance('form', 'IssnregistryModel');
         if ($pk != null) {
-            // Delete publications
-            //$publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
-            //$publicationModel->deleteByPublisherId($pk);
+            // Get number of forms related to this publisher
+            $formsCount = $formModel->getFormsCountByPublisherId($pk);
+            // Check result
+            if ($formsCount != 0) {
+                // If there are forms, the publisher can't be deleted
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_PUBLISHER_DELETE_FAILED_FORMS_EXIST'), 'warning');
+                // Return false as the item can't be deleted
+                return false;
+            }
             // Delete messages
             //$messageModel = JModelLegacy::getInstance('message', 'IssnregistryModel');
             //$messageModel->deleteByPublisherId($pk);
         }
-        return parent::delete($pk);
+        if (parent::delete($pk)) {
+            // If this publisher was created based on a form, remove 
+            // publisher created attribute from the form
+            if ($this->form_id != 0) {
+                $formModel->removePublisherCreated($this->form_id);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
