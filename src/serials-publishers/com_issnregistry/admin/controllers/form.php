@@ -97,4 +97,46 @@ class IssnregistryControllerForm extends JControllerForm {
         $this->redirect();
     }
 
+    public function createPublication() {
+        try {
+            // Get form id
+            $id = $this->input->getInt('formId');
+            // Get form 
+            $form = $this->getModel()->getItem($id);
+            // Check that we have a form
+            if ($form->id == 0) {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_NOT_FOUND'), 'error');
+                // Redirect back to edit view
+                $this->setRedirect('index.php?option=com_issnregistry&view=forms');
+                $this->redirect();
+            }
+            // Array for publication
+            $publication = array(
+                'title' => JText::_('COM_ISSNREGISTRY_PUBLICATION_TITLE_NEW'),
+                'publisher_id' => $form->publisher_id,
+                'form_id' => $form->id
+            );
+
+            // Load publication model
+            $publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
+            // Save publication to db
+            if (!$publicationModel->save($publication)) {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_CREATE_PUBLICATION_FAILED'), 'error');
+                if ($publicationModel->getError()) {
+                    JFactory::getApplication()->enqueueMessage($publicationModel->getError(), 'error');
+                }
+            } else {
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_CREATE_PUBLICATION_SUCCESS'));
+                if (!$this->getModel()->increasePublicationCount($form->id, $form->publication_count)) {
+                    JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_UPDATE_PUBLICATION_COUNT_FAILED'), 'error');
+                }
+            }
+        } catch (Exception $e) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_CREATE_PUBLICATION_FAILED'), 'error');
+        }
+        // Redirect back to edit view
+        $this->setRedirect('index.php?option=com_issnregistry&view=form&id=' . $id . '&layout=edit');
+        $this->redirect();
+    }
+
 }

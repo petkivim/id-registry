@@ -59,7 +59,7 @@ class IssnregistryViewPublications extends JViewLegacy {
      */
     protected function addToolBar() {
         JToolBarHelper::title(JText::_('COM_ISSNREGISTRY_PUBLICATIONS'));
-        JToolBarHelper::addNew('publication.add');
+        //JToolBarHelper::addNew('publication.add');
         JToolBarHelper::editList('publication.edit');
         JToolBarHelper::deleteList('', 'publications.delete');
 

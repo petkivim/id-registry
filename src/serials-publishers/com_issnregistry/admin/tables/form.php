@@ -141,4 +141,54 @@ class IssnRegistryTableForm extends JTable {
         return $this->store();
     }
 
+    /**
+     * Increases the publication of the form identified by the given form id
+     * by one.
+     * @param int $formId form id
+     * @param int $oldCount current publication count that's increased by one
+     * @return boolean true on success; false on failure
+     */
+    public function increasePublicationCount($formId, $oldCount) {
+        $conditions = array(
+            'id' => $formId,
+            'publication_count' => $oldCount
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update publisher created
+        $this->publication_count = $oldCount + 1;
+
+        // Update object to DB
+        return $this->store();
+    }
+
+    /**
+     * Decreases the publication of the form identified by the given form id
+     * by one.
+     * @param int $formId form id
+     * @param int $oldCount current publication count that's decreased by one
+     * @return boolean true on success; false on failure
+     */
+    public function decreasePublicationCount($formId, $oldCount) {
+        $conditions = array(
+            'id' => $formId,
+            'publication_count' => $oldCount
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update publisher created
+        $this->publication_count = $oldCount - 1;
+
+        // Update object to DB
+        return $this->store();
+    }
+
 }

@@ -62,7 +62,12 @@ JFactory::getDocument()->addScriptDeclaration('
         <?php if ($this->item->id != 0) : ?>
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publications', JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS', true)); ?>
             <div class="row-fluid form-horizontal-desktop">       
-                <?php echo '<div class="add_publication">' . JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS_ADD_NEW') . ' <span class="icon-new"></span></div>'; ?>
+                <div class="add_publication">
+                    <a href="index.php?option=com_issnregistry&task=form.createPublication&formId=<?php echo $this->item->id; ?>">
+                        <?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS_ADD_NEW') ?>
+                        <span class="icon-new"></span>
+                    </a>
+                </div>
                 <?php echo $this->loadTemplate('publications_list'); ?>	               
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>

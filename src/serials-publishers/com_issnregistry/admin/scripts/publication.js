@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
     var publication_id = $("#jform_id").val();
+    var form_id = $("#jform_form_id").val();
     var publisher_link_label = $('#jform_link_to_publisher').text();
     var show_label = publisher_link_label.split('|')[0];
     var edit_label = publisher_link_label.split('|')[1];
@@ -34,6 +35,10 @@ jQuery(document).ready(function ($) {
         );
     });
 
+    $("button[data-target='#modal-goto-form']").click(function () {
+        window.location = url + '?option=com_issnregistry&view=form&layout=edit&id=' + form_id;
+    });
+    
     $("#jform_publisher_id").change(function () {
         updatePublisherLink();
     });

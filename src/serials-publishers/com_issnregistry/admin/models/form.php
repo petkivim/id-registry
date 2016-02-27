@@ -101,4 +101,32 @@ class IssnregistryModelForm extends JModelAdmin {
         return $table->removePublisherCreated($formId);
     }
 
+    /**
+     * Increases the publication of the form identified by the given form id
+     * by one.
+     * @param int $formId form id
+     * @param int $oldCount current publication count that's increased by one
+     * @return boolean true on success; false on failure
+     */
+    public function increasePublicationCount($formId, $oldCount) {
+        // Get db access
+        $table = $this->getTable();
+        // Increase count
+        return $table->increasePublicationCount($formId, $oldCount);
+    }
+
+    /**
+     * Decreases the publication of the form identified by the given form id
+     * by one.
+     * @param int $formId form id
+     * @param int $oldCount current publication count that's decreased by one
+     * @return boolean true on success; false on failure
+     */
+    public function decreasePublicationCount($formId, $oldCount) {
+        // Get db access
+        $table = $this->getTable();
+        // Decrease count
+        return $table->decreasePublicationCount($formId, $oldCount);
+    }
+
 }

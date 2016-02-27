@@ -76,7 +76,20 @@ class IssnRegistryTablePublication extends JTable {
             return false;
         }
         // No identifiers found, delete the item
-        return parent::delete($pk);
+        if (parent::delete($pk)) {
+            if ($this->form_id > 0) {
+                // Load form model
+                $formModel = JModelLegacy::getInstance('form', 'IssnregistryModel');
+                // Get form 
+                $form = $formModel->getItem($this->form_id);
+                // Decrease publication count by one
+                if (!$formModel->decreasePublicationCount($form->id, $form->publication_count)) {
+                    JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_UPDATE_PUBLICATION_COUNT_FAILED'), 'warning');
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
