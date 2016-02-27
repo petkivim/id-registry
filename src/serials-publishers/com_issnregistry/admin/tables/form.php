@@ -69,9 +69,35 @@ class IssnRegistryTableForm extends JTable {
      *
      */
     public function delete($pk = null) {
-        // TODO: check if this form can be deleted
+        // Get publication model
+        $publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
+        if ($pk != null) {
+            // Check if there are publications that have ISSN
+            if ($publicationModel->getIssnCountByFormId($pk) != 0) {
+                // If there are publication with ISSN, the form can't be deleted
+                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_DELETE_FAILED_PUBLICATIONS_WITH_ISSN'), 'warning');
+                // Return false as the item can't be deleted
+                return false;
+            }
+        }
         // Delete form
-        return parent::delete($pk);
+        if (parent::delete($pk)) {
+            // Get publications related to this form
+            $publicationIds = $publicationModel->getPublicationIdsByFormId($pk);
+            // Check if there are publications
+            if (sizeof($publicationIds) != 0) {
+                // Delete the publications
+                if (!$publicationModel->delete($publicationIds)) {
+                    JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_DELETE_PUBLICATIONS_FAILED'), 'warning');
+                }
+            }
+            // Get publisher model
+            $publisherrModel = JModelLegacy::getInstance('publisher', 'IssnregistryModel');
+            // Remove reference to this form
+            $publisherrModel->resetFormId($pk);
+            return true;
+        }
+        return false;
     }
 
     /**
