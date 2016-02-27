@@ -109,7 +109,8 @@ class IssnRegistryTablePublication extends JTable {
     }
 
     /**
-     * Removes ISSN identifier replacing it with an empty string.
+     * Removes ISSN identifier replacing it with an empty string. If ISSN
+     * is empty already, this operation returns false.
      * @param integer $publicationId id of the publication to be updated
      * @return boolean true on success, false on failure
      */
@@ -121,6 +122,11 @@ class IssnRegistryTablePublication extends JTable {
 
         // Load object
         if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Check that issn is not empty already
+        if (empty($this->issn)) {
             return false;
         }
 
