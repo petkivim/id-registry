@@ -344,7 +344,7 @@ class IssnregistryFormsHelper {
                 $url = $post->get('url_' . $i, null, 'string');
                 $previousTitle = $post->get('previous_title_' . $i, null, 'string');
                 $previousIssn = $post->get('previous_issn_' . $i, null, 'string');
-                $previousTitleLastIssue = $post->get('previous_title_last_issue_' . $i, null, 'string');
+                $previousTitleLastIssue = $post->get('previous_title_last_issue_' . $i, '', 'string');
                 $mainSeriesTitle = $post->get('main_series_title_' . $i, null, 'string');
                 $mainSeriesIssn = $post->get('main_series_issn_' . $i, null, 'string');
                 $subseriesTitle = $post->get('subseries_title_' . $i, null, 'string');
@@ -353,24 +353,26 @@ class IssnregistryFormsHelper {
                 $anotherMediumIssn = $post->get('another_medium_issn_' . $i, null, 'string');
                 $additionalInfo = $post->get('additional_info_' . $i, null, 'string');
                 $publicationCreated = JFactory::getDate();
-
+                // Generate JSON
+                $previous = self::toJson($previousTitle, $previousIssn, $previousTitleLastIssue);
+                $mainSeries = self::toJson($mainSeriesTitle, $mainSeriesIssn);
+                $subseries = self::toJson($subseriesTitle, $subseriesIssn);
+                $anotherMedium = self::toJson($anotherMediumTitle, $anotherMediumIssn);
+                
                 // Insert columns
                 $pubColumns = array(
                     'title', 'place_of_publication', 'printer', 'issued_from_year',
-                    'issued_from_number', 'frequency', 'language', 'publication_type', 'publication_type_other',
-                    'medium', 'medium_other', 'url', 'previous_title', 'previous_issn',
-                    'previous_title_last_issue', 'main_series_title', 'main_series_issn',
-                    'subseries_title', 'subseries_issn', 'another_medium_title',
-                    'another_medium_issn', 'additional_info', 'form_id',
-                    'created', 'created_by');
+                    'issued_from_number', 'frequency', 'language', 'publication_type',
+                    'publication_type_other', 'medium', 'medium_other', 'url',
+                    'previous', 'main_series', 'subseries', 'another_medium',
+                    'additional_info', 'form_id', 'created', 'created_by');
                 // Insert values
                 $pubValues = array(
                     $db->quote($title), $db->quote($placeOfPublication), $db->quote($printer), $db->quote($issuedFromYear),
                     $db->quote($issuedFromNumber), $db->quote($frequency), $db->quote($language), $db->quote($publicationType), $db->quote($publicationTypeOther),
-                    $db->quote($medium), $db->quote($mediumOther), $db->quote($url), $db->quote($previousTitle), $db->quote($previousIssn),
-                    $db->quote($previousTitleLastIssue), $db->quote($mainSeriesTitle), $db->quote($mainSeriesIssn),
-                    $db->quote($subseriesTitle), $db->quote($subseriesIssn), $db->quote($anotherMediumTitle),
-                    $db->quote($anotherMediumIssn), $db->quote($additionalInfo), $db->quote($formId),
+                    $db->quote($medium), $db->quote($mediumOther), $db->quote($url), $db->quote($previous),
+                    $db->quote($mainSeries), $db->quote($subseries), $db->quote($anotherMedium),
+                    $db->quote($additionalInfo), $db->quote($formId),
                     $db->quote($publicationCreated->toSql()), $db->quote('WWW'));
 
                 // Create a new query object.
@@ -494,6 +496,13 @@ class IssnregistryFormsHelper {
         $mailer->setBody($message);
 
         return $mailer->Send();
+    }
+
+    private static function toJson($title, $issn, $lastIssue = null) {
+        $json = '{"title":["' . $title . '"],"issn":["' . $issn . '"]';
+        $json .= isset($lastIssue) ? ',"last_issue":["' . $lastIssue . '"]' : '';
+        $json .= '}';
+        return $json;
     }
 
 }

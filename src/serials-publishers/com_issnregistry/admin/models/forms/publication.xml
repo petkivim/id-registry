@@ -170,87 +170,98 @@
             default=""
             validate="url"
         />		
-        <field
-            name="previous_title"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_TITLE_LABEL"
-            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_TITLE_DESC"
-            size="20"
-            class="inputbox validate-previoustitle"
-            default=""
-        />			
-        <field
-            name="previous_issn"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_ISSN_LABEL"
-            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_ISSN_DESC"
-            size="9"
-            class="inputbox validate-previousissn"
-            default=""
-        />
-        <field
-            name="previous_title_last_issue"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_TITLE_LAST_ISSUE_LABEL"
-            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_TITLE_LAST_ISSUE_DESC"
-            size="20"
-            class="inputbox validate-previoustitlelastissue"
-            default=""
-        />		
-        <field
-            name="main_series_title"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_TITLE_LABEL"
-            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_TITLE_DESC"
-            size="20"
-            class="inputbox validate-mainseriestitle"
-            default=""
-        />			
-        <field
-            name="main_series_issn"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_MAIN_SERIES_ISSN_LABEL"
-            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_MAIN_SERIES_ISSN_DESC"
-            size="9"
-            class="inputbox validate-mainseriesissn"
-            default=""
-        />
-        <field
-            name="subseries_title"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_TITLE_LABEL"
-            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_TITLE_DESC"
-            size="20"
-            class="inputbox validate-subseriestitle"
-            default=""
-        />			
-        <field
-            name="subseries_issn"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_SUBSERIES_ISSN_LABEL"
-            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_SUBSERIES_ISSN_DESC"
-            size="9"
-            class="inputbox validate-subseriesissn"
-            default=""
-        />		
-		<field
-            name="another_medium_title"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_TITLE_LABEL"
-            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_TITLE_DESC"
-            size="20"
-            class="inputbox validate-anothermediumtitle"
-            default=""
-        />			
-        <field
-            name="another_medium_issn"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_ANOTHER_MEDIUM_ISSN_LABEL"
-            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_ANOTHER_MEDIUM_ISSN_DESC"
-            size="9"
-            class="inputbox validate-anothermediumissn"
-            default=""
-        />
+		<field name="previous"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_LIST_LABEL"
+               description="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_LIST_DESC"
+               select="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_EDIT"
+               class="validate-previous"
+			   maximum="5"
+               default="">
+            <fieldset hidden="true" name="list_main_series_modal" repeat="true">
+                <field name="title"
+                       label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_TITLE_LABEL"
+                       size="20"
+					   maxlength="50"
+                       type="text" />
+				<field name="issn"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_ISSN_LABEL"
+                       size="9"
+                       type="text" />
+				<field name="last_issue"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_TITLE_LAST_ISSUE_LABEL"
+                       size="9"
+					   maxlength="20"
+                       type="text" />					   
+            </fieldset>
+        </field>
+		<field name="main_series"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_LIST_LABEL"
+               description="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_LIST_DESC"
+               select="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_EDIT"
+               class="validate-mainseries"
+			   maximum="5"
+               default="">
+            <fieldset hidden="true" name="list_main_series_modal" repeat="true">
+                <field name="title"
+                       label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_TITLE_LABEL"
+                       size="20"
+					   maxlength="50"
+                       type="text" />
+				<field name="issn"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_MAIN_SERIES_ISSN_LABEL"
+                       size="9"
+					   maxlength="9"
+                       type="text" />
+            </fieldset>
+        </field>
+		<field name="subseries"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_LIST_LABEL"
+               description="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_LIST_DESC"
+               select="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_EDIT"
+               class="validate-subseries"
+			   maximum="5"
+               default="">
+            <fieldset hidden="true" name="list_subseries_modal" repeat="true">
+                <field name="title"
+                       label="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_TITLE_LABEL"
+                       size="20"
+					   maxlength="50"
+                       type="text" />
+				<field name="issn"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_SUBSERIES_ISSN_LABEL"
+                       size="9"
+					   maxlength="9"
+                       type="text" />
+            </fieldset>
+        </field>
+		<field name="another_medium"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_LIST_LABEL"
+               description="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_LIST_DESC"
+               select="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_EDIT"
+               class="validate-anothermedium"
+			   maximum="5"
+               default="">
+            <fieldset hidden="true" name="list_another_medium_modal" repeat="true">
+                <field name="title"
+                       label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_TITLE_LABEL"
+                       size="20"
+					   maxlength="50"
+                       type="text" />
+				<field name="issn"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_ANOTHER_MEDIUM_ISSN_LABEL"
+                       size="9"
+					   maxlength="9"
+                       type="text" />
+            </fieldset>
+        </field>
         <field
             name="additional_info"
             type="textarea"

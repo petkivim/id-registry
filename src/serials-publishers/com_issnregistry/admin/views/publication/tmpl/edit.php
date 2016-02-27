@@ -73,25 +73,20 @@ JFactory::getDocument()->addScriptDeclaration('
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_4'); ?></legend>
-                <?php echo $this->form->renderField('previous_title'); ?>
-                <?php echo $this->form->renderField('previous_issn'); ?>
-                <?php echo $this->form->renderField('previous_title_last_issue'); ?>
+                <?php echo $this->form->renderField('previous'); ?>
 
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_5'); ?></legend>
-                <?php echo $this->form->renderField('main_series_title'); ?>
-                <?php echo $this->form->renderField('main_series_issn'); ?> 
+                <?php echo $this->form->renderField('main_series'); ?>
 
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_8'); ?></legend>
                 <?php echo $this->form->renderField('additional_info'); ?> 
             </div>
             <div class="span6">
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_6'); ?></legend>
-                <?php echo $this->form->renderField('subseries_title'); ?>
-                <?php echo $this->form->renderField('subseries_issn'); ?> 
+                <?php echo $this->form->renderField('subseries'); ?>
 
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_7'); ?></legend>
-                <?php echo $this->form->renderField('another_medium_title'); ?>
-                <?php echo $this->form->renderField('another_medium_issn'); ?> 
+                <?php echo $this->form->renderField('another_medium'); ?> 
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>

@@ -35,7 +35,6 @@ jQuery(document).ready(function () {
         regex = /^.{0,25}$/;
         return regex.test(value);
     });
-
     document.formvalidator.setHandler("publicationtypeother", function (value) {
         regex = /^.{0,50}$/;
         return regex.test(value);
@@ -48,44 +47,24 @@ jQuery(document).ready(function () {
         regex = /^.{0,50}$/;
         return regex.test(value);
     });
-    document.formvalidator.setHandler("previoustitle", function (value) {
-        regex = /^.{0,100}$/;
+    document.formvalidator.setHandler("previous", function (value) {
+        regex = /^.{0,600}$/;
         return regex.test(value);
     });
-    document.formvalidator.setHandler("previousissn", function (value) {
-        regex = /^\d{4}-\d{3}[\dxX]{1}$/;
+    document.formvalidator.setHandler("mainseries", function (value) {
+        regex = /^.{0,600}$/;
         return regex.test(value);
     });
-    document.formvalidator.setHandler("previoustitlelastissue", function (value) {
-        regex = /^.{0,20}$/;
+    document.formvalidator.setHandler("subseries", function (value) {
+        regex = /^.{0,600}$/;
         return regex.test(value);
     });
-    document.formvalidator.setHandler("mainseriestitle", function (value) {
-        regex = /^.{0,100}$/;
-        return regex.test(value);
-    });
-    document.formvalidator.setHandler("mainseriesissn", function (value) {
-        regex = /^\d{4}-\d{3}[\dxX]{1}$/;
-        return regex.test(value);
-    });
-    document.formvalidator.setHandler("subseriestitle", function (value) {
-        regex = /^.{0,100}$/;
-        return regex.test(value);
-    });
-    document.formvalidator.setHandler("subseriesissn", function (value) {
-        regex = /^\d{4}-\d{3}[\dxX]{1}$/;
-        return regex.test(value);
-    });
-    document.formvalidator.setHandler("anothermediumtitle", function (value) {
-        regex = /^.{0,100}$/;
-        return regex.test(value);
-    });
-    document.formvalidator.setHandler("anothermediumissn", function (value) {
-        regex = /^\d{4}-\d{3}[\dxX]{1}$/;
+    document.formvalidator.setHandler("anothermedium", function (value) {
+        regex = /^.{0,600}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("additionalinfo", function (value) {
-        regex = /^.{0,500}$/;
+        regex = /^.{0,1000}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("www", function (value) {

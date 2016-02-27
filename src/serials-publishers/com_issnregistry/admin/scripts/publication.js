@@ -4,8 +4,21 @@ jQuery(document).ready(function ($) {
     var show_label = publisher_link_label.split('|')[0];
     var edit_label = publisher_link_label.split('|')[1];
     var url = window.location.pathname;
-
+    // Observables
+    var previous = 'jform_previous';
+    var main_series = 'jform_main_series';
+    var subseries = 'jform_subseries';
+    var another_medium = 'jform_another_medium';
     updatePublisherLink();
+
+    updateElement(previous);
+    updateElement(main_series);
+    updateElement(subseries);
+    updateElement(another_medium);
+    observeElementChanges(previous);
+    observeElementChanges(main_series);
+    observeElementChanges(subseries);
+    observeElementChanges(another_medium);
 
     $("#jform_language, #jform_publisher_id, #jform_publication_type, #jform_medium, #jform_frequency, #jform_issued_from_year").chosen({
         disable_search_threshold: 10,
@@ -39,5 +52,60 @@ jQuery(document).ready(function ($) {
         } else {
             $('#jform_link_to_publisher').html(publisher_link_label);
         }
+    }
+
+    function observeElementChanges(observableId) {
+        // select the target node
+        var target = document.querySelector('#' + observableId);
+        // create an observer instance
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                var elementName = mutation.target.id;
+                updateElement(elementName);
+            });
+        });
+        // configuration of the observer:
+        var config = {attributes: true};
+        // pass in the target node, as well as the observer options
+        observer.observe(target, config);
+    }
+
+    function updateElement(elementName) {
+        // Get value, which is a JSON string
+        var elementValue = $('#' + elementName).val();
+        // Get rid of jform prefix
+        elementName = elementName.replace('jform_', '');
+        // Parse JSON
+        var json = jQuery.parseJSON(elementValue);
+        // Check for null value
+        if (json !== null) {
+            var content = '<div id="' + elementName + '">';
+            for (var i = 0; i < json.title.length; i++) {
+                content += json.title[i];
+                content += json.title[i].length > 0 && json.issn[i].length > 0 ? ' ' : '';
+                content += json.issn[i].length > 0 ? '(' + json.issn[i] + ')' : '';
+                if (elementName === 'previous') {
+                    content += json.last_issue[i].length > 0 ? ', ' + json.last_issue[i] : '';
+                }
+                content += (i < json.title.length - 1 ? '<br />' : '');
+
+            }
+            // Put all the names inside a div
+            content += '</div>';
+            // Update values to UI
+            updateContent(content, elementName);
+        }
+    }
+
+    function updateContent(content, elementName) {
+        // Remove earlier values
+        $('div#' + elementName).remove();
+        // Add new values
+        $(content).insertBefore('#jform_' + elementName + '_button');
+        // Add some margin
+        $('div#' + elementName).css("margin-bottom", "1em");
+        $('div#' + elementName).css("margin-top", ".4em");
+        // Set width to 90%
+        $('div#' + elementName).css("width", "90%");
     }
 });

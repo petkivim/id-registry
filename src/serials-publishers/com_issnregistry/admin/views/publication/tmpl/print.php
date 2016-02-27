@@ -153,81 +153,17 @@ $this->form->setFieldAttribute('medium', 'readonly', 'true');
         </div>
         <div class="span6">
             <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_4'); ?></legend>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('previous_title'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->previous_title; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('previous_issn'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->previous_issn; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('previous_title_last_issue'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->previous_title_last_issue; ?>
-                </div>
-            </div>
+            <?php echo $this->form->renderField('previous'); ?>
+
             <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_5'); ?></legend>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('main_series_title'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->main_series_title; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('main_series_issn'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->main_series_issn; ?>
-                </div>
-            </div>
+            <?php echo $this->form->renderField('main_series'); ?>
+
             <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_6'); ?></legend>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('subseries_title'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->subseries_title; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('subseries_issn'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->subseries_issn; ?>
-                </div>
-            </div>
+            <?php echo $this->form->renderField('subseries'); ?>
+
             <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_7'); ?></legend>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('another_medium_title'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->another_medium_title; ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('another_medium_issn'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->another_medium_issn; ?>
-                </div>
-            </div>
+            <?php echo $this->form->renderField('another_medium'); ?> 
+
             <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_8'); ?></legend>
             <div class="control-group">
                 <div class="control-label">
