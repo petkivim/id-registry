@@ -32,7 +32,7 @@ class IssnrangeHelper extends JHelperContent {
             $sum_of_digits += $issn{$i} * (8 - $i);
         }
 
-        $check_digit = 11 - ($sum_of_digits % 11);
+        $check_digit = (11 - ($sum_of_digits % 11)) % 11;
         $check_digit = ( $check_digit == 10 ? 'X' : $check_digit);
         return $check_digit;
     }
