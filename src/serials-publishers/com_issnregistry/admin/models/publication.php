@@ -178,19 +178,6 @@ class IssnregistryModelPublication extends JModelAdmin {
     }
 
     /**
-     * Delete all publications related to the publisher identified by
-     * the given publisher id.
-     * @param int $publisherId publisher id
-     * @return int number of deleted rows
-     */
-    public function deleteByPublisherId($publisherId) {
-        // Get db access
-        $table = $this->getTable();
-        // Get publications
-        return $table->deleteByPublisherId($publisherId);
-    }
-
-    /**
      * Removes ISSN identifier replacing it with an empty string.
      * @param integer $publicationId id of the publication to be updated
      * @return boolean true on success, false on failure
