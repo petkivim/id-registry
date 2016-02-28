@@ -62,6 +62,7 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('control_copy_received'); ?>
                 <?php echo $this->form->renderField('issn_frozen'); ?>
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
+                <?php echo $this->loadTemplate('link_to_archive_record'); ?>
                 <?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
                 <?php echo $this->form->renderField('modified'); ?>

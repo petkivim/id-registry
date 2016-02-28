@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_issnregistry/models/rules">	
+    <fieldset addfieldpath="/administrator/components/com_issnregistry/models/fields">
+        <field
+            name="id"
+            type="hidden"
+        />
+        <field
+            name="form_id"
+            type="hidden"
+        />		
+        <field
+            name="title"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_TITLE_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_TITLE_DESC"
+            size="20"
+            class="inputbox validate-title"
+            default=""
+			required="true"
+        />			
+        <field
+            name="issn"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_ISSN_LABEL"
+            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_ISSN_DESC"
+            size="9"
+            class="inputbox validate-issn"
+            default=""
+			readonly="true"
+        />
+        <field
+            name="place_of_publication"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PLACE_OF_PUBLICATION_LABEL"
+            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_PLACE_OF_PUBLICATION_DESC"
+            size="20"
+            class="inputbox validate-placeofpublication"
+            default=""
+        />
+        <field
+            name="printer"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PRINTER_LABEL"
+            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_PRINTER_DESC"
+            size="20"
+            class="inputbox validate-printer"
+            default=""
+        />		
+        <field
+            name="issued_from_year"
+            type="Year"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ISSUED_FROM_YEAR_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_ISSUED_FROM_YEAR_DESC"
+            class="validate-issuedfromyear"
+            default=""
+        />									
+        <field
+            name="issued_from_number"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_ISSUED_FROM_NUMBER_LABEL"
+            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_ISSUED_FROM_NUMBER_DESC"
+            size="5"
+            class="inputbox validate-issuedfromnumber"
+            default=""
+        />
+		<field 
+			name="frequency" 
+			type="list" 
+			default="" 
+			readonly="true"
+			class="validate-frequency"
+			label="COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_LABEL" 
+			description="COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_DESC">
+			<option value="">COM_ISSNREGISTRY_FIELD_SELECT</option>
+			<option value="h">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_H</option>
+			<option value="g">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_G</option>
+			<option value="a">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_A</option>
+			<option value="f">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_F</option>
+			<option value="t">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_T</option>
+			<option value="q">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_Q</option>
+			<option value="b">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_B</option>
+			<option value="m">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_M</option>
+			<option value="s">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_S</option>
+			<option value="j">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_J</option>
+			<option value="w">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_W</option>
+			<option value="c">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_C</option>
+			<option value="i">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_I</option>
+			<option value="d">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_D</option>
+			<option value="k">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_K</option>
+			<option value="z">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_Z</option>
+			<option value="u">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_U</option>
+		</field>
+        <field
+            name="language"
+            type="list"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_DESC"
+            class="validate-language"
+			readonly="true"
+            default=""
+        >	
+			<option value="">COM_ISSNREGISTRY_FIELD_SELECT</option>
+			<option value="FIN">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_FIN</option>
+			<option value="SWE">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_SWE</option>
+			<option value="ENG">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_ENG</option>
+			<option value="SMI">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_SMI</option>
+			<option value="SPA">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_SPA</option>
+			<option value="FRE">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_FRE</option>
+			<option value="RUS">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_RUS</option>
+			<option value="GER">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_GER</option>
+			<option value="MUL">COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_MUL</option>
+		</field>	
+        <field
+            name="publication_type"
+            type="list"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_DESC"
+            class="validate-publicationtype"
+			readonly="true"
+            default=""
+        >	
+			<option value="">COM_ISSNREGISTRY_FIELD_SELECT</option>
+			<option value="JOURNAL">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_JOURNAL</option>
+			<option value="NEWSLETTER">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_NEWSLETTER</option>
+			<option value="STAFF_MAGAZINE">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_STAFF_MAGAZINE</option>
+			<option value="MEMBERSHIP_BASED_MAGAZINE">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_MEMBERSHIP_BASED_MAGAZINE</option>
+			<option value="CARTOON">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_CARTOON</option>
+			<option value="NEWSPAPER">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_NEWSPAPER</option>
+			<option value="FREE_PAPER">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_FREE_PAPER</option>
+			<option value="MONOGRAPHY_SERIES">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_MONOGRAPHY_SERIES</option>
+			<option value="OTHER_SERIAL">COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLICATION_TYPE_OTHER_SERIAL</option>
+		</field>	
+        <field
+            name="publication_type_other"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PUBLICATION_TYPE_OTHER_LABEL"
+            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_PUBLICATION_TYPE_OTHER_DESC"
+            size="20"
+            class="inputbox validate-publicationtypeother"
+            default=""
+        />			
+        <field
+            name="medium"
+            type="list"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MEDIUM_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_MEDIUM_DESC"
+            class="validate-medium"
+            default=""
+			readonly="true"
+        >	
+			<option value="">COM_ISSNREGISTRY_FIELD_SELECT</option>
+			<option value="PRINTED">COM_ISSNREGISTRY_PUBLICATION_FIELD_MEDIUM_PRINTED</option>
+			<option value="ONLINE">COM_ISSNREGISTRY_PUBLICATION_FIELD_MEDIUM_ONLINE</option>
+			<option value="CDROM">COM_ISSNREGISTRY_PUBLICATION_FIELD_MEDIUM_CDROM</option>
+			<option value="OTHER">COM_ISSNREGISTRY_PUBLICATION_FIELD_MEDIUM_OTHER</option>
+		</field>			
+        <field
+            name="medium_other"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_MEDIUM_OTHER_LABEL"
+            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_MEDIUM_OTHER_DESC"
+            size="20"
+            class="inputbox validate-mediumother"
+            default=""
+        />			
+        <field
+            name="url"
+            type="URL"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_WWW_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_WWW_DESC"
+            size="20"
+            class="inputbox validate-url"
+            default=""
+            validate="url"
+        />		
+		<field name="previous"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_LIST_LABEL"
+               description="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_LIST_DESC"
+               select="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_EDIT"
+               class="validate-previous"
+			   maximum="5"
+               default="">
+            <fieldset hidden="true" name="list_main_series_modal" repeat="true">
+                <field name="title"
+                       label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_TITLE_LABEL"
+                       size="20"
+					   maxlength="50"
+                       type="text" />
+				<field name="issn"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_ISSN_LABEL"
+                       size="9"
+                       type="text" />
+				<field name="last_issue"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_TITLE_LAST_ISSUE_LABEL"
+                       size="9"
+					   maxlength="20"
+                       type="text" />					   
+            </fieldset>
+        </field>
+		<field name="main_series"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_LIST_LABEL"
+               description="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_LIST_DESC"
+               select="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_EDIT"
+               class="validate-mainseries"
+			   maximum="5"
+               default="">
+            <fieldset hidden="true" name="list_main_series_modal" repeat="true">
+                <field name="title"
+                       label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_TITLE_LABEL"
+                       size="20"
+					   maxlength="50"
+                       type="text" />
+				<field name="issn"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_MAIN_SERIES_ISSN_LABEL"
+                       size="9"
+					   maxlength="9"
+                       type="text" />
+            </fieldset>
+        </field>
+		<field name="subseries"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_LIST_LABEL"
+               description="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_LIST_DESC"
+               select="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_EDIT"
+               class="validate-subseries"
+			   maximum="5"
+               default="">
+            <fieldset hidden="true" name="list_subseries_modal" repeat="true">
+                <field name="title"
+                       label="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_TITLE_LABEL"
+                       size="20"
+					   maxlength="50"
+                       type="text" />
+				<field name="issn"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_SUBSERIES_ISSN_LABEL"
+                       size="9"
+					   maxlength="9"
+                       type="text" />
+            </fieldset>
+        </field>
+		<field name="another_medium"
+               type="Repeatable"
+               icon="list"
+               label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_LIST_LABEL"
+               description="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_LIST_DESC"
+               select="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_EDIT"
+               class="validate-anothermedium"
+			   maximum="5"
+               default="">
+            <fieldset hidden="true" name="list_another_medium_modal" repeat="true">
+                <field name="title"
+                       label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_TITLE_LABEL"
+                       size="20"
+					   maxlength="50"
+                       type="text" />
+				<field name="issn"
+                       label="COM_ISSNREGISTRY_PUBLISHER_FIELD_ANOTHER_MEDIUM_ISSN_LABEL"
+                       size="9"
+					   maxlength="9"
+                       type="text" />
+            </fieldset>
+        </field>
+        <field
+            name="additional_info"
+            type="textarea"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ADDITIONAL_INFO_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_ADDITIONAL_INFO_DESC"
+            class="inputbox validate-additionalinfo"
+            rows="3"
+            cols="40"
+        /> 		
+		<field
+			name="prepublication_record_created"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="0"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREPUBLICATION_RECORD_CREATED_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREPUBLICATION_RECORD_CREATEDS_DESC"
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+			name="control_copy_received"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="0"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_CONTROL_COPY_RECEIVED_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_CONTROL_COPY_RECEIVED_DESC"
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+			name="issn_frozen"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="0"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ISSN_FROZEN_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_ISSN_FROZEN_DESC"
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>		
+        <field
+            name="publisher_id"
+            type="Publisher"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLISHER_ID_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_PUBLISHER_ID_DESC"
+            class="validate-publisherid"
+            default=""
+			readonly="true"
+        />	
+		<field
+            name="link_to_publisher"
+            type="Span"
+            label=""
+            description=""
+			default="COM_ISSNREGISTRY_PUBLICATION_FIELD_LINK_TO_PUBLISHER"
+        />	
+        <field 
+            name="created"
+            type="calendar"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_CREATED_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_CREATED_DESC"
+            readonly="true"
+            class="readonly"
+            format="%Y-%m-%d %H:%M:%S"
+            filter="server_utc"
+        />
+        <field
+            name="created_by"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_CREATED_BY_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_CREATED_BY_DESC"
+            size="20"
+            readonly="true"
+            class="readonly"
+        />	
+        <field 
+            name="modified"
+            type="calendar"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MODIFIED_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_MODIFIED_DESC"
+            readonly="true"
+            class="readonly"
+            format="%Y-%m-%d %H:%M:%S"
+            filter="server_utc"
+        />
+        <field
+            name="modified_by"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MODIFIED_BY_LABEL"
+            description="COM_ISSNREGISTRY_PUBLICATION_FIELD_MODIFIED_BY_DESC"
+            size="20"
+            readonly="true"
+            class="readonly"
+        />
+    </fieldset>
+</form>

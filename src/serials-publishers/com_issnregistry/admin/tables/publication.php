@@ -87,6 +87,10 @@ class IssnRegistryTablePublication extends JTable {
                     JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_UPDATE_PUBLICATION_COUNT_FAILED'), 'warning');
                 }
             }
+            // Load publication archive model
+            $publicationArchiveModel = JModelLegacy::getInstance('publicationarchive', 'IssnregistryModel');
+            // Delete archive record
+            $publicationArchiveModel->deleteByPublicationId($this->id);
             return true;
         }
         return false;
