@@ -10,6 +10,7 @@
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.formvalidator');
 JHtml::_('formbehavior.chosen');
+JHTML::_('behavior.modal');
 
 // Add scripts
 $document = JFactory::getDocument();
@@ -37,6 +38,7 @@ JFactory::getDocument()->addScriptDeclaration('
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">        
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_1'); ?></legend>
+                <?php echo $this->form->renderField('id'); ?>
                 <?php echo $this->form->renderField('publisher'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
@@ -53,6 +55,7 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('status'); ?>
                 <?php echo $this->form->renderField('publication_count'); ?>
                 <?php echo $this->form->renderField('publication_count_issn'); ?>
+                <?php echo $this->loadTemplate('link_to_archive_record'); ?>
                 <?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
                 <?php echo $this->form->renderField('modified'); ?>

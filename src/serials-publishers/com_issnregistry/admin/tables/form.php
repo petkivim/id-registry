@@ -95,6 +95,12 @@ class IssnRegistryTableForm extends JTable {
             $publisherrModel = JModelLegacy::getInstance('publisher', 'IssnregistryModel');
             // Remove reference to this form
             $publisherrModel->resetFormId($pk);
+            
+            // Load form archive model
+            $formArchiveModel = JModelLegacy::getInstance('formarchive', 'IssnregistryModel');
+            // Delete archive record
+            $formArchiveModel->deleteByFormId($this->id);
+            
             return true;
         }
         return false;

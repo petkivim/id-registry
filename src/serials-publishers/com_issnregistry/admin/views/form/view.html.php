@@ -75,6 +75,15 @@ class IssnregistryViewForm extends JViewLegacy {
         JToolbarHelper::apply('form.apply');
         JToolBarHelper::save('form.save');
         JToolbarHelper::save2new('form.save2new');
+        if (!$isNew) {
+            // Add custom button for sending a message
+            $toolbar = JToolBar::getInstance('toolbar');
+            $layout = new JLayoutFile('joomla.toolbar.popup');
+
+            // Render the popup button
+            $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISSNREGISTRY_FORM_BUTTON_PRINT'), 'class' => 'icon-print'));
+            $toolbar->appendButton('Custom', $dhtml);
+        }
         if (!$isNew && !$this->item->publisher_created && $this->item->publisher_id == 0) {
             JToolBarHelper::custom('form.createPublisher', 'new', 'new', JText::_('COM_ISSNREGISTRY_FORM_BUTTON_CREATE_PUBLISHER'), false, false);
         }
