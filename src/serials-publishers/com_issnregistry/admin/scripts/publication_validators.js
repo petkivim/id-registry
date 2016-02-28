@@ -67,7 +67,7 @@ jQuery(document).ready(function () {
         regex = /^.{0,1000}$/;
         return regex.test(value);
     });
-    document.formvalidator.setHandler("www", function (value) {
+    document.formvalidator.setHandler("url", function (value) {
         regex = /^http(s)?:\/\/(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
         return regex.test(value);
     });

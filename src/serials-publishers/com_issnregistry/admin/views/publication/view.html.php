@@ -81,12 +81,15 @@ class IssnregistryViewPublication extends JViewLegacy {
             $toolbar = JToolBar::getInstance('toolbar');
             $layout = new JLayoutFile('joomla.toolbar.popup');
 
-            // Render the popup button
-            $dhtml = $layout->render(array('name' => 'generate-marc', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PREVIEW_MARC'), 'class' => 'icon-book'));
-            $toolbar->appendButton('Custom', $dhtml);
+            // Show MARC related buttons only if form and publisher are both set
+            if ($this->item->form_id > 0 && $this->item->publisher_id > 0) {
+                // Render the popup button
+                $dhtml = $layout->render(array('name' => 'generate-marc', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PREVIEW_MARC'), 'class' => 'icon-book'));
+                $toolbar->appendButton('Custom', $dhtml);
 
-            JToolBarHelper::custom('publication.download', 'download', 'download', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_DOWNLOAD_MARC'), false, false);
-
+                JToolBarHelper::custom('publication.download', 'download', 'download', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_DOWNLOAD_MARC'), false, false);
+            }
+            
             // Render print button
             $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PRINT'), 'class' => 'icon-print'));
             $toolbar->appendButton('Custom', $dhtml);

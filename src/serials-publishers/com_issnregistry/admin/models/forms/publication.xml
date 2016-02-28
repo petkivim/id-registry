@@ -161,12 +161,12 @@
             default=""
         />			
         <field
-            name="www"
+            name="url"
             type="URL"
             label="COM_ISBNREGISTRY_PUBLICATION_FIELD_WWW_LABEL"
             description="COM_ISBNREGISTRY_PUBLICATION_FIELD_WWW_DESC"
             size="20"
-            class="inputbox validate-www"
+            class="inputbox validate-url"
             default=""
             validate="url"
         />		

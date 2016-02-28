@@ -56,7 +56,7 @@ JFactory::getDocument()->addScriptDeclaration('
             <div class="span6">
                 <?php echo $this->form->renderField('medium'); ?>
                 <?php echo $this->form->renderField('medium_other'); ?>
-                <?php echo $this->form->renderField('www'); ?>
+                <?php echo $this->form->renderField('url'); ?>
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
                 <?php echo $this->form->renderField('prepublication_record_created'); ?>
                 <?php echo $this->form->renderField('control_copy_received'); ?>

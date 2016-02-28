@@ -31,8 +31,16 @@ class IssnregistryViewPublication extends JViewLegacy {
 
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publication.php';
+        // Load publisher model
+        $publisherModel = JModelLegacy::getInstance('publisher', 'IssnregistryModel');
+        // Load publisher
+        $publisher = $publisherModel->getItem($this->item->publisher_id);
+        // Load form model
+        $formModel = JModelLegacy::getInstance('form', 'IssnregistryModel');
+        // Load form
+        $form = $formModel->getItem($this->item->form_id);
         // Generate MARC record
-        $marc = PublicationHelper::previewMarc($this->item);
+        $marc = PublicationHelper::previewMarc($this->item, $form, $publisher);
 
 
         // Set document properties

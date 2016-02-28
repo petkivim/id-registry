@@ -99,10 +99,10 @@ $this->form->setFieldAttribute('medium', 'readonly', 'true');
             </div>                
             <div class="control-group">
                 <div class="control-label">
-                    <?php echo $this->form->getLabel('www'); ?>
+                    <?php echo $this->form->getLabel('url'); ?>
                 </div>
                 <div class="controls">
-                    <?php echo $this->item->www; ?>
+                    <?php echo $this->item->url; ?>
                 </div>
             </div>
             <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
