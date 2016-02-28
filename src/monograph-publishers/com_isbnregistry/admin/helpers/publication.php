@@ -135,7 +135,7 @@ class PublicationHelper extends JHelperContent {
             $field .= "_";
         }
         // 24-34
-        $field .= "_____|000|";
+        $field .= "_____|00|0|";
         // 35-37
         $field .= empty($language) ? '|||' : strtolower($language);
         // 38-39
