@@ -159,4 +159,67 @@ class IssnregistryModelForm extends JModelAdmin {
         return $table->decreasePublicationWithIssnCount($formId, $oldCount);
     }
 
+    /**
+     * Adds a new publisher to the database using the publisher information
+     * that is included in the given form. The created publisher is set
+     * as the publisher of the form and the reference is updated to all the
+     * publications related to the form.
+     * @param object $form form object
+     * @return boolean true on success, false on failure
+     */
+    public function addPublisher($form) {
+        // Get db access
+        $table = $this->getTable();
+        // Start transaction
+        $table->transactionStart();
+
+        // Create array for publisher
+        $publisher = array(
+            'official_name' => $form->publisher,
+            'contact_person' => $form->contact_person,
+            'email' => $form->email,
+            'phone' => $form->phone,
+            'address' => $form->address,
+            'zip' => $form->zip,
+            'city' => $form->city,
+            'lang_code' => $form->lang_code,
+            'form_id' => $form->id
+        );
+
+        // Load publisher model
+        $publisherModel = JModelLegacy::getInstance('publisher', 'IssnregistryModel');
+        // Save publisher to db
+        if (!$publisherModel->save($publisher)) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_FORM_CREATE_PUBLISHER_FAILED'), 'error');
+            if ($publisherModel->getError()) {
+                $this->setError($publisherModel->getError(), 'error');
+            }
+            $table->transactionRollback();
+            return false;
+        }
+        // Get newly created publisher from db - we need the id
+        $publisherFromDb = $publisherModel->getByFormId($form->id);
+
+        // Update form to db
+        if (!$table->addCreatedPublisher($form->id, $publisherFromDb->id)) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_FORM_UPDATING_PUBLISHER_ID_FAILED'), 'error');
+            $table->transactionRollback();
+            return false;
+        }
+        // Get publication model
+        $publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
+        // Update publisher id to all the publications
+        $updateCount = $publicationModel->updatePublisherId($form->id, $publisherFromDb->id);
+        // Check that all the publications were updated
+        if ($updateCount != $form->publication_count) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_UPDATE_PUBLISHER_ID_TO_PUBLICATIONS_FAILED'), 'error');
+            $table->transactionRollback();
+            return false;
+        }
+        // Commit transaction
+        $table->transactionCommit();
+        // Return true
+        return true;
+    }
+
 }

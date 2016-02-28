@@ -243,4 +243,52 @@ class IssnRegistryTableForm extends JTable {
         return $this->store();
     }
 
+    /**
+     * Adds a refenence to a publisher that was created using the information
+     * from the form identified by the given form id.
+     * @param int $formId form id
+     * @param int $publisherId publisher id
+     * @return boolean true on success; false on failure
+     */
+    public function addCreatedPublisher($formId, $publisherId) {
+        $conditions = array(
+            'id' => $formId,
+            'publisher_id' => 0,
+            'publisher_created' => false
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update values
+        $this->publisher_id = $publisherId;
+        $this->publisher_created = true;
+
+        // Update object to DB
+        return $this->store();
+    }
+
+    /**
+     * Starts a transaction.
+     */
+    public function transactionStart() {
+        $this->_db->transactionStart();
+    }
+
+    /**
+     * Commits a transaction.
+     */
+    public function transactionCommit() {
+        $this->_db->transactionCommit();
+    }
+
+    /**
+     * Transaction rollback.
+     */
+    public function transactionRollback() {
+        $this->_db->transactionRollback();
+    }
+
 }
