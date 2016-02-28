@@ -75,26 +75,12 @@ class IssnregistryControllerForm extends JControllerForm {
                 $this->setRedirect('index.php?option=com_issnregistry&view=forms');
                 $this->redirect();
             }
-            // Array for publication
-            $publication = array(
-                'title' => JText::_('COM_ISSNREGISTRY_PUBLICATION_TITLE_NEW'),
-                'publisher_id' => $form->publisher_id,
-                'form_id' => $form->id
-            );
 
-            // Load publication model
-            $publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
             // Save publication to db
-            if (!$publicationModel->save($publication)) {
-                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_CREATE_PUBLICATION_FAILED'), 'error');
-                if ($publicationModel->getError()) {
-                    JFactory::getApplication()->enqueueMessage($publicationModel->getError(), 'error');
-                }
+            if (!$this->getModel()->addPublication($form)) {
+                JFactory::getApplication()->enqueueMessage($this->getModel()->getError(), 'error');
             } else {
                 JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_CREATE_PUBLICATION_SUCCESS'));
-                if (!$this->getModel()->increasePublicationCount($form->id, $form->publication_count)) {
-                    JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_UPDATE_PUBLICATION_COUNT_FAILED'), 'error');
-                }
             }
         } catch (Exception $e) {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_CREATE_PUBLICATION_FAILED'), 'error');

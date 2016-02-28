@@ -222,4 +222,48 @@ class IssnregistryModelForm extends JModelAdmin {
         return true;
     }
 
+    /**
+     * Creates a new publication and links it to the given form. Only publication
+     * title, form id and publisher id are added. Also form's publication
+     * counter is updated
+     * @param object $form form owning the publication
+     * @return boolean true on success, false on failure
+     */
+    public function addPublication($form) {
+        // Get db access
+        $table = $this->getTable();
+        // Start transaction
+        $table->transactionStart();
+
+        // Array for publication
+        $publication = array(
+            'title' => JText::_('COM_ISSNREGISTRY_PUBLICATION_TITLE_NEW'),
+            'publisher_id' => $form->publisher_id,
+            'form_id' => $form->id
+        );
+
+        // Load publication model
+        $publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
+        // Save publication to db
+        if (!$publicationModel->save($publication)) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_FORM_CREATE_PUBLICATION_FAILED'), 'error');
+            if ($publicationModel->getError()) {
+                $this->setError($publicationModel->getError(), 'error');
+            }
+            $table->transactionRollback();
+            return false;
+        }
+
+        // Increase form's publication counter
+        if (!$this->increasePublicationCount($form->id, $form->publication_count)) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_FORM_UPDATE_PUBLICATION_COUNT_FAILED'), 'error');
+            $table->transactionRollback();
+            return false;
+        }
+        // Commit transaction
+        $table->transactionCommit();
+        // Return true
+        return true;
+    }
+
 }
