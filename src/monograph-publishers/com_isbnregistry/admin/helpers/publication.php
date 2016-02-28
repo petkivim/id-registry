@@ -115,7 +115,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function getField008($language, $format, $year) {
         $date = & JFactory::getDate();
-        $date = JHtml::date($date, 'Ymd');
+        $date = JHtml::date($date, 'ymd');
         // 0-5
         $field = $date;
         // 6
