@@ -102,7 +102,7 @@ class IssnregistryModelForm extends JModelAdmin {
     }
 
     /**
-     * Increases the publication of the form identified by the given form id
+     * Increases the publication count of the form identified by the given form id
      * by one.
      * @param int $formId form id
      * @param int $oldCount current publication count that's increased by one
@@ -116,7 +116,7 @@ class IssnregistryModelForm extends JModelAdmin {
     }
 
     /**
-     * Decreases the publication of the form identified by the given form id
+     * Decreases the publication count of the form identified by the given form id
      * by one.
      * @param int $formId form id
      * @param int $oldCount current publication count that's decreased by one
@@ -127,6 +127,36 @@ class IssnregistryModelForm extends JModelAdmin {
         $table = $this->getTable();
         // Decrease count
         return $table->decreasePublicationCount($formId, $oldCount);
+    }
+
+    /**
+     * Increases the publication with ISSN count of the form identified by 
+     * the given form id by one.
+     * @param int $formId form id
+     * @param int $oldCount current publication with ISSN count that's 
+     * increased by one
+     * @return boolean true on success; false on failure
+     */
+    public function increasePublicationWithIssnCount($formId, $oldCount) {
+        // Get db access
+        $table = $this->getTable();
+        // Increase count
+        return $table->increasePublicationWithIssnCount($formId, $oldCount);
+    }
+
+    /**
+     * Decreases the publication with ISSN count of the form identified by 
+     * the given form id by one.
+     * @param int $formId form id
+     * @param int $oldCount current publication with ISSN count that's 
+     * decreased by one
+     * @return boolean true on success; false on failure
+     */
+    public function decreasePublicationWithIssnCount($formId, $oldCount) {
+        // Get db access
+        $table = $this->getTable();
+        // Decrease count
+        return $table->decreasePublicationWithIssnCount($formId, $oldCount);
     }
 
 }

@@ -171,6 +171,18 @@ class IssnregistryModelIssnrange extends JModelAdmin {
             $table->transactionRollback();
             return '';
         }
+        // Get publication
+        $publication = $publicationModel->getItem($publicationId);
+        // Get an instance of a form model
+        $formModel = $this->getInstance('form', 'IssnregistryModel');
+        // Get form 
+        $form = $formModel->getItem($publication->form_id);
+        // Update form counters
+        if (!$formModel->increasePublicationWithIssnCount($form->id, $form->publication_count_issn)) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_FORM_PUBLICATIONS_COUNT_ISSN_UPDATE_FAILED'));
+            $table->transactionRollback();
+            return '';
+        }
 
         // Create ISSN used object
         $issnUsed = array();
@@ -263,6 +275,19 @@ class IssnregistryModelIssnrange extends JModelAdmin {
             return false;
         }
 
+        // Get publication
+        $publication = $publicationModel->getItem($issnUsed->publication_id);
+        // Get an instance of a form model
+        $formModel = $this->getInstance('form', 'IssnregistryModel');
+        // Get form 
+        $form = $formModel->getItem($publication->form_id);
+        // Update form counters
+        if (!$formModel->decreasePublicationWithIssnCount($form->id, $form->publication_count_issn)) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_FORM_PUBLICATIONS_COUNT_ISSN_UPDATE_FAILED'));
+            $table->transactionRollback();
+            return false;
+        }
+        
         // Commit transaction
         $table->transactionCommit();
         // Return true

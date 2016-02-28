@@ -52,6 +52,7 @@ JFactory::getDocument()->addScriptDeclaration('
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
                 <?php echo $this->form->renderField('status'); ?>
                 <?php echo $this->form->renderField('publication_count'); ?>
+                <?php echo $this->form->renderField('publication_count_issn'); ?>
                 <?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
                 <?php echo $this->form->renderField('modified'); ?>

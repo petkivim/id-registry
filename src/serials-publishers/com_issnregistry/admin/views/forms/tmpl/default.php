@@ -70,7 +70,7 @@ $document->addStyleSheet("components/com_issnregistry/css/form.css");
                                 </a>
                             </td>
                             <td>
-                                <?php echo $row->publication_count; ?>
+                                <?php echo $row->publication_count_issn . ' / ' . $row->publication_count; ?>
                             </td>	
                             <td>
                                 <?php echo JText::_('COM_ISSNREGISTRY_FORM_STATUS_' . $row->status); ?>

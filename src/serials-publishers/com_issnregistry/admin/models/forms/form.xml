@@ -102,6 +102,16 @@
 			default="0"
         />	
         <field
+            name="publication_count_issn"
+            type="text"
+            label="COM_ISSNREGISTRY_FORM_FIELD_PUBLICATION_COUNT_ISSN_LABEL"
+            description="COM_ISSNREGISTRY_FORM_FIELD_PUBLICATION_COUNT_ISSN_DESC"
+            size="20"
+            readonly="true"
+            class="readonly"
+			default="0"
+        />			
+        <field
             name="publisher_id"
             type="Publisher"
             label="COM_ISSNREGISTRY_FORM_FIELD_PUBLISHER_ID_LABEL"

@@ -142,7 +142,7 @@ class IssnRegistryTableForm extends JTable {
     }
 
     /**
-     * Increases the publication of the form identified by the given form id
+     * Increases the publication count of the form identified by the given form id
      * by one.
      * @param int $formId form id
      * @param int $oldCount current publication count that's increased by one
@@ -159,7 +159,7 @@ class IssnRegistryTableForm extends JTable {
             return false;
         }
 
-        // Update publisher created
+        // Update publication count
         $this->publication_count = $oldCount + 1;
 
         // Update object to DB
@@ -167,7 +167,7 @@ class IssnRegistryTableForm extends JTable {
     }
 
     /**
-     * Decreases the publication of the form identified by the given form id
+     * Decreases the publication count of the form identified by the given form id
      * by one.
      * @param int $formId form id
      * @param int $oldCount current publication count that's decreased by one
@@ -184,8 +184,60 @@ class IssnRegistryTableForm extends JTable {
             return false;
         }
 
-        // Update publisher created
+        // Update publication count
         $this->publication_count = $oldCount - 1;
+
+        // Update object to DB
+        return $this->store();
+    }
+
+    /**
+     * Increases the publication with ISSN count of the form identified by 
+     * the given form id by one.
+     * @param int $formId form id
+     * @param int $oldCount current publication with ISSN count that's 
+     * increased by one
+     * @return boolean true on success; false on failure
+     */
+    public function increasePublicationWithIssnCount($formId, $oldCount) {
+        $conditions = array(
+            'id' => $formId,
+            'publication_count_issn' => $oldCount
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update publication count issn
+        $this->publication_count_issn = $oldCount + 1;
+
+        // Update object to DB
+        return $this->store();
+    }
+
+    /**
+     * Decreases the publication with ISSN count of the form identified by 
+     * the given form id by one.
+     * @param int $formId form id
+     * @param int $oldCount current publication with ISSN count that's 
+     * decreased by one
+     * @return boolean true on success; false on failure
+     */
+    public function decreasePublicationWithIssnCount($formId, $oldCount) {
+        $conditions = array(
+            'id' => $formId,
+            'publication_count_issn' => $oldCount
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update publication count issn
+        $this->publication_count_issn = $oldCount - 1;
 
         // Update object to DB
         return $this->store();

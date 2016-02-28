@@ -10,6 +10,7 @@ CREATE TABLE `#__issn_registry_form` (
     `zip` VARCHAR(10) NOT NULL,
     `city` VARCHAR(50) NOT NULL,
     `publication_count` INT DEFAULT 0,
+    `publication_count_issn` INT DEFAULT 0,
     `publisher_id` INT DEFAULT 0,
     `publisher_created` boolean not null default 0,
     `lang_code` VARCHAR(8),

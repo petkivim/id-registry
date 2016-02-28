@@ -117,7 +117,8 @@ class IssnregistryModelPublication extends JModelAdmin {
 
     /**
      * Updates publication identified by the given publication id. Only
-     * publication ISSN is updated.
+     * publication ISSN is updated. ISSN can be updated if and only if the
+     * publication does not currently have ISSN.
      * @param integer $publicationId id of the publication to be updated
      * @param string $issn ISSN identifier string
      * @return boolean true on success
