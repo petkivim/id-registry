@@ -249,3 +249,25 @@ ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__issn_registry_message`;
+
+CREATE TABLE `#__issn_registry_message` (
+    `id`       INT(11)     NOT NULL AUTO_INCREMENT,
+    `recipient` VARCHAR(50) NOT NULL,
+    `subject` VARCHAR(50) NOT NULL,
+    `message` text NOT NULL,
+    `lang_code` VARCHAR(8),
+    `message_template_id` INT default 0,
+    `message_type_id` INT default 0,
+    `publisher_id` INT default 0,
+    `form_id` INT default 0,
+    `group_message_id` INT default 0,
+    `sent` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `sent_by` VARCHAR(30),
+    PRIMARY KEY (`id`)
+)
+ENGINE =InnoDB
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;

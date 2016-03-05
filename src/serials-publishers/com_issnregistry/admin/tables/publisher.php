@@ -83,6 +83,11 @@ class IssnRegistryTablePublisher extends JTable {
             if ($this->form_id != 0) {
                 $formModel->removePublisherCreated($this->form_id);
             }
+            // Get message model
+            $messageModel = JModelLegacy::getInstance('message', 'IssnregistryModel');
+            // Delete messages related to this publisher
+            $messageModel->deleteByPublisherId($pk);
+            // Return true
             return true;
         }
         return false;

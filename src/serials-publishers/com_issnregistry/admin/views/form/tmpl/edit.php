@@ -29,6 +29,8 @@ JFactory::getDocument()->addScriptDeclaration('
         }
     };
 ');
+// If "tmpl=component" URL parameter is present, use view only mode
+$viewOnly = strcmp(htmlentities(JFactory::getApplication()->input->get('tmpl')), 'component') == 0 ? true : false;
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_issnregistry&layout=edit&id=' . (int) $this->item->id); ?>"
       method="post" name="adminForm" id="adminForm" class="form-validate">
@@ -51,11 +53,20 @@ JFactory::getDocument()->addScriptDeclaration('
             <div class="span6">
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
                 <?php echo $this->form->renderField('publisher_id'); ?>
+                <?php
+                if (!$viewOnly) {
+                    echo $this->form->renderField('link_to_publisher');
+                }
+                ?>
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
                 <?php echo $this->form->renderField('status'); ?>
                 <?php echo $this->form->renderField('publication_count'); ?>
                 <?php echo $this->form->renderField('publication_count_issn'); ?>
-                <?php echo $this->loadTemplate('link_to_archive_record'); ?>
+                <?php
+                if (!$viewOnly) {
+                    echo $this->loadTemplate('link_to_archive_record');
+                }
+                ?>
                 <?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
                 <?php echo $this->form->renderField('modified'); ?>
@@ -63,7 +74,7 @@ JFactory::getDocument()->addScriptDeclaration('
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php if ($this->item->id != 0) : ?>
+        <?php if (!$viewOnly && $this->item->id > 0) : ?>
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publications', JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS', true)); ?>
             <div class="row-fluid form-horizontal-desktop">       
                 <div class="add_publication">
@@ -73,6 +84,11 @@ JFactory::getDocument()->addScriptDeclaration('
                     </a>
                 </div>
                 <?php echo $this->loadTemplate('publications_list'); ?>	               
+            </div>
+            <?php echo JHtml::_('bootstrap.endTab'); ?>
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'messages', JText::_('COM_ISSNREGISTRY_FORM_TAB_MESSAGES', true)); ?>
+            <div class="row-fluid form-horizontal-desktop">
+                <?php echo $this->loadTemplate('messages_list'); ?>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php endif; ?>

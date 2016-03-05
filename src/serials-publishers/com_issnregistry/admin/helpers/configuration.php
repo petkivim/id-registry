@@ -24,17 +24,30 @@ class ConfigurationHelper extends JHelperContent {
      */
     public static function getMessageTypeParameterNames() {
         return array(
-            'message_type_form_handled'
+            'message_type_form_handled',
+            'message_type_publisher_summary'
         );
     }
 
     /**
-     * Checks if the given message type is identifier created.
+     * Checks if the given message type is form handled.
      * @param string $messageType message type
-     * @return boolean true if identifier created; otherwise false
+     * @return boolean true if form handled; otherwise false
      */
-    public static function isPublicationIdentifierCreated($messageType) {
+    public static function isFormHandled($messageType) {
         if (strcmp($messageType, 'message_type_form_handled') == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the given message type is publisher summary.
+     * @param string $messageType message type
+     * @return boolean true if publisher summary; otherwise false
+     */
+    public static function isPublisherSummary($messageType) {
+        if (strcmp($messageType, 'message_type_publisher_summary') == 0) {
             return true;
         }
         return false;

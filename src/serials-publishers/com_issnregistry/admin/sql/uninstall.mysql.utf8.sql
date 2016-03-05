@@ -8,3 +8,4 @@ DROP TABLE IF EXISTS `#__issn_registry_issn_used`;
 DROP TABLE IF EXISTS `#__issn_registry_issn_canceled`;
 DROP TABLE IF EXISTS `#__issn_registry_message_type`;
 DROP TABLE IF EXISTS `#__issn_registry_message_template`;
+DROP TABLE IF EXISTS `#__issn_registry_message`;

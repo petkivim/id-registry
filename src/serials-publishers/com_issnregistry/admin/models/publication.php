@@ -102,6 +102,18 @@ class IssnregistryModelPublication extends JModelAdmin {
     }
 
     /**
+     * Returns all the publications that are related to the given publisher id.
+     * @param int $publisherId id of the publisher
+     * @return array publications matching the given publisher id
+     */
+    public function getPublicationsByPublisherId($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publications
+        return $table->getPublicationsByPublisherId($publisherId);
+    }
+
+    /**
      * Updates all the given publisher id to all the publications that
      * have the given form id.
      * @param int $formId id of the form

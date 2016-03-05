@@ -11,18 +11,18 @@
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Publisher View
+ * Message View
  *
  * @since  1.0.0
  */
-class IssnregistryViewPublisher extends JViewLegacy {
+class IssnregistryViewMessage extends JViewLegacy {
 
     protected $form = null;
     protected $item = null;
     protected $state = null;
 
     /**
-     * Display the Publisher view
+     * Display the Message view
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      *
@@ -62,35 +62,19 @@ class IssnregistryViewPublisher extends JViewLegacy {
         // Hide Joomla Administrator Main menu
         $input->set('hidemainmenu', true);
 
+        $title = JText::_('COM_ISSNREGISTRY_MESSAGE_NEW');
         $isNew = ($this->item->id == 0);
 
-        if ($isNew) {
-            $title = JText::_('COM_ISSNREGISTRY_PUBLISHER_NEW');
+        if ($this->getLayout() == 'edit') {
+            JToolBarHelper::title(JText::_('COM_ISSNREGISTRY_MESSAGE_NEW'), 'message');
+            JToolbarHelper::save('message.save', 'COM_ISSNREGISTRY_MESSAGE_BUTTON_SEND');
         } else {
-            $title = JText::_('COM_ISSNREGISTRY_PUBLISHER_EDIT');
-            $title .= ' : ' . $this->item->official_name;
+            JToolBarHelper::title(JText::_('COM_ISSNREGISTRY_MESSAGE_SHOW'), 'message');
+            if(!$isNew) {
+                JToolBarHelper::custom('message.resend', 'mail', 'mail', JText::_('COM_ISSNREGISTRY_MESSAGE_BUTTON_RESEND'), false, false);
+            }
         }
-
-        JToolBarHelper::title($title, 'publisher');
-        JToolbarHelper::apply('publisher.apply');
-        JToolBarHelper::save('publisher.save');
-        JToolbarHelper::save2new('publisher.save2new');
-        if (!$isNew) {
-            // Add custom button for sending a message
-            $toolbar = JToolBar::getInstance('toolbar');
-            $layout = new JLayoutFile('joomla.toolbar.popup');
-
-            // Render the popup button
-            $dhtml = $layout->render(array('name' => 'generate-message', 'text' => JText::_('COM_ISSNREGISTRY_PUBLISHER_BUTTON_SEND_MESSAGE'), 'class' => 'icon-envelope'));
-            $toolbar->appendButton('Custom', $dhtml);
-
-            // Render the popup button
-            $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISSNREGISTRY_PUBLISHER_BUTTON_PRINT'), 'class' => 'icon-print'));
-            $toolbar->appendButton('Custom', $dhtml);
-        }
-        JToolBarHelper::cancel(
-                'publisher.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
-        );
+        JToolbarHelper::cancel('message.cancel', 'COM_ISSNREGISTRY_MESSAGE_BUTTON_CLOSE');
     }
 
 }

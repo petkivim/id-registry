@@ -13,4 +13,10 @@ jQuery(document).ready(function ($) {
         SqueezeBox.open(url + '?option=com_issnregistry&view=publisher&layout=print&tmpl=component&id=' + publisher_id, {handler: 'iframe', size: {x: 1200, y: 600}}
         );
     });
+
+    $("button[data-target='#modal-generate-message']").click(function () {
+        SqueezeBox.open(url + '?option=com_issnregistry&view=message&layout=send&tmpl=component&code=publisher_summary'
+                + '&publisherId=' + publisher_id, {handler: 'iframe', size: {x: 800, y: 600}}
+        );
+    });
 });

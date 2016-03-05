@@ -13,6 +13,13 @@
             default="" 
             label="COM_ISSNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_FORM_HANDLED_LABEL"
             description="COM_ISSNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_FORM_HANDLED_DESC"
+        />	
+        <field
+            name="message_type_publisher_summary" 
+            type="MessageTypePreferences" 
+            default="" 
+            label="COM_ISSNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_PUBLISHER_SUMMARY_LABEL"
+            description="COM_ISSNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_PUBLISHER_SUMMARY_DESC"
         />			
 	</fieldset>
 	<fieldset

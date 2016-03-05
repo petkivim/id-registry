@@ -5,16 +5,18 @@
         <p>
             Viestipohjissa on käytössä joukko muuttujia, joiden avulla on 
             mahdollista tuoda viesteihin järjestelmään tallennettuja tietoja. 
-            Tällaisia tietoja ovat esimerkiksi kustantajatunnus, luodut ISBN- 
-            ja ISMN-tunnukset, päivämäärä ja viestin lähettävän käyttäjän nimi.
+            Tällaisia tietoja ovat esimerkiksi julkaisijan nimi, yhteyshenkilö, 
+            luodut ISSN-tunnukset, päivämäärä ja viestin lähettävän käyttäjän nimi.
             Muuttujat merkataan sivupohjiin #-merkkien sisälle, esim:
         </p>
         <pre>
-#IDENTIFIERS#
-#IDENTIFIER#
+#PUBLISHER#
+#CONTACT_PERSON#
+#EMAIL#
+#ADDRESS#
+#PUBLICATIONS#
 #DATE#
 #USER#
-#ADDRESS#
         </pre>
         <p>
             Alla olevassa taulukossa on esitetty järjestelmän tällä hetkellä
@@ -26,13 +28,59 @@
                 <th width="60%" align="left">Selitys</th>
             </tr>
             <tr>
-                <td>IDENTIFIERS</td>
-                <td>Listaus luoduista ISBN-/ISMN-tunnuksista.</td>
+                <td>PUBLISHER</td>
+                <td>
+                    Julkaisijan nimi. Sähköpostin lähetyksen tapahtuessa 
+                    lomakkeen tietojen kautta käytetään lomakkeelle syötetyn 
+                    julkaisijan nimeä. Kun sähköpostin lähetys taas tapahtuu 
+                    julkaisijan tietojen kautta, käytetään julkaisijan tietoihin 
+                    tallennettua nimeä.
+                </td>
             </tr>
             <tr>
-                <td>IDENTIFIER</td>
-                <td>Kustantajatunnus.</td>
+                <td>CONTACT_PERSON</td>
+                <td>
+                    Yhteyshenkilön nimi. Sähköpostin lähetyksen tapahtuessa 
+                    lomakkeen tietojen kautta käytetään lomakkeelle syötetyn 
+                    yhteyshenkilön nimeä. Kun sähköpostin lähetys taas tapahtuu 
+                    julkaisijan tietojen kautta, käytetään julkaisijan tietoihin 
+                    tallennetun yhteyshenkilön nimeä.
+                </td>
             </tr>
+            <tr>
+                <td>EMAIL</td>
+                <td>
+                    Sähköpostiosoite. Sähköpostin lähetyksen tapahtuessa 
+                    lomakkeen tietojen kautta käytetään lomakkeelle syötettyä 
+                    sähköpostiosoitetta. Kun sähköpostin lähetys taas tapahtuu 
+                    julkaisijan tietojen kautta, käytetään julkaisijan tietoihin 
+                    tallennettua sähköpostiosoitetta.
+                </td>
+            </tr>
+            <tr>
+                <td>ADDRESS</td>
+                <td>
+                    Julkaisijan osoite jaettuna kahdella riville siten, että 
+                    ensimäisellä rivillä on katuosoite ja toisella rivillä 
+                    postinumero ja postitoimipaikka.
+                    
+                    Sähköpostin lähetyksen tapahtuessa lomakkeen tietojen kautta 
+                    käytetään lomakkeelle syötettyä osoitetta. Kun sähköpostin 
+                    lähetys taas tapahtuu julkaisijan tietojen kautta, käytetään 
+                    julkaisijan tietoihin tallennettua osoitetta.
+                </td>
+            </tr>
+            <tr>
+                <td>PUBLICATIONS</td>
+                <td>
+                    Listaus julkaisuista muodossa "Julkaisun nimi (xxxx-xxxx)". 
+                    Sähköpostin lähetyksen tapahtuessa lomakkeen tietojen kautta 
+                    listaus sisältää kaikki lomakkeeseen liittyvät julkaisut.
+                    Kun sähköpostin lähetys taas tapahtuu julkaisijan tietojen 
+                    kautta, sisältyy listaus kaikki kyseiseen julkaisijaan
+                    liittyvät julkaisut.
+                </td>
+            </tr>            
             <tr>
                 <td>DATE</td>
                 <td>Päivämäärä muodossa pp.kk.vvvv.</td>
@@ -41,15 +89,6 @@
                 <td>USER</td>
                 <td>Viestin lähettävän käyttäjän nimi.</td>
             </tr>            
-            <tr>
-                <td>ADDRESS</td>
-                <td>
-                    Kustantajan osoite jaettuna kahdella riville siten, että 
-                    ensimäisellä rivillä on katuosoite ja toisella rivillä 
-                    postinumero ja postitoimipaikka.
-                </td>
-            </tr>
-
         </table>
     </body>
 </html>

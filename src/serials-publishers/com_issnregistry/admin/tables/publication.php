@@ -190,6 +190,24 @@ class IssnRegistryTablePublication extends JTable {
     }
 
     /**
+     * Returns all the publications that are related to the given publisher id.
+     * @param int $publisherId id of the publisher
+     * @return array publications matching the given publisher id
+     */
+    public function getPublicationsByPublisherId($publisherId) {
+        // Database connection
+        $query = $this->_db->getQuery(true);
+        // Create query
+        $query->select('*');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
+        $query->order('title ASC');
+        $this->_db->setQuery($query);
+        // Return result
+        return $this->_db->loadObjectList();
+    }
+
+    /**
      * Returns an Object List that contains all the publications in the
      * database.
      * @return ObjectList list of all the publications
