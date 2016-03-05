@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<fieldset
+		name="messaging"
+		label="COM_ISSNREGISTRY_CONFIG_MESSAGING_LABEL"
+		description="COM_ISSNREGISTRY_CONFIG_MESSAGING_DESC"
+		addfieldpath="administrator/components/com_issnregistry/models/fields"
+		>
+		
+        <field
+            name="message_type_form_handled" 
+            type="MessageTypePreferences" 
+            default="" 
+            label="COM_ISSNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_FORM_HANDLED_LABEL"
+            description="COM_ISSNREGISTRY_CONFIG_MESSAGING_MESSAGE_TYPE_FORM_HANDLED_DESC"
+        />			
+	</fieldset>
+	<fieldset
 		name="mail"
-		label="COM_ISBNREGISTRY_CONFIG_EMAIL_LABEL"
-		description="COM_ISBNREGISTRY_CONFIG_EMAIL_DESC"
+		label="COM_ISSNREGISTRY_CONFIG_EMAIL_LABEL"
+		description="COM_ISSNREGISTRY_CONFIG_EMAIL_DESC"
 		>	
         <field
             name="email_from" 
             type="email" 
             default="" 
 			validate="email"
-            label="COM_ISBNREGISTRY_CONFIG_EMAIL_FROM_LABEL"
-            description="COM_ISBNREGISTRY_CONFIG_EMAIL_FROM_DESC"
+            label="COM_ISSNREGISTRY_CONFIG_EMAIL_FROM_LABEL"
+            description="COM_ISSNREGISTRY_CONFIG_EMAIL_FROM_DESC"
         />		
 		<field
 			name="send_email"
 			type="radio"
 			class="btn-group btn-group-yesno"
 			default="0"
-            label="COM_ISBNREGISTRY_CONFIG_EMAIL_SEND_LABEL"
-            description="COM_ISBNREGISTRY_CONFIG_EMAIL_SEND_DESC">
+            label="COM_ISSNREGISTRY_CONFIG_EMAIL_SEND_LABEL"
+            description="COM_ISSNREGISTRY_CONFIG_EMAIL_SEND_DESC">
 			<option
 				value="1">JYES</option>
 			<option
@@ -28,8 +43,8 @@
         <field
             name="email_interval_microseconds"
             type="number"
-            label="COM_ISBNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_LABEL"
-            description="COM_ISBNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_DESC"
+            label="COM_ISSNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_LABEL"
+            description="COM_ISSNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_DESC"
             default="500000"
             min="0"
         />			

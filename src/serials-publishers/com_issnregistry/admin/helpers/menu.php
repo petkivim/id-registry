@@ -59,6 +59,12 @@ class MenuHelper extends JHelperContent {
                 JText::_('COM_ISSNREGISTRY_SUBMENU_PUBLISHERS'), 'index.php?option=com_issnregistry&view=publishers', $vName == 'publishers'
         );
         JHtmlSidebar::addEntry(
+                JText::_('COM_ISSNREGISTRY_SUBMENU_MESSAGE_TEMPLATES'), 'index.php?option=com_issnregistry&view=messagetemplates', $vName == 'messagetemplates'
+        );
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISSNREGISTRY_SUBMENU_MESSAGE_TYPES'), 'index.php?option=com_issnregistry&view=messagetypes', $vName == 'messagetypes'
+        );
+        JHtmlSidebar::addEntry(
                 JText::_('COM_ISSNREGISTRY_SUBMENU_ISSN_RANGES'), 'index.php?option=com_issnregistry&view=issnranges', $vName == 'issnranges'
         );
     }

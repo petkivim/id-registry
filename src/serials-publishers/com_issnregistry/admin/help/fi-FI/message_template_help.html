@@ -1,0 +1,55 @@
+<html>
+    <head></head>
+    <body>
+        <h3>Viestipohjat</h3>
+        <p>
+            Viestipohjissa on k‰ytˆss‰ joukko muuttujia, joiden avulla on 
+            mahdollista tuoda viesteihin j‰rjestelm‰‰n tallennettuja tietoja. 
+            T‰llaisia tietoja ovat esimerkiksi kustantajatunnus, luodut ISBN- 
+            ja ISMN-tunnukset, p‰iv‰m‰‰r‰ ja viestin l‰hett‰v‰n k‰ytt‰j‰n nimi.
+            Muuttujat merkataan sivupohjiin #-merkkien sis‰lle, esim:
+        </p>
+        <pre>
+#IDENTIFIERS#
+#IDENTIFIER#
+#DATE#
+#USER#
+#ADDRESS#
+        </pre>
+        <p>
+            Alla olevassa taulukossa on esitetty j‰rjestelm‰n t‰ll‰ hetkell‰
+            tukemat viisi muuttujaa.
+        </p>
+        <table width="80%">
+            <tr>
+                <th width="20%" align="left">Muuttuja</th>
+                <th width="60%" align="left">Selitys</th>
+            </tr>
+            <tr>
+                <td>IDENTIFIERS</td>
+                <td>Listaus luoduista ISBN-/ISMN-tunnuksista.</td>
+            </tr>
+            <tr>
+                <td>IDENTIFIER</td>
+                <td>Kustantajatunnus.</td>
+            </tr>
+            <tr>
+                <td>DATE</td>
+                <td>P‰iv‰m‰‰r‰ muodossa pp.kk.vvvv.</td>
+            </tr>
+            <tr>
+                <td>USER</td>
+                <td>Viestin l‰hett‰v‰n k‰ytt‰j‰n nimi.</td>
+            </tr>            
+            <tr>
+                <td>ADDRESS</td>
+                <td>
+                    Kustantajan osoite jaettuna kahdella riville siten, ett‰ 
+                    ensim‰isell‰ rivill‰ on katuosoite ja toisella rivill‰ 
+                    postinumero ja postitoimipaikka.
+                </td>
+            </tr>
+
+        </table>
+    </body>
+</html>

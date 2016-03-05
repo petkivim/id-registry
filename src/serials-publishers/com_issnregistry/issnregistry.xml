@@ -41,7 +41,9 @@
 			<menu link="option=com_issnregistry&amp;view=forms" view="forms" img="class:forms">COM_ISSNREGISTRY_SUBMENU_FORMS</menu>
 			<menu link="option=com_issnregistry&amp;view=publications" view="publications" img="class:publications">COM_ISSNREGISTRY_SUBMENU_PUBLICATIONS</menu>
 			<menu link="option=com_issnregistry&amp;view=publishers" view="publishers" img="class:publishers">COM_ISSNREGISTRY_SUBMENU_PUBLISHERS</menu>
-			<menu link="option=com_issnregistry&amp;view=issnranges" view="issnranges" img="class:issnranges">COM_ISSNREGISTRY_SUBMENU_ISSN_RANGES</menu>	
+			<menu link="option=com_issnregistry&amp;view=messagetemplates" view="messagetemplates" img="class:messagetemplates">COM_ISSNREGISTRY_SUBMENU_MESSAGE_TEMPLATES</menu>
+			<menu link="option=com_issnregistry&amp;view=messagetypes" view="messagetypes" img="class:messagetypes">COM_ISSNREGISTRY_SUBMENU_MESSAGE_TYPES</menu>
+			<menu link="option=com_issnregistry&amp;view=issnranges" view="issnranges" img="class:issnranges">COM_ISSNREGISTRY_SUBMENU_ISSN_RANGES</menu>				
         </submenu>
 
         <!-- Administration Main File Copy Section -->
