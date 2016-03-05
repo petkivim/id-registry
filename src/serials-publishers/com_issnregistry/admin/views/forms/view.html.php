@@ -60,7 +60,6 @@ class IssnregistryViewForms extends JViewLegacy {
         JToolBarHelper::addNew('form.add');
         JToolBarHelper::editList('form.edit');
         JToolBarHelper::deleteList('', 'forms.delete');
-        JToolBarHelper::preferences('com_issnregistry');
     }
 
 }

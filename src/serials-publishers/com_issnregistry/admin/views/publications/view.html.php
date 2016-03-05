@@ -62,8 +62,6 @@ class IssnregistryViewPublications extends JViewLegacy {
         //JToolBarHelper::addNew('publication.add');
         JToolBarHelper::editList('publication.edit');
         JToolBarHelper::deleteList('', 'publications.delete');
-
-        JToolBarHelper::preferences('com_issnregistry');
     }
 
 }
