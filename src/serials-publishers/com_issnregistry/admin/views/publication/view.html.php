@@ -74,7 +74,6 @@ class IssnregistryViewPublication extends JViewLegacy {
         JToolBarHelper::title($title, 'publication');
         JToolbarHelper::apply('publication.apply');
         JToolBarHelper::save('publication.save');
-        JToolbarHelper::save2new('publication.save2new');
 
         if (!$isNew) {
             // Add custom button for generating MARC record
