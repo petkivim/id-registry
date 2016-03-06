@@ -20,6 +20,9 @@ defined('_JEXEC') or die('Restricted access');
 class IssnregistryControllerPublication extends JControllerForm {
 
     public function download() {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
         // Get publication id
         $id = $this->input->getInt('id');
         // Redirect to raw format
@@ -28,6 +31,9 @@ class IssnregistryControllerPublication extends JControllerForm {
     }
 
     public function getIssn() {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
         try {
             // Get publication id
             $id = $this->input->getInt('id');
@@ -55,6 +61,9 @@ class IssnregistryControllerPublication extends JControllerForm {
     }
 
     public function deleteIssn() {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
         try {
             // Get publication id
             $id = $this->input->getInt('id');

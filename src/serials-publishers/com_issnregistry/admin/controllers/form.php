@@ -33,6 +33,9 @@ class IssnregistryControllerForm extends JControllerForm {
     }
 
     public function createPublisher() {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
         try {
             // Get form id
             $id = $this->input->getInt('id');
@@ -63,6 +66,9 @@ class IssnregistryControllerForm extends JControllerForm {
     }
 
     public function createPublication() {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
         try {
             // Get form id
             $id = $this->input->getInt('formId');

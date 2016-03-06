@@ -359,7 +359,11 @@ class IssnregistryModelMessage extends JModelAdmin {
      * @return int number of deleted rows
      */
     public function deleteByFormId($formId) {
-        $messageIds = $this->getMessageIdsByForm($formId);
+        // Get db access
+        $table = $this->getTable();
+        // Get ids
+        $messageIds = $table->getMessageIdsByForm($formId);
+        // Delete objects
         $this->delete($messageIds);
     }
 

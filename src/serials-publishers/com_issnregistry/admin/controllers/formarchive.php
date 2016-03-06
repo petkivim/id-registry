@@ -20,6 +20,9 @@ defined('_JEXEC') or die('Restricted access');
 class IssnregistryControllerFormarchive extends JControllerForm {
 
     public function getRecord() {
+        // Check for request forgeries
+        JSession::checkToken('get') or die(JText::_('JINVALID_TOKEN'));
+
         // Get request parameters
         $formId = $this->input->getInt('formId');
         // Get model
