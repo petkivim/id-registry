@@ -24,11 +24,11 @@ class IssnregistryModelMessages extends JModelList {
      */
     protected function getListQuery() {
         // Get publisher id URL parameter
-        $publisherId = JFactory::getApplication()->input->getInt('publisherId');
+        $publisherId = JFactory::getApplication()->input->getInt('publisherId', 0);
         // Get form id URL parameter
-        $formId = JFactory::getApplication()->input->getInt('formId');
+        $formId = JFactory::getApplication()->input->getInt('formId', 0);
         // Get group message id URL parameter
-        $groupMessageId = JFactory::getApplication()->input->getInt('groupMessageId');
+        $groupMessageId = JFactory::getApplication()->input->getInt('groupMessageId', 0);
         // Initialize variables.
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
@@ -38,11 +38,11 @@ class IssnregistryModelMessages extends JModelList {
                 ->from($db->quoteName('#__issn_registry_message'));
         // If publisher id is not null, add where clause and
         // show only publications that belong to the given publisher
-        if ($publisherId != null) {
+        if ($publisherId != 0) {
             $query->where($db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId));
-        } else if ($groupMessageId != null) {
+        } else if ($groupMessageId != 0) {
             $query->where($db->quoteName('group_message_id') . ' = ' . $db->quote($groupMessageId));
-        } else if ($formId != null) {
+        } else if ($formId != 0) {
             $query->where($db->quoteName('form_id') . ' = ' . $db->quote($formId));
         }
         $query->order('sent DESC');

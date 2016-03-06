@@ -10,5 +10,5 @@
 defined('_JEXEC') or die('Restricted access');
 if($this->item->id > 0) :
 ?>
-<iframe id="messages_iframe" src="index.php?option=com_issnregistry&view=messages&formId=<?php echo $this->item->id; ?>&tmpl=component&layout=embed" frameborder="0" height="400" width="80%"></iframe>
+<iframe id="messages_iframe" src="index.php?option=com_issnregistry&view=messages&formId=<?php echo $this->item->id; ?>&tmpl=component&layout=embed_form" frameborder="0" height="400" width="80%"></iframe>
 <?php endif; ?>
