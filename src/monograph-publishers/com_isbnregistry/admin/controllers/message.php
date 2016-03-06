@@ -20,6 +20,9 @@ defined('_JEXEC') or die('Restricted access');
 class IsbnregistryControllerMessage extends JControllerForm {
 
     public function resend($key = null, $urlVar = null) {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
         // Save data
         $return = parent::save(0, $urlVar);
         // Set redirect
@@ -34,6 +37,9 @@ class IsbnregistryControllerMessage extends JControllerForm {
     }
 
     public function send($key = null, $urlVar = null) {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
         // Save data
         $return = parent::save($key, $urlVar);
         // Set redirect

@@ -28,7 +28,7 @@ class IsbnregistryControllerPublication extends JControllerForm {
         // Get type parameter
         $jinput = JFactory::getApplication()->input->post;
         $type = $jinput->get('type', null, 'string');
-        
+
         try {
             // Get request parameters
             $publisherId = $jinput->get('publisherId', null, 'int');
@@ -77,6 +77,9 @@ class IsbnregistryControllerPublication extends JControllerForm {
     }
 
     public function download() {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
         // Get publication id
         $id = $this->input->getInt('id');
         // Redirect to raw format
