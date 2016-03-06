@@ -259,7 +259,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             'identifier_type' => $identifierType,
             'identifier_count' => $count,
             'publisher_id' => $publisherId,
-            'publication_id' => 0,
+            'publication_id' => $publicationId,
             'publisher_identifier_range_id' => $publisherRange->id
         );
         // Get an instance of identifier batch model
@@ -290,11 +290,6 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 if ($publicationModel->getError()) {
                     $this->setError($publicationModel->getError());
                 }
-                $table->transactionRollback();
-                return array();
-            }
-            // Update publication id to identifier batch
-            if (!$identifierBatchModel->updatePublicationId($batchId, $publicationId)) {
                 $table->transactionRollback();
                 return array();
             }
