@@ -52,6 +52,14 @@ class IsbnregistryViewPublisher extends JViewLegacy {
             $this->assignRef('ismns', $ismns);
         }
 
+        // Get identifie URL parameter
+        $identifier = JFactory::getApplication()->input->getString('identifier', '');
+        // If parameter exists and its value is true, new publisher identifier
+        // has been created
+        if (strcmp($identifier, 'true') == 0) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_IDENTIFIER_RANGE_SUCCESS'));
+        }
+        
         // Set the toolbar
         $this->addToolBar();
         // Add jQuery

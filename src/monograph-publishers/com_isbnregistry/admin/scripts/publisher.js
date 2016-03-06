@@ -82,7 +82,7 @@ jQuery(document).ready(function ($) {
             $.post(url, postData)
                     .done(function (data) {
                         if (data.success == true) {
-                            location.reload();
+                            window.location = window.location.href + (window.location.href.match(/identifier=true$/) ? '' : '&identifier=true');
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
                         }
