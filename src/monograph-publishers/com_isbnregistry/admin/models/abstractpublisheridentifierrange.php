@@ -159,12 +159,14 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
      * Returns an array of identifiers that are generated from the active
      * range of the given publisher. The number of identifiers that are generated
      * is defined by the count parameter.
-     * @param type $publisherId id of the publisher to whom the identifiers
+     * @param int $publisherId id of the publisher to whom the identifiers
      * are generated
      * @param type $count number of identifiers to be generated
+     * @param int $publicationId id of the publication if the identifiers
+     * to be generated are for a particular publication. 0 by default.
      * @return array array of identifiers on success, empty array on failure
      */
-    public function generateIdentifiers($publisherId, $count) {
+    public function generateIdentifiers($publisherId, $count, $publicationId = 0) {
         // Get db access
         $table = $this->getTable();
         // Start transaction
@@ -184,6 +186,30 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             $table->transactionRollback();
             return $resultsArray;
         }
+
+        // Get identifier type
+        $identifierType = strtoupper(substr($this->getRangeModelName(), 0, 4));
+        // Init publication model variable
+        $publicationModel = null;
+        // Init publication format variable
+        $publicationFormat = '';
+
+        // Check if publication id is defined
+        if ($publicationId != 0) {
+            // Load publication model
+            $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
+            // Get publication format
+            $publicationFormat = $publicationModel->getPublicationFormat($publicationId);
+            // Check that the format has been set
+            if (empty($publicationFormat)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_FAILED_NO_FORMAT'));
+                $table->transactionRollback();
+                return $resultsArray;
+            }
+            // Set identifiers count - if 'PRINT_ELECTRONICAL' 2 identifiers are needed
+            $count = strcmp($publicationFormat, 'PRINT_ELECTRONICAL') == 0 ? 2 : 1;
+        }
+
         // Check there are enough free numbers
         if ($publisherRange->free < $count) {
             $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_NOT_ENOUGH_FREE_IDENTIFIERS'));
@@ -228,11 +254,9 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             return array();
         }
 
-        // Identifier type
-        $identifierType = substr($this->getRangeModelName(), 0, 4);
         // Parameters array
         $params = array(
-            'identifier_type' => strtoupper($identifierType),
+            'identifier_type' => $identifierType,
             'identifier_count' => $count,
             'publisher_id' => $publisherId,
             'publication_id' => 0,
@@ -259,6 +283,22 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             return array();
         }
 
+        // If publication id has been defined, update the publication
+        if ($publicationId != 0) {
+            // Update publication record
+            if (!$publicationModel->updateIdentifiers($publicationId, $publisherId, $resultsArray['identifiers'], $identifierType, $publicationFormat)) {
+                if ($publicationModel->getError()) {
+                    $this->setError($publicationModel->getError());
+                }
+                $table->transactionRollback();
+                return array();
+            }
+            // Update publication id to identifier batch
+            if (!$identifierBatchModel->updatePublicationId($batchId, $publicationId)) {
+                $table->transactionRollback();
+                return array();
+            }
+        }
         // Commit transaction
         $table->transactionCommit();
 

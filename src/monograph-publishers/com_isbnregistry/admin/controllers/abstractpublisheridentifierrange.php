@@ -232,55 +232,24 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
 
             // Get model
             $model = $this->getModel();
+            // Get array of identifiers numbers
+            $identifiers = $model->generateIdentifiers($publisherId, 0, $publicationId);
 
-            // Init array for results
-            $identifiers = array();
-            // Load publication model
-            $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
-            // Get publication format
-            $publicationFormat = $publicationModel->getPublicationFormat($publicationId);
-            // Generate identifiers only if publication format has been set
-            if (!empty($publicationFormat)) {
-                // Get identifiers count - if 'PRINT_ELECTRONICAL' 2 identifiers are needed
-                $count = strcmp($publicationFormat, 'PRINT_ELECTRONICAL') == 0 ? 2 : 1;
-                // Get array of identifiers numbers
-                $identifiers = $model->generateIdentifiers($publisherId, $count);
-            } else {
-                // Set specific error message
-                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED_NO_FORMAT');
-            }
             // Check if the array is empty
             if (empty($identifiers['identifiers'])) {
                 $response['success'] = false;
-                if (!isset($response['message'])) {
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
+                if ($model->getError()) {
+                    $response['message'] .= ' ' . $model->getError();
                 }
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             } else {
-                // Update publication record
-                // TODO: if this operation fails, the identifier given to it should be freed. Now the identifier is left unused.
-                $updateSuccess = $publicationModel->updateIdentifiers($publicationId, $publisherId, $identifiers['identifiers'], strtoupper($this->getIdentifierType()), $publicationFormat);
-                // Check if operation succeeded
-                if ($updateSuccess) {
-                    // Load identifier batch model
-                    $identifierBatchModel = JModelLegacy::getInstance('identifierbatch', 'IsbnregistryModel');
-                    // Update publication id
-                    $identifierBatchModel->updatePublicationId($identifiers['identifier_batch_id'], $publicationId);
-                    // Results
-                    $response['success'] = true;
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_SUCCESS');
-                    $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
-                    $response['publication_identifiers'] = $identifiers['identifiers'];
-                    $response['identifier_batch_id'] = $identifiers['identifier_batch_id'];
-                } else {
-                    // TODO: Updating publication failed, try to delete the generated identifier
-                    $response['success'] = false;
-                    $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_FAILED');
-                    if ($publicationModel->getError()) {
-                        $response['message'] .= ' ' . $publicationModel->getError();
-                    }
-                    $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
-                }
+                // Results
+                $response['success'] = true;
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . strtoupper($this->getIdentifierType()) . '_NUMBER_SUCCESS');
+                $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
+                $response['publication_identifiers'] = $identifiers['identifiers'];
+                $response['identifier_batch_id'] = $identifiers['identifier_batch_id'];
             }
             // Return results in JSON
             echo json_encode($response);
