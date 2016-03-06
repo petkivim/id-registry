@@ -8,7 +8,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
-<form action="index.php?option=com_isbnregistry&view=messages&groupMessageId=<?php echo JRequest::getVar('groupMessageId', 0); ?>&tmpl=component&layout=group_messages" method="post" id="adminForm" name="adminForm">
+<form action="index.php?option=com_isbnregistry&view=messages&groupMessageId=<?php echo JFactory::getApplication()->input->getInt('groupMessageId', 0); ?>&tmpl=component&layout=group_messages" method="post" id="adminForm" name="adminForm">
     <table class="table table-striped table-hover">
         <thead>
             <tr>

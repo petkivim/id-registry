@@ -3,7 +3,7 @@
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
- * @author 		Petteri Kivimäki
+ * @author 	Petteri Kivimäki
  * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -28,8 +28,10 @@ abstract class IsbnregistryControllerAbstractIdentifierRange extends JController
         $mainframe = JFactory::getApplication();
         try {
             // Get request parameters
-            $publisherId = JRequest::getVar("publisherId", null, "post", "int");
-            $rangeId = JRequest::getVar("rangeId", null, "post", "int");
+            $jinput = JFactory::getApplication()->input->post;
+            $publisherId = $jinput->get('publisherId', null, 'int');
+            $rangeId = $jinput->get('rangeId', null, 'int');
+
             // Create response array
             $response = array();
             // Add request parameters to response

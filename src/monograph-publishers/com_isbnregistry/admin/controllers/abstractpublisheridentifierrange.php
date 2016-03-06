@@ -32,8 +32,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             header('Content-type: application/json; charset=utf-8');
 
             // Get request parameters
-            $publisherId = JRequest::getVar("publisherId", null, "post", "int");
-            $publisherRangeId = JRequest::getVar("publisherRangeId", null, "post", "int");
+            $jinput = JFactory::getApplication()->input->post;
+            $publisherId = $jinput->get('publisherId', null, 'int');
+            $publisherRangeId = $jinput->get('publisherRangeId', null, 'int');
 
             // Create response array
             $response = array();
@@ -83,7 +84,8 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             header('Content-type: application/json; charset=utf-8');
 
             // Get request parameters
-            $publisherId = JRequest::getVar("publisherId", null, "post", "int");
+            $jinput = JFactory::getApplication()->input->post;
+            $publisherId = $jinput->get('publisherId', null, 'int');
 
             // Get model
             $model = $this->getModel();
@@ -115,7 +117,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
         $mainframe = JFactory::getApplication();
         try {
             // Get request parameters
-            $publisherRangeId = JRequest::getVar("publisherRangeId", null, "post", "int");
+            $jinput = JFactory::getApplication()->input->post;
+            $publisherRangeId = $jinput->get('publisherRangeId', null, 'int');
+
             // Create response array
             $response = array();
             // Add request parameters to response
@@ -168,8 +172,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             header('Content-type: application/json; charset=utf-8');
 
             // Get request parameters
-            $publisherId = JRequest::getVar("publisherId", null, "post", "int");
-            $count = JRequest::getVar("count", null, "post", "int");
+            $jinput = JFactory::getApplication()->input->post;
+            $publisherId = $jinput->get('publisherId', null, 'int');
+            $count = $jinput->get('count', null, 'int');
 
             // Add request parameters to response
             $response["publisherId"] = $publisherId;
@@ -223,8 +228,9 @@ abstract class IsbnregistryControllerAbstractPublisherIdentifierRange extends JC
             header('Content-type: application/json; charset=utf-8');
 
             // Get request parameters
-            $publisherId = JRequest::getVar("publisherId", null, "post", "int");
-            $publicationId = JRequest::getVar("publicationId", null, "post", "int");
+            $jinput = JFactory::getApplication()->input->post;
+            $publisherId = $jinput->get('publisherId', null, 'int');
+            $publicationId = $jinput->get('publicationId', null, 'int');
 
             // Add request parameters to response
             $response["publisherId"] = $publisherId;

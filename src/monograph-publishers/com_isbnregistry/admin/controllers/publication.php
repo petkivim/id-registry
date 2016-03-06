@@ -26,10 +26,12 @@ class IsbnregistryControllerPublication extends JControllerForm {
         // http://{SITE}/administrator/?option=com_isbnregistry&task=publication.getPublicationsWithoutIdentifier&publisherId=1&type=(all|isbn|ismn)
         $mainframe = JFactory::getApplication();
         // Get type parameter
-        $type = JRequest::getVar("type", null, "post", "string");
+        $jinput = JFactory::getApplication()->input->post;
+        $type = $jinput->get('type', null, 'string');
+        
         try {
             // Get request parameters
-            $publisherId = JRequest::getVar("publisherId", null, "post", "int");
+            $publisherId = $jinput->get('publisherId', null, 'int');
 
             // Create response array
             $response = array();
@@ -47,7 +49,7 @@ class IsbnregistryControllerPublication extends JControllerForm {
                 $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLICATION_GET_PUBLICATIONS_WITHOUT_' . strtoupper($type) . '_IDENTIFIERS_FAILED');
                 if ($model->getError()) {
                     $response['message'] .= ' ' . $model->getError();
-                } 
+                }
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             } else {
                 $response['success'] = true;

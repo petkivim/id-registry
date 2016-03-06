@@ -9,7 +9,7 @@
 defined('_JEXEC') or die('Restricted Access');
 JHTML::_('behavior.modal');
 ?>
-<form action="index.php?option=com_isbnregistry&view=identifierbatches&publisherId=<?php echo JRequest::getVar('publisherId', 0); ?>&tmpl=component&layout=embed&type=<?php echo JRequest::getVar('type', ''); ?>" method="post" id="adminForm" name="adminForm">
+<form action="index.php?option=com_isbnregistry&view=identifierbatches&publisherId=<?php echo JFactory::getApplication()->input->getInt('publisherId', 0); ?>&tmpl=component&layout=embed&type=<?php echo JFactory::getApplication()->input->getString('type', ''); ?>" method="post" id="adminForm" name="adminForm">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
