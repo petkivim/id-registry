@@ -354,6 +354,27 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRange extends JTable 
         return $this->_db->getAffectedRows();
     }
 
+    /**
+     * Starts a transaction.
+     */
+    public function transactionStart() {
+        $this->_db->transactionStart();
+    }
+
+    /**
+     * Commits a transaction.
+     */
+    public function transactionCommit() {
+        $this->_db->transactionCommit();
+    }
+
+    /**
+     * Transaction rollback.
+     */
+    public function transactionRollback() {
+        $this->_db->transactionRollback();
+    }
+
 }
 
 ?>

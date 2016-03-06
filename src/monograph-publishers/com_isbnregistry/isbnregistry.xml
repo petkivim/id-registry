@@ -3,9 +3,9 @@
 
     <name>COM_ISBNREGISTRY</name>
     <!-- The following elements are optional and free of formatting constraints -->
-    <creationDate>30 December 2015</creationDate>
-    <author>Petteri Kivimaki</author>
-    <copyright>(C)2015 Petteri Kivimaki</copyright>
+    <creationDate>6 March 2016</creationDate>
+    <author>Petteri Kivimäki</author>
+    <copyright>(C)2015-2016 Petteri Kivimäki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
     <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
     <!--  The version string is recorded in the components table -->

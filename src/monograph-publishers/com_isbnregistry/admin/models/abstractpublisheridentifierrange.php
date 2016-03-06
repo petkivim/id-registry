@@ -57,19 +57,28 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
     public function activateRange($publisherId, $publisherRangeId) {
         // Get db access
         $table = $this->getTable();
+        // Start transaction
+        $table->transactionStart();
         // Disactivate all the other publisher isbn ranges
         $table->disactivateAll($publisherId);
         // Activate given range
-        if ($table->activateRange($publisherId, $publisherRangeId)) {
-            // Get object 
-            $publisherRange = $table->getPublisherRange($publisherRangeId, true);
-            // Update publisher's active identifier range info
-            if (!$this->updateActiveIdentifier($publisherRange->publisher_id, $publisherRange->publisher_identifier)) {
-                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_ACTIVE_IDENTIFIER_RANGE_UPDATE_FAILED'));
-            }
-            return true;
+        if (!$table->activateRange($publisherId, $publisherRangeId)) {
+            $table->transactionRollback();
+            return false;
         }
-        return false;
+        // Get object 
+        $publisherRange = $table->getPublisherRange($publisherRangeId, true);
+        // Update publisher's active identifier range info
+        if (!$this->updateActiveIdentifier($publisherRange->publisher_id, $publisherRange->publisher_identifier)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_ACTIVE_IDENTIFIER_RANGE_UPDATE_FAILED'));
+            $table->transactionRollback();
+            return false;
+        }
+
+        // Commit transaction
+        $table->transactionCommit();
+
+        return true;
     }
 
     /**
@@ -95,17 +104,29 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
 
         // Get db access
         $table = $this->getTable();
+        // Start transaction
+        $table->transactionStart();
+
         // Return false if deleting the object failed
         if (!$table->deleteRange($publisherRangeId)) {
             $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_DELETE_FROM_DB_FAILED'));
+            $table->transactionRollback();
             return false;
         }
         // Update publisher's active identifier range info
         if (!$this->updateActiveIdentifier($publisherRange->publisher_id, '')) {
             $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_ACTIVE_IDENTIFIER_RANGE_UPDATE_FAILED'));
+            $table->transactionRollback();
+            return false;
         }
         // Update the ISBN range accordingly
-        $rangeModel->decreaseByOne($this->getRangeId($publisherRange));
+        if (!$rangeModel->decreaseByOne($this->getRangeId($publisherRange))) {
+            $table->transactionRollback();
+            return false;
+        }
+        // Commit transaction
+        $table->transactionCommit();
+
         // Return true on success
         return true;
     }
@@ -146,6 +167,9 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
     public function generateIdentifiers($publisherId, $count) {
         // Get db access
         $table = $this->getTable();
+        // Start transaction
+        $table->transactionStart();
+
         // Get object 
         $publisherRange = $table->getPublisherRangeByPublisherId($publisherId);
 
@@ -155,80 +179,90 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         $resultsArray['identifiers'] = array();
 
         // Check that we have a result
-        if ($publisherRange) {
-            // Check there are enough free numbers
-            if ($publisherRange->free < $count) {
-                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_NOT_ENOUGH_FREE_IDENTIFIERS'));
-                // If not enough free numbers, return an empty array
-                return $resultsArray;
-            }
-            // Get the next available number
-            $nextPointer = (int) $publisherRange->next;
-            // Generate identifiers
-            for ($x = $nextPointer; $x < $nextPointer + $count; $x++) {
-                // Add padding to the publication code
-                $temp = str_pad($x, $publisherRange->category, "0", STR_PAD_LEFT);
-                // Remove dashes
-                $identifier = str_replace('-', '', $publisherRange->publisher_identifier . $temp);
-                // Calculate check digit
-                $checkDigit = $this->getCheckDigit($identifier);
-                // Push identifiers to results arrays
-                array_push($resultsArray['identifiers'], $publisherRange->publisher_identifier . '-' . $temp . '-' . $checkDigit);
-            }
-            // Increase the pointer
-            $publisherRange->next += $count;
-            // Increase taken
-            $publisherRange->taken += $count;
-            // Decreseace free
-            $publisherRange->free -= $count;
-            // Next pointer is a string, add left padding
-            $publisherRange->next = str_pad($publisherRange->next, $publisherRange->category, "0", STR_PAD_LEFT);
-
-            // Are there any free numbers left?
-            if ($publisherRange->free == 0) {
-                // If all the numbers are used, closed and disactivate
-                $publisherRange->is_active = false;
-                $publisherRange->is_closed = true;
-            }
-
-            // Update changed publisher isbn range to the database
-            if ($table->updateIncrease($publisherRange, $count)) {
-                // Identifier type
-                $identifierType = substr($this->getRangeModelName(), 0, 4);
-                // Parameters array
-                $params = array(
-                    'identifier_type' => strtoupper($identifierType),
-                    'identifier_count' => $count,
-                    'publisher_id' => $publisherId,
-                    'publication_id' => 0,
-                    'publisher_identifier_range_id' => $publisherRange->id
-                );
-                // Get an instance of identifier batch model
-                $identifierBatchModel = $this->getInstance('Identifierbatch', 'IsbnregistryModel');
-                // Add identifier batch
-                $batchId = $identifierBatchModel->addNew($params);
-                // Add batch id to results array
-                $resultsArray['identifier_batch_id'] = $batchId;
-                // Get an instance of identifier model
-                $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
-                // Add new identifiers to db
-                if (!$identifierModel->addNew($resultsArray['identifiers'], $batchId)) {
-                    // If adding new identifiers to DB failed, rollback
-                    $this->decreaseByCount($publisherRange->id, $count);
-                    // Delete batch
-                    $identifierBatchModel->delete($batchId);
-                    // Return an empty array
-                    return array();
-                }
-
-                // If update was succesfull, return the generated ISBN numbers
-                return $resultsArray;
-            } else {
-                // If update failed, return an empty array
-                return array();
-            }
+        if (!$publisherRange) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_PUBLISHER_HAS_NO_RANGE'));
+            $table->transactionRollback();
+            return $resultsArray;
         }
-        $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_PUBLISHER_HAS_NO_RANGE'));
+        // Check there are enough free numbers
+        if ($publisherRange->free < $count) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_NOT_ENOUGH_FREE_IDENTIFIERS'));
+            $table->transactionRollback();
+            // If not enough free numbers, return an empty array
+            return $resultsArray;
+        }
+
+        // Get the next available number
+        $nextPointer = (int) $publisherRange->next;
+        // Generate identifiers
+        for ($x = $nextPointer; $x < $nextPointer + $count; $x++) {
+            // Add padding to the publication code
+            $temp = str_pad($x, $publisherRange->category, "0", STR_PAD_LEFT);
+            // Remove dashes
+            $identifier = str_replace('-', '', $publisherRange->publisher_identifier . $temp);
+            // Calculate check digit
+            $checkDigit = $this->getCheckDigit($identifier);
+            // Push identifiers to results arrays
+            array_push($resultsArray['identifiers'], $publisherRange->publisher_identifier . '-' . $temp . '-' . $checkDigit);
+        }
+        // Increase the pointer
+        $publisherRange->next += $count;
+        // Increase taken
+        $publisherRange->taken += $count;
+        // Decreseace free
+        $publisherRange->free -= $count;
+        // Next pointer is a string, add left padding
+        $publisherRange->next = str_pad($publisherRange->next, $publisherRange->category, "0", STR_PAD_LEFT);
+
+        // Are there any free numbers left?
+        if ($publisherRange->free == 0) {
+            // If all the numbers are used, closed and disactivate
+            $publisherRange->is_active = false;
+            $publisherRange->is_closed = true;
+        }
+
+        // Update changed publisher isbn range to the database
+        if (!$table->updateIncrease($publisherRange, $count)) {
+            $table->transactionRollback();
+            // If update failed, return an empty array
+            return array();
+        }
+
+        // Identifier type
+        $identifierType = substr($this->getRangeModelName(), 0, 4);
+        // Parameters array
+        $params = array(
+            'identifier_type' => strtoupper($identifierType),
+            'identifier_count' => $count,
+            'publisher_id' => $publisherId,
+            'publication_id' => 0,
+            'publisher_identifier_range_id' => $publisherRange->id
+        );
+        // Get an instance of identifier batch model
+        $identifierBatchModel = $this->getInstance('Identifierbatch', 'IsbnregistryModel');
+        // Add identifier batch
+        $batchId = $identifierBatchModel->addNew($params);
+        // Check that creating new batch succeeded
+        if ($batchId == 0) {
+            $table->transactionRollback();
+            return array();
+        }
+        // Add batch id to results array
+        $resultsArray['identifier_batch_id'] = $batchId;
+        // Get an instance of identifier model
+        $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
+        // Add new identifiers to db
+        if (!$identifierModel->addNew($resultsArray['identifiers'], $batchId)) {
+            // If adding new identifiers to DB failed, rollback
+            $table->transactionRollback();
+            // Return an empty array
+            return array();
+        }
+
+        // Commit transaction
+        $table->transactionCommit();
+
+        // If update was succesfull, return the generated ISBN numbers
         return $resultsArray;
     }
 

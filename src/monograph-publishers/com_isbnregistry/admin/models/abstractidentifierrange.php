@@ -28,49 +28,65 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
      */
     public function getPublisherIdentifier($rangeId, $publisherId) {
         // Get DAO for db access
-        $dao = $this->getTable();
+        $table = $this->getTable();
+        // Start transaction
+        $table->transactionStart();
         // Get ISBN range object
-        $range = $dao->getRange($rangeId, true);
+        $range = $table->getRange($rangeId, true);
 
         // Check that we have a result
-        if ($range != null) {
-            // Get the next available number
-            $publisherIdentifier = $range->next;
-            // Is this the last value of the range
-            if ($range->next == $range->range_end) {
-                // This is the last value -> range becames inactive
-                $range->is_active = false;
-                // Range becomes closed
-                $range->is_closed = true;
-            }
-            // Increase next pointer
-            $range->next = $range->next + 1;
-            // Next pointer is a string, add left padding
-            $range->next = str_pad($range->next, $range->category, "0", STR_PAD_LEFT);
-            // Decrease free numbers pointer 
-            $range->free -= 1;
-            // Increase used numbers pointer
-            $range->taken += 1;
-            // Update new values to database
-            if ($dao->updateIncrease($range)) {
-                // Format publisher identifier
-                $result = $this->formatPublisherIdentifier($range, $publisherIdentifier);
-                // Get an instance of a ISBN range model
-                $publisherRangeModel = $this->getInstance($this->getPublisherRangeModelName(), 'IsbnregistryModel');
-                // Insert data into publisher isbn range table
-                if ($publisherRangeModel->saveToDb($range, $publisherId, $result)) {
-                    // Update publisher's active identifier range info
-                    if(!$this->updateActiveIdentifier($publisherId, $result)) {
-                        $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_ACTIVE_IDENTIFIER_RANGE_UPDATE_FAILED'));
-                    }
-                    return $result;
-                } else {
-                    // Rollback 
-                    $this->decreaseByOne($range->id);
-                }
-            }
+        if ($range == null) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_IDENTIFIER_RANGE_NOT_FOUND'));
+            $table->transactionRollback();
+            return 0;
         }
-        return 0;
+
+        // Get the next available number
+        $publisherIdentifier = $range->next;
+        // Is this the last value of the range
+        if ($range->next == $range->range_end) {
+            // This is the last value -> range becames inactive
+            $range->is_active = false;
+            // Range becomes closed
+            $range->is_closed = true;
+        }
+        // Increase next pointer
+        $range->next = $range->next + 1;
+        // Next pointer is a string, add left padding
+        $range->next = str_pad($range->next, $range->category, "0", STR_PAD_LEFT);
+        // Decrease free numbers pointer 
+        $range->free -= 1;
+        // Increase used numbers pointer
+        $range->taken += 1;
+
+        // Update new values to database
+        if (!$table->updateIncrease($range)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_IDENTIFIER_RANGE_FAILED'));
+            $table->transactionRollback();
+            return 0;
+        }
+
+        // Format publisher identifier
+        $result = $this->formatPublisherIdentifier($range, $publisherIdentifier);
+        // Get an instance of a ISBN range model
+        $publisherRangeModel = $this->getInstance($this->getPublisherRangeModelName(), 'IsbnregistryModel');
+        // Insert data into publisher isbn range table
+        if (!$publisherRangeModel->saveToDb($range, $publisherId, $result)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_PUBLISHER_IDENTIFIER_RANGE_FAILED'));
+            $table->transactionRollback();
+            return 0;
+        }
+
+        // Update publisher's active identifier range info
+        if (!$this->updateActiveIdentifier($publisherId, $result)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_ACTIVE_IDENTIFIER_RANGE_UPDATE_FAILED'));
+            $table->transactionRollback();
+            return 0;
+        }
+        // Commit transaction
+        $table->transactionCommit();
+
+        return $result;
     }
 
     /**
@@ -84,9 +100,9 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
      */
     public function canDeleteIdentifier($rangeId, $identifier) {
         // Get DAO for db access
-        $dao = $this->getTable();
+        $table = $this->getTable();
         // Get ISBN range object
-        $range = $dao->getRange($rangeId, false);
+        $range = $table->getRange($rangeId, false);
 
         // Check that we have a result
         if ($range != null) {
@@ -117,9 +133,9 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
      */
     public function decreaseByOne($rangeId) {
         // Get DAO for db access
-        $dao = $this->getTable();
+        $table = $this->getTable();
         // Get ISBN range object
-        $range = $dao->getRange($rangeId, false);
+        $range = $table->getRange($rangeId, false);
 
         // Check that we have a result
         if ($range != null) {
@@ -138,7 +154,7 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
                 $range->is_active = true;
             }
             // Update to db
-            if ($dao->updateDecrease($range)) {
+            if ($table->updateDecrease($range)) {
                 return true;
             }
         }
