@@ -47,13 +47,14 @@
             description="COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_DESC"
             onchange="this.form.submit();"
         >
-            <option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_SELECT</option>
-            <option value="0">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER</option>
-            <option value="1">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_ISBN</option>
-            <option value="2">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_ISMN</option>
-            <option value="3">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER</option>
-            <option value="4">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISBN</option>
-            <option value="5">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISMN</option>
+            <!--<option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_SELECT</option>-->
+            <option value="1">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER</option>
+            <!--<option value="2">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_ISBN</option>
+            <option value="3">COM_ISBNREGISTRY_PUBLISHER_FILTER_NO_IDENTIFIER_ISMN</option>
+            <option value="4">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER</option>-->		
+			<option value="5">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISBN_OR_ISMN</option>
+            <!--<option value="6">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISBN</option>
+            <option value="7">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISMN</option>-->
         </field>
         <field
             name="additional_info"

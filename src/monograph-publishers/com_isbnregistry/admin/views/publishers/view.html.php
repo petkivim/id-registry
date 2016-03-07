@@ -38,10 +38,16 @@ class IsbnregistryViewPublishers extends JViewLegacy {
             return false;
         }
 
+        // Get filter no identifier
+        $filterNoIdentifier = $this->state->get('filter.no_identifier');
         // Add publishers helper file
         require_once JPATH_COMPONENT . '/helpers/publishers.php';
         // Add sidebar
-        PublishersHelper::addSubmenu('publishers');
+        if ($filterNoIdentifier == 1) {
+            PublishersHelper::addSubmenu('publishers_applications');
+        } else if ($filterNoIdentifier == 5) {
+            PublishersHelper::addSubmenu('publishers_registry');
+        }
 
         // Set the toolbar
         $this->addToolBar();
@@ -63,14 +69,14 @@ class IsbnregistryViewPublishers extends JViewLegacy {
         JToolBarHelper::addNew('publisher.add');
         JToolBarHelper::editList('publisher.edit');
         JToolBarHelper::deleteList('', 'publishers.delete');
-        
+
         // Get component parameters
         $params = JComponentHelper::getParams('com_isbnregistry');
         // Get PIID file format
         $format = $params->get('piid_format', 'XLS');
 
         JToolBarHelper::custom('publishers.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
-        
+
         JToolBarHelper::preferences('com_isbnregistry');
     }
 

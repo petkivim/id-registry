@@ -125,22 +125,25 @@ class IsbnregistryModelPublishers extends JModelList {
         // Set identifiier filter
         if (is_numeric($noIdentifier)) {
             switch ($noIdentifier) {
-                case 0:
+                case 1:
                     $query->where('(a.active_identifier_isbn = "" AND a.active_identifier_ismn = "")');
                     break;
-                case 1:
+                case 2:
                     $query->where('a.active_identifier_isbn = ""');
                     break;
-                case 2:
+                case 3:
                     $query->where('a.active_identifier_ismn = ""');
                     break;
-                case 3:
+                case 4:
                     $query->where('(a.active_identifier_isbn != "" AND a.active_identifier_ismn != "")');
                     break;
-                case 4:
+                case 5:
+                    $query->where('(a.active_identifier_isbn != "" OR a.active_identifier_ismn != "")');
+                    break;
+                case 6:
                     $query->where('a.active_identifier_isbn != ""');
                     break;
-                case 5:
+                case 7:
                     $query->where('a.active_identifier_ismn != ""');
                     break;
             }

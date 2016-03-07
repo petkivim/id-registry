@@ -56,7 +56,8 @@
         <!-- Administration Menu Section -->
         <menu img="class:isbnregistry">COM_ISBNREGISTRY_MENU</menu>
         <submenu>
-            <menu link="option=com_isbnregistry" view="publishers" img="class:publishers">COM_ISBNREGISTRY_SUBMENU_PUBLISHERS</menu>
+            <menu link="option=com_isbnregistry&amp;view=publishers&amp;filter_no_identifier=1" view="publishers" img="class:publishers">COM_ISBNREGISTRY_SUBMENU_PUBLISHERS_APPLICATIONS</menu>
+			<menu link="option=com_isbnregistry&amp;view=publishers&amp;filter_no_identifier=5" view="publishers" img="class:publishers">COM_ISBNREGISTRY_SUBMENU_PUBLISHERS_REGISTRY</menu>
             <menu link="option=com_isbnregistry&amp;view=publications&amp;filter_status=1" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_RECEIVED</menu>
 			<menu link="option=com_isbnregistry&amp;view=publications&amp;filter_status=2" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_ON_PROCESS</menu>
 			<menu link="option=com_isbnregistry&amp;view=messages" view="messages" img="class:messages">COM_ISBNREGISTRY_SUBMENU_MESSAGES</menu>
