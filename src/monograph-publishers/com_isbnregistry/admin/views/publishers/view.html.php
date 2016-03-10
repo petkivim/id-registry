@@ -45,7 +45,7 @@ class IsbnregistryViewPublishers extends JViewLegacy {
         // Add sidebar
         if ($filterNoIdentifier == 1) {
             PublishersHelper::addSubmenu('publishers_applications');
-        } else if ($filterNoIdentifier == 5) {
+        } else {
             PublishersHelper::addSubmenu('publishers_registry');
         }
 
