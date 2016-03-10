@@ -52,4 +52,18 @@ class IsbnregistryControllerPublishers extends JControllerAdmin {
         $this->redirect();
     }
 
+    public function toAuthorPublisher() {
+        // Check for request forgeries
+        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+
+        // Get component parameters
+        $params = JComponentHelper::getParams('com_isbnregistry');
+        // Get the id of the publisher that represents author publishers
+        $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
+
+        // Redirect to XML format
+        $this->setRedirect('index.php?option=com_isbnregistry&view=publisher&layout=edit&id=' . $authorPublisherId);
+        $this->redirect();
+    }
+
 }

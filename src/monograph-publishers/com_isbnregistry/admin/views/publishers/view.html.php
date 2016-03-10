@@ -70,13 +70,24 @@ class IsbnregistryViewPublishers extends JViewLegacy {
         JToolBarHelper::editList('publisher.edit');
         JToolBarHelper::deleteList('', 'publishers.delete');
 
-        // Get component parameters
-        $params = JComponentHelper::getParams('com_isbnregistry');
-        // Get PIID file format
-        $format = $params->get('piid_format', 'XLS');
+        // Check that we're showing publisher register
+        if ($this->state->get('filter.no_identifier') == 5) {
+            // Get component parameters
+            $params = JComponentHelper::getParams('com_isbnregistry');
 
-        JToolBarHelper::custom('publishers.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
+            // Get the id of the publisher that represents author publishers
+            $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
 
+            // Get PIID file format
+            $format = $params->get('piid_format', 'XLS');
+
+            JToolBarHelper::custom('publishers.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
+
+            // Check that author publisher has been defined
+            if ($authorPublisherId != 0) {
+                JToolBarHelper::custom('publishers.toAuthorPublisher', 'user', 'user', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_TO_AUTHOR_PUBLISHER'), false, false);
+            }
+        }
         JToolBarHelper::preferences('com_isbnregistry');
     }
 
