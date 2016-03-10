@@ -60,6 +60,12 @@ class IsbnregistryViewPublisher extends JViewLegacy {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_IDENTIFIER_RANGE_SUCCESS'));
         }
         
+        // Check if publisher has quitted
+        if($this->item->has_quitted) {
+            // Raise a warning if publisher has quitted
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_PUBLISHER_WARNING_HAS_QUITTED'), 'Warning');
+        }
+        
         // Set the toolbar
         $this->addToolBar();
         // Add jQuery
