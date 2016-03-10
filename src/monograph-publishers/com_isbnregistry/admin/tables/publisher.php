@@ -248,4 +248,22 @@ class IsbnRegistryTablePublisher extends JTable {
         return $this->_db->loadObjectList();
     }
 
+    /**
+     * Loads the has quitted value of the publisher identified by the given
+     * publisher id.
+     * @param integer $publisherId id of the publisher
+     * @return boolean true if publisher has quitted, otherwise false
+     */
+    public function hasQuitted($publisherId) {
+        // Database connection
+        $query = $this->_db->getQuery(true);
+        // Create query
+        $query->select('has_quitted');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherId));
+        $this->_db->setQuery($query);
+        // Return result
+        return $this->_db->loadResult();
+    }
+
 }

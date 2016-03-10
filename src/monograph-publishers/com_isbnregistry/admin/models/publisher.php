@@ -169,4 +169,17 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         return $table->getPublishersByCategory($categories, $hasQuitted, $type);
     }
 
+    /**
+     * Loads the has quitted value of the publisher identified by the given
+     * publisher id.
+     * @param integer $publisherId id of the publisher
+     * @return boolean true if publisher has quitted, otherwise false
+     */
+    public function hasQuitted($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        //  Return result
+        return $table->hasQuitted($publisherId);
+    }
+
 }

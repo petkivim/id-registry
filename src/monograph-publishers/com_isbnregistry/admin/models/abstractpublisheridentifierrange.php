@@ -172,13 +172,25 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         // Start transaction
         $table->transactionStart();
 
-        // Get object 
-        $publisherRange = $table->getPublisherRangeByPublisherId($publisherId);
-
         // Array for results
         $resultsArray = array();
         $resultsArray['identifier_batch_id'] = 0;
         $resultsArray['identifiers'] = array();
+
+        // Load publisher model
+        $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
+        // Get has quitted value
+        $hasQuitted = $publisherModel->hasQuitted($publisherId);
+        // Check the result - if publisher has quitted identifiers can not
+        // be generated
+        if ($hasQuitted) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_HAS_QUITTED'));
+            $table->transactionRollback();
+            return $resultsArray;
+        }
+        
+        // Get object 
+        $publisherRange = $table->getPublisherRangeByPublisherId($publisherId);
 
         // Check that we have a result
         if (!$publisherRange) {
