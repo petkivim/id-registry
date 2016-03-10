@@ -66,7 +66,6 @@ class IsbnregistryViewPublications extends JViewLegacy {
         JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS'));
         JToolBarHelper::addNew('publication.add');
         JToolBarHelper::editList('publication.edit');
-        JToolBarHelper::deleteList('', 'publications.delete');
 
         // Get component parameters
         $params = JComponentHelper::getParams('com_isbnregistry');
