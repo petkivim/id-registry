@@ -56,6 +56,7 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
             </div>
             <div class="span6">
                 <?php echo $this->form->renderField('address'); ?>
+                <?php echo $this->form->renderField('address_line1'); ?>
                 <?php echo $this->form->renderField('zip'); ?>
                 <?php echo $this->form->renderField('city'); ?>
                 <?php echo $this->form->renderField('phone'); ?>

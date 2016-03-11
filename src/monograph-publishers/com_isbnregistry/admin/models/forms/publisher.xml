@@ -80,6 +80,15 @@
             class="inputbox validate-address"
             default=""
         />	
+		<field
+            name="address_line1"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDRESS_LINE_1_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_ADDRESS_LINE_1_DESC"
+            size="20"
+            class="inputbox validate-addressline1"
+            default=""
+        />
         <field
             name="zip"
             type="text"

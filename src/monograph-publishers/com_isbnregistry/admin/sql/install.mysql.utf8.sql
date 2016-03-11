@@ -6,6 +6,7 @@ CREATE TABLE `#__isbn_registry_publisher` (
     `other_names` VARCHAR(200),
     `previous_names` VARCHAR(300),
     `address` VARCHAR(50) NOT NULL,
+    `address_line1` VARCHAR(50),
     `zip` VARCHAR(10) NOT NULL,
     `city` VARCHAR(50) NOT NULL,
     `phone` VARCHAR(30),

@@ -15,9 +15,9 @@ $document = JFactory::getDocument();
 $document->addScript("components/com_isbnregistry/scripts/publisher_print.js");
 // Add css
 $document->addStyleSheet("components/com_isbnregistry/css/publisher.css");
-$this->form->setFieldAttribute( 'lang_code', 'readonly', 'true' );
-$this->form->setFieldAttribute( 'has_quitted', 'readonly', 'true' );
-$this->form->setFieldAttribute( 'question_7', 'readonly', 'true' );
+$this->form->setFieldAttribute('lang_code', 'readonly', 'true');
+$this->form->setFieldAttribute('has_quitted', 'readonly', 'true');
+$this->form->setFieldAttribute('question_7', 'readonly', 'true');
 ?>
 
 <button name="print" id="print"><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_PRINT'); ?></button>
@@ -100,6 +100,14 @@ $this->form->setFieldAttribute( 'question_7', 'readonly', 'true' );
                 </div>
                 <div class="controls">
                     <?php echo $this->item->address; ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('address_line1'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->address_line1; ?>
                 </div>
             </div>
             <div class="control-group">

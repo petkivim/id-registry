@@ -19,6 +19,10 @@ jQuery(document).ready(function () {
         regex = /^.{0,50}$/;
         return regex.test(value);
     });
+    document.formvalidator.setHandler("addressline1", function (value) {
+        regex = /^.{0,50}$/;
+        return regex.test(value);
+    });
     document.formvalidator.setHandler("zip", function (value) {
         regex = /^\d{5}$/;
         return regex.test(value);
