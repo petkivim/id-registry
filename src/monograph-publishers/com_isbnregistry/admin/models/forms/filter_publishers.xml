@@ -8,6 +8,18 @@
             hint="JSEARCH_FILTER"
         />
         <field
+            name="target_field"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_TARGET_FIELD_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_TARGET_FIELD_DESC"
+            onchange="this.form.submit();"
+            default=""
+        >
+            <option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_TARGET_FIELD_SELECT</option>
+            <option value="additional_info">COM_ISBNREGISTRY_PUBLISHER_FILTER_ADDITIONAL_INFO</option>
+			<option value="contact_person">COM_ISBNREGISTRY_PUBLISHER_FILTER_CONTACT_PERSON</option>
+        </field>		
+        <field
             name="type"
             type="list"
             label="COM_ISBNREGISTRY_PUBLISHER_FILTER_TYPE_LABEL"
@@ -55,17 +67,6 @@
 			<option value="5">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISBN_OR_ISMN</option>
             <!--<option value="6">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISBN</option>
             <option value="7">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISMN</option>-->
-        </field>
-        <field
-            name="additional_info"
-            type="list"
-            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_ADDITIONAL_INFO_LABEL"
-            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_ADDITIONAL_INFO_DESC"
-            onchange="this.form.submit();"
-            default=""
-        >
-            <option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_ADDITIONAL_INFO_SELECT</option>
-            <option value="1">JYES</option>
         </field>
     </fields>
     <fields name="list">

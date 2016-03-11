@@ -25,7 +25,7 @@ class IsbnregistryModelPublishers extends JModelList {
                 'type', 'a.type',
                 'lang_code', 'a.lang_code',
                 'no_identifier', 'a.no_identifier',
-                'additional_info', 'a.additional_info'
+                'target_field', 'a.target_field'
             );
         }
 
@@ -68,8 +68,8 @@ class IsbnregistryModelPublishers extends JModelList {
         $noIdentifier = $this->getUserStateFromRequest($this->context . '.filter.no_identifier', 'filter_no_identifier', '');
         $this->setState('filter.no_identifier', $noIdentifier);
 
-        $additionalInfo = $this->getUserStateFromRequest($this->context . '.filter.additional_info', 'filter_additional_info', '');
-        $this->setState('filter.additional_info', $additionalInfo);
+        $targetField = $this->getUserStateFromRequest($this->context . '.filter.target_field', 'filter_target_field', '');
+        $this->setState('filter.target_field', $targetField);
 
         // List state information.
         parent::populateState('a.official_name', 'asc');
@@ -95,9 +95,8 @@ class IsbnregistryModelPublishers extends JModelList {
         $langCode = $this->getState('filter.lang_code');
         // Get identifier filter
         $noIdentifier = $this->getState('filter.no_identifier');
-        // Get additional info
-        $additionalInfo = $this->getState('filter.additional_info');
-        $useAdditionalInfo = $additionalInfo == 1 ? true : false;
+        // Get target field
+        $targetField = $this->getState('filter.target_field');
 
         // Create the base select statement.
         $query->select('DISTINCT a.id, a.official_name, a.active_identifier_isbn, a.active_identifier_ismn, a.created')
@@ -165,8 +164,10 @@ class IsbnregistryModelPublishers extends JModelList {
             } else {
                 $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
                 // Search from additional info field or name fields?
-                if ($useAdditionalInfo) {
+                if (strcmp($targetField, 'additional_info') === 0) {
                     $query->where('a.additional_info LIKE ' . $search);
+                } else if (strcmp($targetField, 'contact_person') === 0) {
+                    $query->where('a.contact_person LIKE ' . $search);
                 } else {
                     $query->where('(a.official_name LIKE ' . $search . ' OR a.other_names LIKE ' . $search . ' OR a.previous_names LIKE ' . $search . ')');
                 }
