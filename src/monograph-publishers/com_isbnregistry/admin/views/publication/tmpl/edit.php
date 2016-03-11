@@ -53,6 +53,9 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                 <?php echo $this->form->renderField('link_to_publisher'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
+                <!-- Below line is needed because when saving a form with a checkbox 
+                that is unchecked, there is no variable for it in the POST data -->
+                <input type="hidden" name="jform[no_identifier_granted]" value="0">
                 <?php echo $this->form->renderField('no_identifier_granted'); ?>
                 <?php echo $this->form->renderField('created'); ?>
                 <?php echo $this->form->renderField('created_by'); ?>
