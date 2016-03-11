@@ -14,10 +14,10 @@ defined('_JEXEC') or die('Restricted Access');
             <tr>
                 <th width="1%"><?php echo JText::_('COM_ISBNREGISTRY_MESSAGES_NUM'); ?></th>
                 <th width="25%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_MESSAGES_RECIPIENT'); ?>
+                    <?php echo JText::_('COM_ISBNREGISTRY_MESSAGES_SUBJECT'); ?>
                 </th>	
                 <th width="25%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_MESSAGES_SUBJECT'); ?>
+                    <?php echo JText::_('COM_ISBNREGISTRY_MESSAGES_TITLE'); ?>
                 </th>		
                 <th width="25%">
                     <?php echo JText::_('COM_ISBNREGISTRY_MESSAGES_SENT'); ?>
@@ -44,11 +44,11 @@ defined('_JEXEC') or die('Restricted Access');
                         <td><?php echo $this->pagination->getRowOffset($i); ?></td>
                         <td>
                             <a target="new" href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_MESSAGE'); ?>">
-                                <?php echo $row->recipient; ?>
+                                <?php echo $row->subject; ?>
                             </a>
                         </td>   
                         <td>
-                            <?php echo $row->subject; ?>
+                            <?php echo!empty($row->title) ? $row->title : '-'; ?>
                         </td>  
                         <td>
                             <?php echo JHtml::date($row->sent, 'd.m.Y'); ?>

@@ -32,14 +32,17 @@ class IsbnregistryModelMessages extends JModelList {
         $query = $db->getQuery(true);
 
         // Create the base select statement.
-        $query->select('*')
-                ->from($db->quoteName('#__isbn_registry_message'));
+        $query->select('msg.*, pub.title')
+                ->from($db->quoteName('#__isbn_registry_message') . ' AS msg');
+        // Left join to publication
+        $query->join('LEFT', '#__isbn_registry_publication AS pub ON pub.id = msg.publication_id');
+        
         // If publisher id is not null, add where clause and
         // show only publications that belong to the given publisher
         if ($publisherId != null) {
-            $query->where($db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId));
+            $query->where($db->quoteName('msg.publisher_id') . ' = ' . $db->quote($publisherId));
         } else if ($groupMessageId != null) {
-            $query->where($db->quoteName('group_message_id') . ' = ' . $db->quote($groupMessageId ));
+            $query->where($db->quoteName('msg.group_message_id') . ' = ' . $db->quote($groupMessageId ));
         }
         $query->order('sent DESC');
 
