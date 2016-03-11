@@ -60,6 +60,8 @@
 			<menu link="option=com_isbnregistry&amp;view=publishers&amp;filter_no_identifier=5" view="publishers" img="class:publishers">COM_ISBNREGISTRY_SUBMENU_PUBLISHERS_REGISTRY</menu>
             <menu link="option=com_isbnregistry&amp;view=publications&amp;filter_status=1" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_RECEIVED</menu>
 			<menu link="option=com_isbnregistry&amp;view=publications&amp;filter_status=2" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_ON_PROCESS</menu>
+			<menu link="option=com_isbnregistry&amp;view=publications&amp;filter_status=3" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_PROCESSED</menu>
+			<menu link="option=com_isbnregistry&amp;view=publications&amp;filter_status=4" view="publications" img="class:publications">COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_NO_IDENTIFIER_GRANTED</menu>
 			<menu link="option=com_isbnregistry&amp;view=messages" view="messages" img="class:messages">COM_ISBNREGISTRY_SUBMENU_MESSAGES</menu>
 			<menu link="option=com_isbnregistry&amp;view=groupmessages" view="groupmessages" img="class:groupmessages">COM_ISBNREGISTRY_SUBMENU_GROUP_MESSAGES</menu>
 			<menu link="option=com_isbnregistry&amp;view=messagetemplates" view="messagetemplates" img="class:messagetemplates">COM_ISBNREGISTRY_SUBMENU_MESSAGE_TEMPLATES</menu>

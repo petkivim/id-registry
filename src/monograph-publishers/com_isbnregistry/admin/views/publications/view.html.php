@@ -46,7 +46,11 @@ class IsbnregistryViewPublications extends JViewLegacy {
             PublishersHelper::addSubmenu('publications_received');
         } else if ($filterStatus == 2) {
             PublishersHelper::addSubmenu('publications_on_process');
-        }              
+        } else if ($filterStatus == 4) {
+            PublishersHelper::addSubmenu('publications_no_identifier_granted');
+        } else {
+            PublishersHelper::addSubmenu('publications_processed');
+        }
         // Set the toolbar
         $this->addToolBar();
         // Render the sidebar

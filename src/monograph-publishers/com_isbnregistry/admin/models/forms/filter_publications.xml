@@ -18,7 +18,8 @@
             <!--<option value="">COM_ISBNREGISTRY_PUBLICATION_FILTER_STATUS_SELECT</option>-->
             <option value="1">COM_ISBNREGISTRY_PUBLICATION_FILTER_STATUS_RECEIVED</option>
             <option value="2">COM_ISBNREGISTRY_PUBLICATION_FILTER_STATUS_ON_PROCESS</option>       
-			<!--<option value="3">COM_ISBNREGISTRY_PUBLICATION_FILTER_STATUS_PROCESSED</option>-->
+			<option value="3">COM_ISBNREGISTRY_PUBLICATION_FILTER_STATUS_PROCESSED</option>
+			<option value="4">COM_ISBNREGISTRY_PUBLICATION_FILTER_STATUS_NO_IDENTIFIER_GRANTED</option>
         </field>
     </fields>
     <fields name="list">

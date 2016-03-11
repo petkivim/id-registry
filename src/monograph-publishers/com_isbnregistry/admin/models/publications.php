@@ -95,15 +95,22 @@ class IsbnregistryModelPublications extends JModelList {
                 case 1:
                     $query->where('(a.publication_identifier_print = "" AND a.publication_identifier_electronical = "")');
                     $query->where('a.on_process = false');
+                    $query->where('a.no_identifier_granted = false');
                     $query->order('a.created DESC');
                     break;
                 case 2:
                     $query->where('(a.publication_identifier_print = "" AND a.publication_identifier_electronical = "")');
                     $query->where('a.on_process = true');
+                    $query->where('a.no_identifier_granted = false');
                     $query->order('a.created DESC');
                     break;
                 case 3:
                     $query->where('(a.publication_identifier_print != "" OR a.publication_identifier_electronical != "")');
+                    $query->where('a.no_identifier_granted = false');
+                    $query->order('a.title ASC');
+                    break;
+                case 4:
+                    $query->where('a.no_identifier_granted = true');
                     $query->order('a.title ASC');
                     break;
             }
