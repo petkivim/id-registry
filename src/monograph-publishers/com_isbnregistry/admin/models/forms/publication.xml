@@ -399,21 +399,15 @@
 		</field>	
         <field
             name="publication_identifier_print"
-            type="text"
+            type="hidden"
             label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_PRINT_LABEL"
             description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_PRINT_DESC"
-            size="20"
-            readonly="true"
-            class="readonly"
         />	
         <field
             name="publication_identifier_electronical"
-            type="text"
+            type="hidden"
             label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_ELECTRONICAL_LABEL"
             description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_ELECTRONICAL_DESC"
-            size="20"
-            readonly="true"
-            class="readonly"
         />        	
         <field
             name="year"

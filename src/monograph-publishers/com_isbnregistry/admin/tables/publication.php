@@ -145,40 +145,54 @@ class IsbnRegistryTablePublication extends JTable {
      * publication identifier(s) and publication identifier type are updated.
      * @param integer $publicationId id of the publication to be updated
      * @param integer $publisherId id of the publisher that owns the publication
-     * @param array $identifiers array of new identifier
+     * @param string $identifiersPrint identifiers of printed publication in JSON string
+     * @param string $identifiersElectronical identifiers of electronical publication in JSON string
      * @param string $identifierType type of the identifier, "ISBN" or "ISMN"
      * @param string $publicationFormat publication format
      * @return boolean true on success
      */
-    public function updateIdentifiers($publicationId, $publisherId, $identifiers, $identifierType, $publicationFormat) {
-        // Conditions for which records should be updated.
-        $conditions = array(
-            'id' => $publicationId,
-            'publisher_id' => $publisherId
-        );
+    public function updateIdentifiers($publicationId, $publisherId, $identifiersPrint, $identifiersElectronical, $identifierType, $publicationFormat) {
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
 
-        // Load object
-        if (!$this->load($conditions)) {
-            return false;
-        }
+        // Database connection
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('publication_identifier_type') . ' = ' . $this->_db->quote($identifierType),
+            $this->_db->quoteName('on_process') . ' = ' . $this->_db->quote(false),
+            $this->_db->quoteName('modified') . ' = ' . $this->_db->quote($date->toSql()),
+            $this->_db->quoteName('modified_by') . ' = ' . $this->_db->quote($user->get('username'))
+        );
 
         // Update identifier(s)
         if (strcmp($publicationFormat, 'PRINT') == 0) {
-            $this->publication_identifier_print = $identifiers[0];
+            array_push($fields, $this->_db->quoteName('publication_identifier_print') . ' = ' . $this->_db->quote($identifiersPrint));
         } else if (strcmp($publicationFormat, 'ELECTRONICAL') == 0) {
-            $this->publication_identifier_electronical = $identifiers[0];
+            array_push($fields, $this->_db->quoteName('publication_identifier_electronical') . ' = ' . $this->_db->quote($identifiersElectronical));
         } else if (strcmp($publicationFormat, 'PRINT_ELECTRONICAL') == 0) {
-            $this->publication_identifier_print = $identifiers[0];
-            $this->publication_identifier_electronical = $identifiers[1];
+            array_push($fields, $this->_db->quoteName('publication_identifier_print') . ' = ' . $this->_db->quote($identifiersPrint));
+            array_push($fields, $this->_db->quoteName('publication_identifier_electronical') . ' = ' . $this->_db->quote($identifiersElectronical));
         }
 
-        // Update identifier type
-        $this->publication_identifier_type = $identifierType;
-        // On process must set to false
-        $this->on_process = false;
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publicationId),
+            $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId),
+        );
 
-        // Update object to DB
-        return $this->store();
+        // Create query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // If number of affected rows is 1, the result is OK
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -188,26 +202,38 @@ class IsbnRegistryTablePublication extends JTable {
      * @return boolean true on success, false on failure
      */
     public function removeIdentifiers($publicationId) {
-        // Conditions for which records should be updated.
-        $conditions = array(
-            'id' => $publicationId
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        // Database connection
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('publication_identifier_print') . ' = ' . $this->_db->quote(''),
+            $this->_db->quoteName('publication_identifier_electronical') . ' = ' . $this->_db->quote(''),
+            $this->_db->quoteName('publication_identifier_type') . ' = ' . $this->_db->quote(''),
+            $this->_db->quoteName('on_process') . ' = ' . $this->_db->quote(true),
+            $this->_db->quoteName('modified') . ' = ' . $this->_db->quote($date->toSql()),
+            $this->_db->quoteName('modified_by') . ' = ' . $this->_db->quote($user->get('username'))
         );
 
-        // Load object
-        if (!$this->load($conditions)) {
-            return false;
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publicationId)
+        );
+
+        // Create query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // If number of affected rows is 1, the result is OK
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
         }
-
-        // Update identifier(s)
-        $this->publication_identifier_print = '';
-        $this->publication_identifier_electronical = '';
-        $this->publication_identifier_type = '';
-
-        // On process must set to true
-        $this->on_process = true;
-
-        // Update object to DB
-        return $this->store();
+        return false;
     }
 
     /**

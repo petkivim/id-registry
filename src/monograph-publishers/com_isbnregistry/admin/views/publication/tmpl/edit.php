@@ -34,6 +34,8 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
     $this->form->setFieldAttribute('publisher_id', 'readonly', 'true');
     $this->form->setFieldAttribute('publication_type', 'readonly', 'true');
     $this->form->setFieldAttribute('publication_format', 'readonly', 'true');
+    $this->form->setFieldAttribute('type', 'readonly', 'true');
+    $this->form->setFieldAttribute('fileformat', 'readonly', 'true');
 }
 ?>				
 <form action="<?php echo JRoute::_('index.php?option=com_isbnregistry&layout=edit&id=' . (int) $this->item->id); ?>"
@@ -108,7 +110,41 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                 <?php echo $this->form->renderField('map_scale'); ?>
                 <?php echo $this->form->renderField('language'); ?>	
                 <?php echo $this->form->renderField('publication_identifier_print'); ?>
+                <div class="control-group">
+                    <div class="control-label">                 
+                        <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_PRINT_LABEL'); ?>
+                    </div>
+                    <div class="controls">
+                        <?php
+                        $json = json_decode($this->item->publication_identifier_print);
+                        if (!empty($json)) {
+                            foreach ($json as $identifier => $type) {
+                                echo $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ')<br />';
+                            }
+                        } else {
+                            echo '-';
+                        }
+                        ?>
+                    </div>
+                </div>
                 <?php echo $this->form->renderField('publication_identifier_electronical'); ?>
+                <div class="control-group">
+                    <div class="control-label">                       
+                        <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_ELECTRONICAL_LABEL'); ?>
+                    </div>
+                    <div class="controls">
+                        <?php
+                        $json = json_decode($this->item->publication_identifier_electronical);
+                        if (!empty($json)) {
+                            foreach ($json as $identifier => $type) {
+                                echo $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ')<br />';
+                            }
+                        } else {
+                            echo '-';
+                        }
+                        ?>
+                    </div>
+                </div>
                 <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED'); ?></h4>
                 <?php echo $this->form->renderField('year'); ?>	
                 <?php echo $this->form->renderField('month'); ?>

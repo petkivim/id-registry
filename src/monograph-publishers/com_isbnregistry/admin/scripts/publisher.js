@@ -304,7 +304,7 @@ jQuery(document).ready(function ($) {
                         if (data.success == true) {
                             var identifiers = '';
                             $.each(data.identifiers, function (key, value) {
-                                identifiers += value + '\n';
+                                identifiers += key + '\n';
                             });
                             $("textarea#jform_created_" + type + "s").html(identifiers);
                             $('#system-message-container').html(showNotification('success', data.title, data.message));
@@ -363,10 +363,10 @@ jQuery(document).ready(function ($) {
                             loadPublisherIsbnRanges(type);
                             loadPublicationsWithoutIdentifier(type);
                             var link = '<a href="' + url + '?option=com_isbnregistry&view=publication&layout=edit&id=' + publicationId + '" target="new">';
-                            link += label + ' (' + data.publication_identifiers[0];
-                            link += data.publication_identifiers.length === 2 ? ', ' + data.publication_identifiers[1] : '';
-                            link += ')</a>';
-
+                            link += label + '</a><br /><br />';
+                            $.each(data.publication_identifiers, function (key, value) {
+                                link += key + ' (' + value + ')<br />';
+                            });
                             $('#jform_link_to_publication_' + type).html(link);
                             if (type === 'ismn') {
                                 batch_id_ismn = data.identifier_batch_id;

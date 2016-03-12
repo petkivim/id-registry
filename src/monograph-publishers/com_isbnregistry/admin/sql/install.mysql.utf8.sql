@@ -87,8 +87,8 @@ CREATE TABLE `#__isbn_registry_publication` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `official_name` VARCHAR(100) NOT NULL,
     `publisher_identifier_str` VARCHAR(20),
-    `publication_identifier_print` VARCHAR(20) default '',
-    `publication_identifier_electronical` VARCHAR(20) default '',
+    `publication_identifier_print` VARCHAR(105) default '',
+    `publication_identifier_electronical` VARCHAR(115) default '',
     `publication_identifier_type` VARCHAR(4) default '',
     `publisher_id` INT,
     `locality` VARCHAR(50),
@@ -361,6 +361,7 @@ CREATE TABLE `#__isbn_registry_identifier` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `identifier` VARCHAR(20) NOT NULL,
     `identifier_batch_id` INT NOT NULL,
+    `publication_type` VARCHAR(25) NOT NULL DEFAULT '',
     PRIMARY KEY (`id`),
     INDEX `idx_identifier` (`identifier`),
     INDEX `idx_identifier_batch_id` (`identifier_batch_id`)

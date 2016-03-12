@@ -16,10 +16,10 @@ defined('_JEXEC') or die('Restricted Access');
                 <th width="20%">
                     <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_TITLE'); ?>
                 </th>	
-                <th width="15%">
+                <th width="20%">
                     <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_IDENTIFIER'); ?>
                 </th>
-                <th width="30%">
+                <th width="25%">
                     <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATIONS_COMMENTS'); ?>
                 </th>		
                 <th width="15%">
@@ -55,10 +55,10 @@ defined('_JEXEC') or die('Restricted Access');
                         </td> 
                         <td>
                             <?php
-                            $identifier = empty($row->publication_identifier_print) ? '' : $row->publication_identifier_print;
-                            $identifier .=!empty($row->publication_identifier_print) && !empty($row->publication_identifier_electronical) ? ', ' : '';
-                            $identifier .= empty($row->publication_identifier_electronical) ? '' : $row->publication_identifier_electronical;
-                            echo $identifier;
+                            // Load publication model
+                            $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
+                            // Get identifiers string
+                            echo $publicationModel->getIdentifiersString($row->publication_identifier_print, $row->publication_identifier_electronical);
                             ?>
                         </td> 
                         <td>

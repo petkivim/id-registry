@@ -160,10 +160,15 @@ class IsbnregistryModelPublication extends JModelAdmin {
             return false;
         }
 
+        // Convert identifiers print to JSON
+        $identifiersPrint = $this->identifiersPrintToJSON($identifiers);
+        // Convert identifiers electronical to JSON
+        $identifiersElectronical = $this->identifiersElectronicalToJSON($identifiers);
+
         // Get DAO for db access
         $dao = $this->getTable();
         // Return result
-        return $dao->updateIdentifiers($publicationId, $publisherId, $identifiers, $identifierType, $publicationFormat);
+        return $dao->updateIdentifiers($publicationId, $publisherId, $identifiersPrint, $identifiersElectronical, $identifierType, $publicationFormat);
     }
 
     /**
@@ -268,6 +273,63 @@ class IsbnregistryModelPublication extends JModelAdmin {
         $table = $this->getTable();
         // Update
         return $table->removeIdentifiers($publicationId);
+    }
+
+    /**
+     * Creates a comma separated string that contains identifiers of both
+     * printed and electronical publications.
+     * @param string $printIdentifiers print identifiers strign
+     * @param string $electronicalIdentifiers electronical identifiers string
+     * @return string comma separated string that contains identifiers of both
+     * printed and electronical publications
+     */
+    public function getIdentifiersString($printIdentifiers, $electronicalIdentifiers) {
+        $identifiers = array();
+        $json = json_decode($printIdentifiers);
+        if (!empty($json)) {
+            foreach ($json as $identifier => $type) {
+                array_push($identifiers, $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ')');
+            }
+        }
+        $json = json_decode($electronicalIdentifiers);
+        if (!empty($json)) {
+            foreach ($json as $identifier => $type) {
+                array_push($identifiers, $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ')');
+            }
+        }
+        if (!empty($identifiers)) {
+            return implode(', ', $identifiers);
+        } else {
+            return '-';
+        }
+    }
+
+    private function identifiersPrintToJSON($identifiers) {
+        $types = array('PAPERBACK', 'HARDBACK', 'SPIRAL_BINDING');
+        $json = array();
+        foreach ($identifiers as $identifier => $type) {
+            if (in_array($type, $types)) {
+                $json[$identifier] = $type;
+            }
+        }
+        if (empty($json)) {
+            return '';
+        }
+        return json_encode($json);
+    }
+
+    private function identifiersElectronicalToJSON($identifiers) {
+        $types = array('PDF', 'EPUB', 'CD_ROM', 'OTHER');
+        $json = array();
+        foreach ($identifiers as $identifier => $type) {
+            if (in_array($type, $types)) {
+                $json[$identifier] = $type;
+            }
+        }
+        if (empty($json)) {
+            return '';
+        }
+        return json_encode($json);
     }
 
 }

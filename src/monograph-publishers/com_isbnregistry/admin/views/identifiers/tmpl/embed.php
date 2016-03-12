@@ -37,7 +37,7 @@ defined('_JEXEC') or die('Restricted Access');
                     <tr>
                         <td><?php echo $this->pagination->getRowOffset($i); ?></td> 
                         <td>
-                            <?php echo $row->identifier; ?>
+                            <?php echo $row->identifier . (empty($row->publication_type) ? '' : ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $row->publication_type) . ')'); ?>
                         </td>   							
                         <td align="center">
                             <?php echo $row->id; ?>

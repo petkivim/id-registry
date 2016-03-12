@@ -57,14 +57,14 @@ class IsbnRegistryTableIdentifier extends JTable {
         $query = $this->_db->getQuery(true);
 
         // Insert columns.
-        $columns = array('identifier', 'identifier_batch_id');
+        $columns = array('identifier', 'identifier_batch_id', 'publication_type');
 
         // Prepare the insert query.
         $query->insert($this->_db->quoteName($this->_tbl))->columns($this->_db->quoteName($columns));
 
         // Loop through identifiers
-        foreach ($identifiers as $identifier) {
-            $query->values(array("'" . $identifier . "', " . $identifierBatchId));
+        foreach ($identifiers as $identifier => $publicationType) {
+            $query->values(array("'" . $identifier . "', " . $identifierBatchId. ", '" . $publicationType . "'"));
         }
 
         // Set the query 

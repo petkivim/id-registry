@@ -134,18 +134,32 @@ $this->form->setFieldAttribute('fileformat', 'readonly', 'true');
             <?php echo $this->form->renderField('language'); ?>	
             <div class="control-group">
                 <div class="control-label">
-                    <?php echo $this->form->getLabel('publication_identifier_print'); ?>
+                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_PRINT_LABEL'); ?>
                 </div>
                 <div class="controls">
-                    <?php echo $this->item->publication_identifier_print; ?>
+                    <?php
+                    $json = json_decode($this->item->publication_identifier_print);
+                    if (!empty($json)) {
+                        foreach ($json as $identifier => $type) {
+                            echo $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ')<br />';
+                        }
+                    }
+                    ?>
                 </div>
             </div>
             <div class="control-group">
                 <div class="control-label">
-                    <?php echo $this->form->getLabel('publication_identifier_electronical'); ?>
+                    <?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_IDENTIFIER_ELECTRONICAL_LABEL'); ?>
                 </div>
                 <div class="controls">
-                    <?php echo $this->item->publication_identifier_electronical; ?>
+                    <?php
+                    $json = json_decode($this->item->publication_identifier_electronical);
+                    if (!empty($json)) {
+                        foreach ($json as $identifier => $type) {
+                            echo $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ')<br />';
+                        }
+                    }
+                    ?>
                 </div>
             </div>
             <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED'); ?></h4>

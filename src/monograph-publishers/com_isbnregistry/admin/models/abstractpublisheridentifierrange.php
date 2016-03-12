@@ -188,7 +188,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             $table->transactionRollback();
             return $resultsArray;
         }
-        
+
         // Get object 
         $publisherRange = $table->getPublisherRangeByPublisherId($publisherId);
 
@@ -205,21 +205,61 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         $publicationModel = null;
         // Init publication format variable
         $publicationFormat = '';
+        // Init publication types array
+        $publicationTypes = array();
 
         // Check if publication id is defined
         if ($publicationId != 0) {
             // Load publication model
             $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
             // Get publication format
-            $publicationFormat = $publicationModel->getPublicationFormat($publicationId);
+            $publication = $publicationModel->getItem($publicationId);
             // Check that the format has been set
-            if (empty($publicationFormat)) {
+            if (!$publication) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_FAILED_NO_PUBLICATION_FOUND'));
+                $table->transactionRollback();
+                return $resultsArray;
+            } else if (empty($publication->publication_format)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_FAILED_NO_FORMAT'));
                 $table->transactionRollback();
                 return $resultsArray;
             }
-            // Set identifiers count - if 'PRINT_ELECTRONICAL' 2 identifiers are needed
-            $count = strcmp($publicationFormat, 'PRINT_ELECTRONICAL') == 0 ? 2 : 1;
+            // Set publication format
+            $publicationFormat = $publication->publication_format;
+            // Get print types
+            $printTypes = $this->fromStrToArray($publication->type);
+            // Get electronical types
+            $electronicalTypes = $this->fromStrToArray($publication->fileformat);
+            // Check publication format and type
+            if (strcmp($publicationFormat, 'PRINT') == 0) {
+                if (sizeof($printTypes) == 0 || sizeof($electronicalTypes) > 0) {
+                    $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_INVALID_TYPE_FORMAT'));
+                    $table->transactionRollback();
+                    return $resultsArray;
+                }
+            } else if (strcmp($publicationFormat, 'ELECTRONICAL') == 0) {
+                if (sizeof($printTypes) > 0 || sizeof($electronicalTypes) == 0) {
+                    $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_INVALID_TYPE_FORMAT'));
+                    $table->transactionRollback();
+                    return $resultsArray;
+                }
+            } else if (strcmp($publicationFormat, 'PRINT_ELECTRONICAL') == 0) {
+                if (sizeof($printTypes) == 0 || sizeof($electronicalTypes) == 0) {
+                    $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_INVALID_TYPE_FORMAT'));
+                    $table->transactionRollback();
+                    return $resultsArray;
+                }
+            }
+            // Merge publication type and fileformat arrays
+            $publicationTypes = array_merge($printTypes, $electronicalTypes);
+            // Calculate identifier count
+            $count = sizeof($publicationTypes);
+            // Check that count is not zero
+            if ($count == 0) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_FAILED_NO_TYPE'));
+                $table->transactionRollback();
+                return $resultsArray;
+            }
         }
 
         // Check there are enough free numbers
@@ -232,6 +272,8 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
 
         // Get the next available number
         $nextPointer = (int) $publisherRange->next;
+        // Init counter
+        $i = 0;
         // Generate identifiers
         for ($x = $nextPointer; $x < $nextPointer + $count; $x++) {
             // Add padding to the publication code
@@ -240,8 +282,12 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             $identifier = str_replace('-', '', $publisherRange->publisher_identifier . $temp);
             // Calculate check digit
             $checkDigit = $this->getCheckDigit($identifier);
-            // Push identifiers to results arrays
-            array_push($resultsArray['identifiers'], $publisherRange->publisher_identifier . '-' . $temp . '-' . $checkDigit);
+            // Format full identifier
+            $identifier = $publisherRange->publisher_identifier . '-' . $temp . '-' . $checkDigit;
+            // Add identifier to results array
+            $resultsArray['identifiers'][$identifier] = (!empty($publicationTypes) ? $publicationTypes[$i] : '');
+            // Increase counter
+            $i++;
         }
         // Increase the pointer
         $publisherRange->next += $count;
@@ -306,6 +352,12 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 return array();
             }
         }
+
+        // Add translations for types
+        foreach ($resultsArray['identifiers'] as $identifier => $type) {
+            $resultsArray['identifiers'][$identifier] = (!empty($type) ? JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) : '');
+        }
+
         // Commit transaction
         $table->transactionCommit();
 
@@ -401,6 +453,17 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         $table = $this->getTable();
         // Get results 
         return $table->getPublisherRange($rangeId, false);
+    }
+
+    private function fromStrToArray($source) {
+        $result = array();
+        if (empty($source)) {
+            return $result;
+        }
+        if ($source && !is_array($source)) {
+            $result = explode(',', $source);
+        }
+        return $result;
     }
 
 }
