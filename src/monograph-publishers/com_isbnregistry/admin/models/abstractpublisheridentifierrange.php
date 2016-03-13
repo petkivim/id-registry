@@ -224,6 +224,12 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 $table->transactionRollback();
                 return $resultsArray;
             }
+            // Check that "no_identifier_granted" is false
+            if ($publication->no_identifier_granted) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_FAILED_NO_IDENTIFIER_GRANTED'));
+                $table->transactionRollback();
+                return $resultsArray;
+            }
             // Set publication format
             $publicationFormat = $publication->publication_format;
             // Get print types
