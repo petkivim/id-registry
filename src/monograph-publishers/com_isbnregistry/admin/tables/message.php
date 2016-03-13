@@ -134,4 +134,24 @@ class IsbnRegistryTableMessage extends JTable {
         return $this->_db->loadColumn();
     }
 
+    /**
+     * Get all batch ids and message ids related to the publisher 
+     * identified by the given publisher id.
+     * @param int $publisherId publisher id
+     * @return array array of batch ids and message ids
+     */
+    public function getBatchIdsAndMessageIdsByPublisher($publisherId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('id, batch_id')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
+        $query->order('id ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

@@ -40,8 +40,19 @@ class IsbnregistryViewIdentifierbatches extends JViewLegacy {
         // Load publications
         $publications = $publicationModel->getPublicationsArray();
         // Pass $publications to the layout
-        $this->assignRef('publications', $publications);
+        $this->publications = $publications;
 
+        // Get publisher id URL parameter
+        $publisherId = JFactory::getApplication()->input->getInt('publisherId');
+        // Load message model
+        $messageModel = JModelLegacy::getInstance('message', 'IsbnregistryModel');
+        // Get messages related to this publication
+        $ids = $messageModel->getBatchIdsAndMessageIdsByPublisher($publisherId);
+        // Pass $ids to the layout
+        $this->messages = $ids;
+        // Set publisher id
+        $this->publisher_id = $publisherId;
+        
         // Render the sidebar - pagination does not work without this!
         $this->sidebar = JHtmlSidebar::render();
         // Display the template

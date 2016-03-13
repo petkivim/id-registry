@@ -442,4 +442,27 @@ class IsbnregistryModelMessage extends JModelAdmin {
         $this->delete($messageIds);
     }
 
+    /**
+     * Get all batch ids and message ids related to the publisher 
+     * identified by the given publisher id. The result is returned as an
+     * associative array where batch id is the key and the last message id
+     * related to the batch id is the value.
+     * @param int $publisherId publisher id
+     * @return array array of batch ids and message ids
+     */
+    public function getBatchIdsAndMessageIdsByPublisher($publisherId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get ids
+        $ids = $table->getBatchIdsAndMessageIdsByPublisher($publisherId);
+        // New array for results
+        $results = array();
+        // Loop through the ids
+        foreach($ids as $id) {
+            $results[$id->batch_id] = $id->id;
+        }
+        // Return results
+        return $results;
+    }
+
 }

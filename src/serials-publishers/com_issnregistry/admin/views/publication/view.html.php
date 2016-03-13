@@ -101,6 +101,7 @@ class IssnregistryViewPublication extends JViewLegacy {
                     JToolBarHelper::custom('publication.deleteIssn', 'minus', 'minus', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_DELETE_ISSN'), false, false);
                 }
             }
+            // Go to form button is shown only if form is set
             if ($this->item->form_id > 0) {
                 // Render print button
                 $dhtml = $layout->render(array('name' => 'goto-form', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_GOTO_FORM'), 'class' => 'icon-file-2'));
