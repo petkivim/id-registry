@@ -3,7 +3,7 @@
 
     <name>COM_ISSNREGISTRY</name>
     <!-- The following elements are optional and free of formatting constraints -->
-    <creationDate>6 March 2016</creationDate>
+    <creationDate>13 March 2016</creationDate>
     <author>Petteri Kivimäki</author>
     <copyright>(C)2016 Petteri Kivimäki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
@@ -80,9 +80,12 @@
         </files>
         <languages folder="admin/language">
             <language tag="en-GB">en-GB/en-GB.com_issnregistry.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_issnregistry_email.ini</language>
             <language tag="en-GB">en-GB/en-GB.com_issnregistry.sys.ini</language>
             <language tag="fi-FI">fi-FI/fi-FI.com_issnregistry.ini</language>
+			<language tag="fi-FI">fi-FI/fi-FI.com_issnregistry_email.ini</language>
             <language tag="fi-FI">fi-FI/fi-FI.com_issnregistry.sys.ini</language>
+			<language tag="sv-SE">sv-SE/sv-SE.com_issnregistry_email.ini</language>
         </languages>
     </administration>
 

@@ -235,6 +235,10 @@ class IssnregistryModelMessage extends JModelAdmin {
         // Set message
         $message->message = $template->message;
 
+        // Load language file - translations are used
+        // in "filterPublications" function later
+        JFactory::getLanguage()->load('com_issnregistry_email', JPATH_ADMINISTRATOR, $message->lang_code, true);
+
         // Init publications array
         $publications = array();
 
@@ -286,7 +290,8 @@ class IssnregistryModelMessage extends JModelAdmin {
     private function filterPublications($messageBody, $publications) {
         $html = '';
         foreach ($publications as $publication) {
-            $html .= $publication->title . ' (' . $publication->issn . ')<br />';
+            $html .= $publication->title . ', ' . $publication->issn;
+            $html .= ' (' . JText::_('COM_ISSNREGISTRY_EMAIL_PUBLICATION_MEDIUM_' . $publication->medium) . ')<br />';
         }
         return str_replace("#PUBLICATIONS#", $html, $messageBody);
     }
