@@ -7,6 +7,19 @@
  */
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
+
+JFactory::getDocument()->addScriptDeclaration('
+    Joomla.submitbutton = function(task) {
+        if(task == "isbnranges.delete") {
+            var response = confirm("' . JText::_('COM_ISBNREGISTRY_CONFIRM_DELETE') . '");
+            if (response == true) {
+                Joomla.submitform(task);
+            }
+        } else {
+            Joomla.submitform(task);
+        }
+    };
+');
 ?>
 <form action="index.php?option=com_isbnregistry&view=isbnranges" method="post" id="adminForm" name="adminForm">
     <div id="j-sidebar-container" class="span2">

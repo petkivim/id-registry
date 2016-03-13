@@ -21,3 +21,5 @@ defined('_JEXEC') or die('Restricted access');
 <span id="label_active" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_ISBN_RANGES_ACTIVE'); ?></span>
 <span id="label_activate" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_ISBN_RANGES_ACTIVATE'); ?></span>
 <span id="label_closed" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_ISBN_RANGES_CLOSED'); ?></span>
+<span id="label_confirm_delete" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_CONFIRM_DELETE_IDENTIFIER'); ?></span>
+<span id="label_confirm_cancel" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_CONFIRM_CANCEL_IDENTIFIER'); ?></span>

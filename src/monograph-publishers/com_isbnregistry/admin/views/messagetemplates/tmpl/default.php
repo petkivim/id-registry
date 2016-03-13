@@ -10,6 +10,19 @@ defined('_JEXEC') or die('Restricted Access');
 // Load styles
 $document = JFactory::getDocument();
 $document->addStyleSheet("components/com_isbnregistry/css/messagetemplate.css");
+
+$document->addScriptDeclaration('
+    Joomla.submitbutton = function(task) {
+        if(task == "messagetemplates.delete") {
+            var response = confirm("' . JText::_('COM_ISBNREGISTRY_CONFIRM_DELETE') . '");
+            if (response == true) {
+                Joomla.submitform(task);
+            }
+        } else {
+            Joomla.submitform(task);
+        }
+    };
+');
 ?>
 <form action="index.php?option=com_isbnregistry&view=messagetemplates" method="post" id="adminForm" name="adminForm">
     <div id="j-sidebar-container" class="span2">

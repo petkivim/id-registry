@@ -17,6 +17,8 @@ jQuery(document).ready(function ($) {
     var label_active = $("#label_active").text();
     var label_closed = $("#label_closed").text();
     var label_activate = $("#label_activate").text();
+    var label_confirm_delete = $("#label_confirm_delete").text();
+    var label_confirm_cancel = $("#label_confirm_cancel").text();
 
     // Run async functions when page loads
     loadPublisherIsbnRanges('isbn');
@@ -232,15 +234,19 @@ jQuery(document).ready(function ($) {
     }
 
     $('div#publisherIsbnRanges').on('click', 'span.icon-delete', function () {
-        // Get publisher isbn range id
-        var range_id = $(this).closest('tr').attr('id').replace('row-', '');
-        deletePublisherIdentifierRange(range_id, 'isbn');
+        if (confirm(label_confirm_delete) === true) {
+            // Get publisher isbn range id
+            var range_id = $(this).closest('tr').attr('id').replace('row-', '');
+            deletePublisherIdentifierRange(range_id, 'isbn');
+        }
     });
 
     $('div#publisherIsmnRanges').on('click', 'span.icon-delete', function () {
-        // Get publisher ismn range id
-        var range_id = $(this).closest('tr').attr('id').replace('row-', '');
-        deletePublisherIdentifierRange(range_id, 'ismn');
+        if (confirm(label_confirm_delete) === true) {
+            // Get publisher ismn range id
+            var range_id = $(this).closest('tr').attr('id').replace('row-', '');
+            deletePublisherIdentifierRange(range_id, 'ismn');
+        }
     });
 
     function deletePublisherIdentifierRange(rangeId, type) {
@@ -435,19 +441,27 @@ jQuery(document).ready(function ($) {
     }
 
     $("#jform_delete_isbn").click(function () {
-        deleteIdentifierBatch('isbn', batch_id_isbn, false);
+        if (confirm(label_confirm_cancel) === true) {
+            deleteIdentifierBatch('isbn', batch_id_isbn, false);
+        }
     });
 
     $("#jform_delete_ismn").click(function () {
-        deleteIdentifierBatch('ismn', batch_id_ismn, false);
+        if (confirm(label_confirm_cancel) === true) {
+            deleteIdentifierBatch('ismn', batch_id_ismn, false);
+        }
     });
 
     $("#jform_delete_isbns").click(function () {
-        deleteIdentifierBatch('isbn', batch_id_isbns, true);
+        if (confirm(label_confirm_cancel) === true) {
+            deleteIdentifierBatch('isbn', batch_id_isbns, true);
+        }
     });
 
     $("#jform_delete_ismns").click(function () {
-        deleteIdentifierBatch('ismn', batch_id_ismns, true);
+        if (confirm(label_confirm_cancel) === true) {
+            deleteIdentifierBatch('ismn', batch_id_ismns, true);
+        }
     });
 
     function deleteIdentifierBatch(type, batchId, isPlural) {
