@@ -76,7 +76,7 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("additionalinfo", function (value) {
-        regex = /^.{0,500}$/;
+        regex = /^.{0,2000}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("yearquitted", function (value) {
