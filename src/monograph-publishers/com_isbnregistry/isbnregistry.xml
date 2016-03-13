@@ -3,7 +3,7 @@
 
     <name>COM_ISBNREGISTRY</name>
     <!-- The following elements are optional and free of formatting constraints -->
-    <creationDate>6 March 2016</creationDate>
+    <creationDate>12 March 2016</creationDate>
     <author>Petteri Kivimäki</author>
     <copyright>(C)2015-2016 Petteri Kivimäki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
@@ -103,9 +103,12 @@
         </files>
         <languages folder="admin/language">
             <language tag="en-GB">en-GB/en-GB.com_isbnregistry.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_isbnregistry_email.ini</language>
             <language tag="en-GB">en-GB/en-GB.com_isbnregistry.sys.ini</language>
             <language tag="fi-FI">fi-FI/fi-FI.com_isbnregistry.ini</language>
+			<language tag="fi-FI">fi-FI/fi-FI.com_isbnregistry_email.ini</language>
             <language tag="fi-FI">fi-FI/fi-FI.com_isbnregistry.sys.ini</language>
+			<language tag="sv-SE">sv-SE/sv-SE.com_isbnregistry_email.ini</language>
         </languages>
     </administration>
 

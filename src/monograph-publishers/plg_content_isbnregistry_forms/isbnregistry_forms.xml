@@ -2,8 +2,8 @@
 <extension type="plugin" group="content" version="2.5" method="upgrade">
 	<name>PLG_ISBNREGISTRY_FORMS</name>
 	<author>Petteri Kivimaki</author>
-	<creationDate>21 November 2015</creationDate>
-    <copyright>(C)2015 Petteri Kivimaki</copyright>
+	<creationDate>12 March 2016</creationDate>
+    <copyright>(C)2015-2016 Petteri Kivimaki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
     <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
 	<version>0.0.1</version>

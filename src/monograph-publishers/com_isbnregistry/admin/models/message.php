@@ -241,22 +241,6 @@ class IsbnregistryModelMessage extends JModelAdmin {
         // Update recipient
         $message->recipient = $publisher->email;
 
-        // Load message template model
-        $messageTemplateModel = JModelLegacy::getInstance('messagetemplate', 'IsbnregistryModel');
-        // Load template
-        $template = $messageTemplateModel->getMessageTemplateByTypeAndLanguage($messageTypeId, $message->lang_code);
-        // Check that we found a template
-        if (!$template) {
-            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_TEMPLATE_FOUND'), 'warning');
-            return false;
-        }
-        // Update template id
-        $message->message_template_id = $template->id;
-        // Set subject
-        $message->subject = $template->subject;
-        // Set message
-        $message->message = $template->message;
-
         // Check if identifiers are related to a publication
         $isPublicationIdentifierCreated = ConfigurationHelper::isPublicationIdentifierCreated($code);
         // If so, load publication
@@ -278,6 +262,22 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $message->recipient = $publication->email;
         }
 
+        // Load message template model
+        $messageTemplateModel = JModelLegacy::getInstance('messagetemplate', 'IsbnregistryModel');
+        // Load template
+        $template = $messageTemplateModel->getMessageTemplateByTypeAndLanguage($messageTypeId, $message->lang_code);
+        // Check that we found a template
+        if (!$template) {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_TEMPLATE_FOUND'), 'warning');
+            return false;
+        }
+        // Update template id
+        $message->message_template_id = $template->id;
+        // Set subject
+        $message->subject = $template->subject;
+        // Set message
+        $message->message = $template->message;
+
         // Load publisher identifier
         // Do we need to load ISBN or ISMN?
         $type = ConfigurationHelper::isIsbn($code) ? 'isbn' : 'ismn';
@@ -293,6 +293,10 @@ class IsbnregistryModelMessage extends JModelAdmin {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_ACTIVE_PUBLISHER_IDENTIFIERS_FOUND'), 'warning');
         }
 
+        // Load language file - translations are used
+        // in "filterPublicationIdentifiers" function later
+        JFactory::getLanguage()->load('com_isbnregistry_email', JPATH_ADMINISTRATOR, $message->lang_code, true);
+
         // Check if publication identifiers should be added to the message
         $addPublicationIdentifiers = ConfigurationHelper::addPublicationIdentifiers($code);
         // Add identifiers if needed
@@ -300,7 +304,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
             // Load identifier model
             $identifierModel = JModelLegacy::getInstance('identifier', 'IsbnregistryModel');
             // Get identifiers
-            $identifiers = $identifierModel->getIdentifiersArray($identifierBatchId);
+            $identifiers = $identifierModel->getIdentifiers($identifierBatchId);
             // Set batch id
             $message->batch_id = $identifierBatchId;
             // Get identifiers attachment limit
@@ -338,7 +342,15 @@ class IsbnregistryModelMessage extends JModelAdmin {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_MESSAGE_IDENTIFIERS_IN_ATTACHMENT'), 'notice');
             return str_replace("#IDENTIFIERS#", '', $messageBody);
         } else {
-            return str_replace("#IDENTIFIERS#", implode('<br />', $identifiers), $messageBody);
+            $html = '';
+            foreach ($identifiers as $identifier) {
+                $html .= empty($html) ? '' : '<br />';
+                $html .= $identifier->identifier;
+                if (!empty($identifier->publication_type)) {
+                    $html .= ' (' . JText::_('COM_ISBNREGISTRY_EMAIL_IDENTIFIER_TYPE_' . $identifier->publication_type) . ')';
+                }
+            }
+            return str_replace("#IDENTIFIERS#", $html, $messageBody);
         }
     }
 
