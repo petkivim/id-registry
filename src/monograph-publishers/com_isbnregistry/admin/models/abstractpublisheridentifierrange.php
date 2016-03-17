@@ -25,6 +25,8 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
 
     abstract public function updateActiveIdentifier($publisherId, $identifier);
 
+    abstract public function getIdentifierVarTotalLength();
+
     /**
      * Method to store a new publisher identifier range into database. 
      * All the other ranges of the same type are disactivated and the new 
@@ -93,19 +95,38 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             return false;
         }
 
-        // Get an instance of a identifier range model
-        $rangeModel = $this->getInstance($this->getRangeModelName(), 'IsbnregistryModel');
-        // Check that no other identifiers have been given from the same range 
-        // since this one
-        if (!$rangeModel->canDeleteIdentifier($this->getRangeId($publisherRange), $publisherRange->publisher_identifier)) {
-            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_DELETE_FAILED_NOT_LATEST'));
-            return false;
-        }
-
         // Get db access
         $table = $this->getTable();
         // Start transaction
         $table->transactionStart();
+
+        // Get an instance of a identifier range model
+        $rangeModel = $this->getInstance($this->getRangeModelName(), 'IsbnregistryModel');
+        // Check if other identifiers have been given from the same range 
+        // since this one. If not, identifier range must be updated
+        if ($rangeModel->canDeleteIdentifier($this->getRangeId($publisherRange), $publisherRange->publisher_identifier)) {
+            // Update the identifier range accordingly
+            if (!$rangeModel->decreaseByOne($this->getRangeId($publisherRange))) {
+                $table->transactionRollback();
+                return false;
+            }
+        } else {
+            // Add removed identifier to canceled identifiers list that it
+            // can be reused
+            // Get an instance of canceled model
+            $canceledModel = $this->getInstance('publisher' . $this->getRangeModelName() . 'canceled', 'IsbnregistryModel');
+            // Create canceled object
+            $publisherRangeCanceled = array();
+            $publisherRangeCanceled['identifier'] = $publisherRange->publisher_identifier;
+            $publisherRangeCanceled['category'] = ($this->getIdentifierVarTotalLength() - $publisherRange->category);
+            $publisherRangeCanceled['range_id'] = $this->getRangeId($publisherRange);
+            // Add new canceled entry
+            if ($canceledModel->save($publisherRangeCanceled) == 0) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_IDENTIFIER_CANCELED_ENTRY_CREATION_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
+        }
 
         // Return false if deleting the object failed
         if (!$table->deleteRange($publisherRangeId)) {
@@ -119,11 +140,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             $table->transactionRollback();
             return false;
         }
-        // Update the ISBN range accordingly
-        if (!$rangeModel->decreaseByOne($this->getRangeId($publisherRange))) {
-            $table->transactionRollback();
-            return false;
-        }
+
         // Commit transaction
         $table->transactionCommit();
 

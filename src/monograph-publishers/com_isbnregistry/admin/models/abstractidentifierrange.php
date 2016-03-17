@@ -41,33 +41,52 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
             return 0;
         }
 
-        // Get the next available number
-        $publisherIdentifier = $range->next;
-        // Is this the last value of the range
-        if ($range->next == $range->range_end) {
-            // This is the last value -> range becames inactive
-            $range->is_active = false;
-            // Range becomes closed
-            $range->is_closed = true;
-        }
-        // Increase next pointer
-        $range->next = $range->next + 1;
-        // Next pointer is a string, add left padding
-        $range->next = str_pad($range->next, $range->category, "0", STR_PAD_LEFT);
-        // Decrease free numbers pointer 
-        $range->free -= 1;
-        // Increase used numbers pointer
-        $range->taken += 1;
+        // Get an instance of identifier canceled range model
+        $publisherRangeCanceledModel = $this->getInstance($this->getPublisherRangeModelName() . 'canceled', 'IsbnregistryModel');
+        // Get canceled identifier
+        $canceledIdentifier = $publisherRangeCanceledModel->getIdentifier($range->category, $range->id);
+        // Check if a canceled identifier was found
+        if ($canceledIdentifier != null) {
+            // Try to delete the canceled identifier from the db
+            if (!$publisherRangeCanceledModel->deleteIdentifier($canceledIdentifier->range_id, $canceledIdentifier->identifier)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_CANCELED_IDENTIFIER_DELETE_FAILED'));
+                $table->transactionRollback();
+                return 0;
+            }
+            // Update range object if necessary
+            if ($canceledIdentifier->range_id != $rangeId) {
+                $range = $table->getRange($canceledIdentifier->range_id, false);
+            }
+            // Set result
+            $result = $canceledIdentifier->identifier;
+        } else {
+            // Get the next available number
+            $publisherIdentifier = $range->next;
+            // Is this the last value of the range
+            if ($range->next == $range->range_end) {
+                // This is the last value -> range becames inactive
+                $range->is_active = false;
+                // Range becomes closed
+                $range->is_closed = true;
+            }
+            // Increase next pointer
+            $range->next = $range->next + 1;
+            // Next pointer is a string, add left padding
+            $range->next = str_pad($range->next, $range->category, "0", STR_PAD_LEFT);
+            // Decrease free numbers pointer 
+            $range->free -= 1;
+            // Increase used numbers pointer
+            $range->taken += 1;
 
-        // Update new values to database
-        if (!$table->updateIncrease($range)) {
-            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_IDENTIFIER_RANGE_FAILED'));
-            $table->transactionRollback();
-            return 0;
+            // Update new values to database
+            if (!$table->updateIncrease($range)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_IDENTIFIER_RANGE_FAILED'));
+                $table->transactionRollback();
+                return 0;
+            }
+            // Format publisher identifier
+            $result = $this->formatPublisherIdentifier($range, $publisherIdentifier);
         }
-
-        // Format publisher identifier
-        $result = $this->formatPublisherIdentifier($range, $publisherIdentifier);
         // Get an instance of a ISBN range model
         $publisherRangeModel = $this->getInstance($this->getPublisherRangeModelName(), 'IsbnregistryModel');
         // Insert data into publisher isbn range table

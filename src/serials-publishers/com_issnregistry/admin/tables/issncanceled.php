@@ -27,7 +27,7 @@ class IssnRegistryTableIssncanceled extends JTable {
     }
 
     /**
-     * Stores a publication.
+     * Stores a canceled ISSN.
      *
      * @param   boolean  $updateNulls  True to update fields even if they are null.
      *

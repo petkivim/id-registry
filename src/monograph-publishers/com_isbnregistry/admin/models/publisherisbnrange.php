@@ -122,4 +122,14 @@ class IsbnregistryModelPublisherisbnrange extends IsbnregistryModelAbstractPubli
         return $publisherModel->updateActiveIsbnIdentifier($publisherId, $identifier);
     }
 
+    /**
+     * Returns the total length of the variable part of the identifier which
+     * is 6.
+     * @return int total length of the variable part of the identifier which
+     * is 6
+     */
+    public function getIdentifierVarTotalLength() {
+        return 6;
+    }
+
 }
