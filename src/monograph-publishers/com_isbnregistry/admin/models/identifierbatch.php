@@ -231,6 +231,17 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
             return false;
         }
 
+        // Go through identifiers that should be new and not canceled before.
+        // These identifiers must have the same publisher identifier range id
+        // with the batch object. If the id is not the same there are probably
+        // canceled identifiers that are from a later range. In this case delete
+        // process should be different and that's not supported.
+        for ($i = 0; $i < $identifierBatch->identifier_count; $i++) {
+            if ($identifiers[$i]->publisher_identifier_range_id != $identifierBatch->publisher_identifier_range_id) {
+                $table->transactionRollback();
+                return false;
+            }
+        }
         // Get an instance of identifier canceled model
         $identifierCanceledModel = $this->getInstance('Identifiercanceled', 'IsbnregistryModel');
         // Get publisher identifier range object - we need to know the category
