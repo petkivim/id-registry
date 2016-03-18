@@ -407,10 +407,22 @@ class IsbnregistryModelMessage extends JModelAdmin {
      * Delete all messages related to the publisher identified by
      * the given publisher id.
      * @param int $publisherId publisher id
-     * @return int number of deleted rows
      */
     public function deleteByPublisherId($publisherId) {
         $messageIds = $this->getMessageIdsByPublisher($publisherId);
+        $this->delete($messageIds);
+    }
+
+    /**
+     * Delete all messages related to the batch identified by
+     * the given batch id.
+     * @param int $batchId batch id
+     */
+    public function deleteByBatchId($batchId) {
+        // Get db access
+        $table = $this->getTable();
+        // Get ids
+        $messageIds = $table->getMessageIdsByBatchId($batchId);
         $this->delete($messageIds);
     }
 
@@ -458,7 +470,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
         // New array for results
         $results = array();
         // Loop through the ids
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             $results[$id->batch_id] = $id->id;
         }
         // Return results

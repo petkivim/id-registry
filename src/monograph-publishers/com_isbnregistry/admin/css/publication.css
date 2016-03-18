@@ -9,3 +9,7 @@
 .header {
     background-color: #860F98!important;
 }
+
+.icon-delete {
+    cursor: pointer;
+}

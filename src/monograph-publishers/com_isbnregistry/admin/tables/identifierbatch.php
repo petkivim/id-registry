@@ -67,6 +67,8 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
         $this->publisher_id = $params['publisher_id'];
         $this->publication_id = $params['publication_id'];
         $this->publisher_identifier_range_id = $params['publisher_identifier_range_id'];
+        $this->identifier_canceled_used_count = $params['identifier_canceled_used_count'];
+        
         // Add object to db
         if (!$this->store()) {
             return 0;
@@ -162,7 +164,7 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
         // Execute query
         $result = $this->_db->execute();
         // If affected rows returns 1, operation succeeded
-        if($this->_db->getAffectedRows() == 1) {
+        if ($this->_db->getAffectedRows() == 1) {
             return true;
         }
         // Otherwise return false
@@ -226,6 +228,30 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadResult();
+    }
+
+    /**
+     * Increase identifier batch canceled count by one.
+     * @param int $identifierBatchId id of the identifier batch
+     * @param int $count current count
+     * @return boolean true on success, false on failure
+     */
+    public function increaseCanceledCount($identifierBatchId, $count) {
+        $conditions = array(
+            'id' => $identifierBatchId,
+            'identifier_canceled_count' => $count
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update publication id
+        $this->identifier_canceled_count = $this->identifier_canceled_count + 1;
+
+        // Update object to DB
+        return $this->store();
     }
 
     /**

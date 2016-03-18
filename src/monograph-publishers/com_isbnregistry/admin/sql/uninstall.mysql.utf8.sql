@@ -12,4 +12,5 @@ DROP TABLE IF EXISTS `#__isbn_registry_message_template`;
 DROP TABLE IF EXISTS `#__isbn_registry_message`;
 DROP TABLE IF EXISTS `#__isbn_registry_identifier_batch`;
 DROP TABLE IF EXISTS `#__isbn_registry_identifier`;
+DROP TABLE IF EXISTS `#__isbn_registry_identifier_canceled`;
 DROP TABLE IF EXISTS `#__isbn_registry_group_message`;

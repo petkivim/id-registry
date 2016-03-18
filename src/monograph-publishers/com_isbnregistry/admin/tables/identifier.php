@@ -57,14 +57,14 @@ class IsbnRegistryTableIdentifier extends JTable {
         $query = $this->_db->getQuery(true);
 
         // Insert columns.
-        $columns = array('identifier', 'identifier_batch_id', 'publication_type');
+        $columns = array('identifier', 'identifier_batch_id', 'publisher_identifier_range_id', 'publication_type');
 
         // Prepare the insert query.
         $query->insert($this->_db->quoteName($this->_tbl))->columns($this->_db->quoteName($columns));
 
         // Loop through identifiers
-        foreach ($identifiers as $identifier => $publicationType) {
-            $query->values(array("'" . $identifier . "', " . $identifierBatchId. ", '" . $publicationType . "'"));
+        foreach ($identifiers as $identifier) {
+            $query->values(array("'" . $identifier['identifier'] . "', " . $identifierBatchId . ", " . $identifier['publisher_identifier_range_id'] . ", '" . $identifier['publication_type'] . "'"));
         }
 
         // Set the query 
@@ -80,9 +80,12 @@ class IsbnRegistryTableIdentifier extends JTable {
     /**
      * Returns identifiers with the given batch id.
      * @param int $identifierBatchId
+     * @param boolean $orderByIdentifier when true the results are sorted by
+     * identfier in desceinding order, by default the value is false which
+     * means that the results are sorted by id in ascending order
      * @return list of identifier objects
      */
-    public function getIdentifiers($identifierBatchId) {
+    public function getIdentifiers($identifierBatchId, $orderByIdentifier = false) {
         // Create new query object.
         $query = $this->_db->getQuery(true);
 
@@ -95,7 +98,7 @@ class IsbnRegistryTableIdentifier extends JTable {
         $query->select('*')
                 ->from($this->_db->quoteName($this->_tbl))
                 ->where($conditions)
-                ->order('id ASC');
+                ->order(($orderByIdentifier ? 'identifier DESC' : 'id ASC'));
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();
@@ -123,6 +126,45 @@ class IsbnRegistryTableIdentifier extends JTable {
         $result = $this->_db->execute();
         // Return the number of deleted rows
         return $this->_db->getAffectedRows();
+    }
+
+    /**
+     * Return the identifier object matching the given identifier string.
+     * @param string $identifier identifier string
+     * @return object identifier object
+     */
+    public function getIdentifier($identifier) {
+        // Database connection
+        $query = $this->_db->getQuery(true);
+        // Create query
+        $query->select('i.id, i.identifier, i.identifier_batch_id, ib.identifier_type, ib.identifier_count, ib.identifier_canceled_count, ib.publication_id, ib.publisher_id, ib.publisher_identifier_range_id');
+        $query->from($this->_db->quoteName($this->_tbl) . ' AS i');
+        $query->join('INNER', '#__isbn_registry_identifier_batch AS ib ON ib.id = i.identifier_batch_id');
+        $query->where($this->_db->quoteName('i.identifier') . ' = ' . $this->_db->quote($identifier));
+        $this->_db->setQuery($query);
+        // Return result
+        return $this->_db->loadObject();
+    }
+
+    /**
+     * Starts a transaction.
+     */
+    public function transactionStart() {
+        $this->_db->transactionStart();
+    }
+
+    /**
+     * Commits a transaction.
+     */
+    public function transactionCommit() {
+        $this->_db->transactionCommit();
+    }
+
+    /**
+     * Transaction rollback.
+     */
+    public function transactionRollback() {
+        $this->_db->transactionRollback();
     }
 
 }

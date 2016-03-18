@@ -379,7 +379,9 @@ DROP TABLE IF EXISTS `#__isbn_registry_identifier_batch`;
 CREATE TABLE `#__isbn_registry_identifier_batch` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `identifier_type` VARCHAR(4) NOT NULL,
-    `identifier_count` VARCHAR(4) NOT NULL,
+    `identifier_count` INT NOT NULL,
+    `identifier_canceled_count` INT NOT NULL,
+    `identifier_canceled_used_count` INT NOT NULL,
     `publisher_id` INT NOT NULL,
     `publication_id` INT NOT NULL,
     `publisher_identifier_range_id` INT NOT NULL,
@@ -401,10 +403,34 @@ CREATE TABLE `#__isbn_registry_identifier` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `identifier` VARCHAR(20) NOT NULL,
     `identifier_batch_id` INT NOT NULL,
+    `publisher_identifier_range_id` INT NOT NULL,
     `publication_type` VARCHAR(25) NOT NULL DEFAULT '',
     PRIMARY KEY (`id`),
     INDEX `idx_identifier` (`identifier`),
     INDEX `idx_identifier_batch_id` (`identifier_batch_id`)
+)
+ENGINE =InnoDB
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__isbn_registry_identifier_canceled`;
+
+CREATE TABLE `#__isbn_registry_identifier_canceled` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `identifier` VARCHAR(20) NOT NULL,
+    `identifier_type` VARCHAR(4) NOT NULL,
+    `category` INT NOT NULL,
+    `publisher_id` INT NOT NULL,
+    `publisher_identifier_range_id` INT NOT NULL,
+    `canceled` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `canceled_by` VARCHAR(30),
+    PRIMARY KEY (`id`),
+    UNIQUE (identifier),
+    INDEX `idx_publisher_id` (`publisher_id`),
+    INDEX `idx_publisher_identifier_range_id` (`publisher_identifier_range_id`),
+    INDEX `idx_identifier` (`identifier`),
+    INDEX `idx_category` (`category`)
 )
 ENGINE =InnoDB
 AUTO_INCREMENT =0

@@ -97,6 +97,25 @@ class IsbnRegistryTableMessage extends JTable {
     }
 
     /**
+     * Get all message ids related to the batch identified by the given
+     * batch id.
+     * @param int $batchId batch id
+     * @return array array of message ids
+     */
+    public function getMessageIdsByBatchId($batchId) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('id')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($this->_db->quoteName('batch_id') . ' = ' . $this->_db->quote($batchId));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadColumn();
+    }
+
+    /**
      * Return the number of messages related to the batch identified by the
      * given id
      * @param integer $batchId batch id

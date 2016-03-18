@@ -165,10 +165,42 @@ class IsbnregistryModelPublication extends JModelAdmin {
         // Convert identifiers electronical to JSON
         $identifiersElectronical = $this->identifiersElectronicalToJSON($identifiers);
 
-        // Get DAO for db access
-        $dao = $this->getTable();
+        // Get db access
+        $table = $this->getTable();
         // Return result
-        return $dao->updateIdentifiers($publicationId, $publisherId, $identifiersPrint, $identifiersElectronical, $identifierType, $publicationFormat);
+        return $table->updateIdentifiers($publicationId, $publisherId, $identifiersPrint, $identifiersElectronical, $identifierType, $publicationFormat);
+    }
+
+    /**
+     * Removes the given identifier from the publication identified by the
+     * given id.
+     * @param int $publicationId publication id
+     * @param int $identifier identifier to be removed
+     * @return boolean true on success; false on failure
+     */
+    public function removeIdentifier($publicationId, $identifier) {
+        // Get publication
+        $publication = $this->getItem($publicationId);
+        // Check that we have a result
+        if (!$publication) {
+            return false;
+        }
+        // Get print identifiers as array
+        $identifiersPrintJson = json_decode($publication->publication_identifier_print, true);
+        // Remove the identifier
+        unset($identifiersPrintJson[$identifier]);
+        // Get print identifiers as sting
+        $identifiersPrintString = empty($identifiersPrintJson) ? '' : json_encode($identifiersPrintJson);
+        // Get electronical identifiers as array
+        $identifiersElectronicalJson = json_decode($publication->publication_identifier_electronical, true);
+        // Remove the identifier
+        unset($identifiersElectronicalJson[$identifier]);
+        // Get electronical identifiers as sting
+        $identifiersElectronicalString = empty($identifiersElectronicalJson) ? '' : json_encode($identifiersElectronicalJson);
+        // Get db access
+        $table = $this->getTable();
+        // Return result
+        return $table->updateIdentifiers($publicationId, $publication->publisher_id, $identifiersPrintString, $identifiersElectronicalString, $publication->publication_identifier_type, $publication->publication_format);
     }
 
     /**

@@ -92,14 +92,17 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
 
     /**
      * Returns identifiers with the given batch id.
-     * @param int $identifierBatchId identifier batch id related to the identifiers
+     * @param int $identifierBatchId
+     * @param boolean $orderByIdentifier when true the results are sorted by
+     * identfier in desceinding order, by default the value is false which
+     * means that the results are sorted by id in ascending order
      * @return list of identifier objects
      */
-    public function getIdentifiers($identifierBatchId) {
+    public function getIdentifiers($identifierBatchId, $orderByIdentifier = false) {
         // Get db access
         $table = $this->getTable();
         // Return result
-        return $table->getIdentifiers($identifierBatchId);
+        return $table->getIdentifiers($identifierBatchId, $orderByIdentifier);
     }
 
     /**
@@ -131,6 +134,99 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
         $table = $this->getTable();
         // Return result
         return $table->deleteByBatchId($batchId);
+    }
+
+    /**
+     * Deletes the given identifier and removes it from the current publication.
+     * The identifier can be reused later.
+     * @param string $identifier identifier to be deleted 
+     * @return boolean true on success, false on failure
+     */
+    public function deleteIdentifier($identifier) {
+        // Get db access
+        $table = $this->getTable();
+        // Start transaction
+        $table->transactionStart();
+
+        // Load identifier object
+        $identifierObj = $table->getIdentifier($identifier);
+        // Check that we have a result
+        if (!$identifierObj) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_IDENTIFIER_NOT_FOUND'));
+            $table->transactionRollback();
+            return false;
+        }
+
+        // Load publication model
+        $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
+        // Get an instance of identifier batch model
+        $identifierBatchModel = $this->getInstance('Identifierbatch', 'IsbnregistryModel');
+        // Check how many identifiers were created on the same bacth
+        if ($identifierObj->identifier_count == 1 || $identifierObj->identifier_canceled_count == $identifierObj->identifier_count - 1) {
+            // If this is the only identifier OR there's only one identifier left,
+            //  the batch object can be deleted
+            if (!$identifierBatchModel->delete($identifierObj->identifier_batch_id)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_DELETE_BATCH_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
+            // Delete messages related to the batch
+            $messageModel = JModelLegacy::getInstance('message', 'IsbnregistryModel');
+            $messageModel->deleteByBatchId($identifierObj->identifier_batch_id);
+            // Try to remove publication's identifiers
+            if (!$publicationModel->removeIdentifiers($identifierObj->publication_id)) {
+                $table->transactionRollback();
+                return false;
+            }
+        } else {
+            // Update canceled count
+            if (!$identifierBatchModel->increaseCanceledCount($identifierObj->identifier_batch_id, $identifierObj->identifier_canceled_count)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_DELETE_BATCH_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
+            // Update publication
+            if (!$publicationModel->removeIdentifier($identifierObj->publication_id, $identifier)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_PUBLICATION_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
+        }
+        // Try to delete identifier from db
+        if (!$this->delete($identifierObj->id)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_FAILED'));
+            $table->transactionRollback();
+            return false;
+        }
+
+        // Load publication identifier range model
+        $publisherIdentifierRangeModel = JModelLegacy::getInstance('publisher' . strtolower($identifierObj->identifier_type) . 'range', 'IsbnregistryModel');
+        // Get publisher identifier range
+        $publisherIdentifierRange = $publisherIdentifierRangeModel->getItem($identifierObj->publisher_identifier_range_id);
+
+        // Create new identifier canceled object
+        $identifierCanceled = array(
+            'identifier' => $identifier,
+            'identifier_type' => $identifierObj->identifier_type,
+            'category' => $publisherIdentifierRange->category,
+            'publisher_id' => $identifierObj->publisher_id,
+            'publisher_identifier_range_id' => $identifierObj->publisher_identifier_range_id
+        );
+
+        // Get an instance of identifier canceled model
+        $identifierCanceledModel = $this->getInstance('Identifiercanceled', 'IsbnregistryModel');
+        // Save new identifier canceled object
+        if (!$identifierCanceledModel->save($identifierCanceled)) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_SAVE_IDENTIFIER_CANCELED_FAILED'));
+            $table->transactionRollback();
+            return false;
+        }
+
+        // Commit transaction
+        $table->transactionCommit();
+
+        // Return true
+        return true;
     }
 
 }

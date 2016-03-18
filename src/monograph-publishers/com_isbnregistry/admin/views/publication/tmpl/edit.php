@@ -119,7 +119,7 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                         $json = json_decode($this->item->publication_identifier_print);
                         if (!empty($json)) {
                             foreach ($json as $identifier => $type) {
-                                echo $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ')<br />';
+                                echo '<div class="identifier" id="' . $identifier . '">' . $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ') <span class="icon-delete"></span></div>';
                             }
                         } else {
                             echo '-';
@@ -137,7 +137,7 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                         $json = json_decode($this->item->publication_identifier_electronical);
                         if (!empty($json)) {
                             foreach ($json as $identifier => $type) {
-                                echo $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ')<br />';
+                                echo '<div class="identifier" id="' . $identifier . '">' . $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ') <span class="icon-delete"></span></div>';
                             }
                         } else {
                             echo '-';
@@ -168,6 +168,7 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
         <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>
+    <span id="label_confirm_delete" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_CONFIRM_DELETE_IDENTIFIER'); ?></span>
     <input type="hidden" name="task" value="publication.edit" />
     <?php echo JHtml::_('form.token'); ?>
 </form>

@@ -104,7 +104,8 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
     }
 
     /**
-     * Deletes the batch identified by the given id.
+     * Deletes the batch identified by the given id. Range model's counters 
+     * are not updated.
      * @param int $id batch id
      * @return boolean true on success; otherwise false
      */
@@ -156,7 +157,7 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
     /**
      * Deletes the batch identified by the given id. The batch is deleted
      * if and only if it's the last batch generated from the same publisher
-     * identifier range.
+     * identifier range. Range model's counters are updated.
      * @param int $identifierBatchId batch id
      * @return boolean true on success; otherwise false
      */
@@ -168,6 +169,13 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         if (!$identifierBatch) {
             return false;
         }
+
+        // Check that no single identifiers have been canceled
+        if ($identifierBatch->identifier_canceled_count != 0) {
+            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_IDENTIFIER_BATCH_DELETE_FAILED_CANCELED_COUNT_NOT_ZERO'));
+            return false;
+        }
+
         // Get the id of last batch from the same publisher identifier range
         $lastId = $table->getLast($identifierBatch->publisher_identifier_range_id);
         // Check that the last id and the id to be deleted match
@@ -215,11 +223,47 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         }
         // Get an instance of identifier model
         $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
-        // Delete identifiers
-        if (!$identifierModel->deleteByBatchId($identifierBatch->id)) {
+        // Get identifier objects
+        $identifiers = $identifierModel->getIdentifiers($identifierBatch->id, true);
+        // Check that the numbers match
+        if (sizeof($identifiers) != $identifierBatch->identifier_count + $identifierBatch->identifier_canceled_used_count) {
             $table->transactionRollback();
             return false;
         }
+
+        // Get an instance of identifier canceled model
+        $identifierCanceledModel = $this->getInstance('Identifiercanceled', 'IsbnregistryModel');
+        // Get publisher identifier range object - we need to know the category
+        $publisherIdentifierRange = $rangeModel->getItem($identifierBatch->publisher_identifier_range_id);
+        // Reused identifiers must be moved back to cancelled identifiers
+        for ($i = $identifierBatch->identifier_count; $i < $identifierBatch->identifier_count + $identifierBatch->identifier_canceled_used_count; $i++) {
+            // Create new identifier canceled object
+            $identifierCanceled = array(
+                'identifier' => $identifiers[$i]->identifier,
+                'identifier_type' => $identifierBatch->identifier_type,
+                'category' => $publisherIdentifierRange->category,
+                'publisher_id' => $identifierBatch->publisher_id,
+                'publisher_identifier_range_id' => $identifiers[$i]->publisher_identifier_range_id
+            );
+
+            // Save new identifier canceled object
+            if (!$identifierCanceledModel->save($identifierCanceled)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_SAVE_IDENTIFIER_CANCELED_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
+        }
+        // Put identifier ids into array that we can delete them easily
+        $identifiersDelete = array();
+        for ($i = 0; $i < sizeof($identifiers); $i++) {
+            array_push($identifiersDelete, $identifiers[$i]->id);
+        }
+        // Delete identifiers
+        if (!$identifierModel->delete($identifiersDelete)) {
+            $table->transactionRollback();
+            return false;
+        }
+
         // Delete batch
         if (!$table->deleteBatch($identifierBatch->id)) {
             $table->transactionRollback();
@@ -228,6 +272,19 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         // Commit
         $table->transactionCommit();
         return true;
+    }
+
+    /**
+     * Increase identifier batch canceled count by one.
+     * @param int $identifierBatchId id of the identifier batch
+     * @param int $count current count
+     * @return boolean true on success, false on failure
+     */
+    public function increaseCanceledCount($identifierBatchId, $count) {
+        // Get db access
+        $table = $this->getTable();
+        // Return result
+        return $table->increaseCanceledCount($identifierBatchId, $count);
     }
 
 }

@@ -88,7 +88,7 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRangeCanceled extends
     /**
      * Returns the smallest canceled identifier object (fifo) that belongs to 
      * the given category and that was given from the range identified by the 
-     * given id. If id is not defined, the smallest issn from any range is 
+     * given id. If id is not defined, the smallest identifier from any range is 
      * returned.
      * @param int $category category
      * @param int $rangeId identifier range id
@@ -105,26 +105,6 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRangeCanceled extends
         if ($rangeId > 0) {
             $query->where($this->_db->quoteName('range_id') . ' = ' . $this->_db->quote($rangeId));
         }
-        $query->order('identifier ASC')->setLimit('1');
-        $this->_db->setQuery($query);
-        // Execute query
-        return $this->_db->loadObject();
-    }
-
-    /**
-     * Returns the smallest canceled identifier object (fifo) belonging to the
-     * category identified by the given category. If no identifiers is 
-     * available from the given category, null is returned.
-     * @param int $category category
-     * @return string smallest identifier that from the category
-     */
-    public function getIdentifierByCategory($category) {
-        // Get query
-        $query = $this->_db->getQuery(true);
-
-        // Create the query
-        $query->select('*')->from($this->_db->quoteName($this->_tbl));
-        $query->where($this->_db->quoteName('category') . ' = ' . $this->_db->quote($category));
         $query->order('identifier ASC')->setLimit('1');
         $this->_db->setQuery($query);
         // Execute query
