@@ -48,12 +48,12 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('printer'); ?>               
                 <?php echo $this->form->renderField('issued_from_year'); ?>
                 <?php echo $this->form->renderField('issued_from_number'); ?>
-                <?php echo $this->form->renderField('frequency'); ?>
+                <?php echo $this->form->renderField('frequency'); ?>               
+            </div>
+            <div class="span6">
                 <?php echo $this->form->renderField('language'); ?>
                 <?php echo $this->form->renderField('publication_type'); ?>
                 <?php echo $this->form->renderField('publication_type_other'); ?>
-            </div>
-            <div class="span6">
                 <?php echo $this->form->renderField('medium'); ?>
                 <?php echo $this->form->renderField('medium_other'); ?>
                 <?php echo $this->form->renderField('url'); ?>
@@ -61,12 +61,6 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('prepublication_record_created'); ?>
                 <?php echo $this->form->renderField('control_copy_received'); ?>
                 <?php echo $this->form->renderField('issn_frozen'); ?>
-                <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
-                <?php echo $this->loadTemplate('link_to_archive_record'); ?>
-                <?php echo $this->form->renderField('created'); ?>
-                <?php echo $this->form->renderField('created_by'); ?>
-                <?php echo $this->form->renderField('modified'); ?>
-                <?php echo $this->form->renderField('modified_by'); ?>
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
@@ -88,6 +82,19 @@ JFactory::getDocument()->addScriptDeclaration('
 
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_7'); ?></legend>
                 <?php echo $this->form->renderField('another_medium'); ?> 
+            </div>
+        </div>
+        <?php echo JHtml::_('bootstrap.endTab'); ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'history', JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_HISTORY', true)); ?>
+        <div class="row-fluid form-horizontal-desktop">
+            <div class="span6">
+                <?php echo $this->loadTemplate('link_to_archive_record'); ?>
+                <?php echo $this->form->renderField('created'); ?>
+                <?php echo $this->form->renderField('created_by'); ?>
+                <?php echo $this->form->renderField('modified'); ?>
+                <?php echo $this->form->renderField('modified_by'); ?>
+            </div>
+            <div class="span6">
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
