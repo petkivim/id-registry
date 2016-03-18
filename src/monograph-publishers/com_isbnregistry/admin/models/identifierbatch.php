@@ -203,9 +203,11 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         // Start transaction
         $table->transactionStart();
         // Decrease range models' counters
-        if (!$rangeModel->decreaseByCount($identifierBatch->publisher_identifier_range_id, $identifierBatch->identifier_count)) {
-            $table->transactionRollback();
-            return false;
+        if ($identifierBatch->publisher_identifier_range_id != 0) {
+            if (!$rangeModel->decreaseByCount($identifierBatch->publisher_identifier_range_id, $identifierBatch->identifier_count)) {
+                $table->transactionRollback();
+                return false;
+            }
         }
         // Check if there's a publication related to the batch
         if ($identifierBatch->publication_id > 0) {
@@ -245,7 +247,7 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         // Get an instance of identifier canceled model
         $identifierCanceledModel = $this->getInstance('Identifiercanceled', 'IsbnregistryModel');
         // Get publisher identifier range object - we need to know the category
-        $publisherIdentifierRange = $rangeModel->getItem($identifierBatch->publisher_identifier_range_id);
+        $publisherIdentifierRange = $rangeModel->getItem($identifiers[0]->publisher_identifier_range_id);
         // Reused identifiers must be moved back to cancelled identifiers
         for ($i = $identifierBatch->identifier_count; $i < $identifierBatch->identifier_count + $identifierBatch->identifier_canceled_used_count; $i++) {
             // Create new identifier canceled object
