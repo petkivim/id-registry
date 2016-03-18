@@ -140,21 +140,35 @@ class IsbnRegistryTablePublisher extends JTable {
      * @return true on success; false on failure
      */
     public function updateActiveIsbnIdentifier($publisherId, $identifier) {
-        // Conditions for which records should be updated.
-        $conditions = array(
-            'id' => $publisherId
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        // Database connection
+        $query = $this->_db->getQuery(true);
+
+        // Update identifier
+        $fields = array(
+            $this->_db->quoteName('active_identifier_isbn') . ' = ' . $this->_db->quote($identifier),
+            $this->_db->quoteName('modified') . ' = ' . $this->_db->quote($date->toSql()),
+            $this->_db->quoteName('modified_by') . ' = ' . $this->_db->quote($user->get('username'))
         );
 
-        // Load object
-        if (!$this->load($conditions)) {
-            return false;
+        // Conditions 
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherId)
+        );
+
+        // Create query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // If number of affected rows is 1, the result is OK
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
         }
-
-        // Update identifier type
-        $this->active_identifier_isbn = $identifier;
-
-        // Update object to DB
-        return $this->store();
+        return false;
     }
 
     /**
@@ -165,21 +179,35 @@ class IsbnRegistryTablePublisher extends JTable {
      * @return true on success; false on failure
      */
     public function updateActiveIsmnIdentifier($publisherId, $identifier) {
-        // Conditions for which records should be updated.
-        $conditions = array(
-            'id' => $publisherId
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        // Database connection
+        $query = $this->_db->getQuery(true);
+
+        // Update identifier
+        $fields = array(
+            $this->_db->quoteName('active_identifier_ismn') . ' = ' . $this->_db->quote($identifier),
+            $this->_db->quoteName('modified') . ' = ' . $this->_db->quote($date->toSql()),
+            $this->_db->quoteName('modified_by') . ' = ' . $this->_db->quote($user->get('username'))
         );
 
-        // Load object
-        if (!$this->load($conditions)) {
-            return false;
+        // Conditions 
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherId)
+        );
+
+        // Create query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // If number of affected rows is 1, the result is OK
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
         }
-
-        // Update identifier type
-        $this->active_identifier_ismn = $identifier;
-
-        // Update object to DB
-        return $this->store();
+        return false;
     }
 
     /**

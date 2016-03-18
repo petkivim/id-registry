@@ -185,7 +185,7 @@ class IsbnRegistryTablePublication extends JTable {
         // Conditions for which records should be updated.
         $conditions = array(
             $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publicationId),
-            $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId),
+            $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId)
         );
 
         // Create query
