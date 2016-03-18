@@ -54,22 +54,7 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                 <?php echo $this->form->renderField('publisher_id'); ?>
                 <?php echo $this->form->renderField('link_to_publisher'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
-                <?php echo $this->form->renderField('lang_code'); ?>
-                <!-- Below line is needed because when saving a form with a checkbox 
-                that is unchecked, there is no variable for it in the POST data -->
-                <input type="hidden" name="jform[no_identifier_granted]" value="0">
-                <?php echo $this->form->renderField('no_identifier_granted'); ?>
-                <?php echo $this->form->renderField('created'); ?>
-                <?php echo $this->form->renderField('created_by'); ?>
-                <?php echo $this->form->renderField('modified'); ?>
-                <?php echo $this->form->renderField('modified_by'); ?>
-
-                <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
-                <?php echo $this->form->renderField('published_before'); ?>
-                <?php echo $this->form->renderField('publications_public'); ?>
-                <?php echo $this->form->renderField('publications_intra'); ?>
-                <?php echo $this->form->renderField('publishing_activity'); ?>
-                <?php echo $this->form->renderField('publishing_activity_amount'); ?>				
+                <?php echo $this->form->renderField('lang_code'); ?>			
             </div>
             <div class="span6">
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
@@ -81,29 +66,35 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHING', true)); ?>
+        <div class="row-fluid form-horizontal-desktop">
+            <div class="span6">              
+                <?php echo $this->form->renderField('published_before'); ?>
+                <?php echo $this->form->renderField('publications_public'); ?>
+                <?php echo $this->form->renderField('publications_intra'); ?>
+                <?php echo $this->form->renderField('publishing_activity'); ?>
+                <?php echo $this->form->renderField('publishing_activity_amount'); ?>				
+            </div>
+            <div class="span6">
+            </div>
+        </div>
+        <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publication', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLICATION', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_4'); ?></legend>
                 <?php echo $this->form->renderField('publication_type'); ?>
                 <?php echo $this->form->renderField('publication_format'); ?>
-                <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_5'); ?></legend>
-                <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_MAIN'); ?></h4>
-                <?php echo $this->form->renderField('first_name_1'); ?>
-                <?php echo $this->form->renderField('last_name_1'); ?>	
-                <?php echo $this->form->renderField('role_1'); ?>			
-                <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_OTHERS'); ?></h4>
-                <?php echo $this->form->renderField('first_name_2'); ?>
-                <?php echo $this->form->renderField('last_name_2'); ?>	
-                <?php echo $this->form->renderField('role_2'); ?>	
-                <?php echo $this->form->renderField('first_name_3'); ?>
-                <?php echo $this->form->renderField('last_name_3'); ?>	
-                <?php echo $this->form->renderField('role_3'); ?>	
-                <?php echo $this->form->renderField('first_name_4'); ?>
-                <?php echo $this->form->renderField('last_name_4'); ?>	
-                <?php echo $this->form->renderField('role_4'); ?>	
+                <!-- Below line is needed because when saving a form with a checkbox 
+                that is unchecked, there is no variable for it in the POST data -->
+                <input type="hidden" name="jform[no_identifier_granted]" value="0">
+                <?php echo $this->form->renderField('no_identifier_granted'); ?>    
+                <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_7'); ?></legend>
+                <?php echo $this->form->renderField('series'); ?>
+                <?php echo $this->form->renderField('issn'); ?>	
+                <?php echo $this->form->renderField('volume'); ?>
             </div>
-            <div class="span6">
+            <div class="span6">     
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_6'); ?></legend>
                 <?php echo $this->form->renderField('title'); ?>
                 <?php echo $this->form->renderField('subtitle'); ?>	
@@ -148,21 +139,59 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                 <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLISHED'); ?></h4>
                 <?php echo $this->form->renderField('year'); ?>	
                 <?php echo $this->form->renderField('month'); ?>
-                <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_7'); ?></legend>
-                <?php echo $this->form->renderField('series'); ?>
-                <?php echo $this->form->renderField('issn'); ?>	
-                <?php echo $this->form->renderField('volume'); ?>	
+            </div>
+        </div>
+        <?php echo JHtml::_('bootstrap.endTab'); ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'print_electronical', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PRINT_ELECTRONICAL', true)); ?>
+        <div class="row-fluid form-horizontal-desktop">
+            <div class="span6">              
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_8'); ?></legend>		
                 <?php echo $this->form->renderField('printing_house'); ?>
                 <?php echo $this->form->renderField('printing_house_city'); ?>	
                 <?php echo $this->form->renderField('copies'); ?>	
                 <?php echo $this->form->renderField('edition'); ?>		
-                <?php echo $this->form->renderField('type'); ?>
-                <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_9'); ?></legend>
-                <?php echo $this->form->renderField('comments'); ?>
+                <?php echo $this->form->renderField('type'); ?>			
+            </div>
+            <div class="span6">
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_10'); ?></legend>
                 <?php echo $this->form->renderField('fileformat'); ?>
-                <?php echo $this->form->renderField('fileformat_other'); ?>
+                <?php echo $this->form->renderField('fileformat_other'); ?>	
+                <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_9'); ?></legend>
+                <?php echo $this->form->renderField('comments'); ?>
+            </div>
+        </div>
+        <?php echo JHtml::_('bootstrap.endTab'); ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'authors', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_AUTHORS', true)); ?>
+        <div class="row-fluid form-horizontal-desktop">
+            <div class="span6">              
+                <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_MAIN'); ?></h4>
+                <?php echo $this->form->renderField('first_name_1'); ?>
+                <?php echo $this->form->renderField('last_name_1'); ?>	
+                <?php echo $this->form->renderField('role_1'); ?>						
+            </div>
+            <div class="span6">
+                <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_OTHERS'); ?></h4>
+                <?php echo $this->form->renderField('first_name_2'); ?>
+                <?php echo $this->form->renderField('last_name_2'); ?>	
+                <?php echo $this->form->renderField('role_2'); ?>	
+                <?php echo $this->form->renderField('first_name_3'); ?>
+                <?php echo $this->form->renderField('last_name_3'); ?>	
+                <?php echo $this->form->renderField('role_3'); ?>	
+                <?php echo $this->form->renderField('first_name_4'); ?>
+                <?php echo $this->form->renderField('last_name_4'); ?>	
+                <?php echo $this->form->renderField('role_4'); ?>	
+            </div>
+        </div>
+        <?php echo JHtml::_('bootstrap.endTab'); ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'history', JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_HISTORY', true)); ?>
+        <div class="row-fluid form-horizontal-desktop">
+            <div class="span6">              
+                <?php echo $this->form->renderField('created'); ?>
+                <?php echo $this->form->renderField('created_by'); ?>
+                <?php echo $this->form->renderField('modified'); ?>
+                <?php echo $this->form->renderField('modified_by'); ?>			
+            </div>
+            <div class="span6">
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>

@@ -48,11 +48,6 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->form->renderField('has_quitted'); ?>
                 <?php echo $this->form->renderField('year_quitted'); ?>
                 <?php echo $this->form->renderField('additional_info'); ?>
-                <?php echo $this->loadTemplate('link_to_archive_record'); ?>
-                <?php echo $this->form->renderField('created'); ?>
-                <?php echo $this->form->renderField('created_by'); ?>
-                <?php echo $this->form->renderField('modified'); ?>
-                <?php echo $this->form->renderField('modified_by'); ?>
             </div>
             <div class="span6">
                 <?php echo $this->form->renderField('address'); ?>
@@ -82,105 +77,120 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'identifiers', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS', true)); ?>
-        <div class="row-fluid form-horizontal-desktop">
-            <div class="span6" id="publisherIsbnRanges">
-                <?php if (!$viewOnly) : ?>
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_1'); ?></legend>
-                    <?php echo $this->form->renderField('isbn_range'); ?>
-                    <?php echo $this->form->renderField('get_publisher_identifier_isbn'); ?>
-                <?php endif; ?>
-                <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_2'); ?></legend>							
-                <?php echo $this->loadTemplate('isbn_ranges'); ?>				
-            </div>
-            <div class="span6" id="publisherIsmnRanges">
-                <?php if (!$viewOnly) : ?>
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_3'); ?></legend>
-                    <?php echo $this->form->renderField('ismn_range'); ?>
-                    <?php echo $this->form->renderField('get_publisher_identifier_ismn'); ?>	
-                <?php endif; ?>
-                <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_4'); ?></legend>							
-                <?php echo $this->loadTemplate('ismn_ranges'); ?>	
-            </div>
-        </div>
-        <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php if (!$viewOnly) : ?>
-            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'isbn', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN', true)); ?>
+        <?php if ($this->item->id > 0) : ?>
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'identifiers', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS', true)); ?>
             <div class="row-fluid form-horizontal-desktop">
-                <div class="span6">
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_1'); ?></legend>
-                    <?php echo $this->form->renderField('isbn_count'); ?>	
-                    <div class="control-group">
-                        <div class="control-label">
-                        </div>
-                        <div class="controls">
-                            <?php echo $this->form->getInput('get_isbns'); ?>
-                            <?php echo $this->form->getInput('delete_isbns'); ?>
-                        </div>
-                    </div>
-                    <?php echo $this->form->renderField('created_isbns'); ?>
-                    <?php echo $this->form->renderField('notify_isbns'); ?>
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_2'); ?></legend>
-                    <?php echo $this->loadTemplate('show_isbn_history'); ?>
+                <div class="span6" id="publisherIsbnRanges">
+                    <?php if (!$viewOnly) : ?>
+                        <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_1'); ?></legend>
+                        <?php echo $this->form->renderField('isbn_range'); ?>
+                        <?php echo $this->form->renderField('get_publisher_identifier_isbn'); ?>
+                    <?php endif; ?>
+                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_2'); ?></legend>							
+                    <?php echo $this->loadTemplate('isbn_ranges'); ?>				
                 </div>
-                <div class="span6">		
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_3'); ?></legend>
-                    <?php echo $this->form->renderField('publications_without_isbn'); ?>	
-                    <div class="control-group">
-                        <div class="control-label">
-                        </div>
-                        <div class="controls">
-                            <?php echo $this->form->getInput('get_isbn'); ?>
-                            <?php echo $this->form->getInput('delete_isbn'); ?>
-                        </div>
-                    </div>
-                    <?php echo $this->form->renderField('link_to_publication_isbn'); ?>		
-                    <?php echo $this->form->renderField('notify_isbn'); ?>	
+                <div class="span6" id="publisherIsmnRanges">
+                    <?php if (!$viewOnly) : ?>
+                        <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_3'); ?></legend>
+                        <?php echo $this->form->renderField('ismn_range'); ?>
+                        <?php echo $this->form->renderField('get_publisher_identifier_ismn'); ?>	
+                    <?php endif; ?>
+                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLISHER_IDENTIFIERS_SUBTITLE_4'); ?></legend>							
+                    <?php echo $this->loadTemplate('ismn_ranges'); ?>	
                 </div>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
-            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'ismn', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN', true)); ?>
+            <?php if (!$viewOnly) : ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'isbn', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN', true)); ?>
+                <div class="row-fluid form-horizontal-desktop">
+                    <div class="span6">
+                        <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_1'); ?></legend>
+                        <?php echo $this->form->renderField('isbn_count'); ?>	
+                        <div class="control-group">
+                            <div class="control-label">
+                            </div>
+                            <div class="controls">
+                                <?php echo $this->form->getInput('get_isbns'); ?>
+                                <?php echo $this->form->getInput('delete_isbns'); ?>
+                            </div>
+                        </div>
+                        <?php echo $this->form->renderField('created_isbns'); ?>
+                        <?php echo $this->form->renderField('notify_isbns'); ?>
+                        <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_2'); ?></legend>
+                        <?php echo $this->loadTemplate('show_isbn_history'); ?>
+                    </div>
+                    <div class="span6">		
+                        <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISBN_SUBTITLE_3'); ?></legend>
+                        <?php echo $this->form->renderField('publications_without_isbn'); ?>	
+                        <div class="control-group">
+                            <div class="control-label">
+                            </div>
+                            <div class="controls">
+                                <?php echo $this->form->getInput('get_isbn'); ?>
+                                <?php echo $this->form->getInput('delete_isbn'); ?>
+                            </div>
+                        </div>
+                        <?php echo $this->form->renderField('link_to_publication_isbn'); ?>		
+                        <?php echo $this->form->renderField('notify_isbn'); ?>	
+                    </div>
+                </div>
+                <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'ismn', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN', true)); ?>
+                <div class="row-fluid form-horizontal-desktop">
+                    <div class="span6">
+                        <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_1'); ?></legend>
+                        <?php echo $this->form->renderField('ismn_count'); ?>	
+                        <div class="control-group">
+                            <div class="control-label">
+                            </div>
+                            <div class="controls">
+                                <?php echo $this->form->getInput('get_ismns'); ?>
+                                <?php echo $this->form->getInput('delete_ismns'); ?>
+                            </div>
+                        </div>
+                        <?php echo $this->form->renderField('created_ismns'); ?>
+                        <?php echo $this->form->renderField('notify_ismns'); ?>
+                        <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_2'); ?></legend>
+                        <?php echo $this->loadTemplate('show_ismn_history'); ?>
+                    </div>
+                    <div class="span6">		
+                        <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_3'); ?></legend>	
+                        <?php echo $this->form->renderField('publications_without_ismn'); ?>
+                        <div class="control-group">
+                            <div class="control-label">
+                            </div>
+                            <div class="controls">
+                                <?php echo $this->form->getInput('get_ismn'); ?>
+                                <?php echo $this->form->getInput('delete_ismn'); ?>
+                            </div>
+                        </div>
+                        <?php echo $this->form->renderField('link_to_publication_ismn'); ?>	
+                        <?php echo $this->form->renderField('notify_ismn'); ?>
+                    </div>
+                </div>
+                <?php echo JHtml::_('bootstrap.endTab'); ?>
+                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publications', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATIONS', true)); ?>
+                <div class="row-fluid form-horizontal-desktop">
+                    <?php echo $this->loadTemplate('publications_list'); ?>
+                </div>
+                <?php echo JHtml::_('bootstrap.endTab'); ?> 
+                <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'messages', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_MESSAGES', true)); ?>
+                <div class="row-fluid form-horizontal-desktop">
+                    <?php echo $this->loadTemplate('messages_list'); ?>
+                </div>
+                <?php echo JHtml::_('bootstrap.endTab'); ?>
+            <?php endif; ?>       
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'history', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_HISTORY', true)); ?>
             <div class="row-fluid form-horizontal-desktop">
                 <div class="span6">
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_1'); ?></legend>
-                    <?php echo $this->form->renderField('ismn_count'); ?>	
-                    <div class="control-group">
-                        <div class="control-label">
-                        </div>
-                        <div class="controls">
-                            <?php echo $this->form->getInput('get_ismns'); ?>
-                            <?php echo $this->form->getInput('delete_ismns'); ?>
-                        </div>
-                    </div>
-                    <?php echo $this->form->renderField('created_ismns'); ?>
-                    <?php echo $this->form->renderField('notify_ismns'); ?>
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_2'); ?></legend>
-                    <?php echo $this->loadTemplate('show_ismn_history'); ?>
+                    <?php echo $this->loadTemplate('link_to_archive_record'); ?>
+                    <?php echo $this->form->renderField('created'); ?>
+                    <?php echo $this->form->renderField('created_by'); ?>
+                    <?php echo $this->form->renderField('modified'); ?>
+                    <?php echo $this->form->renderField('modified_by'); ?>
                 </div>
-                <div class="span6">		
-                    <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATION_ISMN_SUBTITLE_3'); ?></legend>	
-                    <?php echo $this->form->renderField('publications_without_ismn'); ?>
-                    <div class="control-group">
-                        <div class="control-label">
-                        </div>
-                        <div class="controls">
-                            <?php echo $this->form->getInput('get_ismn'); ?>
-                            <?php echo $this->form->getInput('delete_ismn'); ?>
-                        </div>
-                    </div>
-                    <?php echo $this->form->renderField('link_to_publication_ismn'); ?>	
-                    <?php echo $this->form->renderField('notify_ismn'); ?>
+                <div class="span6">
                 </div>
-            </div>
-            <?php echo JHtml::_('bootstrap.endTab'); ?>
-            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publications', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_PUBLICATIONS', true)); ?>
-            <div class="row-fluid form-horizontal-desktop">
-                <?php echo $this->loadTemplate('publications_list'); ?>
-            </div>
-            <?php echo JHtml::_('bootstrap.endTab'); ?> 
-            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'messages', JText::_('COM_ISBNREGISTRY_PUBLISHER_TAB_MESSAGES', true)); ?>
-            <div class="row-fluid form-horizontal-desktop">
-                <?php echo $this->loadTemplate('messages_list'); ?>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php endif; ?>
