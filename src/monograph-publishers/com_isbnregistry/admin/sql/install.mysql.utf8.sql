@@ -406,6 +406,7 @@ CREATE TABLE `#__isbn_registry_identifier` (
     `publisher_identifier_range_id` INT NOT NULL,
     `publication_type` VARCHAR(25) NOT NULL DEFAULT '',
     PRIMARY KEY (`id`),
+    UNIQUE (identifier),
     INDEX `idx_identifier` (`identifier`),
     INDEX `idx_identifier_batch_id` (`identifier_batch_id`)
 )
