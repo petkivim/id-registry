@@ -3,6 +3,7 @@ jQuery(document).ready(function ($) {
     var publisher_link_label = $('#jform_link_to_publisher').text();
     var show_label = publisher_link_label.split('|')[0];
     var edit_label = publisher_link_label.split('|')[1];
+    var label_confirm_add_publication = $('#label_confirm_add_publication').text();
     // Get form id
     var form_id = $("#jform_id").val();
     // Get current URL
@@ -26,6 +27,10 @@ jQuery(document).ready(function ($) {
         );
     });
 
+    $("a#add_publication_link").click(function () {
+        return confirm(label_confirm_add_publication);
+    });
+    
     $("#jform_publisher_id").change(function () {
         updatePublisherLink();
     });

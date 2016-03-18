@@ -10,6 +10,19 @@ defined('_JEXEC') or die('Restricted Access');
 // Load styles
 $document = JFactory::getDocument();
 $document->addStyleSheet("components/com_issnregistry/css/messagetype.css");
+
+$document->addScriptDeclaration('
+    Joomla.submitbutton = function(task) {
+        if(task == "messagetypes.delete") {
+            var response = confirm("' . JText::_('COM_ISSNREGISTRY_CONFIRM_DELETE') . '");
+            if (response == true) {
+                Joomla.submitform(task);
+            }
+        } else {
+            Joomla.submitform(task);
+        }
+    };
+');
 ?>
 <form action="index.php?option=com_issnregistry&view=messagetypes" method="post" id="adminForm" name="adminForm">
     <div id="j-sidebar-container" class="span2">

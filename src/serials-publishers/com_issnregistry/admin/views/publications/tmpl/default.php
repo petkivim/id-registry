@@ -15,6 +15,19 @@ JHtml::_('formbehavior.chosen', 'select');
 // Load styles
 $document = JFactory::getDocument();
 $document->addStyleSheet("components/com_issnregistry/css/publication.css");
+
+$document->addScriptDeclaration('
+    Joomla.submitbutton = function(task) {
+        if(task == "publications.delete") {
+            var response = confirm("' . JText::_('COM_ISSNREGISTRY_CONFIRM_DELETE') . '");
+            if (response == true) {
+                Joomla.submitform(task);
+            }
+        } else {
+            Joomla.submitform(task);
+        }
+    };
+');
 ?>
 <form action="index.php?option=com_issnregistry&view=publications" method="post" id="adminForm" name="adminForm">
     <div id="j-sidebar-container" class="span2">

@@ -15,6 +15,19 @@ JHtml::_('formbehavior.chosen', 'select');
 // Load styles
 $document = JFactory::getDocument();
 $document->addStyleSheet("components/com_issnregistry/css/publisher.css");
+
+$document->addScriptDeclaration('
+    Joomla.submitbutton = function(task) {
+        if(task == "publishers.delete") {
+            var response = confirm("' . JText::_('COM_ISSNREGISTRY_CONFIRM_DELETE') . '");
+            if (response == true) {
+                Joomla.submitform(task);
+            }
+        } else {
+            Joomla.submitform(task);
+        }
+    };
+');
 ?>
 <form action="index.php?option=com_issnregistry&view=publishers" method="post" id="adminForm" name="adminForm">
     <div id="j-sidebar-container" class="span2">

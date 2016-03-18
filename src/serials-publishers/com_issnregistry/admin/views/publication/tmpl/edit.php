@@ -22,8 +22,13 @@ $document->addStyleSheet("components/com_issnregistry/css/publication.css");
 // This fix is needed for JToolBar
 JFactory::getDocument()->addScriptDeclaration('
     Joomla.submitbutton = function(task)
-    {
-        if (task == "publication.cancel" || document.formvalidator.isValid(document.getElementById("adminForm")))
+    {       
+        if(task == "publication.deleteIssn") {
+            var response = confirm("' . JText::_('COM_ISSNREGISTRY_CONFIRM_DELETE_ISSN') . '");
+            if (response == true) {
+                Joomla.submitform(task);
+            }
+        } else if (task == "publication.cancel" || document.formvalidator.isValid(document.getElementById("adminForm")))
         {
             Joomla.submitform(task, document.getElementById("adminForm"));
         }

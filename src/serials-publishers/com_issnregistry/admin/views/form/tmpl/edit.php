@@ -78,7 +78,7 @@ $viewOnly = strcmp(htmlentities(JFactory::getApplication()->input->get('tmpl')),
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publications', JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS', true)); ?>
             <div class="row-fluid form-horizontal-desktop">       
                 <div class="add_publication">
-                    <a href="index.php?option=com_issnregistry&task=form.createPublication&formId=<?php echo $this->item->id; ?>">
+                    <a id="add_publication_link" href="index.php?option=com_issnregistry&task=form.createPublication&formId=<?php echo $this->item->id; ?>&<?php echo JSession::getFormToken() ?>=1">
                         <?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLICATIONS_ADD_NEW') ?>
                         <span class="icon-new"></span>
                     </a>
@@ -95,5 +95,6 @@ $viewOnly = strcmp(htmlentities(JFactory::getApplication()->input->get('tmpl')),
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>
     <input type="hidden" name="task" value="form.edit" />
+    <span id="label_confirm_add_publication" style=" visibility:hidden"><?php echo JText::_('COM_ISSNREGISTRY_FORM_CONFIRM_ADD_PUBLICATION'); ?></span>
     <?php echo JHtml::_('form.token'); ?>
 </form>
