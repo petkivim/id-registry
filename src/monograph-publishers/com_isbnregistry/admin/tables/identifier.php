@@ -137,7 +137,7 @@ class IsbnRegistryTableIdentifier extends JTable {
         // Database connection
         $query = $this->_db->getQuery(true);
         // Create query
-        $query->select('i.id, i.identifier, i.identifier_batch_id, ib.identifier_type, ib.identifier_count, ib.identifier_canceled_count, ib.publication_id, ib.publisher_id, ib.publisher_identifier_range_id');
+        $query->select('i.id, i.identifier, i.identifier_batch_id, ib.identifier_type, ib.identifier_count, ib.identifier_canceled_count, ib.identifier_canceled_used_count, ib.publication_id, ib.publisher_id, i.publisher_identifier_range_id');
         $query->from($this->_db->quoteName($this->_tbl) . ' AS i');
         $query->join('INNER', '#__isbn_registry_identifier_batch AS ib ON ib.id = i.identifier_batch_id');
         $query->where($this->_db->quoteName('i.identifier') . ' = ' . $this->_db->quote($identifier));

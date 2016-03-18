@@ -162,7 +162,7 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
         // Get an instance of identifier batch model
         $identifierBatchModel = $this->getInstance('Identifierbatch', 'IsbnregistryModel');
         // Check how many identifiers were created on the same bacth
-        if ($identifierObj->identifier_count == 1 || $identifierObj->identifier_canceled_count == $identifierObj->identifier_count - 1) {
+        if ($identifierObj->identifier_count + $identifierObj->identifier_canceled_used_count == 1 || $identifierObj->identifier_canceled_count == (($identifierObj->identifier_canceled_used_count + $identifierObj->identifier_count) - 1)) {
             // If this is the only identifier OR there's only one identifier left,
             //  the batch object can be deleted
             if (!$identifierBatchModel->delete($identifierObj->identifier_batch_id)) {
