@@ -76,7 +76,7 @@ class IsbnregistryModelPublications extends JModelList {
             $query->select('*')
                     ->from($db->quoteName('#__isbn_registry_publication'));
             $query->where($db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId));
-            $query->order('title ASC');
+            $query->order('created DESC');
 
             return $query;
         }
