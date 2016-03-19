@@ -87,7 +87,7 @@ JHTML::_('behavior.modal');
                             <?php echo $row->identifier_type; ?>
                         </td>  
                         <td>
-                            <?php echo $row->identifier_count; ?>
+                            <?php echo ($row->identifier_count + $row->identifier_canceled_used_count - $row->identifier_canceled_count); ?>
                         </td> 
                         <td>
                             <?php echo $link; ?>
