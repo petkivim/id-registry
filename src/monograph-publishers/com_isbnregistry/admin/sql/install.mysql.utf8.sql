@@ -210,6 +210,7 @@ CREATE TABLE `#__isbn_registry_publisher_isbn_range` (
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`),
+    UNIQUE (publisher_identifier),
     INDEX `idx_publisher_id` (`publisher_id`),
     INDEX `idx_isbn_range_id` (`isbn_range_id`)
 )
@@ -266,6 +267,7 @@ CREATE TABLE `#__isbn_registry_publisher_ismn_range` (
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`),
+    UNIQUE (publisher_identifier),
     INDEX `idx_publisher_id` (`publisher_id`),
     INDEX `idx_ismn_range_id` (`ismn_range_id`)
 )
