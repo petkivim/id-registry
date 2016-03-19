@@ -169,7 +169,7 @@ jQuery(document).ready(function ($) {
                             content += '<td class="' + type + '_range_col_1">' + data[i].publisher_identifier + '-' + padding + '-X' + '</td>';
                             content += '<td class="' + type + '_range_col_2">' + data[i].created.split(' ')[0] + ' (' + data[i].created_by + ')</td>';
                             content += '<td class="' + type + '_range_col_3">' + data[i].free + '</td>';
-                            content += '<td class="' + type + '_range_col_4">' + data[i].next + '</td>';
+                            content += '<td class="' + type + '_range_col_4">' + data[i].taken + '</td>';
                             content += '<td class="' + type + '_range_col_5';
                             if (data[i].is_active == 1) {
                                 content += '">' + label_active;
