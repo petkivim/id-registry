@@ -45,6 +45,7 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->form->renderField('previous_names'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
+                <?php echo $this->form->renderField('promote_sorting'); ?>
                 <?php echo $this->form->renderField('has_quitted'); ?>
                 <?php echo $this->form->renderField('year_quitted'); ?>
                 <?php echo $this->form->renderField('additional_info'); ?>

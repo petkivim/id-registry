@@ -28,6 +28,7 @@ CREATE TABLE `#__isbn_registry_publisher` (
     `confirmation` VARCHAR(100) NOT NULL,
     `active_identifier_isbn` VARCHAR(20) default '',
     `active_identifier_ismn` VARCHAR(20) default '',
+    `promote_sorting` boolean not null default 0,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',

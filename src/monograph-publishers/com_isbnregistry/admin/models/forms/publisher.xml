@@ -539,5 +539,16 @@
             readonly="true"
             default="COM_ISBNREGISTRY_PUBLISHER_BUTTON_NOTIFY_ISMN_NUMBER"
         />			
+		<field
+			name="promote_sorting"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="0"
+            label="COM_ISBNREGISTRY_PUBLISHER_FIELD_PROMOTE_SORTING_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FIELD_PROMOTE_SORTING_DESC"
+			>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>	
     </fieldset>
 </form>
