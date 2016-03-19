@@ -158,6 +158,9 @@ class PublicationHelper extends JHelperContent {
                         }
                         $record->addDataField($datafield);
                     }
+                } else {
+                    $types = self::fromStrToArray($publication->type);
+                    self::addTypes('020', '_', $record, $types);
                 }
             } else {
                 $json = json_decode($publication->publication_identifier_electronical);
@@ -171,6 +174,9 @@ class PublicationHelper extends JHelperContent {
                         }
                         $record->addDataField($datafield);
                     }
+                } else {
+                    $types = self::fromStrToArray($publication->fileformat);
+                    self::addTypes('020', '_', $record, $types, true);
                 }
             }
         }
@@ -190,6 +196,9 @@ class PublicationHelper extends JHelperContent {
                         }
                         $record->addDataField($datafield);
                     }
+                } else {
+                    $types = self::fromStrToArray($publication->type);
+                    self::addTypes('024', '2', $record, $types);
                 }
             } else {
                 $json = json_decode($publication->publication_identifier_electronical);
@@ -203,6 +212,9 @@ class PublicationHelper extends JHelperContent {
                         }
                         $record->addDataField($datafield);
                     }
+                } else {
+                    $types = self::fromStrToArray($publication->fileformat);
+                    self::addTypes('024', '2', $record, $types, true);
                 }
             }
         }
@@ -441,6 +453,20 @@ class PublicationHelper extends JHelperContent {
         }
     }
 
+    private static function addTypes($field, $ind1, $record, $types, $isElectronical = false) {
+        if (!empty($types)) {
+            foreach ($types as $type) {
+                $datafield = new DataField($field, $ind1, '_');
+                $datafield->addSubfield(new Subfield('a', ''));
+                $typeStr = $isElectronical ? self::getFileFormat($type) : self::getType($type);
+                if (!empty($type)) {
+                    $datafield->addSubfield(new Subfield('q', $typeStr));
+                }
+                $record->addDataField($datafield);
+            }
+        }
+    }
+
     private static function isElectronical($format) {
         if (strcmp($format, 'ELECTRONICAL') == 0) {
             return true;
@@ -506,6 +532,16 @@ class PublicationHelper extends JHelperContent {
             return 'CD-ROM';
         }
         return '';
+    }
+
+    /**
+     * Converts the given comma separated string to array.
+     */
+    private function fromStrToArray($source) {
+        if ($source && !is_array($source)) {
+            $source = explode(',', $source);
+        }
+        return $source;
     }
 
     /**

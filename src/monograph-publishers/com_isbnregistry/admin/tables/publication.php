@@ -131,6 +131,7 @@ class IsbnRegistryTablePublication extends JTable {
         // Add conditions related to publication type
         if (strcasecmp($type, 'isbn') == 0) {
             array_push($conditions, $this->_db->quoteName('publication_type') . ' != ' . $this->_db->quote('SHEET_MUSIC'));
+            array_push($conditions, $this->_db->quoteName('publication_type') . ' != ' . $this->_db->quote(''));
         } else if (strcasecmp($type, 'ismn') == 0) {
             array_push($conditions, $this->_db->quoteName('publication_type') . ' = ' . $this->_db->quote('SHEET_MUSIC'));
         }
