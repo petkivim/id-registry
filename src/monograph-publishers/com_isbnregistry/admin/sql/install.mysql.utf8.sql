@@ -72,6 +72,7 @@ CREATE TABLE `#__isbn_registry_publisher_archive` (
     `question_7` VARCHAR(50),
     `question_8` VARCHAR(50),
     `confirmation` VARCHAR(100) NOT NULL,
+    `id_old` INT,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     PRIMARY KEY (`id`),

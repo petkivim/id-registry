@@ -48,6 +48,14 @@ $document->addStyleSheet("components/com_isbnregistry/css/publisher.css");
                 </div>
             </div>
             <?php echo $this->form->renderField('lang_code'); ?>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('id_old'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->id_old; ?>
+                </div>
+            </div>
             <?php echo $this->form->renderField('created'); ?>
             <div class="control-group">
                 <div class="control-label">
