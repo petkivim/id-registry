@@ -134,12 +134,12 @@
 		addfieldpath="administrator/components/com_isbnregistry/models/fields"
 		>	
 		<field
-			name="piid_format"
+			name="statistics_format"
 			type="radio"
 			class="btn-group btn-group-yesno"
 			default="XLS"
-            label="COM_ISBNREGISTRY_CONFIG_EXPORT_PIID_FORMAT_LABEL"
-            description="COM_ISBNREGISTRY_CONFIG_EXPORT_PIID_FORMAT_DESC">
+            label="COM_ISBNREGISTRY_CONFIG_EXPORT_STATISTICS_FORMAT_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EXPORT_STATISTICS_FORMAT_DESC">
 			<option value="CSV">CSV</option>
 			<option value="XLS">XLS</option>
 		</field>		

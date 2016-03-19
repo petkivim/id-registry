@@ -78,10 +78,17 @@ class IsbnregistryViewPublishers extends JViewLegacy {
             // Get the id of the publisher that represents author publishers
             $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
 
-            // Get PIID file format
-            $format = $params->get('piid_format', 'XLS');
+            // Get statistics file format
+            $format = $params->get('statistics_format', 'XLS');
 
             JToolBarHelper::custom('publishers.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
+
+            $toolbar = JToolBar::getInstance('toolbar');
+            $layout = new JLayoutFile('joomla.toolbar.popup');
+
+            // Render the popup button
+            $dhtml = $layout->render(array('name' => 'statistics', 'text' => JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_STATISTICS'), 'class' => 'icon-pie'));
+            $toolbar->appendButton('Custom', $dhtml);
 
             // Check that author publisher has been defined
             if ($authorPublisherId != 0) {

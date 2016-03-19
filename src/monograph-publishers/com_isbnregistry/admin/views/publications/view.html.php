@@ -78,8 +78,8 @@ class IsbnregistryViewPublications extends JViewLegacy {
         if ($filterStatus == 3) {
             // Get component parameters
             $params = JComponentHelper::getParams('com_isbnregistry');
-            // Get PIID file format
-            $format = $params->get('piid_format', 'XLS');
+            // Get statistics file format
+            $format = $params->get('statistics_format', 'XLS');
 
             JToolBarHelper::custom('publications.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
         }
