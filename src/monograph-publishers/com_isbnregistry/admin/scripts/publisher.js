@@ -291,6 +291,8 @@ jQuery(document).ready(function ($) {
     });
 
     function getIdentifiers(count, type) {
+        // Disable get identifiers button
+        $('#jform_get_' + type + 's').prop("disabled", true);
         // Set post parameterts
         var postData = {};
         // Session ID
@@ -322,8 +324,10 @@ jQuery(document).ready(function ($) {
                             }
                             $('#jform_notify_' + type + 's').prop("disabled", false);
                             $('#jform_delete_' + type + 's').prop("disabled", false);
+                            $('#jform_get_' + type + 's').prop("disabled", false);
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
+                            $('#jform_get_' + type + 's').prop("disabled", false);
                         }
                     })
                     .fail(function (xhr, textStatus, errorThrown) {
@@ -346,6 +350,8 @@ jQuery(document).ready(function ($) {
     });
 
     function getIdentifier(publicationId, type) {
+        // Disable get identifiers button
+        $('#jform_get_' + type).prop("disabled", true);
         // Set post parameterts
         var postData = {};
         // Session ID
@@ -383,11 +389,13 @@ jQuery(document).ready(function ($) {
                             }
                             $('#jform_notify_' + type).prop("disabled", false);
                             $('#jform_delete_' + type).prop("disabled", false);
+                            $('#jform_get_' + type).prop("disabled", false);
                             // Update publications iframe
                             $('#publications_iframe').attr("src", $('#publications_iframe').attr("src"));
                         } else {
                             $('#system-message-container').html(showNotification('error', data.title, data.message));
                             $('#jform_link_to_publication_' + type).html('');
+                            $('#jform_get_' + type).prop("disabled", false);
                         }
                     })
                     .fail(function (xhr, textStatus, errorThrown) {
@@ -465,6 +473,11 @@ jQuery(document).ready(function ($) {
     });
 
     function deleteIdentifierBatch(type, batchId, isPlural) {
+        var plural = isPlural ? 's' : '';
+        // Disable get identifiers button
+        $('#jform_get_' + type + plural).prop("disabled", true);
+        $('#jform_delete_' + type + plural).prop("disabled", true);
+        $('#jform_notify_' + type + plural).prop("disabled", true);
         // Set post parameterts
         var postData = {};
         // Session ID
@@ -484,6 +497,9 @@ jQuery(document).ready(function ($) {
                         deleteBatchSuccess(type, isPlural);
                     } else {
                         $('#system-message-container').html(showNotification('error', data.title, data.message));
+                        $('#jform_get_' + type + (isPlural ? 's' : '')).prop("disabled", false);
+                        $('#jform_delete_' + type + plural).prop("disabled", false);
+                        $('#jform_notify_' + type + plural).prop("disabled", false);
                     }
                 })
                 .fail(function (xhr, textStatus, errorThrown) {
@@ -499,8 +515,7 @@ jQuery(document).ready(function ($) {
             } else {
                 batch_id_ismns = 0;
             }
-            $('#jform_delete_' + type + 's').prop("disabled", true);
-            $('#jform_notify_' + type + 's').prop("disabled", true);
+            $('#jform_get_' + type + 's').prop("disabled", false);
             $('textarea#jform_created_' + type + 's').html('');
         } else {
             if (type === 'isbn') {
@@ -509,8 +524,7 @@ jQuery(document).ready(function ($) {
                 batch_id_ismn = 0;
             }
             loadPublicationsWithoutIdentifier(type);
-            $('#jform_delete_' + type).prop("disabled", true);
-            $('#jform_notify_' + type).prop("disabled", true);
+            $('#jform_get_' + type).prop("disabled", false);
             $('#jform_link_to_publication_' + type).html('-');
             // Update publications iframe
             $('#publications_iframe').attr("src", $('#publications_iframe').attr("src"));
