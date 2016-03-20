@@ -365,6 +365,11 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             $publisherRangeId = 0;
         }
 
+        // Cache for publisher ranges
+        $rangeCache = array();
+        // Add publisher range to cache
+        $rangeCache[$publisherRange->id] = $publisherRange;
+
         // Add canceled identifiers to results
         for ($i = $count, $j = 0; $i < $count + $canceledIdentifiersCount; $i++, $j++) {
             // Publication type
@@ -379,6 +384,19 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             );
             // Add to objects array
             array_push($identifierObjects, $identifierObject);
+
+            // Check if publisher range is in cache
+            if (!array_key_exists($canceledIdentifiers[$j]->publisher_identifier_range_id, $rangeCache)) {
+                $rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id] = $this->getItem($canceledIdentifiers[$j]->publisher_identifier_range_id);
+            }
+            // Increase publisher identifier range canceled counter
+            $rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id]->canceled -= 1;
+            // Update to database
+            if (!$table->decreaseCanceled($rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id], 1)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));
+                $table->transactionRollback();
+                return array();
+            }
         }
 
         // Parameters array
@@ -536,6 +554,21 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         $table = $this->getTable();
         // Get results 
         return $table->getPublisherRange($rangeId, false);
+    }
+
+    /**
+     * Updates the canceled value of the given publisher identifier range to 
+     * the database. This  method must be used when the number of canceled 
+     * identifiers is being increased.
+     * @param Object $publisherRange object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
+     */
+    public function increaseCanceled($publisherRange, $count) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->increaseCanceled($publisherRange, $count);
     }
 
     private function fromStrToArray($source) {

@@ -308,6 +308,68 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRange extends JTable 
     }
 
     /**
+     * Updates the canceled value of the given publisher identifier range to 
+     * the database. This  method must be used when the number of canceled 
+     * identifiers is being increased.
+     * @param Object $publisherRange object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
+     */
+    public function increaseCanceled($publisherRange, $count) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherRange->id),
+            $this->_db->quoteName('canceled') . ' = ' . $this->_db->quote(($publisherRange->canceled - $count))
+        );
+        return $this->updateCanceled($publisherRange, $conditions);
+    }
+
+    /**
+     * Updates the canceled value of the given publisher identifier range to 
+     * the database. This  method must be used when the number of canceled 
+     * identifiers is being decreased.
+     * @param Object $publisherRange object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
+     */
+    public function decreaseCanceled($publisherRange, $count) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherRange->id),
+            $this->_db->quoteName('canceled') . ' = ' . $this->_db->quote(($publisherRange->canceled + $count))
+        );
+        return $this->updateCanceled($publisherRange, $conditions);
+    }
+
+    /**
+     * Updates the canceled value of the given publisher range.
+     * @param Object $publisherRange object to be updated
+     * @param array $conditions conditions for the update operation
+     * @return boolean true on success
+     */
+    protected function updateCanceled($publisherRange, $conditions) {
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('canceled') . ' = ' . $this->_db->quote($publisherRange->canceled)
+        );
+
+        // Set update query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+
+        // Execute query
+        $result = $this->_db->execute();
+
+        // If operation succeeded, one row was affected
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns a list of identifier ranges belonging to the publisher
      * identified by the given id.
      * @param integer $publisherId id of the publisher who owns the identifiers
