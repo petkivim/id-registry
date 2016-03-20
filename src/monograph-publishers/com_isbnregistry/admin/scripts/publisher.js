@@ -291,8 +291,7 @@ jQuery(document).ready(function ($) {
     });
 
     function getIdentifiers(count, type) {
-        // Disable get identifiers button
-        $('#jform_get_' + type + 's').prop("disabled", true);
+        // Disable get identifiers button       
         // Set post parameterts
         var postData = {};
         // Session ID
@@ -306,6 +305,7 @@ jQuery(document).ready(function ($) {
         postData['count'] = count;
         // If publisher is not new, try to generate isbn numbers
         if (publisher_id.length > 0 && count > 0) {
+            $('#jform_get_' + type + 's').prop("disabled", true);
             // Add request parameters
             $.post(url, postData)
                     .done(function (data) {
@@ -350,8 +350,6 @@ jQuery(document).ready(function ($) {
     });
 
     function getIdentifier(publicationId, type) {
-        // Disable get identifiers button
-        $('#jform_get_' + type).prop("disabled", true);
         // Set post parameterts
         var postData = {};
         // Session ID
@@ -365,6 +363,8 @@ jQuery(document).ready(function ($) {
         postData['publicationId'] = publicationId;
         // If publisher is not new and publication is selected, try to get isbn number
         if (publisher_id.length > 0 && publicationId.length > 0) {
+            // Disable get identifiers button
+            $('#jform_get_' + type).prop("disabled", true);
             // Add request parameters
             $.post(url, postData)
                     .done(function (data) {
