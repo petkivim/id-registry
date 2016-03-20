@@ -311,17 +311,59 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         $canceledIdentifiersCount = sizeof($canceledIdentifiers);
         // Update count
         $count -= $canceledIdentifiersCount;
+        // Count can't be less than zero
+        $count = $count < 0 ? 0 : $count;
         // Identifier objects array
         $identifierObjects = array();
+
+        // Get an instance of identifier model
+        $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
 
         // Check if more identifiers are needed
         if ($count > 0) {
 
-            // Check there are enough free numbers
+            // Check if there are enough free numbers
             if ($publisherRange->free < $count) {
-                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_NOT_ENOUGH_FREE_IDENTIFIERS'));
-                $table->transactionRollback();
-                // If not enough free numbers, return an empty array
+                // Not enough free numbers - try to get another publisher identifier range with the same category from the publisher
+                $newPublisherRange = $table->getPublisherRangeByPublisherIdAndCategory($publisherRange->publisher_id, $publisherRange->category);
+                // New range must have enough numbers that it can cover the missing part:
+                // canceled identifiers + current range free + new range free >= original count
+                if ($newPublisherRange->free < ($count - $publisherRange->free)) {
+                    $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_NOT_ENOUGH_FREE_IDENTIFIERS'));
+                    $table->transactionRollback();
+                    // If not enough free numbers, return an empty array
+                    return $resultsArray;
+                }
+
+                // Check if there are identifiers that must be cancelled
+                if ($publisherRange->free > 0) {
+                    // Get all the free identifiers from the current range
+                    $idsToCancel = $this->generateIdentifiers($publisherId, $publisherRange->free);
+
+                    // Cancel all the identifiers that were generated from the
+                    // the current range
+                    foreach ($idsToCancel['identifiers'] as $identifier => $type) {
+                        // Return an empty array if deleting identifiers fails
+                        if (!$identifierModel->deleteIdentifier($identifier)) {
+                            $table->transactionRollback();
+                            return $resultsArray;
+                        }
+                    }
+                }
+                // Disactivate all the publisher identifier ranges
+                $table->disactivateAll($publisherRange->publisher_id);
+                // Activate the new range
+                $table->activateRange($publisherRange->publisher_id, $newPublisherRange->id);
+                // Update publisher object
+                if (!$this->updateActiveIdentifier($publisherId, $newPublisherRange->publisher_identifier)) {
+                    // Show error if updating the publisher identifier failed
+                    $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_PUBLISHER_IDENTIFIER_RANGE_FAILED'));
+                }
+                // Generate identifiers - these results include earlier created
+                // and then cancelled identifiers, and identifiers from the
+                // new range
+                $resultsArray = $this->generateIdentifiers($publisherId, ($count + $canceledIdentifiersCount));
+                // Return results
                 return $resultsArray;
             }
 
@@ -441,8 +483,6 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         }
         // Add batch id to results array
         $resultsArray['identifier_batch_id'] = $batchId;
-        // Get an instance of identifier model
-        $identifierModel = $this->getInstance('Identifier', 'IsbnregistryModel');
         // Add new identifiers to db
         if (!$identifierModel->addNew($identifierObjects, $batchId)) {
             // If adding new identifiers to DB failed, rollback
