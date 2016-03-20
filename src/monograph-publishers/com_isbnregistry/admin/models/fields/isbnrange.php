@@ -38,7 +38,7 @@ class JFormFieldIsbnrange extends JFormFieldList {
 			$db->quoteName('is_closed') . ' = ' . $db->quote(false)
         );		
         $query = $db->getQuery(true);
-        $query->select('id,prefix,lang_group,range_begin,range_end,free,next');
+        $query->select('id,prefix,lang_group,range_begin,range_end,free,next,canceled');
         $query->from('#__isbn_registry_isbn_range');
 		$query->where($conditions);
 		$query->order('prefix ASC, lang_group ASC, category ASC, range_begin ASC');
@@ -50,7 +50,7 @@ class JFormFieldIsbnrange extends JFormFieldList {
             foreach ($isbnranges as $isbnrange) {
 				$label = $isbnrange->prefix > 0 ? $isbnrange->prefix . '-' : '';
 				$label .= $isbnrange->lang_group . ' : ' . $isbnrange->range_begin . ' - ' . $isbnrange->range_end;
-				$label .= ', ' . JText::_('COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_LABEL') . ': ' . $isbnrange->free;
+				$label .= ', ' . JText::_('COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_LABEL') . ': ' . ($isbnrange->free + $isbnrange->canceled);
                 $options[] = JHtml::_('select.option', $isbnrange->id, $label);
             }
         }

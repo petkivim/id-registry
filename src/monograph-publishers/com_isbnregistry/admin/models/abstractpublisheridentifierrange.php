@@ -126,6 +126,16 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 $table->transactionRollback();
                 return false;
             }
+            // Get identifier range object
+            $identifierRange = $rangeModel->getItem($this->getRangeId($publisherRange));
+            // Increased canceled counter
+            $identifierRange->canceled += 1;
+            // Update range object's canceled counter to db
+            if (!$rangeModel->increaseCanceled($identifierRange, 1)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_IDENTIFIER_CANCELED_COUNTER_FAILED'));
+                $table->transactionRollback();
+                return 0;
+            }
         }
 
         // Return false if deleting the object failed
@@ -389,7 +399,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             if (!array_key_exists($canceledIdentifiers[$j]->publisher_identifier_range_id, $rangeCache)) {
                 $rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id] = $this->getItem($canceledIdentifiers[$j]->publisher_identifier_range_id);
             }
-            // Increase publisher identifier range canceled counter
+            // Decrease publisher identifier range canceled counter
             $rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id]->canceled -= 1;
             // Update to database
             if (!$table->decreaseCanceled($rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id], 1)) {

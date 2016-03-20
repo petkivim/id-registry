@@ -57,6 +57,14 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
             if ($canceledIdentifier->range_id != $rangeId) {
                 $range = $table->getRange($canceledIdentifier->range_id, false);
             }
+            // Decreased canceled counter
+            $range->canceled -= 1;
+            // Update range object's canceled counter to db
+            if (!$table->decreaseCanceled($range, 1)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_IDENTIFIER_CANCELED_COUNTER_DAILED'));
+                $table->transactionRollback();
+                return 0;
+            }
             // Set result
             $result = $canceledIdentifier->identifier;
         } else {
@@ -178,6 +186,21 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
             }
         }
         return false;
+    }
+
+    /**
+     * Updates the canceled value of the given identifier range to 
+     * the database. This  method must be used when the number of canceled 
+     * identifiers is being increased.
+     * @param Object $range object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
+     */
+    public function increaseCanceled($range, $count) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->increaseCanceled($range, $count);
     }
 
 }

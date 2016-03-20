@@ -174,6 +174,68 @@ abstract class IsbnRegistryTableAbstractIdentifierRange extends JTable {
     }
 
     /**
+     * Updates the canceled value of the given identifier range to 
+     * the database. This  method must be used when the number of canceled 
+     * identifiers is being increased.
+     * @param Object $range object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
+     */
+    public function increaseCanceled($range, $count) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($range->id),
+            $this->_db->quoteName('canceled') . ' = ' . $this->_db->quote(($range->canceled - $count))
+        );
+        return $this->updateCanceled($range, $conditions);
+    }
+
+    /**
+     * Updates the canceled value of the given identifier range to 
+     * the database. This  method must be used when the number of canceled 
+     * identifiers is being decreased.
+     * @param Object $range object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
+     */
+    public function decreaseCanceled($range, $count) {
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($range->id),
+            $this->_db->quoteName('canceled') . ' = ' . $this->_db->quote(($range->canceled + $count))
+        );
+        return $this->updateCanceled($range, $conditions);
+    }
+
+    /**
+     * Updates the canceled value of the given range.
+     * @param Object $range object to be updated
+     * @param array $conditions conditions for the update operation
+     * @return boolean true on success
+     */
+    protected function updateCanceled($range, $conditions) {
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('canceled') . ' = ' . $this->_db->quote($range->canceled)
+        );
+
+        // Set update query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+
+        // Execute query
+        $result = $this->_db->execute();
+
+        // If operation succeeded, one row was affected
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Delete all identifier ranges related to the publisher identified by
      * the given publisher id.
      * @param int $publisherId publisher id

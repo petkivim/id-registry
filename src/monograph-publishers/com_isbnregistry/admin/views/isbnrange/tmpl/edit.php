@@ -34,26 +34,43 @@ JFactory::getDocument()->addScriptDeclaration('
     <div class="form-horizontal">
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">  
-				<?php
-				// If even one ISBN has been used, this item can't be modified
-				if(strcmp($this->item->range_begin, $this->item->next) != 0) {
-					$this->form->setFieldAttribute( 'prefix', 'readonly', 'true' );
-					$this->form->setFieldAttribute( 'lang_group', 'readonly', 'true' );
-					$this->form->setFieldAttribute( 'range_begin', 'readonly', 'true' );
-					$this->form->setFieldAttribute( 'range_end', 'readonly', 'true' );
-				}
-				if($this->item->is_closed) {
-					$this->form->setFieldAttribute( 'is_active', 'readonly', 'true' );
-				}
-				?>            
+                <?php
+                // If even one ISBN has been used, this item can't be modified
+                if (strcmp($this->item->range_begin, $this->item->next) != 0) {
+                    $this->form->setFieldAttribute('prefix', 'readonly', 'true');
+                    $this->form->setFieldAttribute('lang_group', 'readonly', 'true');
+                    $this->form->setFieldAttribute('range_begin', 'readonly', 'true');
+                    $this->form->setFieldAttribute('range_end', 'readonly', 'true');
+                }
+                if ($this->item->is_closed) {
+                    $this->form->setFieldAttribute('is_active', 'readonly', 'true');
+                }
+                ?>            
                 <?php echo $this->form->renderField('prefix'); ?>
                 <?php echo $this->form->renderField('lang_group'); ?>
                 <?php echo $this->form->renderField('range_begin'); ?>
                 <?php echo $this->form->renderField('range_end'); ?>
-				<?php echo $this->form->renderField('is_active'); ?>
-				<?php echo $this->form->renderField('free'); ?>
-				<?php echo $this->form->renderField('taken'); ?>
-				<?php echo $this->form->renderField('next'); ?>
+                <?php echo $this->form->renderField('is_active'); ?>
+                <?php echo $this->form->renderField('free'); ?>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?php echo $this->form->getLabel('free_lbl'); ?>
+                    </div>
+                    <div class="controls">
+                        <?php echo ($this->item->free + $this->item->canceled); ?>
+                    </div>
+                </div>
+                <?php echo $this->form->renderField('taken'); ?>
+                <div class="control-group">
+                    <div class="control-label">
+                        <?php echo $this->form->getLabel('taken_lbl'); ?>
+                    </div>
+                    <div class="controls">
+                        <?php echo ($this->item->taken - $this->item->canceled); ?>
+                    </div>
+                </div>
+                <?php echo $this->form->renderField('canceled'); ?>
+                <?php echo $this->form->renderField('next'); ?>
             </div>
             <div class="span6">
                 <?php echo $this->form->renderField('created'); ?>

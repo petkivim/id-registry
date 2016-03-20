@@ -63,25 +63,33 @@
 		</field>		
         <field
             name="free"
-            type="text"
-            label="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_LABEL"
-            description="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_DESC"
-            size="20"
-            readonly="true"
-            default=""
+            type="hidden"
         />	
+		<field 
+			name="free_lbl"
+			type="spacer" 
+			label="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_LABEL" 
+			description="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_DESC" 
+		/>
         <field
             name="taken"
-            type="text"
+            type="hidden"
+        />	
+		<field 
+			name="taken_lbl"
+			type="spacer" 
             label="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_TAKEN_LABEL"
             description="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_TAKEN_DESC"
-            size="20"
-            readonly="true"
-            default=""
-        />	
+		/>
+        <field
+            name="canceled"
+            type="hidden"
+            label="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_CANCELED_LABEL"
+            description="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_CANCELED_DESC"
+        />		
         <field
             name="next"
-            type="text"
+            type="hidden"
             label="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_NEXT_LABEL"
             description="COM_ISBNREGISTRY_ISBN_RANGE_FIELD_NEXT_DESC"
             size="20"

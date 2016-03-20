@@ -96,7 +96,7 @@ JFactory::getDocument()->addScriptDeclaration('
                             </td> 
                             <td>
                                 <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_ISBN_RANGE'); ?>">
-                                    <?php echo $row->free; ?>
+                                    <?php echo ($row->free + $row->canceled); ?>
                                 </a>
                             </td> 		
                             <td>
