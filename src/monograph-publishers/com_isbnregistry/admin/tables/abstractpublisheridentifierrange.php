@@ -241,6 +241,32 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRange extends JTable 
     }
 
     /**
+     * Returns the publisher identifier range belonging to the publisher
+     * identified by the given publisher id. The range must be active and
+     * not closed.
+     * @param integer $publisherId id of the publisher that owns the range
+     * @param int $category range category
+     * @return object identifier range object on success; null on failure
+     */
+    public function getPublisherRangeByPublisherIdAndCategory($publisherId, $category) {
+        $conditions = array(
+            $this->_db->quoteName('publisher_id') . " = " . $this->_db->quote($publisherId),
+            $this->_db->quoteName('category') . " = " . $this->_db->quote($category),
+            $this->_db->quoteName('is_active') . " = " . $this->_db->quote(false),
+            $this->_db->quoteName('is_closed') . " = " . $this->_db->quote(false)
+        );
+
+        // Database query
+        $query = $this->_db->getQuery(true);
+        $query->select('*');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+        $this->_db->setQuery((string) $query);
+
+        return $this->_db->loadObject();
+    }
+
+    /**
      * Updates the given publisher identifier range to the database. This 
      * method must be used when the number of used identifiers is being 
      * increased.

@@ -174,7 +174,7 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
             $messageModel = JModelLegacy::getInstance('message', 'IsbnregistryModel');
             $messageModel->deleteByBatchId($identifierObj->identifier_batch_id);
             // Try to remove publication's identifiers
-            if (!$publicationModel->removeIdentifiers($identifierObj->publication_id)) {
+            if ($identifierObj->publication_id != 0 && !$publicationModel->removeIdentifiers($identifierObj->publication_id)) {
                 $table->transactionRollback();
                 return false;
             }
@@ -186,7 +186,7 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
                 return false;
             }
             // Update publication
-            if (!$publicationModel->removeIdentifier($identifierObj->publication_id, $identifier)) {
+            if ($identifierObj->publication_id != 0 && !$publicationModel->removeIdentifier($identifierObj->publication_id, $identifier)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_PUBLICATION_FAILED'));
                 $table->transactionRollback();
                 return false;
