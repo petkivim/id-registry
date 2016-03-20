@@ -362,7 +362,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 // Generate identifiers - these results include earlier created
                 // and then cancelled identifiers, and identifiers from the
                 // new range
-                $resultsArray = $this->generateIdentifiers($publisherId, ($count + $canceledIdentifiersCount));
+                $resultsArray = $this->generateIdentifiers($publisherId, ($count + $canceledIdentifiersCount), $publicationId);
                 // Return results
                 return $resultsArray;
             }
