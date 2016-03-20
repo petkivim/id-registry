@@ -130,6 +130,12 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             $identifierRange = $rangeModel->getItem($this->getRangeId($publisherRange));
             // Increased canceled counter
             $identifierRange->canceled += 1;
+            // Check if identifier range is closed
+            if ($identifierRange->is_closed) {
+                // Update is_closed and is_active
+                $identifierRange->is_closed = false;
+                $identifierRange->is_active = true;
+            }
             // Update range object's canceled counter to db
             if (!$rangeModel->increaseCanceled($identifierRange, 1)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_IDENTIFIER_CANCELED_COUNTER_FAILED'));

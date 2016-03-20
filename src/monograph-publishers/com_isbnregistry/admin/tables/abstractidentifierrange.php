@@ -218,7 +218,9 @@ abstract class IsbnRegistryTableAbstractIdentifierRange extends JTable {
 
         // Fields to update.
         $fields = array(
-            $this->_db->quoteName('canceled') . ' = ' . $this->_db->quote($range->canceled)
+            $this->_db->quoteName('canceled') . ' = ' . $this->_db->quote($range->canceled),
+            $this->_db->quoteName('is_active') . ' = ' . $this->_db->quote($range->is_active),
+            $this->_db->quoteName('is_closed') . ' = ' . $this->_db->quote($range->is_closed)
         );
 
         // Set update query

@@ -59,6 +59,13 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
             }
             // Decreased canceled counter
             $range->canceled -= 1;
+            // Are there any more identifiers left in this range?
+            if ($range->free == 0 && $range->canceled == 0) {
+                // This is the last value -> range becames inactive
+                $range->is_active = false;
+                // Range becomes closed
+                $range->is_closed = true;
+            }
             // Update range object's canceled counter to db
             if (!$table->decreaseCanceled($range, 1)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_IDENTIFIER_CANCELED_COUNTER_DAILED'));
@@ -71,7 +78,7 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
             // Get the next available number
             $publisherIdentifier = $range->next;
             // Is this the last value of the range
-            if ($range->next == $range->range_end) {
+            if ($range->next == $range->range_end && $range->canceled == 0) {
                 // This is the last value -> range becames inactive
                 $range->is_active = false;
                 // Range becomes closed

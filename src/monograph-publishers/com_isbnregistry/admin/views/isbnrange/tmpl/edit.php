@@ -51,7 +51,6 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('range_begin'); ?>
                 <?php echo $this->form->renderField('range_end'); ?>
                 <?php echo $this->form->renderField('is_active'); ?>
-                <?php echo $this->form->renderField('free'); ?>
                 <div class="control-group">
                     <div class="control-label">
                         <?php echo $this->form->getLabel('free_lbl'); ?>
@@ -60,7 +59,6 @@ JFactory::getDocument()->addScriptDeclaration('
                         <?php echo ($this->item->free + $this->item->canceled); ?>
                     </div>
                 </div>
-                <?php echo $this->form->renderField('taken'); ?>
                 <div class="control-group">
                     <div class="control-label">
                         <?php echo $this->form->getLabel('taken_lbl'); ?>
@@ -69,8 +67,6 @@ JFactory::getDocument()->addScriptDeclaration('
                         <?php echo ($this->item->taken - $this->item->canceled); ?>
                     </div>
                 </div>
-                <?php echo $this->form->renderField('canceled'); ?>
-                <?php echo $this->form->renderField('next'); ?>
             </div>
             <div class="span6">
                 <?php echo $this->form->renderField('created'); ?>
