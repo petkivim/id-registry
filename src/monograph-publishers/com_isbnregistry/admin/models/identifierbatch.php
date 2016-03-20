@@ -279,6 +279,11 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
             }
             // Increase publisher identifier range canceled counter
             $rangeCache[$identifiers[$i]->publisher_identifier_range_id]->canceled += 1;
+            // Check if closed
+            if ($rangeCache[$identifiers[$i]->publisher_identifier_range_id]->is_closed) {
+                // Update is_closed
+                $rangeCache[$identifiers[$i]->publisher_identifier_range_id]->is_closed = false;
+            }
             // Update to database
             if (!$rangeModel->increaseCanceled($rangeCache[$identifiers[$i]->publisher_identifier_range_id], 1)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));

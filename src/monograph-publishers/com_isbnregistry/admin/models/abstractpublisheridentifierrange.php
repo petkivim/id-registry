@@ -364,7 +364,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             $publisherRange->next = str_pad($publisherRange->next, $publisherRange->category, "0", STR_PAD_LEFT);
 
             // Are there any free numbers left?
-            if ($publisherRange->free == 0) {
+            if ($publisherRange->free == 0 && $publisherRange->canceled == 0) {
                 // If all the numbers are used, closed and disactivate
                 $publisherRange->is_active = false;
                 $publisherRange->is_closed = true;
@@ -407,6 +407,12 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             }
             // Decrease publisher identifier range canceled counter
             $rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id]->canceled -= 1;
+            // Are there any free numbers left?
+            if ($rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id]->free == 0 && $rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id]->canceled == 0) {
+                // If all the numbers are used, close and disactivate
+                $rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id]->is_active = false;
+                $rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id]->is_closed = true;
+            }
             // Update to database
             if (!$table->decreaseCanceled($rangeCache[$canceledIdentifiers[$j]->publisher_identifier_range_id], 1)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));

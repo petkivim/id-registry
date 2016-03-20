@@ -216,13 +216,18 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
 
         // Increase publisher identifier range canceled counter
         $publisherIdentifierRange->canceled += 1;
+        // Check if closed
+        if ($publisherIdentifierRange->is_closed) {
+            // Update is_closed and is_active
+            $publisherIdentifierRange->is_closed = false;
+        }
         // Update to database
         if (!$publisherIdentifierRangeModel->increaseCanceled($publisherIdentifierRange, 1)) {
             $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));
             $table->transactionRollback();
             return false;
         }
-        
+
         // Get an instance of identifier canceled model
         $identifierCanceledModel = $this->getInstance('Identifiercanceled', 'IsbnregistryModel');
         // Save new identifier canceled object
