@@ -132,8 +132,7 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("comments", function (value) {
-        regex = /^.{0,2000}$/;
-        return regex.test(value);
+        return value.length <= 2000;
     });
     document.formvalidator.setHandler("fileformat", function (value) {
         regex = /^.{0,25}$/;
