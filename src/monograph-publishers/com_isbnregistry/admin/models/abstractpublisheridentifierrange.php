@@ -633,6 +633,21 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         return $table->increaseCanceled($publisherRange, $count);
     }
 
+    /**
+     * Updates the deleted value of the given publisher identifier range to 
+     * the database. This  method must be used when the number of deleted 
+     * identifiers is being increased.
+     * @param Object $publisherRange object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
+     */
+    public function increaseDeleted($publisherRange, $count) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->increaseDeleted($publisherRange, $count);
+    }
+
     private function fromStrToArray($source) {
         $result = array();
         if (empty($source)) {

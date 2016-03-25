@@ -68,7 +68,7 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
         $this->publication_id = $params['publication_id'];
         $this->publisher_identifier_range_id = $params['publisher_identifier_range_id'];
         $this->identifier_canceled_used_count = $params['identifier_canceled_used_count'];
-        
+
         // Add object to db
         if (!$this->store()) {
             return 0;
@@ -249,6 +249,30 @@ class IsbnRegistryTableIdentifierbatch extends JTable {
 
         // Update publication id
         $this->identifier_canceled_count = $this->identifier_canceled_count + 1;
+
+        // Update object to DB
+        return $this->store();
+    }
+
+    /**
+     * Increase identifier batch deleted count by one.
+     * @param int $identifierBatchId id of the identifier batch
+     * @param int $count current count
+     * @return boolean true on success, false on failure
+     */
+    public function increaseDeletedCount($identifierBatchId, $count) {
+        $conditions = array(
+            'id' => $identifierBatchId,
+            'identifier_deleted_count' => $count
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update deleted count
+        $this->identifier_deleted_count = $this->identifier_deleted_count + 1;
 
         // Update object to DB
         return $this->store();

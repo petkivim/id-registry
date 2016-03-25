@@ -109,8 +109,10 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                         <?php
                         $json = json_decode($this->item->publication_identifier_print);
                         if (!empty($json)) {
+                            $titleCancel = JText::_('COM_ISBNREGISTRY_PUBLICATION_LABEL_CANCEL_IDENTIFIER');
+                            $titleDelete = JText::_('COM_ISBNREGISTRY_PUBLICATION_LABEL_DELETE_IDENTIFIER');
                             foreach ($json as $identifier => $type) {
-                                echo '<div class="identifier" id="' . $identifier . '">' . $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ') <span class="icon-delete"></span></div>';
+                                echo '<div class="identifier" id="' . $identifier . '">' . $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ') <span class="icon-delete" title="' . $titleCancel . '"></span> <span class="icon-trash" title="' . $titleDelete . '"></span></div>';
                             }
                         } else {
                             echo '-';
@@ -127,8 +129,10 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                         <?php
                         $json = json_decode($this->item->publication_identifier_electronical);
                         if (!empty($json)) {
+                            $titleCancel = JText::_('COM_ISBNREGISTRY_PUBLICATION_LABEL_CANCEL_IDENTIFIER');
+                            $titleDelete = JText::_('COM_ISBNREGISTRY_PUBLICATION_LABEL_DELETE_IDENTIFIER');
                             foreach ($json as $identifier => $type) {
-                                echo '<div class="identifier" id="' . $identifier . '">' . $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ') <span class="icon-delete"></span></div>';
+                                echo '<div class="identifier" id="' . $identifier . '">' . $identifier . ' (' . JText::_('COM_ISBNREGISTRY_PUBLICATION_JSON_TYPE_' . $type) . ') <span class="icon-delete" title="' . $titleCancel . '"></span> <span class="icon-trash" title="' . $titleDelete . '"></span></div>';
                             }
                         } else {
                             echo '-';
@@ -197,6 +201,7 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
         <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>
+    <span id="label_confirm_cancel" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_CONFIRM_CANCEL_IDENTIFIER'); ?></span>
     <span id="label_confirm_delete" style=" visibility:hidden"><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_CONFIRM_DELETE_IDENTIFIER'); ?></span>
     <input type="hidden" name="task" value="publication.edit" />
     <?php echo JHtml::_('form.token'); ?>

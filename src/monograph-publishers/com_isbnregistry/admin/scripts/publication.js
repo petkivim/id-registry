@@ -6,6 +6,7 @@ jQuery(document).ready(function ($) {
     var show_label = publisher_link_label.split('|')[0];
     var edit_label = publisher_link_label.split('|')[1];
     var url = window.location.pathname;
+    var label_confirm_cancel = $("#label_confirm_cancel").text();
     var label_confirm_delete = $("#label_confirm_delete").text();
 
     updatePublisherLink();
@@ -55,7 +56,7 @@ jQuery(document).ready(function ($) {
     });
 
     $("span.icon-delete").click(function () {
-        if (confirm(label_confirm_delete) === true) {
+        if (confirm(label_confirm_cancel) === true) {
             // Get identifier
             var identifier = $(this).closest('div').attr('id');
             cancelIdentifier(identifier);
@@ -70,6 +71,41 @@ jQuery(document).ready(function ($) {
         // Component that's called
         postData['option'] = 'com_isbnregistry';
         postData['task'] = 'identifier.cancel';
+        // Set identifier
+        postData['identifier'] = identifier;
+        // Add request parameters
+        $.post(url, postData)
+                .done(function (data) {
+                    // If operation was successfull, update view
+                    if (data.success == true) {
+                        $('#system-message-container').html(showNotification('success', data.title, data.message));
+                        $("#" + identifier).remove();
+                    } else {
+                        $('#system-message-container').html(showNotification('error', data.title, data.message));
+                    }
+                })
+                .fail(function (xhr, textStatus, errorThrown) {
+                    var json = jQuery.parseJSON(xhr.responseText);
+                    $('#system-message-container').html(showNotification('error', json.title, json.message));
+                });
+    }
+
+    $("span.icon-trash").click(function () {
+        if (confirm(label_confirm_delete) === true) {
+            // Get identifier
+            var identifier = $(this).closest('div').attr('id');
+            deleteIdentifier(identifier);
+        }
+    });
+
+    function deleteIdentifier(identifier) {
+        // Set post parameterts
+        var postData = {};
+        // Session ID
+        postData[sessionId] = 1;
+        // Component that's called
+        postData['option'] = 'com_isbnregistry';
+        postData['task'] = 'identifier.delete';
         // Set identifier
         postData['identifier'] = identifier;
         // Add request parameters

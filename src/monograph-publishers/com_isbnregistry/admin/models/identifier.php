@@ -137,12 +137,14 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
     }
 
     /**
-     * Cancels the given identifier and removes it from the current publication.
-     * The identifier can be reused later.
+     * By default Cancels the given identifier, removes it from the current 
+     * publication and the identifier can be reused later. Identifier will be
+     * permanently deleted if $permanent is true.
      * @param string $identifier identifier to be canceled 
+     * @param boolean $permanent cancel or delete permanently
      * @return boolean true on success, false on failure
      */
-    public function cancelIdentifier($identifier) {
+    public function cancelIdentifier($identifier, $permanent = false) {
         // Get db access
         $table = $this->getTable();
         // Start transaction
@@ -161,8 +163,10 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
         $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
         // Get an instance of identifier batch model
         $identifierBatchModel = $this->getInstance('Identifierbatch', 'IsbnregistryModel');
+        // Get total used count
+        $totalCount = $identifierObj->identifier_count + $identifierObj->identifier_canceled_used_count;
         // Check how many identifiers were created on the same bacth
-        if ($identifierObj->identifier_count + $identifierObj->identifier_canceled_used_count == 1 || $identifierObj->identifier_canceled_count == (($identifierObj->identifier_canceled_used_count + $identifierObj->identifier_count) - 1)) {
+        if ($totalCount == 1 || $identifierObj->identifier_canceled_count + $identifierObj->identifier_deleted_count == ($totalCount - 1)) {
             // If this is the only identifier OR there's only one identifier left,
             //  the batch object can be deleted
             if (!$identifierBatchModel->delete($identifierObj->identifier_batch_id)) {
@@ -179,12 +183,22 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
                 return false;
             }
         } else {
-            // Update canceled count
-            if (!$identifierBatchModel->increaseCanceledCount($identifierObj->identifier_batch_id, $identifierObj->identifier_canceled_count)) {
-                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_DELETE_BATCH_FAILED'));
-                $table->transactionRollback();
-                return false;
+            if ($permanent) {
+                // Update deleted count
+                if (!$identifierBatchModel->increaseDeletedCount($identifierObj->identifier_batch_id, $identifierObj->identifier_deleted_count)) {
+                    $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_DELETE_BATCH_FAILED'));
+                    $table->transactionRollback();
+                    return false;
+                }
+            } else {
+                // Update canceled count
+                if (!$identifierBatchModel->increaseCanceledCount($identifierObj->identifier_batch_id, $identifierObj->identifier_canceled_count)) {
+                    $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_DELETE_BATCH_FAILED'));
+                    $table->transactionRollback();
+                    return false;
+                }
             }
+
             // Update publication
             if ($identifierObj->publication_id != 0 && !$publicationModel->removeIdentifier($identifierObj->publication_id, $identifier)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_PUBLICATION_FAILED'));
@@ -204,39 +218,50 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
         // Get publisher identifier range
         $publisherIdentifierRange = $publisherIdentifierRangeModel->getItem($identifierObj->publisher_identifier_range_id);
 
-        // Create new identifier canceled object
-        $identifierCanceled = array(
-            'id' => 0,
-            'identifier' => $identifier,
-            'identifier_type' => $identifierObj->identifier_type,
-            'category' => $publisherIdentifierRange->category,
-            'publisher_id' => $identifierObj->publisher_id,
-            'publisher_identifier_range_id' => $identifierObj->publisher_identifier_range_id
-        );
+        // Is this permanent delete or cancel?
+        if ($permanent) {
+            // Increase publisher identifier range deleted counter
+            $publisherIdentifierRange->deleted += 1;
+            // Update to database
+            if (!$publisherIdentifierRangeModel->increaseDeleted($publisherIdentifierRange, 1)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
+        } else {
+            // Create new identifier canceled object
+            $identifierCanceled = array(
+                'id' => 0,
+                'identifier' => $identifier,
+                'identifier_type' => $identifierObj->identifier_type,
+                'category' => $publisherIdentifierRange->category,
+                'publisher_id' => $identifierObj->publisher_id,
+                'publisher_identifier_range_id' => $identifierObj->publisher_identifier_range_id
+            );
 
-        // Increase publisher identifier range canceled counter
-        $publisherIdentifierRange->canceled += 1;
-        // Check if closed
-        if ($publisherIdentifierRange->is_closed) {
-            // Update is_closed and is_active
-            $publisherIdentifierRange->is_closed = false;
-        }
-        // Update to database
-        if (!$publisherIdentifierRangeModel->increaseCanceled($publisherIdentifierRange, 1)) {
-            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));
-            $table->transactionRollback();
-            return false;
-        }
+            // Increase publisher identifier range canceled counter
+            $publisherIdentifierRange->canceled += 1;
+            // Check if closed
+            if ($publisherIdentifierRange->is_closed) {
+                // Update is_closed and is_active
+                $publisherIdentifierRange->is_closed = false;
+            }
+            // Update to database
+            if (!$publisherIdentifierRangeModel->increaseCanceled($publisherIdentifierRange, 1)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
 
-        // Get an instance of identifier canceled model
-        $identifierCanceledModel = $this->getInstance('Identifiercanceled', 'IsbnregistryModel');
-        // Save new identifier canceled object
-        if (!$identifierCanceledModel->save($identifierCanceled)) {
-            $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_SAVE_IDENTIFIER_CANCELED_FAILED'));
-            $table->transactionRollback();
-            return false;
+            // Get an instance of identifier canceled model
+            $identifierCanceledModel = $this->getInstance('Identifiercanceled', 'IsbnregistryModel');
+            // Save new identifier canceled object
+            if (!$identifierCanceledModel->save($identifierCanceled)) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_SAVE_IDENTIFIER_CANCELED_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
         }
-
         // Commit transaction
         $table->transactionCommit();
 

@@ -325,4 +325,17 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         return $table->increaseCanceledCount($identifierBatchId, $count);
     }
 
+    /**
+     * Increase identifier batch deleted count by one.
+     * @param int $identifierBatchId id of the identifier batch
+     * @param int $count current count
+     * @return boolean true on success, false on failure
+     */
+    public function increaseDeletedCount($identifierBatchId, $count) {
+        // Get db access
+        $table = $this->getTable();
+        // Return result
+        return $table->increaseDeletedCount($identifierBatchId, $count);
+    }
+
 }

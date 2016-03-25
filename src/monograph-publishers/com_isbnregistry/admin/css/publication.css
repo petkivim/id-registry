@@ -10,11 +10,15 @@
     background-color: #860F98!important;
 }
 
-.icon-delete {
+.icon-delete, .icon-trash {
     cursor: pointer;
 }
 
 #jform_comments {
     width: 90%;
     height: 30em;
+}
+
+span.icon-trash {
+    margin-left: 1em;
 }

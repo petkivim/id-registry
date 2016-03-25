@@ -398,6 +398,41 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRange extends JTable 
     }
 
     /**
+     * Updates the deleted value of the given publisher identifier range to 
+     * the database. This  method must be used when the number of deleted 
+     * identifiers is being increased.
+     * @param Object $publisherRange object to be updated
+     * @param int $count how much value is increased
+     * @return boolean true on success
+     */
+    public function increaseDeleted($publisherRange, $count) {
+        $conditions = array(
+            $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherRange->id),
+            $this->_db->quoteName('deleted') . ' = ' . $this->_db->quote(($publisherRange->deleted - $count))
+        );
+
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('deleted') . ' = ' . $this->_db->quote($publisherRange->deleted)
+        );
+
+        // Set update query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+
+        // Execute query
+        $result = $this->_db->execute();
+
+        // If operation succeeded, one row was affected
+        if ($this->_db->getAffectedRows() == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns a list of identifier ranges belonging to the publisher
      * identified by the given id.
      * @param integer $publisherId id of the publisher who owns the identifiers
