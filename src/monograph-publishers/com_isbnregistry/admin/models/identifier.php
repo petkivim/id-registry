@@ -137,12 +137,12 @@ class IsbnregistryModelIdentifier extends JModelAdmin {
     }
 
     /**
-     * Deletes the given identifier and removes it from the current publication.
+     * Cancels the given identifier and removes it from the current publication.
      * The identifier can be reused later.
-     * @param string $identifier identifier to be deleted 
+     * @param string $identifier identifier to be canceled 
      * @return boolean true on success, false on failure
      */
-    public function deleteIdentifier($identifier) {
+    public function cancelIdentifier($identifier) {
         // Get db access
         $table = $this->getTable();
         // Start transaction

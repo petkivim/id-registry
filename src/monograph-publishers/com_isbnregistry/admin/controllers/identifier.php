@@ -19,11 +19,11 @@ defined('_JEXEC') or die('Restricted access');
  */
 class IsbnregistryControllerIdentifier extends JControllerForm {
 
-   function delete() {
+   function cancel() {
         // Check for request forgeries
         JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
-        // http://{SITE}/administrator/?option=com_isbnregistry&task=identifier.delete&identifier=xxx-xxx-xxxxx-x-x
+        // http://{SITE}/administrator/?option=com_isbnregistry&task=identifier.cancel&identifier=xxx-xxx-xxxxx-x-x
         $mainframe = JFactory::getApplication();
         try {
             // Get request parameters
@@ -38,16 +38,16 @@ class IsbnregistryControllerIdentifier extends JControllerForm {
             // Get model
             $model = $this->getModel();
             // Cancel the given identifier
-            $result = $model->deleteIdentifier($identifier);
+            $result = $model->cancelIdentifier($identifier);
 
             // Check if the result is OK and genrate response
             if ($result) {
                 $response['success'] = true;
-                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_IDENTIFIER_SUCCESS');
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_CANCEL_IDENTIFIER_SUCCESS');
                 $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_SUCCESS_TITLE');
             } else {
                 $response['success'] = false;
-                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_IDENTIFIER_FAILED');
+                $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_CANCEL_IDENTIFIER_FAILED');
                 if ($model->getError()) {
                     $response['message'] .= ' ' . $model->getError();
                 }
@@ -62,7 +62,7 @@ class IsbnregistryControllerIdentifier extends JControllerForm {
         } catch (Exception $e) {
             http_response_code(500);
             $response['success'] = false;
-            $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_DELETE_RANGE_FAILED');
+            $response['message'] = JText::_('COM_ISBNREGISTRY_PUBLISHER_CANCEL_IDENTIFIER_FAILED');
             $response['title'] = JText::_('COM_ISBNREGISTRY_RESPONSE_ERROR_TITLE');
             echo json_encode($response);
             if (!is_null($mainframe)) {

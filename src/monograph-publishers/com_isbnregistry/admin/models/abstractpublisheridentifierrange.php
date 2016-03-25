@@ -344,7 +344,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                     // the current range
                     foreach ($idsToCancel['identifiers'] as $identifier => $type) {
                         // Return an empty array if deleting identifiers fails
-                        if (!$identifierModel->deleteIdentifier($identifier)) {
+                        if (!$identifierModel->cancelIdentifier($identifier)) {
                             $table->transactionRollback();
                             return $resultsArray;
                         }

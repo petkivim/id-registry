@@ -58,18 +58,18 @@ jQuery(document).ready(function ($) {
         if (confirm(label_confirm_delete) === true) {
             // Get identifier
             var identifier = $(this).closest('div').attr('id');
-            deleteIdentifier(identifier);
+            cancelIdentifier(identifier);
         }
     });
 
-    function deleteIdentifier(identifier) {
+    function cancelIdentifier(identifier) {
         // Set post parameterts
         var postData = {};
         // Session ID
         postData[sessionId] = 1;
         // Component that's called
         postData['option'] = 'com_isbnregistry';
-        postData['task'] = 'identifier.delete';
+        postData['task'] = 'identifier.cancel';
         // Set identifier
         postData['identifier'] = identifier;
         // Add request parameters
