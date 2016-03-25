@@ -22,12 +22,9 @@ defined('_JEXEC') or die('Restricted Access');
                 <th width="15%">
                     <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_MEDIUM'); ?>
                 </th>
-                <th width="10%">
-                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_PREPUBLICATION_RECORD_CREATED'); ?>
+                <th width="20%">
+                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_STATUS'); ?>
                 </th>	
-                <th width="10%">
-                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_CONTROL_COPY_RECEIVED'); ?>
-                </th>
                 <th width="2%">
                     <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_ID'); ?>
                 </th>
@@ -61,11 +58,8 @@ defined('_JEXEC') or die('Restricted Access');
                             <?php echo (empty($row->medium) ? '' : JText::_('COM_ISSNREGISTRY_PUBLICATION_MEDIUM_' . $row->medium)); ?>
                         </td>
                         <td>
-                            <?php echo ($row->prepublication_record_created ? JText::_('JYES') : JText::_('JNO')); ?>
-                        </td> 
-                        <td>
-                            <?php echo ($row->control_copy_received ? JText::_('JYES') : JText::_('JNO')); ?>
-                        </td>                               
+                            <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_STATUS_' . $row->status); ?>
+                        </td>                                
                         <td align="center">
                             <?php echo $row->id; ?>
                         </td>

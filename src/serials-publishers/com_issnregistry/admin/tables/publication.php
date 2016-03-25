@@ -120,6 +120,8 @@ class IssnRegistryTablePublication extends JTable {
 
         // Update identifier
         $this->issn = $issn;
+        // Update status
+        $this->status = 'WAITING_FOR_CONTROL_COPY';
 
         // Update object to DB
         return $this->store();
@@ -149,6 +151,8 @@ class IssnRegistryTablePublication extends JTable {
 
         // Update ISSN
         $this->issn = '';
+        // Update status
+        $this->status = 'NO_PREPUBLICATION_RECORD';
 
         // Update object to DB
         return $this->store();

@@ -21,10 +21,17 @@ jQuery(document).ready(function ($) {
     observeElementChanges(subseries);
     observeElementChanges(another_medium);
 
-    $("#jform_language, #jform_publisher_id, #jform_publication_type, #jform_medium, #jform_frequency, #jform_issued_from_year").chosen({
+    $("#jform_language, #jform_publication_type, #jform_medium, #jform_frequency, #jform_issued_from_year, #jform_status").chosen({
         disable_search_threshold: 10,
         width: "17em"
     });
+
+    // Update status menu - ISSN_FROZEN can be selected only in limited cases
+    if ($("#jform_status").val() !== 'NO_PREPUBLICATION_RECORD' && $("#jform_status").val() !== 'ISSN_FROZEN') {
+        $("#jform_status option[value='ISSN_FROZEN']").attr('disabled', 'disabled');
+        $('#jform_status').trigger('liszt:updated');
+    }
+
 
     $("button[data-target='#modal-generate-marc']").click(function () {
         SqueezeBox.open(url + '?option=com_issnregistry&view=publication&id=' + publication_id + '&layout=edit&format=preview', {handler: 'iframe', size: {x: 800, y: 600}});
@@ -38,26 +45,31 @@ jQuery(document).ready(function ($) {
     $("button[data-target='#modal-goto-form']").click(function () {
         window.location = url + '?option=com_issnregistry&view=form&layout=edit&id=' + form_id;
     });
-    
+
     $("#jform_publisher_id").change(function () {
         updatePublisherLink();
     });
 
     function updatePublisherLink() {
+        $("#jform_publisher_id").closest('.control-group').hide();
         var publisher_id = $("#jform_publisher_id").val();
+        var publisher_name = $("#jform_publisher_id option:selected").text();
         if (publisher_id.length > 0) {
-            var link = '<a href="' + url + '?option=com_issnregistry&view=publisher&layout=edit&id=' + publisher_id + '&tmpl=component"';
+            var link = publisher_name + ' (';
+            link += '<a href="' + url + '?option=com_issnregistry&view=publisher&layout=edit&id=' + publisher_id + '&tmpl=component"';
             link += ' class="modal" rel="{size: {x: 1200, y: 600}, handler:\'iframe\'}">';
             link += show_label.trim() + '</a> | ';
             link += '<a href="' + url + '?option=com_issnregistry&view=publisher&layout=edit&id=' + publisher_id + '" target="new">';
-            link += edit_label + '</a>';
+            link += edit_label + '</a>)';
             $('#jform_link_to_publisher').html(link);
             // Joomla behavior assignment must be reloaded
             SqueezeBox.assign($$('a.modal'), {parse: 'rel'});
         } else {
-            $('#jform_link_to_publisher').html(publisher_link_label);
+            $('#jform_link_to_publisher').html('-');
         }
     }
+
+
 
     function observeElementChanges(observableId) {
         // select the target node

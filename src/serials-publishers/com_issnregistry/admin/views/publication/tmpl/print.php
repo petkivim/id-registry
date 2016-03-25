@@ -47,6 +47,14 @@ $this->form->setFieldAttribute('medium', 'readonly', 'true');
             <?php echo $this->form->renderField('publisher_id'); ?> 
             <div class="control-group">
                 <div class="control-label">
+                    <?php echo $this->form->getLabel('status'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_STATUS_' . $this->item->status); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
                     <?php echo $this->form->getLabel('place_of_publication'); ?>
                 </div>
                 <div class="controls">
@@ -104,32 +112,7 @@ $this->form->setFieldAttribute('medium', 'readonly', 'true');
                 <div class="controls">
                     <?php echo $this->item->url; ?>
                 </div>
-            </div>
-            <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('prepublication_record_created'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo ($this->item->prepublication_record_created ? JText::_('JYES') : JText::_('JNO')); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('control_copy_received'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo ($this->item->control_copy_received ? JText::_('JYES') : JText::_('JNO')); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('issn_frozen'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo ($this->item->issn_frozen ? JText::_('JYES') : JText::_('JNO')); ?>
-                </div>
-            </div>
+            </div>            
             <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_HISTORY'); ?></legend>
             <?php echo $this->form->renderField('created'); ?>
             <div class="control-group">

@@ -103,26 +103,20 @@ class IssnregistryModelPublications extends JModelList {
         if (is_numeric($status)) {
             switch ($status) {
                 case 1:
-                    $query->where('a.prepublication_record_created = false');
-                    $query->where('a.control_copy_received = false');
-                    $query->where('a.issn_frozen = false');
+                    $query->where('a.status = "NO_PREPUBLICATION_RECORD"');
                     //$query->order('a.created DESC');
                     break;
                 case 2:
-                    $query->where('a.prepublication_record_created = true');
-                    $query->where('a.control_copy_received = false');
-                    $query->where('a.issn_frozen = false');
-                    //$query->order('a.created DESC');
+                    $query->where('a.status = "ISSN_FROZEN"');
+                    //$query->order('a.title ASC');
                     break;
                 case 3:
-                    $query->where('a.prepublication_record_created = true');
-                    $query->where('a.control_copy_received = true');
-                    $query->where('a.issn_frozen = false');
+                    $query->where('a.status = "WAITING_FOR_CONTROL_COPY"');
                     //$query->order('a.created DESC');
                     break;
                 case 4:
-                    $query->where('a.issn_frozen = true');
-                    //$query->order('a.title ASC');
+                    $query->where('a.status = "COMPLETED"');
+                    //$query->order('a.created DESC');
                     break;
             }
         } else {

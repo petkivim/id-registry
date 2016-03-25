@@ -49,6 +49,7 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('issn'); ?>
                 <?php echo $this->form->renderField('publisher_id'); ?> 
                 <?php echo $this->form->renderField('link_to_publisher'); ?>
+                <?php echo $this->form->renderField('status'); ?>
                 <?php echo $this->form->renderField('place_of_publication'); ?>
                 <?php echo $this->form->renderField('printer'); ?>               
                 <?php echo $this->form->renderField('issued_from_year'); ?>
@@ -62,10 +63,6 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('medium'); ?>
                 <?php echo $this->form->renderField('medium_other'); ?>
                 <?php echo $this->form->renderField('url'); ?>
-                <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
-                <?php echo $this->form->renderField('prepublication_record_created'); ?>
-                <?php echo $this->form->renderField('control_copy_received'); ?>
-                <?php echo $this->form->renderField('issn_frozen'); ?>
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
