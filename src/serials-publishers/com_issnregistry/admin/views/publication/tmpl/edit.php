@@ -42,7 +42,6 @@ JFactory::getDocument()->addScriptDeclaration('
         <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'basic', JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_BASIC', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">              
-                <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_1'); ?></legend>
                 <?php echo $this->form->renderField('id'); ?>
                 <?php echo $this->form->renderField('form_id'); ?>
                 <?php echo $this->form->renderField('title'); ?>
@@ -53,10 +52,11 @@ JFactory::getDocument()->addScriptDeclaration('
                 <?php echo $this->form->renderField('place_of_publication'); ?>
                 <?php echo $this->form->renderField('printer'); ?>               
                 <?php echo $this->form->renderField('issued_from_year'); ?>
-                <?php echo $this->form->renderField('issued_from_number'); ?>
-                <?php echo $this->form->renderField('frequency'); ?>               
+                <?php echo $this->form->renderField('issued_from_number'); ?>                             
             </div>
             <div class="span6">
+                <?php echo $this->form->renderField('frequency'); ?> 
+                <?php echo $this->form->renderField('frequency_other'); ?> 
                 <?php echo $this->form->renderField('language'); ?>
                 <?php echo $this->form->renderField('publication_type'); ?>
                 <?php echo $this->form->renderField('publication_type_other'); ?>

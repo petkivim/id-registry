@@ -73,6 +73,14 @@ $document->addStyleSheet("components/com_issnregistry/css/publication.css");
             </div> 
             <div class="control-group">
                 <div class="control-label">
+                    <?php echo $this->form->getLabel('frequency_other'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->frequency_other; ?>
+                </div>
+            </div> 
+            <div class="control-group">
+                <div class="control-label">
                     <?php echo $this->form->getLabel('language'); ?>
                 </div>
                 <div class="controls">

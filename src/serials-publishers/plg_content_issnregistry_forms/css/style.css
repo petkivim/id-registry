@@ -46,6 +46,7 @@ td.sub_title {
     padding-left: 30%;
 }
 
+input[type="text"].frequency_other,
 input[type="text"].publication_type_other, 
 input[type="text"].medium_other {
     display:inline;

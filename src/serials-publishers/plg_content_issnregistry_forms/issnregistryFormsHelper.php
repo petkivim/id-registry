@@ -143,6 +143,13 @@ class IssnregistryFormsHelper {
             } else if (!self::validateFrequency($frequency)) {
                 $errors['frequency_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_INVALID";
             }
+            // Frequency other - optional
+            $frequencyOther = $post->get('frequency_other_' . $i, null, 'string');
+            if (strlen($frequencyOther) > 50) {
+                $errors['frequency_other_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
+            } else if (strcmp('z', $frequency) == 0 && empty($frequencyOther) == true) {
+                $errors['frequency_other_' . $i] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
+            }
             // Language - required
             $language = $post->get('language_' . $i, null, 'string');
             if (empty($language) == true) {
@@ -336,6 +343,7 @@ class IssnregistryFormsHelper {
                 $issuedFromYear = $post->get('issued_from_year_' . $i, null, 'string');
                 $issuedFromNumber = $post->get('issued_from_number_' . $i, null, 'string');
                 $frequency = $post->get('frequency_' . $i, null, 'string');
+                $frequencyOther = $post->get('frequency_other_' . $i, null, 'string');
                 $language = $post->get('language_' . $i, null, 'string');
                 $publicationType = $post->get('publication_type_' . $i, null, 'string');
                 $publicationTypeOther = $post->get('publication_type_other_' . $i, null, 'string');
@@ -358,21 +366,22 @@ class IssnregistryFormsHelper {
                 $mainSeries = self::toJson($mainSeriesTitle, $mainSeriesIssn);
                 $subseries = self::toJson($subseriesTitle, $subseriesIssn);
                 $anotherMedium = self::toJson($anotherMediumTitle, $anotherMediumIssn);
-                
+
                 // Insert columns
                 $pubColumns = array(
                     'title', 'place_of_publication', 'printer', 'issued_from_year',
-                    'issued_from_number', 'frequency', 'language', 'publication_type',
-                    'publication_type_other', 'medium', 'medium_other', 'url',
-                    'previous', 'main_series', 'subseries', 'another_medium',
-                    'additional_info', 'form_id', 'created', 'created_by');
+                    'issued_from_number', 'frequency', 'frequency_other',
+                    'language', 'publication_type', 'publication_type_other',
+                    'medium', 'medium_other', 'url', 'previous', 'main_series',
+                    'subseries', 'another_medium', 'additional_info', 'form_id',
+                    'created', 'created_by');
                 // Insert values
                 $pubValues = array(
                     $db->quote($title), $db->quote($placeOfPublication), $db->quote($printer), $db->quote($issuedFromYear),
-                    $db->quote($issuedFromNumber), $db->quote($frequency), $db->quote($language), $db->quote($publicationType), $db->quote($publicationTypeOther),
-                    $db->quote($medium), $db->quote($mediumOther), $db->quote($url), $db->quote($previous),
-                    $db->quote($mainSeries), $db->quote($subseries), $db->quote($anotherMedium),
-                    $db->quote($additionalInfo), $db->quote($formId),
+                    $db->quote($issuedFromNumber), $db->quote($frequency), $db->quote($frequencyOther),
+                    $db->quote($language), $db->quote($publicationType), $db->quote($publicationTypeOther),
+                    $db->quote($medium), $db->quote($mediumOther), $db->quote($url), $db->quote($previous), $db->quote($mainSeries),
+                    $db->quote($subseries), $db->quote($anotherMedium), $db->quote($additionalInfo), $db->quote($formId),
                     $db->quote($publicationCreated->toSql()), $db->quote('WWW'));
 
                 // Create a new query object.
@@ -453,7 +462,7 @@ class IssnregistryFormsHelper {
 
     public static function getFrequencyList() {
         $frequencies = array(
-            'h', 'g', 'a', 'f', 't', 'q', 'b', 'm', 's', 'j', 'w', 'c', 'i', 'd', 'k', 'z', 'u'
+            'h', 'g', 'a', 'f', 't', 'q', 'b', 'm', 's', 'j', 'w', 'c', 'i', 'd', 'k', 'z'
         );
         return $frequencies;
     }

@@ -141,6 +141,10 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td>' . self::getFrequencyMenu($i) . '</td>';
             $html .= '<td class="error">* ' . JText::_($errors['frequency_' . $i]) . '</td>';
             $html .= '</tr><tr>';
+            $html .= '<td></td>';
+            $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_OTHER_FIELD') . '<input type="text" name="frequency_other_' . $i . '" id="frequency_other_' . $i . '" size="20" class="frequency_other" value="' . $post->get('frequency_other_' . $i, null, 'string') . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['frequency_other_' . $i]) . '</td>';
+            $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
             $html .= '<td>' . self::getLanguageMenu($i) . '</td>';
             $html .= '<td class="error">* ' . JText::_($errors['language_' . $i]) . '</td>';
@@ -293,6 +297,9 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_FIELD') . ':</td>';
             $html .= '<td>' . self::getFrequencyLabel($i) . '</td>';
             $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_OTHER_SUMMARY_FIELD') . '</td>';
+            $html .= '<td>' . $post->get('frequency_other_' . $i, null, 'string') . '</td>';
+            $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
             $html .= '<td>' . self::getLanguageLabel($i) . '</td>';
             $html .= '</tr><tr>';
@@ -409,6 +416,7 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<input type="hidden" name="issued_from_year_' . $i . '" value="' . $post->get('issued_from_year_' . $i, null, 'string') . '" />';
             $html .= '<input type="hidden" name="issued_from_number_' . $i . '" value="' . $post->get('issued_from_number_' . $i, null, 'string') . '" />';
             $html .= '<input type="hidden" name="frequency_' . $i . '" value="' . $post->get('frequency_' . $i, null, 'string') . '" />';
+            $html .= '<input type="hidden" name="frequency_other_' . $i . '" value="' . $post->get('frequency_other_' . $i, null, 'string') . '" />';
             $html .= '<input type="hidden" name="language_' . $i . '" value="' . $post->get('language_' . $i, null, 'string') . '" />';
             $html .= '<input type="hidden" name="publication_type_' . $i . '" value="' . $post->get('publication_type_' . $i, null, 'string') . '" />';
             $html .= '<input type="hidden" name="publication_type_other_' . $i . '" value="' . $post->get('publication_type_other_' . $i, null, 'string') . '" />';

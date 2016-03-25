@@ -27,6 +27,10 @@ jQuery(document).ready(function () {
         regex = /^.{0,1}$/;
         return regex.test(value);
     });
+    document.formvalidator.setHandler("frequencyother", function (value) {
+        regex = /^.{0,50}$/;
+        return regex.test(value);
+    });    
     document.formvalidator.setHandler("language", function (value) {
         regex = /^.{0,50}$/;
         return regex.test(value);

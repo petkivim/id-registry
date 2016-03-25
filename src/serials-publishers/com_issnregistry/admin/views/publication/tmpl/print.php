@@ -86,6 +86,14 @@ $this->form->setFieldAttribute('medium', 'readonly', 'true');
                 </div>
             </div>           
             <?php echo $this->form->renderField('frequency'); ?>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('frequency_other'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->frequency_other; ?>
+                </div>
+            </div>   
             <?php echo $this->form->renderField('language'); ?>
             <?php echo $this->form->renderField('publication_type'); ?>
             <div class="control-group">

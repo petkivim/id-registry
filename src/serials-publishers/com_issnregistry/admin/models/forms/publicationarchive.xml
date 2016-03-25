@@ -92,6 +92,15 @@
 			<option value="u">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_U</option>
 		</field>
         <field
+            name="frequency_other"
+            type="text"
+            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_FREQUENCY_OTHER_LABEL"
+            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_FREQUENCY_OTHER_DESC"
+            size="20"
+            class="inputbox validate-frequencyother"
+            default=""
+        />		
+        <field
             name="language"
             type="list"
             label="COM_ISSNREGISTRY_PUBLICATION_FIELD_LANGUAGE_LABEL"
