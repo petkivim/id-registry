@@ -22,6 +22,26 @@ $this->form->setFieldAttribute('status', 'readonly', 'true');
 <button name="print" id="print"><?php echo JText::_('COM_ISSNREGISTRY_FORM_BUTTON_PRINT'); ?></button>
 <div class="form-horizontal">
     <div class="row-fluid form-horizontal-desktop">
+        <div class="span6">
+            <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('publication_count'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->publication_count; ?>
+                </div>
+            </div>
+            <?php echo $this->form->renderField('created'); ?>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('created_by'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->created_by; ?>
+                </div>
+            </div>
+        </div>
         <div class="span6">              
             <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_1'); ?></legend>
             <div class="control-group">
@@ -86,26 +106,6 @@ $this->form->setFieldAttribute('status', 'readonly', 'true');
                 </div>
                 <div class="controls">
                     <?php echo $this->item->city; ?>
-                </div>
-            </div>
-        </div>
-        <div class="span6">
-            <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('publication_count'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->publication_count; ?>
-                </div>
-            </div>
-            <?php echo $this->form->renderField('created'); ?>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('created_by'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->created_by; ?>
                 </div>
             </div>
         </div>

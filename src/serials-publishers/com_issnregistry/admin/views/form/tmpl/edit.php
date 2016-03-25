@@ -39,6 +39,18 @@ $viewOnly = strcmp(htmlentities(JFactory::getApplication()->input->get('tmpl')),
         <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publisher', JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER', true)); ?>
         <div class="row-fluid form-horizontal-desktop">
             <div class="span6">        
+                <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
+                <?php echo $this->form->renderField('publisher_id'); ?>
+                <?php
+                if (!$viewOnly) {
+                    echo $this->form->renderField('link_to_publisher');
+                }
+                ?>
+                <?php echo $this->form->renderField('status'); ?>
+                <?php echo $this->form->renderField('publication_count'); ?>
+                <?php echo $this->form->renderField('publication_count_issn'); ?>        
+            </div>
+            <div class="span6">
                 <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_1'); ?></legend>
                 <?php echo $this->form->renderField('id'); ?>
                 <?php echo $this->form->renderField('publisher'); ?>
@@ -48,29 +60,7 @@ $viewOnly = strcmp(htmlentities(JFactory::getApplication()->input->get('tmpl')),
                 <?php echo $this->form->renderField('phone'); ?>            
                 <?php echo $this->form->renderField('address'); ?>
                 <?php echo $this->form->renderField('zip'); ?>
-                <?php echo $this->form->renderField('city'); ?>            
-            </div>
-            <div class="span6">
-                <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
-                <?php echo $this->form->renderField('publisher_id'); ?>
-                <?php
-                if (!$viewOnly) {
-                    echo $this->form->renderField('link_to_publisher');
-                }
-                ?>
-                <legend><?php echo JText::_('COM_ISSNREGISTRY_FORM_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
-                <?php echo $this->form->renderField('status'); ?>
-                <?php echo $this->form->renderField('publication_count'); ?>
-                <?php echo $this->form->renderField('publication_count_issn'); ?>
-                <?php
-                if (!$viewOnly) {
-                    echo $this->loadTemplate('link_to_archive_record');
-                }
-                ?>
-                <?php echo $this->form->renderField('created'); ?>
-                <?php echo $this->form->renderField('created_by'); ?>
-                <?php echo $this->form->renderField('modified'); ?>
-                <?php echo $this->form->renderField('modified_by'); ?>
+                <?php echo $this->form->renderField('city'); ?>   
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
@@ -92,6 +82,23 @@ $viewOnly = strcmp(htmlentities(JFactory::getApplication()->input->get('tmpl')),
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php endif; ?>
+        <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'history', JText::_('COM_ISSNREGISTRY_FORM_TAB_HISTORY', true)); ?>
+        <div class="row-fluid form-horizontal-desktop">
+            <div class="span6">
+                <?php
+                if (!$viewOnly) {
+                    echo $this->loadTemplate('link_to_archive_record');
+                }
+                ?>
+                <?php echo $this->form->renderField('created'); ?>
+                <?php echo $this->form->renderField('created_by'); ?>
+                <?php echo $this->form->renderField('modified'); ?>
+                <?php echo $this->form->renderField('modified_by'); ?>
+            </div>
+            <div class="span6">
+            </div>
+        </div>
+        <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>
     <input type="hidden" name="task" value="form.edit" />
