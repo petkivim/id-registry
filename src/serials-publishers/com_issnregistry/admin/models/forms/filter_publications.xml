@@ -12,6 +12,7 @@
             type="list"
             label="COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_LABEL"
             description="COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_DESC"
+			default="3"
             onchange="this.form.submit();"
         >
             <option value="">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_SELECT</option>

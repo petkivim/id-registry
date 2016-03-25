@@ -98,35 +98,30 @@ class IssnregistryModelPublications extends JModelList {
         // Create the base select statement.
         $query->select('a.*, p.official_name')->from($db->quoteName('#__issn_registry_publication') . ' AS a');
         $query->join('LEFT', '#__issn_registry_publisher AS p ON p.id = a.publisher_id');
+        $query->join('INNER', '#__issn_registry_form AS f ON f.id = a.form_id');
 
         // Check status value
         if (is_numeric($status)) {
             switch ($status) {
                 case 1:
                     $query->where('a.status = "NO_PREPUBLICATION_RECORD"');
-                    //$query->order('a.created DESC');
                     break;
                 case 2:
                     $query->where('a.status = "ISSN_FROZEN"');
-                    //$query->order('a.title ASC');
                     break;
                 case 3:
                     $query->where('a.status = "WAITING_FOR_CONTROL_COPY"');
-                    //$query->order('a.created DESC');
                     break;
                 case 4:
                     $query->where('a.status = "COMPLETED"');
-                    //$query->order('a.created DESC');
                     break;
             }
-        } else {
-            //$query->order('a.title ASC');
         }
 
         // Build search
         if (!empty($search)) {
             $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
-            $query->where('(a.title LIKE ' . $search . ' OR a.issn LIKE ' . $search . ' OR p.official_name LIKE ' . $search . ')');
+            $query->where('(a.title LIKE ' . $search . ' OR a.issn LIKE ' . $search . ' OR a.additional_info LIKE ' . $search . ' OR p.official_name LIKE ' . $search . ' OR p.contact_person LIKE ' . $search . ' OR f.publisher LIKE ' . $search . ' OR f.contact_person LIKE ' . $search . ')');
         }
 
         $query->order('a.created DESC');
