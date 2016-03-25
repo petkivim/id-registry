@@ -88,6 +88,13 @@ class IssnregistryModelMessage extends JModelAdmin {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ERROR_MESSAGE_SAVE_TO_DB_FAILED'), 'error');
             return false;
         }
+        // Update form status if form has been set
+        if ($table->form_id > 0) {
+            // Load form model
+            $formModel = JModelLegacy::getInstance('form', 'IssnregistryModel');
+            // Update form status
+            $formModel->setStatusCompleted($table->form_id);
+        }
         return true;
     }
 

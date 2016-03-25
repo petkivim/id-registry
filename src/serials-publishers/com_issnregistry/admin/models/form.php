@@ -266,4 +266,18 @@ class IssnregistryModelForm extends JModelAdmin {
         return true;
     }
 
+    /**
+     * Sets the status of the form identified by the given form id as
+     * "COMPLETED". The current status must be "NOT_NOTIFIED", otherwise
+     * updating the status fails.
+     * @param int $formId id of the form
+     * @return boolean true on success, false on failure
+     */
+    public function setStatusCompleted($formId) {
+        // Get db access
+        $table = $this->getTable();
+        // Decrease count
+        return $table->setStatusCompleted($formId);
+    }
+
 }

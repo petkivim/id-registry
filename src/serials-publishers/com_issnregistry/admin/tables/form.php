@@ -173,6 +173,11 @@ class IssnRegistryTableForm extends JTable {
         // Update publication count
         $this->publication_count = $oldCount + 1;
 
+        // Update status
+        if (strcmp($this->status, 'NOT_NOTIFIED') == 0) {
+            $this->status = 'NOT_HANDLED';
+        }
+
         // Update object to DB
         return $this->store();
     }
@@ -224,6 +229,11 @@ class IssnRegistryTableForm extends JTable {
         // Update publication count issn
         $this->publication_count_issn = $oldCount + 1;
 
+        // Update status
+        if ($this->publication_count_issn == $this->publication_count) {
+            $this->status = 'NOT_NOTIFIED';
+        }
+
         // Update object to DB
         return $this->store();
     }
@@ -249,6 +259,11 @@ class IssnRegistryTableForm extends JTable {
 
         // Update publication count issn
         $this->publication_count_issn = $oldCount - 1;
+
+        // Update status
+        if (strcmp($this->status, 'NOT_NOTIFIED') == 0) {
+            $this->status = 'NOT_HANDLED';
+        }
 
         // Update object to DB
         return $this->store();
@@ -276,6 +291,31 @@ class IssnRegistryTableForm extends JTable {
         // Update values
         $this->publisher_id = $publisherId;
         $this->publisher_created = true;
+
+        // Update object to DB
+        return $this->store();
+    }
+
+    /**
+     * Sets the status of the form identified by the given form id as
+     * "COMPLETED". The current status must be "NOT_NOTIFIED", otherwise
+     * updating the status fails.
+     * @param int $formId id of the form
+     * @return boolean true on success, false on failure
+     */
+    public function setStatusCompleted($formId) {
+        $conditions = array(
+            'id' => $formId,
+            'status' => 'NOT_NOTIFIED'
+        );
+
+        // Load object
+        if (!$this->load($conditions)) {
+            return false;
+        }
+
+        // Update status
+        $this->status = 'COMPLETED';
 
         // Update object to DB
         return $this->store();
