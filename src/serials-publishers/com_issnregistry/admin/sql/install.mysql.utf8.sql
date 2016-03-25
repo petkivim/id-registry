@@ -74,7 +74,7 @@ CREATE TABLE `#__issn_registry_publication` (
     `main_series` VARCHAR(600),
     `subseries` VARCHAR(600),
     `another_medium` VARCHAR(600),
-    `additional_info` VARCHAR(1000),
+    `additional_info` VARCHAR(2000),
     `status` VARCHAR(24) DEFAULT 'NO_PREPUBLICATION_RECORD',
     `form_id` INT DEFAULT 0,
     `publisher_id` INT DEFAULT 0,
