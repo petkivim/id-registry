@@ -15,15 +15,28 @@
             default=""
             required="true"
         />
-        <field
-            name="contact_person"
-            type="text"
-            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_LABEL"
-            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSON_DESC"
-            size="20"
-            class="inputbox validate-contactperson"
-            default=""
-        />
+		<field name="contact_person"
+			type="Repeatable"
+			icon="list"
+			label="COM_ISSNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSONS_LABEL"
+			description="COM_ISSNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSONS_DESC"
+			select="COM_ISSNREGISTRY_PUBLICATION_FIELD_CONTACT_PERSONS_EDIT"
+			class="validate-contactperson"
+			maximum="5"
+            default="">
+            <fieldset hidden="true" name="list_contact_persons" repeat="true">
+                <field name="name"
+				   label="COM_ISSNREGISTRY_PUBLICATION_FIELD_CONTACT_PERSONS_NAME_LABEL"
+				   size="20"
+				   maxlength="50"
+				   type="text" />
+				<field name="email"
+				   label="COM_ISSNREGISTRY_PUBLICATION_FIELD_CONTACT_PERSONS_EMAIL_LABEL"
+				   size="20"
+				   maxlength="50"
+				   type="text" />
+            </fieldset>
+        </field>		
         <field
             name="address"
             type="text"

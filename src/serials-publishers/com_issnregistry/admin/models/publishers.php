@@ -83,7 +83,7 @@ class IssnregistryModelPublishers extends JModelList {
         // Build search
         if (!empty($search)) {
             $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
-            $query->where('a.official_name LIKE ' . $search);
+            $query->where('(a.official_name LIKE ' . $search . ' OR a.contact_person LIKE ' . $search . ')');
         }
 
         // Set order

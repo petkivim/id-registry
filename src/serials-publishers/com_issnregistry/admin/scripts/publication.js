@@ -69,8 +69,6 @@ jQuery(document).ready(function ($) {
         }
     }
 
-
-
     function observeElementChanges(observableId) {
         // select the target node
         var target = document.querySelector('#' + observableId);

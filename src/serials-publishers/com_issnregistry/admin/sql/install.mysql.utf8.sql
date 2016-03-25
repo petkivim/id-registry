@@ -34,7 +34,7 @@ CREATE TABLE `#__issn_registry_form_archive` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `form_id` INT NOT NULL,
     `publisher` VARCHAR(100) NOT NULL,
-    `contact_person` VARCHAR(100),
+    `contact_person` VARCHAR(600),
     `email` VARCHAR(100) NOT NULL,
     `phone` VARCHAR(30),
     `address` VARCHAR(50) NOT NULL,

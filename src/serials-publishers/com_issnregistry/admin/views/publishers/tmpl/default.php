@@ -50,10 +50,10 @@ $document->addScriptDeclaration('
                         <th width="2%">
                             <?php echo JHtml::_('grid.checkall'); ?>
                         </th>
-                        <th width="65%">
+                        <th width="60%">
                             <?php echo JText::_('COM_ISSNREGISTRY_PUBLISHERS_OFFICIAL_NAME'); ?>
                         </th>
-                        <th width="25%">
+                        <th width="35%">
                             <?php echo JText::_('COM_ISSNREGISTRY_PUBLISHERS_CONTACT_PERSON'); ?>
                         </th>
                         <th width="2%">
@@ -84,7 +84,14 @@ $document->addScriptDeclaration('
                                 </a>
                             </td>   
                             <td>
-                                <?php echo $row->contact_person; ?>
+                                <?php
+                                $json = json_decode($row->contact_person);
+                                if (!empty($json)) {
+                                    $names = implode(', ', $json->{'name'});
+                                    echo $names;
+                                }
+                                ?>
+
                             </td> 
                             <td align="center">
                                 <?php echo $row->id; ?>

@@ -32,14 +32,7 @@ $this->form->setFieldAttribute( 'lang_code', 'readonly', 'true' );
                     <?php echo $this->item->official_name; ?>
                 </div>
             </div>
-            <div class="control-group">
-                <div class="control-label">
-                    <?php echo $this->form->getLabel('contact_person'); ?>
-                </div>
-                <div class="controls">
-                    <?php echo $this->item->contact_person; ?>
-                </div>
-            </div>
+            <?php echo $this->form->renderField('contact_person'); ?>
             <?php echo $this->form->renderField('lang_code'); ?>           
             <?php echo $this->form->renderField('created'); ?>
             <div class="control-group">
