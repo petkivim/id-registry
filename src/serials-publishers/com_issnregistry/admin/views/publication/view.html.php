@@ -41,6 +41,12 @@ class IssnregistryViewPublication extends JViewLegacy {
             return false;
         }
 
+        // Check if publication's ISSN has been frozen
+        if ($this->item->issn_frozen) {
+            // Raise a warning if ISSN has been frozen
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_PUBLICATION_FROZEN_WARNING'), 'Error');
+        }
+
         // Set the toolbar
         $this->addToolBar();
         // Add jQuery
@@ -88,7 +94,7 @@ class IssnregistryViewPublication extends JViewLegacy {
 
                 JToolBarHelper::custom('publication.download', 'download', 'download', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_DOWNLOAD_MARC'), false, false);
             }
-            
+
             // Render print button
             $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PRINT'), 'class' => 'icon-print'));
             $toolbar->appendButton('Custom', $dhtml);
