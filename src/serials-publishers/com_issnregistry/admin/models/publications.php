@@ -122,7 +122,7 @@ class IssnregistryModelPublications extends JModelList {
         if (!empty($search)) {
             $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
             $query->where('(a.title LIKE ' . $search . ' OR a.issn LIKE ' . $search . ' OR a.additional_info LIKE ' . $search . ' OR p.official_name LIKE ' . $search . ' OR p.contact_person LIKE ' . $search . ' OR f.publisher LIKE ' . $search . ' OR f.contact_person LIKE ' . $search . ')');
-        }
+        } 
 
         $query->order('a.created DESC');
 
