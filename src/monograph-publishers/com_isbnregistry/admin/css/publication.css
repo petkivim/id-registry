@@ -13,3 +13,8 @@
 .icon-delete {
     cursor: pointer;
 }
+
+#jform_comments {
+    width: 90%;
+    height: 30em;
+}

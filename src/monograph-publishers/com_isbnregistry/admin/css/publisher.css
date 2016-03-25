@@ -51,6 +51,7 @@
     cursor: pointer;
 }
 
-
-
-
+#jform_additional_info {
+    width: 90%;
+    height: 30em;
+}
