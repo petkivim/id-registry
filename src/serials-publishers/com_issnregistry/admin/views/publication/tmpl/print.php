@@ -130,7 +130,7 @@ $this->form->setFieldAttribute('medium', 'readonly', 'true');
                     <?php echo ($this->item->issn_frozen ? JText::_('JYES') : JText::_('JNO')); ?>
                 </div>
             </div>
-            <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_3'); ?></legend>
+            <legend><?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_TAB_HISTORY'); ?></legend>
             <?php echo $this->form->renderField('created'); ?>
             <div class="control-group">
                 <div class="control-label">
