@@ -38,11 +38,18 @@ class IssnregistryViewForms extends JViewLegacy {
             return false;
         }
 
+        // Get filter status
+        $filterStatus = $this->state->get('filter.status');
         // Add menu helper file
         require_once JPATH_COMPONENT . '/helpers/menu.php';
         // Add sidebar
-        MenuHelper::addSubmenu('forms');
-
+        if ($filterStatus == 2) {
+            MenuHelper::addSubmenu('forms_not_notified');
+        } else if ($filterStatus == 3) {
+            MenuHelper::addSubmenu('forms_completed');
+        }  else {
+            MenuHelper::addSubmenu('forms_not_handled');
+        }
         // Set the toolbar
         $this->addToolBar();
         // Render the sidebar

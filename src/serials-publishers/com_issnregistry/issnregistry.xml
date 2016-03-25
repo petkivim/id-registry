@@ -38,7 +38,9 @@
         <!-- Administration Menu Section -->
         <menu img="class:issnregistry">COM_ISSNREGISTRY_MENU</menu>
         <submenu>
-			<menu link="option=com_issnregistry&amp;view=forms" view="forms" img="class:forms">COM_ISSNREGISTRY_SUBMENU_FORMS</menu>
+			<menu link="option=com_issnregistry&amp;view=forms&amp;filter_status=1" view="forms" img="class:forms">COM_ISSNREGISTRY_SUBMENU_FORMS_NOT_HANDLED</menu>
+			<menu link="option=com_issnregistry&amp;view=forms&amp;filter_status=2" view="forms" img="class:forms">COM_ISSNREGISTRY_SUBMENU_FORMS_NOT_NOTIFIED</menu>
+			<menu link="option=com_issnregistry&amp;view=forms&amp;filter_status=3" view="forms" img="class:forms">COM_ISSNREGISTRY_SUBMENU_FORMS_COMPLETED</menu>
 			<menu link="option=com_issnregistry&amp;view=publications" view="publications" img="class:publications">COM_ISSNREGISTRY_SUBMENU_PUBLICATIONS</menu>
 			<menu link="option=com_issnregistry&amp;view=publishers" view="publishers" img="class:publishers">COM_ISSNREGISTRY_SUBMENU_PUBLISHERS</menu>
 			<menu link="option=com_issnregistry&amp;view=messages" view="messages" img="class:messages">COM_ISSNREGISTRY_SUBMENU_MESSAGES</menu>

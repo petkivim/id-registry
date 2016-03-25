@@ -27,7 +27,13 @@ class MenuHelper extends JHelperContent {
      */
     public static function addSubmenu($vName) {
         JHtmlSidebar::addEntry(
-                JText::_('COM_ISSNREGISTRY_SUBMENU_FORMS'), 'index.php?option=com_issnregistry&view=forms', $vName == 'forms'
+                JText::_('COM_ISSNREGISTRY_SUBMENU_FORMS_NOT_HANDLED'), 'index.php?option=com_issnregistry&view=forms&filter_status=1', $vName == 'forms_not_handled'
+        );
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISSNREGISTRY_SUBMENU_FORMS_NOT_NOTIFIED'), 'index.php?option=com_issnregistry&view=forms&filter_status=2', $vName == 'forms_not_notified'
+        );
+        JHtmlSidebar::addEntry(
+                JText::_('COM_ISSNREGISTRY_SUBMENU_FORMS_COMPLETED'), 'index.php?option=com_issnregistry&view=forms&filter_status=3', $vName == 'forms_completed'
         );
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISSNREGISTRY_SUBMENU_PUBLICATIONS'), 'index.php?option=com_issnregistry&view=publications', $vName == 'publications'
