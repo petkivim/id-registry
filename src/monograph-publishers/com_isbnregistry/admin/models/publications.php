@@ -53,7 +53,7 @@ class IsbnregistryModelPublications extends JModelList {
         $this->setState('filter.status', $status);
 
         // List state information.
-        parent::populateState('a.title', 'asc');
+        parent::populateState('a.created', 'desc');
     }
 
     /**
@@ -96,26 +96,20 @@ class IsbnregistryModelPublications extends JModelList {
                     $query->where('(a.publication_identifier_print = "" AND a.publication_identifier_electronical = "")');
                     $query->where('a.on_process = false');
                     $query->where('a.no_identifier_granted = false');
-                    $query->order('a.created DESC');
                     break;
                 case 2:
                     $query->where('(a.publication_identifier_print = "" AND a.publication_identifier_electronical = "")');
                     $query->where('a.on_process = true');
                     $query->where('a.no_identifier_granted = false');
-                    $query->order('a.created DESC');
                     break;
                 case 3:
                     $query->where('(a.publication_identifier_print != "" OR a.publication_identifier_electronical != "")');
                     $query->where('a.no_identifier_granted = false');
-                    $query->order('a.title ASC');
                     break;
                 case 4:
                     $query->where('a.no_identifier_granted = true');
-                    $query->order('a.title ASC');
                     break;
             }
-        } else {
-            $query->order('a.title ASC');
         }
 
         // Build search
@@ -123,7 +117,9 @@ class IsbnregistryModelPublications extends JModelList {
             $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
             $query->where('(a.title LIKE ' . $search . ' OR a.comments LIKE ' . $search . ' OR a.official_name LIKE ' . $search . ' OR a.contact_person LIKE ' . $search . ')');
         }
-
+        // Set sort order
+        $query->order('a.created DESC');
+        
         return $query;
     }
 
