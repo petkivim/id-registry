@@ -93,7 +93,7 @@ $this->form->setFieldAttribute('fileformat', 'readonly', 'true');
                     <?php echo $this->item->modified_by; ?>
                 </div>
             </div>
-            <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_2'); ?></legend>
+            <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHING'); ?></legend>
             <?php echo $this->form->renderField('published_before'); ?>
             <?php echo $this->form->renderField('publications_public'); ?>
             <?php echo $this->form->renderField('publications_intra'); ?>
@@ -250,7 +250,7 @@ $this->form->setFieldAttribute('fileformat', 'readonly', 'true');
             <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_4'); ?></legend>
             <?php echo $this->form->renderField('publication_type'); ?>
             <?php echo $this->form->renderField('publication_format'); ?>
-            <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_5'); ?></legend>
+            <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_AUTHORS'); ?></legend>
             <h4><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATION_AUTHOR_MAIN'); ?></h4>
             <div class="control-group">
                 <div class="control-label">
@@ -355,6 +355,14 @@ $this->form->setFieldAttribute('fileformat', 'readonly', 'true');
                 </div>
             </div>
             <?php echo $this->form->renderField('type'); ?>
+            <div class="control-group">
+                <div class="control-label">
+                    <?php echo $this->form->getLabel('type_other'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->type_other; ?>
+                </div>
+            </div>
             <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_9'); ?></legend>
             <div class="control-group">
                 <div class="control-label">

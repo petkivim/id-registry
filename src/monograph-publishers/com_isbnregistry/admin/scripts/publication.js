@@ -17,7 +17,7 @@ jQuery(document).ready(function ($) {
         placeholder_text_multiple: " "
     });
     $("#jform_type").chosen({
-        max_selected_options: 3,
+        max_selected_options: 4,
         width: "17em",
         placeholder_text_multiple: " "
     });

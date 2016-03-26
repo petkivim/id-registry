@@ -128,9 +128,13 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("type", function (value) {
-        regex = /^.{0,35}$/;
+        regex = /^.{0,50}$/;
         return regex.test(value);
     });
+    document.formvalidator.setHandler("typeother", function (value) {
+        regex = /^.{0,100}$/;
+        return regex.test(value);
+    });    
     document.formvalidator.setHandler("comments", function (value) {
         return value.length <= 2000;
     });

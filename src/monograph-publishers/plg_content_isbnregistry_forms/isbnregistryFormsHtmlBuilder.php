@@ -438,10 +438,18 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<td>';
             $type = $post->get('type', null, 'array');
             $html .= '<input type="checkbox" name="type[]" value="PAPERBACK"' . (isset($type) && in_array('PAPERBACK', $type) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_PAPERBACK');
-            $html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="HARDBACK"' . (isset($type) && in_array('HARDBACK', $type) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_HARDBACK');
-            $html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($type) && in_array('SPIRAL_BINDING', $type) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_SPIRAL_BINDING');
+            // HARDBACK and SPIRAL_BINDING are shown only if the publication is not a dissertation
+            if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
+                $html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="HARDBACK"' . (isset($type) && in_array('HARDBACK', $type) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_HARDBACK');
+                $html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($type) && in_array('SPIRAL_BINDING', $type) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_SPIRAL_BINDING');
+            }
+            $html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="OTHER_PRINT"' . (isset($type) && in_array('OTHER_PRINT', $type) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_OTHER_PRINT');
             $html .= '</td>';
             $html .= '<td class="error">* ' . JText::_($errors['type']) . '</td>';
+            $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_OTHER_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="type_other" id="type_other" size="25" value="' . $post->get('type_other', null, 'string') . '" /></td>';
+            $html .= '<td class="error">' . JText::_($errors['type_other']) . '</td>';
             $html .= '</tr>';
             $html .= '</table>';
         }
@@ -459,8 +467,11 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<td>';
             $fileformat = $post->get('fileformat', null, 'array');
             $html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="PDF"' . (isset($fileformat) && in_array('PDF', $fileformat) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_PDF');
-            $html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($fileformat) && in_array('EPUB', $fileformat) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_EPUB');
-            $html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="CD_ROM"' . (isset($fileformat) && in_array('CD_ROM', $fileformat) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_CD_ROM');
+            // EPUB and CD_ROM are shown only if the publication is not a dissertation
+            if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
+                $html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($fileformat) && in_array('EPUB', $fileformat) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_EPUB');
+                $html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="CD_ROM"' . (isset($fileformat) && in_array('CD_ROM', $fileformat) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_CD_ROM');
+            }
             $html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="OTHER"' . (isset($fileformat) && in_array('OTHER', $fileformat) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_OTHER');
             $html .= '</td>';
             $html .= '<td class="error">* ' . JText::_($errors['fileformat']) . '</td>';
@@ -699,16 +710,22 @@ class IsbnregistryFormsHtmlBuilder {
             }
             $type = $post->get('type', null, 'array');
             $html .= '<input style="display:none;" type="checkbox" name="type[]" value="PAPERBACK"' . (isset($type) && in_array('PAPERBACK', $type) ? ' checked' : '') . '/>';
-            $html .= '<input style="display:none;" type="checkbox" name="type[]" value="HARDBACK"' . (isset($type) && in_array('HARDBACK', $type) ? ' checked' : '') . '/>';
-            $html .= '<input style="display:none;" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($type) && in_array('SPIRAL_BINDING', $type) ? ' checked' : '') . '/>';
+            if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
+                $html .= '<input style="display:none;" type="checkbox" name="type[]" value="HARDBACK"' . (isset($type) && in_array('HARDBACK', $type) ? ' checked' : '') . '/>';
+                $html .= '<input style="display:none;" type="checkbox" name="type[]" value="SPIRAL_BINDING"' . (isset($type) && in_array('SPIRAL_BINDING', $type) ? ' checked' : '') . '/>';
+            }
+            $html .= '<input style="display:none;" type="checkbox" name="type[]" value="OTHER_PRINT"' . (isset($type) && in_array('OTHER_PRINT', $type) ? ' checked' : '') . '/>';
+            $html .= '<input type="hidden" name="type_other" value="' . $post->get('type_other', null, 'string') . '" />';
         }
         // Additional information
         $html .= '<textarea name="comments" style="display:none;">' . $post->get('comments', null, 'string') . '</textarea>';
         if (IsbnregistryFormsHelper::isElectronical($post->get('publication_format', null, 'string'))) {
             $fileformat = $post->get('fileformat', null, 'array');
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="PDF"' . (isset($fileformat) && in_array('PDF', $fileformat) ? ' checked' : '') . '/>';
-            $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($fileformat) && in_array('EPUB', $fileformat) ? ' checked' : '') . '/>';
-            $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="CD_ROM"' . (isset($fileformat) && in_array('CD_ROM', $fileformat) ? ' checked' : '') . '/>';
+            if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
+                $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="EPUB"' . (isset($fileformat) && in_array('EPUB', $fileformat) ? ' checked' : '') . '/>';
+                $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="CD_ROM"' . (isset($fileformat) && in_array('CD_ROM', $fileformat) ? ' checked' : '') . '/>';
+            }
             $html .= '<input style="display:none;" type="checkbox" name="fileformat[]" value="OTHER"' . (isset($fileformat) && in_array('OTHER', $fileformat) ? ' checked' : '') . '/>';
             $html .= '<input type="hidden" name="fileformat_other" value="' . $post->get('fileformat_other', null, 'string') . '" />';
         }

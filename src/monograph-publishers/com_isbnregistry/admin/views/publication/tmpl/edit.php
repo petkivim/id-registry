@@ -154,7 +154,8 @@ if (!empty($this->item->publication_identifier_print) || !empty($this->item->pub
                 <?php echo $this->form->renderField('printing_house_city'); ?>	
                 <?php echo $this->form->renderField('copies'); ?>	
                 <?php echo $this->form->renderField('edition'); ?>		
-                <?php echo $this->form->renderField('type'); ?>			
+                <?php echo $this->form->renderField('type'); ?>	
+                <?php echo $this->form->renderField('type_other'); ?>	
             </div>
             <div class="span6">
                 <legend><?php echo JText::_('COM_ISBNREGISTRY_PUBLICATION_TAB_PUBLISHER_SUBTITLE_10'); ?></legend>

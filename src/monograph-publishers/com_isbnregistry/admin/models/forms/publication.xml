@@ -525,7 +525,17 @@
 			<option value="PAPERBACK">COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_PAPERBACK</option>
 			<option value="HARDBACK">COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_HARDBACK</option>
 			<option value="SPIRAL_BINDING">COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_SPIRAL_BINDING</option>
+			<option value="OTHER_PRINT">COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_OTHER_PRINT</option>
 		</field>	
+		<field
+            name="type_other"
+            type="text"
+            label="COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_OTHER_LABEL"
+            description="COM_ISBNREGISTRY_PUBLICATION_FIELD_TYPE_OTHER_DESC"
+            size="20"
+            class="inputbox validate-typeother"
+            default=""
+        />	
         <field
             name="comments"
             type="textarea"

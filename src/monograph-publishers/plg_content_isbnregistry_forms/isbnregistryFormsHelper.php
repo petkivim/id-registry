@@ -426,10 +426,19 @@ class IsbnregistryFormsHelper {
             $types = $post->get('type', null, 'array');
             if (count($types) == 0) {
                 $errors['type'] = "PLG_ISBNREGISTRY_FORMS_TYPE_FIELD_EMPTY";
-            } else if (count($types) > 3) {
+            } else if (count($types) > 4) {
                 $errors['type'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_MANY";
             } else if (!self::validateTypes($types)) {
                 $errors['type'] = "PLG_ISBNREGISTRY_FORMS_TYPE_FIELD_INVALID";
+            }
+            // If OTHER is selected, type_other field can not be empty
+            if (isset($types) && in_array('OTHER_PRINT', $types)) {
+                $typeOther = $post->get('type_other', null, 'string');
+                if (strlen($typeOther) == 0) {
+                    $errors['type_other'] = "PLG_ISBNREGISTRY_FORMS_TYPE_OTHER_FIELD_EMPTY";
+                } else if (strlen($typeOther) > 100) {
+                    $errors['type_other'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
+                }
             }
         }
         // Comments - optional
@@ -579,6 +588,7 @@ class IsbnregistryFormsHelper {
         $copies = $post->get('copies', null, 'string');
         $edition = $post->get('edition', null, 'string');
         $type = $post->get('type', null, 'array');
+        $typeOther = $post->get('type_other', null, 'string');
         // Additional information
         $comments = $post->get('comments', null, 'string');
         // Other information
@@ -627,8 +637,8 @@ class IsbnregistryFormsHelper {
 
         // If printed
         if (self::isPrint($publication_format)) {
-            array_push($columns, 'printing_house', 'printing_house_city', 'type');
-            array_push($values, $db->quote($printing_house), $db->quote($printing_house_city), $db->quote($type_str));
+            array_push($columns, 'printing_house', 'printing_house_city', 'type', 'type_other');
+            array_push($values, $db->quote($printing_house), $db->quote($printing_house_city), $db->quote($type_str), $db->quote($typeOther));
             if (!$is_dissertation) {
                 array_push($columns, 'copies', 'edition');
                 array_push($values, $db->quote($copies), $db->quote($edition));
@@ -709,7 +719,7 @@ class IsbnregistryFormsHelper {
             return false;
         }
         $validValues = array(
-            'PAPERBACK', 'HARDBACK', 'SPIRAL_BINDING'
+            'PAPERBACK', 'HARDBACK', 'SPIRAL_BINDING', 'OTHER_PRINT'
         );
         foreach ($types as $type) {
             if (!in_array($type, $validValues)) {

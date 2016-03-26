@@ -337,7 +337,7 @@ class IsbnregistryModelPublication extends JModelAdmin {
     }
 
     private function identifiersPrintToJSON($identifiers) {
-        $types = array('PAPERBACK', 'HARDBACK', 'SPIRAL_BINDING');
+        $types = array('PAPERBACK', 'HARDBACK', 'SPIRAL_BINDING', 'OTHER_PRINT');
         $json = array();
         foreach ($identifiers as $identifier => $type) {
             if (in_array($type, $types)) {
