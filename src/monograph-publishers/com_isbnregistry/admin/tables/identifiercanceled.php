@@ -85,10 +85,34 @@ class IsbnRegistryTableIdentifiercanceled extends JTable {
         // Create the query
         $query->select('*')->from($this->_db->quoteName($this->_tbl));
         $query->where($conditions);
-        $query->order('identifier ASC')->setLimit((int)$count);
+        $query->order('identifier ASC')->setLimit((int) $count);
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Delete all identifiers related to the publisher identifier range 
+     * identified by the given id.
+     * @param int $publisherIdenfierRangeId publisher identifier range id
+     * @return int number of deleted rows
+     */
+    public function deleteByPublisherIdenfierRangeId($publisherIdenfierRangeId) {
+        $query = $this->_db->getQuery(true);
+
+        // Delete all identifiers related to the batch
+        $conditions = array(
+            $this->_db->quoteName('publisher_identifier_range_id') . ' = ' . $this->_db->quote($publisherIdenfierRangeId)
+        );
+
+        $query->delete($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of deleted rows
+        return$this->_db->getAffectedRows();
     }
 
 }

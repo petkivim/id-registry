@@ -165,7 +165,8 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRange extends JTable 
 
     /**
      * Deletes the given publisher range. The range is deleted if and only
-     * if no identifiers are created yet.
+     * if no identifiers are created yet or all the created identifiers have
+     * been canceled.
      * @param integer $publisherRangeId id of the range to be deleted
      * @return boolean true on success
      */
@@ -176,7 +177,8 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRange extends JTable 
         // Conditions for delete operation - delete by id
         $conditions = array(
             $this->_db->quoteName('id') . ' = ' . $this->_db->quote($publisherRangeId),
-            $this->_db->quoteName('taken') . ' = ' . $this->_db->quote(0)
+            $this->_db->quoteName('deleted') . ' = ' . $this->_db->quote(0),
+            '(' . $this->_db->quoteName('taken') . ' = ' . $this->_db->quote(0) . ' OR ' . $this->_db->quoteName('taken') . ' = ' . $this->_db->quoteName('canceled') . ')'
         );
         // Create query		
         $query->delete($this->_db->quoteName($this->_tbl));

@@ -174,7 +174,7 @@ jQuery(document).ready(function ($) {
                             if (data[i].is_active == 1) {
                                 content += '">' + label_active;
                                 // If range hasn't been used yet, add delete icon
-                                if (data[i].range_begin == data[i].next) {
+                                if (data[i].range_begin == data[i].next || (data[i].taken == data[i].canceled && data[i].deleted == 0)) {
                                     content += ' <span class="icon-delete"></span>';
                                 }
                             } else if (data[i].is_closed == 1) {

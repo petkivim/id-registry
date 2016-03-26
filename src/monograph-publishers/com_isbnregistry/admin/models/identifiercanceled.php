@@ -124,4 +124,17 @@ class IsbnregistryModelIdentifiercanceled extends JModelAdmin {
         return $result;
     }
 
+    /**
+     * Delete all identifiers related to the publisher identifier range 
+     * identified by the given id.
+     * @param int $publisherIdenfierRangeId publisher identifier range id
+     * @return int number of deleted rows
+     */
+    public function deleteByPublisherIdenfierRangeId($publisherIdenfierRangeId) {
+        // Get db access
+        $table = $this->getTable();
+        // Return result
+        return $table->deleteByPublisherIdenfierRangeId($publisherIdenfierRangeId);
+    }
+
 }

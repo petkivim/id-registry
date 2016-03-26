@@ -140,10 +140,20 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
             if (!$rangeModel->increaseCanceled($identifierRange, 1)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_UPDATE_IDENTIFIER_CANCELED_COUNTER_FAILED'));
                 $table->transactionRollback();
-                return 0;
+                return false;
             }
         }
 
+        // Are there canceled identifiers that need to be deleted?
+        if ($publisherRange->canceled > 0) {
+            // Load identifier canceled model
+            $identifierCanceledModel = JModelLegacy::getInstance('identifiercanceled', 'IsbnregistryModel');
+            if ($identifierCanceledModel->deleteByPublisherIdenfierRangeId($publisherRange->id) != $publisherRange->canceled) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETING_CANCELED_IDENTIFERS_FAILED'));
+                $table->transactionRollback();
+                return false;
+            }
+        }
         // Return false if deleting the object failed
         if (!$table->deleteRange($publisherRangeId)) {
             $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_DELETE_FROM_DB_FAILED'));
@@ -181,6 +191,10 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         }
         // If no identifiers have been given yet, the item can be deleted
         if (strcmp($result->range_begin, $result->next) == 0) {
+            return $result;
+        } else if ($result->taken == $result->canceled && $result->deleted == 0) {
+            // If all the given identifieres are canceled and no identifiers have
+            // been deleted, the item can be deleted
             return $result;
         }
         $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_POINTER_NOT_ZERO'));
