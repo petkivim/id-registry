@@ -220,7 +220,7 @@ class IssnregistryModelMessage extends JModelAdmin {
             // Set language code
             $message->lang_code = $publisher->lang_code;
             // Update recipient
-            $message->recipient = $publisher->email;
+            $message->recipient = $this->getEmail($publisher);
         }
 
         // Set publisher id
@@ -312,8 +312,8 @@ class IssnregistryModelMessage extends JModelAdmin {
 
     private function filterPublisher($messageBody, $publisher) {
         $messageBody = str_replace("#PUBLISHER#", $publisher->official_name, $messageBody);
-        $messageBody = str_replace("#CONTACT_PERSON#", $publisher->contact_person, $messageBody);
-        $messageBody = str_replace("#EMAIL#", $publisher->email, $messageBody);
+        $messageBody = str_replace("#CONTACT_PERSON#", $this->getContactPerson($publisher), $messageBody);
+        $messageBody = str_replace("#EMAIL#", $this->getEmail($publisher), $messageBody);
         return $messageBody;
     }
 
@@ -330,6 +330,52 @@ class IssnregistryModelMessage extends JModelAdmin {
 
     private function filterAddress($messageBody, $street, $zip, $city) {
         return str_replace("#ADDRESS#", $street . '<br />' . $zip . ' ' . $city, $messageBody);
+    }
+
+    private function getEmail($publisher) {
+        // Use publisher's general email if it's not empty
+        if (!empty($publisher->email)) {
+            return $publisher->email;
+        }
+        // Get contact persons as JSON
+        $json = json_decode($publisher->contact_person);
+        // Check that we have a JSON object
+        if (!empty($json)) {
+            // Loop through email adresses
+            foreach ($json->{'email'} as $email) {
+                // Return the first email that's not empty
+                if (!empty($email)) {
+                    return $email;
+                }
+            }
+        }
+        return '';
+    }
+
+    private function getContactPerson($publisher) {
+        // Has publisher general email?
+        $hasEmail = !empty($publisher->email);
+        // Get email that's used as recipient
+        $email = $this->getEmail($publisher);
+        // Get contact persons as JSON 
+        $json = json_decode($publisher->contact_person);
+        // Check that we have a JSON object
+        if (!empty($json)) {
+            // Loop through names
+            for ($i = 0; $i < sizeof($json->{'name'}); $i++) {
+                // Check that name is not empty
+                if (!empty($json->{'name'}[$i])) {
+                    // If general email exists, use the first name
+                    if ($hasEmail) {
+                        return $json->{'name'}[$i];
+                    } else if (strcmp($email, $json->{'email'}[$i]) == 0) {
+                        // Otherwise return the name that matches the email
+                        return $json->{'name'}[$i];
+                    }
+                }
+            }
+        }
+        return '';
     }
 
     /**
