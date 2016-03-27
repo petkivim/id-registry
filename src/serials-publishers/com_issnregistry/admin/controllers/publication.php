@@ -44,10 +44,11 @@ class IssnregistryControllerPublication extends JControllerForm {
             // Check result, created issn is returned on success, an empty
             // string on failure
             if (empty($result)) {
-                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_GET_ISSN_FAILED'), 'error');
+                $errorMsg = JText::_('COM_ISSNREGISTRY_ISSN_RANGE_GET_ISSN_FAILED');
                 if ($issnRangeModel->getError()) {
-                    JFactory::getApplication()->enqueueMessage($issnRangeModel->getError(), 'error');
+                    $errorMsg .= ' ' . $issnRangeModel->getError();
                 }
+                JFactory::getApplication()->enqueueMessage($errorMsg, 'error');
             } else {
                 JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_GET_ISSN_SUCCESS'));
             }
@@ -75,10 +76,11 @@ class IssnregistryControllerPublication extends JControllerForm {
             $result = $issnRangeModel->deleteIssn($publication->issn);
             // Check result
             if (!$result) {
-                JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_DELETE_ISSN_FAILED'), 'error');
+                $errorMsg = JText::_('COM_ISSNREGISTRY_ISSN_RANGE_DELETE_ISSN_FAILED');
                 if ($issnRangeModel->getError()) {
-                    JFactory::getApplication()->enqueueMessage($issnRangeModel->getError(), 'error');
+                    $errorMsg .= ' ' . $issnRangeModel->getError();
                 }
+                JFactory::getApplication()->enqueueMessage($errorMsg, 'error');
             } else {
                 JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_ISSN_RANGE_DELETE_ISSN_SUCCESS'));
             }

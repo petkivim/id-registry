@@ -165,14 +165,30 @@ class IssnregistryModelIssnrange extends JModelAdmin {
 
         // Get an instance of a publication model
         $publicationModel = $this->getInstance('publication', 'IssnregistryModel');
-        // Update publisher's active identifier range info
+
+        // Get publication
+        $publication = $publicationModel->getItem($publicationId);
+
+        // Check that we have a result
+        if ($publication == null) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_PUBLICATION_NOT_FOUND'));
+            $table->transactionRollback();
+            return '';
+        }
+
+        // Medium must be set
+        if (empty($publication->medium)) {
+            $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_PUBLICATION_MEDIUM_EMPTY'));
+            $table->transactionRollback();
+            return '';
+        }
+
+        // Update publication's ISSN
         if (!$publicationModel->updateIssn($publicationId, $issn)) {
             $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_PUBLICATION_ISSN_UPDATE_FAILED'));
             $table->transactionRollback();
             return '';
         }
-        // Get publication
-        $publication = $publicationModel->getItem($publicationId);
         // Get an instance of a form model
         $formModel = $this->getInstance('form', 'IssnregistryModel');
         // Get form 
@@ -287,7 +303,7 @@ class IssnregistryModelIssnrange extends JModelAdmin {
             $table->transactionRollback();
             return false;
         }
-        
+
         // Commit transaction
         $table->transactionCommit();
         // Return true
