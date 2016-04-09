@@ -144,8 +144,9 @@ class IssnRegistryTablePublication extends JTable {
             return false;
         }
 
-        // Check that issn is not empty already
-        if (empty($this->issn)) {
+        // Check that issn is not empty already or that status is not
+        // 'ISSN_FROZEN'.
+        if (empty($this->issn) || strcmp($this->status, 'ISSN_FROZEN') == 0) {
             return false;
         }
 

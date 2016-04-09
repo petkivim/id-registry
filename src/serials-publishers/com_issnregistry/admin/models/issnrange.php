@@ -222,8 +222,10 @@ class IssnregistryModelIssnrange extends JModelAdmin {
     }
 
     /**
-     * Deletes the given ISSN number if and only if it is the last ISSN
-     * number that was generated from its range.
+     * Cancels the given ISSN number and the number will be reused. If it is 
+     * the last ISSN number that was generated from its range, the counters of 
+     * the range are updated accordingly. Otherwise the ISSN is marked as 
+     * canceled and the counters of the range are not updated.
      * @param string $issn ISSN number to be deleted
      * @return boolean true on success, false on failure
      */

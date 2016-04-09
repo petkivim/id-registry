@@ -42,7 +42,7 @@ class IssnregistryViewPublication extends JViewLegacy {
         }
 
         // Check if publication's ISSN has been frozen
-        if ($this->item->issn_frozen) {
+        if (strcmp($this->item->status, 'ISSN_FROZEN') == 0) {
             // Raise a warning if ISSN has been frozen
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_PUBLICATION_FROZEN_WARNING'), 'Error');
         }
@@ -103,7 +103,7 @@ class IssnregistryViewPublication extends JViewLegacy {
             if ($this->item->publisher_id > 0) {
                 if (empty($this->item->issn)) {
                     JToolBarHelper::custom('publication.getIssn', 'new', 'new', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_GET_ISSN'), false, false);
-                } else {
+                } else if (strcmp($this->item->status, 'ISSN_FROZEN') != 0) {
                     JToolBarHelper::custom('publication.deleteIssn', 'minus', 'minus', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_DELETE_ISSN'), false, false);
                 }
             }
