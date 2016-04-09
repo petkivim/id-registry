@@ -115,6 +115,7 @@ class IssnregistryFormsHtmlBuilder {
         // Create publication forms
         for ($i = 0; $i < $publicationCount; $i++) {
             $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_5') . ($publicationCount > 1 ? (' ' . ($i + 1)) : '') . '</div>';
+            $html .= '<div class="post_field">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_5_INFO') . '</div>';
             $html .= '<table>';
             $html .= '<tr>';
             $html .= '<td class="form3_col1">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_FIELD') . ':</td>';
