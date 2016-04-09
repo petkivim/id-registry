@@ -57,7 +57,6 @@ class IssnregistryFormsHtmlBuilder {
         $backApplicationPt2 = $post->get('back_application_pt2', null, 'string');
         if (isset($backApplicationPt2)) {
             $html .= self::getIssnApplicationFormPt2Hidden();
-            $html .= self::getIssnApplicationFormPt3Hidden();
         }
         $html .= '</form></div>';
         return $html;
@@ -67,7 +66,7 @@ class IssnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
         // Get publication count
-        $publicationCount = $post->get('publication_count', 0, 'integer');
+        $publicationCount = $post->get('publication_count', 1, 'integer');
         // Sanity check for publication count
         if ($publicationCount > $maxPublicationsCount) {
             $publicationCount = $maxPublicationsCount;
@@ -79,39 +78,21 @@ class IssnregistryFormsHtmlBuilder {
         $html .= '<div>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_LANGUAGES_INFO') . '</div>';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_4') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_COUNT_FIELD') . '</div>';
-
+     
         $html .= '<div class="plg_issnregistry_forms" id="plg_issnregistry_forms_application" >';
         $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="issnApplicationForm" id="issnApplicationForm">';
+
         $html .= '<div><select name="publication_count" id="publication_count">';
-        $html .= '<option value="0"' . ($publicationCount == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
+        //$html .= '<option value="0"' . ($publicationCount == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
         for ($i = 1; $i <= $maxPublicationsCount; $i++) {
             $html .= '<option value="' . $i . '"' . ($publicationCount == $i ? ' selected' : '') . '>' . $i . '</option>';
         }
         $html .= '</select>';
         $html .= '<span class="error">* ' . JText::_($errors['publication_count']) . '</span></div>';
-        $html .= '<div class="button_row"><input type="submit" name="back_application_pt2" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_BACK_BTN') . '" />';
-        $html .= '<input type="submit" name="submit_application_pt2" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
-        $html .= JHTML::_('form.token');
-        $html .= self::getIssnApplicationFormPt1Hidden();
-        $html .= self::getIssnApplicationFormPt3Hidden();
-        $html .= '</form></div>';
-        return $html;
-    }
+        $html .= '<div class="button_row"><input type="submit" name="refresh_application_pt2" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_REFRESH_BTN') . '" /></div>';
 
-    public static function getIssnApplicationFormPt3($maxPublicationsCount = 1, $errors = array()) {
-        // Get the post variables
-        $post = JFactory::getApplication()->input->post;
-        // Get publication count
-        $publicationCount = $post->get('publication_count', 0, 'integer');
-        // Sanity check for publication count
-        if ($publicationCount > $maxPublicationsCount) {
-            $publicationCount = $maxPublicationsCount;
-        }
-
-        $html .= '<div class="form_header">' . JText::_('PLG_ISSNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
-        $html .= '<div class="plg_issnregistry_forms" id="plg_issnregistry_forms_application" >';
-        $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="issnApplicationForm" id="issnApplicationForm">';
-
+        $html .= '<div class="form_header_info">' . JText::_('PLG_ISSNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
+        
         // Create publication forms
         for ($i = 0; $i < $publicationCount; $i++) {
             $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_5') . ($publicationCount > 1 ? (' ' . ($i + 1)) : '') . '</div>';
@@ -225,18 +206,16 @@ class IssnregistryFormsHtmlBuilder {
             }
         }
 
-        $html .= '<div class="button_row" id="button_row_form3"><input type="submit" name="back_application_pt3" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_BACK_BTN') . '" />';
-        $html .= '<input type="submit" name="submit_application_pt3" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
+        $html .= '<div class="button_row" id="button_row_form2"><input type="submit" name="back_application_pt2" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_BACK_BTN') . '" />';
+        $html .= '<input type="submit" name="submit_application_pt2" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
         $html .= JHTML::_('form.token');
-        $html .= '<input type="hidden" name="publication_count" value="' . $publicationCount . '" />';
         $html .= self::getIssnApplicationFormPt1Hidden();
-        $html .= self::getIssnApplicationFormPt2Hidden();
         $html .= '</form></div>';
 
         return $html;
     }
 
-    public static function getIssnApplicationFormPt4($maxPublicationsCount = 1) {
+    public static function getIssnApplicationFormPt3($maxPublicationsCount = 1) {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
         // Get publication count
@@ -370,9 +349,8 @@ class IssnregistryFormsHtmlBuilder {
         $html .= '<form action = "' . JURI::getInstance()->toString() . '" method = "post" name="issnApplicationForm" id="issnApplicationForm">';
         $html .= self::getIssnApplicationFormPt1Hidden();
         $html .= self::getIssnApplicationFormPt2Hidden();
-        $html .= self::getIssnApplicationFormPt3Hidden();
-        $html .= '<div class="button_row" id="button_row_form4"><input type="submit" name="back_application_pt4" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_BACK_BTN') . '" />';
-        $html .= '<input type="submit" name="submit_application_pt4" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_SEND_BTN') . '" /></div>';
+        $html .= '<div class="button_row" id="button_row_form3"><input type="submit" name="back_application_pt3" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_BACK_BTN') . '" />';
+        $html .= '<input type="submit" name="submit_application_pt3" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_SEND_BTN') . '" /></div>';
         $html .= JHTML::_('form.token');
         $html .= '</form></div>';
         return $html;
@@ -397,18 +375,11 @@ class IssnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<input type="hidden" name="publication_count" value="' . $post->get('publication_count', 0, 'integer') . '" />';
-
-        return $html;
-    }
-
-    private static function getIssnApplicationFormPt3Hidden() {
-        // Get the post variables
-        $post = JFactory::getApplication()->input->post;
-
         // Get publication count
         $publicationCount = $post->get('publication_count', 0, 'integer');
 
+        $html .= '<input type="hidden" name="publication_count" value="' . $post->get('publication_count', 0, 'integer') . '" />';
+        
         // Create publication forms
         for ($i = 0; $i < $publicationCount; $i++) {
             $html .= '<input type="hidden" name="title_' . $i . '" value="' . $post->get('title_' . $i, null, 'string') . '" />';

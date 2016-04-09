@@ -4,7 +4,7 @@
  * @Plugin 	"ID Registry - Serials Publishers - Forms"
  * @version 	1.0.0
  * @author 	Petteri Kivimäki
- * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
+ * @copyright	Copyright (C) 2015-2016 Petteri Kivimäki. All rights reserved.
  */
 defined('_JEXEC') or die('Restricted access');
 
@@ -45,7 +45,7 @@ class plgContentIssnregistry_forms extends JPlugin {
                 $notifyAdmin = $this->params->def('notify_admin', true);
                 // Get max publications count
                 $maxPublicationsCount = $this->params->def('max_publications_count', 1);
-                
+
                 // Language settings
                 $lang = JFactory::getLanguage();
                 // Load the language file in the current site language
@@ -61,7 +61,8 @@ class plgContentIssnregistry_forms extends JPlugin {
                 $submitApplicationPt4 = $post->get('submit_application_pt4', null, 'string');
                 // Get back button values
                 $backApplicationPt3 = $post->get('back_application_pt3', null, 'string');
-                $backApplicationPt4 = $post->get('back_application_pt4', null, 'string');
+                // Get refresh button value
+                $refreshApplicationPt2 = $post->get('refresh_application_pt2', null, 'string');
 
                 // Process
                 if (JSession::checkToken() && isset($submitApplicationPt1)) {
@@ -78,30 +79,18 @@ class plgContentIssnregistry_forms extends JPlugin {
                 } else if (JSession::checkToken() && isset($submitApplicationPt2)) {
                     // Validate input data
                     $errors = IssnregistryFormsHelper::validateApplicationFormPt2();
-                    // If there are no errors, continue processing
                     if (empty($errors)) {
-                        // Show the second page
+                        // Show overview form
                         $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount);
                     } else {
-                        // Show the first page with error messages
+                        // Show the second page with error messages
                         $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($maxPublicationsCount, $errors);
                     }
                 } else if (JSession::checkToken() && isset($submitApplicationPt3)) {
                     // Validate input data
-                    $errors = IssnregistryFormsHelper::validateApplicationFormPt3();
-                    if (empty($errors)) {
-                        // Show overview form
-                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt4($maxPublicationsCount);
-                    } else {
-                        // Show the second page with error messages
-                        $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount, $errors);
-                    }
-                } else if (JSession::checkToken() && isset($submitApplicationPt4)) {
-                    // Validate input data
                     $errorsPt1 = IssnregistryFormsHelper::validateApplicationFormPt1();
                     $errorsPt2 = IssnregistryFormsHelper::validateApplicationFormPt2();
-                    $errorsPt3 = IssnregistryFormsHelper::validateApplicationFormPt3();
-                    if (empty($errorsPt1) && empty($errorsPt2) && empty($errorsPt3)) {
+                    if (empty($errorsPt1) && empty($errorsPt2)) {
                         // Save to DB
                         $formId = IssnregistryFormsHelper::saveApplicationToDb($maxPublicationsCount);
                         // If formId is 0 saving donation to DB failed
@@ -123,17 +112,14 @@ class plgContentIssnregistry_forms extends JPlugin {
                         } else if (!empty($errorsPt2)) {
                             // Show the second page with error messages
                             $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($maxPublicationsCount, $errorsPt2);
-                        } else {
-                            // Show the third page with error messages
-                            $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount, $errorsPt3);
                         }
                     }
                 } else if (JSession::checkToken() && isset($backApplicationPt3)) {
                     // Back button has been pressed - generate form
                     $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($maxPublicationsCount);
-                } else if (JSession::checkToken() && isset($backApplicationPt4)) {
-                    // Back button has been pressed - generate form
-                    $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount);
+                } else if (JSession::checkToken() && isset($refreshApplicationPt2)) {
+                    // Show the second page
+                    $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt2($maxPublicationsCount);
                 } else {
                     // Generate form
                     $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt1();

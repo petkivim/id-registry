@@ -6,6 +6,12 @@
     margin-bottom: 1.5em;
 }
 
+.form_header_info {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    font-style: italic;
+}
+
 div.sub_title {
     font-size: 105%;
     font-weight: bold;

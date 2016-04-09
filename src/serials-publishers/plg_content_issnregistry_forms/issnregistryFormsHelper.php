@@ -86,18 +86,6 @@ class IssnregistryFormsHelper {
         if ($publicationCount == 0) {
             $errors['publication_count'] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
         }
-        return $errors;
-    }
-
-    public static function validateApplicationFormPt3() {
-        // Array for the error messages
-        $errors = array();
-
-        // Get the post variables
-        $post = JFactory::getApplication()->input->post;
-
-        // Get publication count
-        $publicationCount = $post->get('publication_count', 0, 'integer');
 
         // Loop through all the publications
         for ($i = 0; $i < $publicationCount; $i++) {
