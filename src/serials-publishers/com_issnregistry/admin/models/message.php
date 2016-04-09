@@ -435,7 +435,7 @@ class IssnregistryModelMessage extends JModelAdmin {
         // Get db access
         $table = $this->getTable();
         // Get results 
-        return $table->getMessageCountByBatchId($formId);
+        return $table->getMessageCountByFormId($formId);
     }
 
     /**

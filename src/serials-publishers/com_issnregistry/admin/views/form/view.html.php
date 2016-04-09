@@ -80,8 +80,13 @@ class IssnregistryViewForm extends JViewLegacy {
             $toolbar = JToolBar::getInstance('toolbar');
             $layout = new JLayoutFile('joomla.toolbar.popup');
 
-            // Add send message button if all the publications have ISSN
-            if ($this->item->publication_count == $this->item->publication_count_issn) {
+            // Load message model
+            $messageModel = JModelLegacy::getInstance('message', 'IssnregistryModel');
+            // Get number of messages related to this form
+            $msgCount = $messageModel->getMessageCountByFormId($this->item->id);
+            // Add send message button if all the publications have ISSN and no
+            // messages have been sent yet
+            if ($this->item->publication_count == $this->item->publication_count_issn && $msgCount == 0) {
                 // Render the popup button
                 $dhtml = $layout->render(array('name' => 'generate-message', 'text' => JText::_('COM_ISSNREGISTRY_FORM_BUTTON_SEND_MESSAGE'), 'class' => 'icon-envelope'));
                 $toolbar->appendButton('Custom', $dhtml);
