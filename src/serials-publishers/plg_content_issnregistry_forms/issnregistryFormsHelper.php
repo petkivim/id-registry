@@ -462,7 +462,7 @@ class IssnregistryFormsHelper {
 
     public static function getFrequencyList() {
         $frequencies = array(
-            'h', 'g', 'a', 'f', 't', 'q', 'b', 'm', 's', 'j', 'w', 'c', 'i', 'd', 'k', 'z'
+            'a', 'f', 'q', 'b', 'm', 'w', 'd', 'k', 'u', 'z'
         );
         return $frequencies;
     }
