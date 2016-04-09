@@ -44,7 +44,10 @@ class IssnregistryViewPublication extends JViewLegacy {
         // Check if publication's ISSN has been frozen
         if (strcmp($this->item->status, 'ISSN_FROZEN') == 0) {
             // Raise a warning if ISSN has been frozen
-            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_PUBLICATION_FROZEN_WARNING'), 'Error');
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_PUBLICATION_FROZEN_WARNING'), 'Warning');
+        } else if (strcmp($this->item->status, 'NO_ISSN_GRANTED') == 0) {
+            // Raise a warning if ISSN has been frozen
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_PUBLICATION_NO_ISSN_GRANTED_WARNING'), 'Warning');
         }
 
         // Set the toolbar
@@ -101,9 +104,9 @@ class IssnregistryViewPublication extends JViewLegacy {
 
             // Publisher must be set for ISSN related operations
             if ($this->item->publisher_id > 0) {
-                if (empty($this->item->issn)) {
+                if (empty($this->item->issn) && strcmp($this->item->status, 'NO_ISSN_GRANTED') != 0) {
                     JToolBarHelper::custom('publication.getIssn', 'new', 'new', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_GET_ISSN'), false, false);
-                } else if (strcmp($this->item->status, 'ISSN_FROZEN') != 0) {
+                } else if (!empty($this->item->issn) && strcmp($this->item->status, 'ISSN_FROZEN') != 0) {
                     JToolBarHelper::custom('publication.deleteIssn', 'minus', 'minus', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_DELETE_ISSN'), false, false);
                 }
             }

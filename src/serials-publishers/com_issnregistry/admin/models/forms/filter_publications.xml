@@ -19,7 +19,8 @@
             <option value="1">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_NO_PREPUBLICATION</option>
 			<option value="2">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_FROZEN</option>
             <option value="3">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_NO_CONTROL_COPY</option>       
-			<option value="4">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_READY</option>			
+			<option value="4">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_READY</option>		
+			<option value="5">COM_ISSNREGISTRY_PUBLICATION_FILTER_STATUS_NO_ISSN_GRANTED</option>	
         </field>
     </fields>
     <fields name="list">

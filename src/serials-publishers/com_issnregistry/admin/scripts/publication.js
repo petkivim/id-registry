@@ -26,6 +26,16 @@ jQuery(document).ready(function ($) {
         width: "17em"
     });
 
+    // Update status menu - NO_ISSN_GRANTED can be selected only in if ISSN
+    // has not been assigned yet
+    if ($("#jform_issn").val() !== '') {
+        $("#jform_status option[value='NO_ISSN_GRANTED']").attr('disabled', 'disabled');
+        $('#jform_status').trigger('liszt:updated');
+    } else if ($("#jform_issn").val() === '') {
+        $("#jform_status option[value='ISSN_FROZEN']").attr('disabled', 'disabled');
+        $('#jform_status').trigger('liszt:updated');
+    }
+
     $("button[data-target='#modal-generate-marc']").click(function () {
         SqueezeBox.open(url + '?option=com_issnregistry&view=publication&id=' + publication_id + '&layout=edit&format=preview', {handler: 'iframe', size: {x: 800, y: 600}});
     });
