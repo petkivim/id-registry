@@ -26,13 +26,6 @@ jQuery(document).ready(function ($) {
         width: "17em"
     });
 
-    // Update status menu - ISSN_FROZEN can be selected only in limited cases
-    if ($("#jform_status").val() !== 'NO_PREPUBLICATION_RECORD' && $("#jform_status").val() !== 'ISSN_FROZEN') {
-        $("#jform_status option[value='ISSN_FROZEN']").attr('disabled', 'disabled');
-        $('#jform_status').trigger('liszt:updated');
-    }
-
-
     $("button[data-target='#modal-generate-marc']").click(function () {
         SqueezeBox.open(url + '?option=com_issnregistry&view=publication&id=' + publication_id + '&layout=edit&format=preview', {handler: 'iframe', size: {x: 800, y: 600}});
     });
