@@ -82,13 +82,13 @@ class IsbnregistryViewPublication extends JViewLegacy {
             $layout = new JLayoutFile('joomla.toolbar.popup');
 
             // Render the popup button
-            $dhtml = $layout->render(array('name' => 'generate-marc', 'text' => JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_PREVIEW_MARC'), 'class' => 'icon-book'));
+            $dhtml = $layout->render(array('name' => 'generate-marc', 'doTask' => '', 'text' => JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_PREVIEW_MARC'), 'class' => 'icon-book'));
             $toolbar->appendButton('Custom', $dhtml);
 
             JToolBarHelper::custom('publication.download', 'download', 'download', JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_DOWNLOAD_MARC'), false, false);
 
             // Render print button
-            $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_PRINT'), 'class' => 'icon-print'));
+            $dhtml = $layout->render(array('name' => 'print', 'doTask' => '', 'text' => JText::_('COM_ISBNREGISTRY_PUBLICATION_BUTTON_PRINT'), 'class' => 'icon-print'));
             $toolbar->appendButton('Custom', $dhtml);
         }
 

@@ -87,7 +87,7 @@ class IsbnregistryViewPublishers extends JViewLegacy {
             $layout = new JLayoutFile('joomla.toolbar.popup');
 
             // Render the popup button
-            $dhtml = $layout->render(array('name' => 'statistics', 'text' => JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_STATISTICS'), 'class' => 'icon-pie'));
+            $dhtml = $layout->render(array('name' => 'statistics', 'doTask' => '', 'text' => JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_STATISTICS'), 'class' => 'icon-pie'));
             $toolbar->appendButton('Custom', $dhtml);
 
             // Check that author publisher has been defined
