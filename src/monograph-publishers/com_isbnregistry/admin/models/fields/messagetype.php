@@ -3,7 +3,7 @@
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
- * @author 		Petteri Kivimäki
+ * @author 	Petteri Kivimäki
  * @copyright	Copyright (C) 2016 Petteri Kivimäki. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -36,7 +36,7 @@ class JFormFieldMessagetype extends JFormFieldList {
         $query = $db->getQuery(true);
         $query->select('id,name');
         $query->from('#__isbn_registry_message_type');
-		$query->order('name ASC');
+        $query->order('name ASC');
         $db->setQuery((string) $query);
         $msgTypes = $db->loadObjectList();
         $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT'));

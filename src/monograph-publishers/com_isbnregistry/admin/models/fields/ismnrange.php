@@ -3,7 +3,7 @@
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
- * @author 		Petteri Kivimäki
+ * @author 	Petteri Kivimäki
  * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -33,23 +33,23 @@ class JFormFieldIsmnrange extends JFormFieldList {
      */
     protected function getOptions() {
         $db = JFactory::getDBO();
-		$conditions = array(
+        $conditions = array(
             $db->quoteName('is_active') . ' = ' . $db->quote(true),
-			$db->quoteName('is_closed') . ' = ' . $db->quote(false)
-        );		
+            $db->quoteName('is_closed') . ' = ' . $db->quote(false)
+        );
         $query = $db->getQuery(true);
         $query->select('id,prefix,range_begin,range_end,free,next,canceled');
         $query->from('#__isbn_registry_ismn_range');
-		$query->where($conditions);
-		$query->order('prefix ASC, category ASC, range_begin ASC');
+        $query->where($conditions);
+        $query->order('prefix ASC, category ASC, range_begin ASC');
         $db->setQuery((string) $query);
         $ismnranges = $db->loadObjectList();
         $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT'));
 
         if ($ismnranges) {
             foreach ($ismnranges as $ismnrange) {
-				$label = $ismnrange->prefix . ' : ' . $ismnrange->range_begin . ' - ' . $ismnrange->range_end;
-				$label .= ', ' . JText::_('COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_LABEL') . ': ' . ($ismnrange->free + $ismnrange->canceled);
+                $label = $ismnrange->prefix . ' : ' . $ismnrange->range_begin . ' - ' . $ismnrange->range_end;
+                $label .= ', ' . JText::_('COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_LABEL') . ': ' . ($ismnrange->free + $ismnrange->canceled);
                 $options[] = JHtml::_('select.option', $ismnrange->id, $label);
             }
         }

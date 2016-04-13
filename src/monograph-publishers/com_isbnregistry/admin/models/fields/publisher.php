@@ -3,7 +3,7 @@
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
- * @author 		Petteri Kivimäki
+ * @author 	Petteri Kivimäki
  * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -36,7 +36,7 @@ class JFormFieldPublisher extends JFormFieldList {
         $query = $db->getQuery(true);
         $query->select('id,official_name');
         $query->from('#__isbn_registry_publisher');
-		$query->order('promote_sorting DESC, official_name ASC');
+        $query->order('promote_sorting DESC, official_name ASC');
         $db->setQuery((string) $query);
         $publishers = $db->loadObjectList();
         $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT'));

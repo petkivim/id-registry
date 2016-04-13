@@ -3,7 +3,7 @@
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
- * @author 		Petteri Kivimäki
+ * @author 	Petteri Kivimäki
  * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -36,8 +36,8 @@ class JFormFieldPublicationNotMusic extends JFormFieldList {
         $query = $db->getQuery(true);
         $query->select('id, title');
         $query->from('#__isbn_registry_publication');
-		$query->where('publication_type != "SHEET_MUSIC"');
-		$query->order('title ASC');
+        $query->where('publication_type != "SHEET_MUSIC"');
+        $query->order('title ASC');
         $db->setQuery((string) $query);
         $publications = $db->loadObjectList();
         $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT'));

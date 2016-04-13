@@ -3,7 +3,7 @@
 /**
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
- * @author 		Petteri Kivimäki
+ * @author 	Petteri Kivimäki
  * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -33,24 +33,24 @@ class JFormFieldIsbnrange extends JFormFieldList {
      */
     protected function getOptions() {
         $db = JFactory::getDBO();
-		$conditions = array(
+        $conditions = array(
             $db->quoteName('is_active') . ' = ' . $db->quote(true),
-			$db->quoteName('is_closed') . ' = ' . $db->quote(false)
-        );		
+            $db->quoteName('is_closed') . ' = ' . $db->quote(false)
+        );
         $query = $db->getQuery(true);
         $query->select('id,prefix,lang_group,range_begin,range_end,free,next,canceled');
         $query->from('#__isbn_registry_isbn_range');
-		$query->where($conditions);
-		$query->order('prefix ASC, lang_group ASC, category ASC, range_begin ASC');
+        $query->where($conditions);
+        $query->order('prefix ASC, lang_group ASC, category ASC, range_begin ASC');
         $db->setQuery((string) $query);
         $isbnranges = $db->loadObjectList();
         $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT'));
 
         if ($isbnranges) {
             foreach ($isbnranges as $isbnrange) {
-				$label = $isbnrange->prefix > 0 ? $isbnrange->prefix . '-' : '';
-				$label .= $isbnrange->lang_group . ' : ' . $isbnrange->range_begin . ' - ' . $isbnrange->range_end;
-				$label .= ', ' . JText::_('COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_LABEL') . ': ' . ($isbnrange->free + $isbnrange->canceled);
+                $label = $isbnrange->prefix > 0 ? $isbnrange->prefix . '-' : '';
+                $label .= $isbnrange->lang_group . ' : ' . $isbnrange->range_begin . ' - ' . $isbnrange->range_end;
+                $label .= ', ' . JText::_('COM_ISBNREGISTRY_ISBN_RANGE_FIELD_FREE_LABEL') . ': ' . ($isbnrange->free + $isbnrange->canceled);
                 $options[] = JHtml::_('select.option', $isbnrange->id, $label);
             }
         }

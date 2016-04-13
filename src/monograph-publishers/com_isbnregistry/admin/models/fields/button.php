@@ -20,7 +20,7 @@ class JFormFieldButton extends JFormField {
 
     public function getInput() {
         $readonly = $this->readonly ? ' disabled' : '';
-        $html .= '<input type="button" name="' . $this->name . '" id="' . $this->id . '" class="' . $this->class . '" value="' . JText::_($this->default) . '"' . $readonly . ' />';
+        $html = '<input type="button" name="' . $this->name . '" id="' . $this->id . '" class="' . $this->class . '" value="' . JText::_($this->default) . '"' . $readonly . ' />';
         return $html;
     }
 
