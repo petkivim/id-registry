@@ -119,13 +119,16 @@ class IsbnregistryModelPublishers extends JModelList {
             } else if (preg_match('/^ISMN$/', $type) === 1) {
                 $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS i ON a.id = i.publisher_id');
             }
+        } else {
+            $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON a.id = isbn.publisher_id');
+            $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
         }
 
-        // Set identifiier filter
-        if (is_numeric($noIdentifier)) {
+        // Set identifier filter
+        if (is_numeric($noIdentifier) && empty($type)) {
             switch ($noIdentifier) {
                 case 1:
-                    $query->where('(a.active_identifier_isbn = "" AND a.active_identifier_ismn = "")');
+                    $query->where('(isbn.publisher_identifier is null AND ismn.publisher_identifier is null)');
                     break;
                 case 2:
                     $query->where('a.active_identifier_isbn = ""');
@@ -137,7 +140,7 @@ class IsbnregistryModelPublishers extends JModelList {
                     $query->where('(a.active_identifier_isbn != "" AND a.active_identifier_ismn != "")');
                     break;
                 case 5:
-                    $query->where('(a.active_identifier_isbn != "" OR a.active_identifier_ismn != "")');
+                    $query->where('(isbn.publisher_identifier != "" OR ismn.publisher_identifier != "")');
                     break;
                 case 6:
                     $query->where('a.active_identifier_isbn != ""');
@@ -155,8 +158,6 @@ class IsbnregistryModelPublishers extends JModelList {
                 $search = $db->quote('%' . trim($search) . '%');
                 // If type is not defined, search ISBN and ISMN identifiers
                 if (empty($type)) {
-                    $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON a.id = isbn.publisher_id');
-                    $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
                     $query->where('(isbn.publisher_identifier LIKE ' . $search . ' OR ismn.publisher_identifier LIKE ' . $search . ')');
                 } else {
                     $query->where('i.publisher_identifier LIKE ' . $search);
