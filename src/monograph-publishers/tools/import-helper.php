@@ -45,7 +45,7 @@ class ImportHelper {
             // Split by "\t"
             $data = str_getcsv($line, "\t");
             // Skip headers and empty lines
-            if ($i == 1 || strlen($data[0]) == 0) {
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
                 continue;
             }
             // Create a new publisher
@@ -103,7 +103,7 @@ class ImportHelper {
             // Split by "\t"
             $data = str_getcsv($line, "\t");
             // Skip headers and empty lines
-            if ($i == 1 || strlen($data[0]) == 0) {
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
                 continue;
             }
             // Check that there's a matching publisher
@@ -133,7 +133,7 @@ class ImportHelper {
             // Split by "\t"
             $data = str_getcsv($line, "\t");
             // Skip headers and empty lines
-            if ($i == 1 || strlen($data[0]) == 0) {
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
                 continue;
             }
             // Check that there's a matching publisher
@@ -182,7 +182,7 @@ class ImportHelper {
             // Split by "\t"
             $data = str_getcsv($line, "\t");
             // Skip headers and empty lines
-            if ($i == 1 || strlen($data[0]) == 0) {
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
                 continue;
             }
             // Check that there's a matching publisher
@@ -211,7 +211,7 @@ class ImportHelper {
             // Split by "\t"
             $data = str_getcsv($line, "\t");
             // Skip headers and empty lines
-            if ($i == 1 || strlen($data[0]) == 0) {
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
                 continue;
             }
             // Create a new identifier range
@@ -243,8 +243,8 @@ class ImportHelper {
             'prefix' => $data[1],
             'lang_group' => $data[2],
             'category' => $data[3],
-            'range_begin' => str_pad($data[4], $data[3], "0", STR_PAD_LEFT),
-            'range_end' => str_pad($data[5], $data[3], "0", STR_PAD_LEFT),
+            'range_begin' => str_pad((int)$data[4], (int)$data[3], "0", STR_PAD_LEFT),
+            'range_end' => str_pad((int)$data[5], (int)$data[3], "0", STR_PAD_LEFT),
             'free' => $data[7] - $canceled,
             'taken' => $data[8] + $canceled,
             'canceled' => $canceled,
@@ -284,7 +284,7 @@ class ImportHelper {
             $next = $data[5] + 1;
         }
         // Add padding
-        $next = str_pad($next, $data[3], "0", STR_PAD_LEFT);
+        $next = str_pad($next, (int)$data[3], "0", STR_PAD_LEFT);
         // Return result
         return $next;
     }
@@ -310,7 +310,7 @@ class ImportHelper {
             // Split by "\t"
             $data = str_getcsv($line, "\t");
             // Skip headers and empty lines
-            if ($i == 1 || strlen($data[0]) == 0) {
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
                 continue;
             }
 
@@ -403,7 +403,7 @@ class ImportHelper {
             // Split by "\t"
             $data = str_getcsv($line, "\t");
             // Skip headers and empty lines
-            if ($i == 1 || strlen($data[0]) == 0) {
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
                 continue;
             }
 
@@ -457,6 +457,10 @@ class ImportHelper {
         $rangeIdLabel = $ismn ? 'ismn_range_id' : 'isbn_range_id';
         $rangeBegin = str_pad('', $category, "0", STR_PAD_LEFT);
         $rangeEnd = str_pad('', $category, "9", STR_PAD_LEFT);
+        // Sanity check for used identifiers counter
+        if ($data[9] < 0) {
+            $data[9] = 0;
+        }
         $next = strlen($data[9]) < $category ? str_pad($data[9], $category, "0", STR_PAD_LEFT) : $data[9];
         $totalCount = $rangeEnd - $rangeBegin + 1;
         // Create a new identifier range
