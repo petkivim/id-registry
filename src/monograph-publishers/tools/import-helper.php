@@ -109,7 +109,7 @@ class ImportHelper {
             // Check that there's a matching publisher
             if (array_key_exists($data[0], $publishers)) {
                 // Set first name
-                $publishers[$data[0]]['official_name'] = $data[1];
+                $publishers[$data[0]]['official_name'] = trim($data[1]);
                 // Set www address
                 $publishers[$data[0]]['www'] = (strlen(trim($data[2])) > 0 && !preg_match('/^http(s)?:\/\//', $data[2]) ? 'http://' . $data[2] : $data[2]);
             }
@@ -139,15 +139,15 @@ class ImportHelper {
             // Check that there's a matching publisher
             if (array_key_exists($data[0], $publishers)) {
                 if (strcmp($data[2], 'C') == 0) {
-                    $publishers[$data[0]]['official_name'] .= empty($publishers[$data[0]]['official_name']) ? $data[1] : ' ' . $data[1];
+                    $publishers[$data[0]]['official_name'] .= empty($publishers[$data[0]]['official_name']) ? $data[1] : ' ' . trim($data[1]);
                 } else if (strcmp($data[2], 'M') == 0) {
-                    $publishers[$data[0]]['other_names'] .= empty($publishers[$data[0]]['other_names']) ? $data[1] : ', ' . $data[1];
+                    $publishers[$data[0]]['other_names'] .= empty($publishers[$data[0]]['other_names']) ? $data[1] : ', ' . trim($data[1]);
                 } else if (strcmp($data[2], 'A') == 0) {
                     if (empty($publishers[$data[0]]['previous_names'])) {
                         // Create new array for names
                         $previousNames = array();
                         // Add new value
-                        $previousNames['name'] = array($data[1]);
+                        $previousNames['name'] = array(trim($data[1]));
                         // Encode array to JSON string
                         $publishers[$data[0]]['previous_names'] = json_encode($previousNames, JSON_UNESCAPED_UNICODE);
                     } else {
@@ -155,7 +155,7 @@ class ImportHelper {
                         $json = json_decode($publishers[$data[0]]['previous_names'], true);
                         if (!empty($json)) {
                             // Add new value to array
-                            array_push($json['name'], $data[1]);
+                            array_push($json['name'], trim($data[1]));
                             // Encode array back to JSON string
                             $publishers[$data[0]]['previous_names'] = json_encode($json, JSON_UNESCAPED_UNICODE);
                         }
