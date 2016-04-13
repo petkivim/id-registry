@@ -267,9 +267,9 @@ AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
 
-DROP TABLE IF EXISTS `#__isbn_registry_isbn_range_canceled`;
+DROP TABLE IF EXISTS `#__isbn_registry_publisher_isbn_range_canceled`;
 
-CREATE TABLE `#__isbn_registry_isbn_range_canceled` (
+CREATE TABLE `#__isbn_registry_publisher_isbn_range_canceled` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `identifier` VARCHAR(13) NOT NULL,
     `category` INT NOT NULL,
@@ -288,9 +288,9 @@ AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
 
-DROP TABLE IF EXISTS `#__isbn_registry_ismn_range_canceled`;
+DROP TABLE IF EXISTS `#__isbn_registry_publisher_ismn_range_canceled`;
 
-CREATE TABLE `#__isbn_registry_ismn_range_canceled` (
+CREATE TABLE `#__isbn_registry_publisher_ismn_range_canceled` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `identifier` VARCHAR(13) NOT NULL,
     `category` INT NOT NULL,
