@@ -41,13 +41,6 @@ AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
 
-INSERT INTO `#__isbn_registry_publisher` (`official_name`, `other_names`, `address`, `zip`, `city`, `phone`, `email`,`www`, `contact_person`, `question_1`, `question_2`, `question_3`, `question_4`, `question_5`, `question_6`, `question_7`, `question_8`, `confirmation`, `lang_code`, `has_quitted`, `created`, `created_by`) VALUES
-('Aa-kustantamo', 'Toinen nimi',  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', '000,030,050', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', false, UTC_TIMESTAMP(), 'SYSTEM'),
-('Aä', '', 'Viulutie 123', '004200', 'Helsinki', '', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen',  'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', '', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', false, UTC_TIMESTAMP(), 'SYSTEM'),
-('Ää', '', 'Vesitie 100', '05678', 'Nilsiä', '091234567', 'teppo.testaaja@pkrete.com','', 'Matti Virtanen',  'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', '490,520', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'en-GB', false, UTC_TIMESTAMP(), 'SYSTEM'),
-('Testikustantamo', 'Test, Koe', 'Hiisikuja 5', '04230', 'Kerava', '050 12346789', 'teppo.testaaja@pkrete.com','http://www.test.com', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', '030', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'fi-FI', false, UTC_TIMESTAMP(), 'SYSTEM'),
-('Edita', '', 'Kaikukatu 6', '00530', 'Helsinki', '09 123 4556', 'tiina.teekkari@pkrete.com','http://www.edita.fi', 'Matti Virtanen', 'Vastaus 1', 'Vastaus 2', 'Vastaus 3', 'Vastaus 4', 'Vastaus 5', 'Vastaus 6', '000,030,050,950', 'Vastaus 8', '07.11.2015 Matti Virtanen', 'en-GB', false, UTC_TIMESTAMP(), 'SYSTEM');
-
 DROP TABLE IF EXISTS `#__isbn_registry_publisher_archive`;
 
 CREATE TABLE `#__isbn_registry_publisher_archive` (
@@ -153,13 +146,6 @@ AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
 
-INSERT INTO `#__isbn_registry_publication` (`official_name`, `publisher_id`, `address`, `zip`, `city`, `phone`, `email`, `contact_person`, `publication_type`, `publication_format`, `first_name_1`, `last_name_1`, `role_1`, `title`, `lang_code`, `created`, `created_by`) VALUES
-('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'BOOK', 'PRINT', 'Matti', 'Meikäläinen', 'AUTHOR', 'Kirja 1 - painettu', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
-('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'BOOK', 'PRINT_ELECTRONICAL', 'Teppo', 'Testaaja', 'AUTHOR', 'Kirja 2 - painettu & e', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
-('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'SHEET_MUSIC', 'PRINT', 'Tiina', 'Teekkari', 'AUTHOR', 'Nuotti 1 - painettu', 'en-GB', UTC_TIMESTAMP(), 'SYSTEM'),
-('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'DISSETATION', 'ELECTRONICAL', 'Pertti', 'Professori', 'AUTHOR', 'Disseration 1 - e', 'fi-FI', UTC_TIMESTAMP(), 'SYSTEM'),
-('Aa-kustantamo', 1,  'Kettukuja 6', '00100', 'Helsinki', '0400123456', 'teppo.testaaja@pkrete.com', 'Matti Virtanen', 'SHEET_MUSIC', 'PRINT_ELECTRONICAL', 'Mauno', 'Ahonen', 'AUTHOR', 'Nuotti 2 - painettu & e', 'en-GB', UTC_TIMESTAMP(), 'SYSTEM');
-
 DROP TABLE IF EXISTS `#__isbn_registry_isbn_range`;
 
 CREATE TABLE `#__isbn_registry_isbn_range` (
@@ -175,6 +161,7 @@ CREATE TABLE `#__isbn_registry_isbn_range` (
     `next` VARCHAR(5) NOT NULL,
     `is_active` boolean not null default 1,
     `is_closed` boolean not null default 0,
+    `id_old` INT,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -185,12 +172,6 @@ ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
-
-INSERT INTO `#__isbn_registry_isbn_range` (`prefix`, `lang_group`, `category`, `range_begin`, `range_end`, `free`, `next`, `created`, `created_by`) VALUES
-(978, 951, 2, '00', '19', 20, '00', UTC_TIMESTAMP(), 'SYSTEM'),
-(0, 952, 3, '000', '099', 100, '000', UTC_TIMESTAMP(), 'SYSTEM'),
-(0, 952, 5, '00020', '00021', 2, '00020', UTC_TIMESTAMP(), 'SYSTEM'),
-(978, 952, 4, '0100', '0199', 100, '0100', UTC_TIMESTAMP(), 'SYSTEM');
 
 DROP TABLE IF EXISTS `#__isbn_registry_publisher_isbn_range`;
 
@@ -209,6 +190,7 @@ CREATE TABLE `#__isbn_registry_publisher_isbn_range` (
     `next` VARCHAR(5) NOT NULL,
     `is_active` boolean not null default 1,
     `is_closed` boolean not null default 0,
+    `id_old` INT,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -238,6 +220,7 @@ CREATE TABLE `#__isbn_registry_ismn_range` (
     `next` VARCHAR(7) NOT NULL,
     `is_active` boolean not null default 1,
     `is_closed` boolean not null default 0,
+    `id_old` INT,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -269,6 +252,7 @@ CREATE TABLE `#__isbn_registry_publisher_ismn_range` (
     `next` VARCHAR(7) NOT NULL,
     `is_active` boolean not null default 1,
     `is_closed` boolean not null default 0,
+    `id_old` INT,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -285,11 +269,12 @@ COLLATE utf8_swedish_ci;
 
 DROP TABLE IF EXISTS `#__isbn_registry_isbn_range_canceled`;
 
-CREATE TABLE `#__isbn_registry_isbn_canceled` (
+CREATE TABLE `#__isbn_registry_isbn_range_canceled` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `identifier` VARCHAR(13) NOT NULL,
     `category` INT NOT NULL,
     `range_id` INT NOT NULL,
+    `id_old` INT,
     `canceled` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `canceled_by` VARCHAR(30),
     PRIMARY KEY (`id`),
@@ -305,11 +290,12 @@ COLLATE utf8_swedish_ci;
 
 DROP TABLE IF EXISTS `#__isbn_registry_ismn_range_canceled`;
 
-CREATE TABLE `#__isbn_registry_ismn_canceled` (
+CREATE TABLE `#__isbn_registry_ismn_range_canceled` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `identifier` VARCHAR(13) NOT NULL,
     `category` INT NOT NULL,
     `range_id` INT NOT NULL,
+    `id_old` INT,
     `canceled` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `canceled_by` VARCHAR(30),
     PRIMARY KEY (`id`),
@@ -468,7 +454,7 @@ CREATE TABLE `#__isbn_registry_group_message` (
     `created_by` VARCHAR(30),
     `finished` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     PRIMARY KEY (`id`),
-    INDEX `idx_message_template_id` (`message_template_id`)
+    INDEX `idx_message_type_id` (`message_type_id`)
 )
 ENGINE =InnoDB
 AUTO_INCREMENT =0
