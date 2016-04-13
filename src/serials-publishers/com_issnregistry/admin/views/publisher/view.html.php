@@ -81,11 +81,11 @@ class IssnregistryViewPublisher extends JViewLegacy {
             $layout = new JLayoutFile('joomla.toolbar.popup');
 
             // Render the popup button
-            $dhtml = $layout->render(array('name' => 'generate-message', 'text' => JText::_('COM_ISSNREGISTRY_PUBLISHER_BUTTON_SEND_MESSAGE'), 'class' => 'icon-envelope'));
+            $dhtml = $layout->render(array('name' => 'generate-message', 'doTask' => '', 'text' => JText::_('COM_ISSNREGISTRY_PUBLISHER_BUTTON_SEND_MESSAGE'), 'class' => 'icon-envelope'));
             $toolbar->appendButton('Custom', $dhtml);
 
             // Render the popup button
-            $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISSNREGISTRY_PUBLISHER_BUTTON_PRINT'), 'class' => 'icon-print'));
+            $dhtml = $layout->render(array('name' => 'print', 'doTask' => '', 'text' => JText::_('COM_ISSNREGISTRY_PUBLISHER_BUTTON_PRINT'), 'class' => 'icon-print'));
             $toolbar->appendButton('Custom', $dhtml);
         }
         JToolBarHelper::cancel(

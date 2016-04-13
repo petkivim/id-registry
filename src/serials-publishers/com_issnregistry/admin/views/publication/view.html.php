@@ -92,14 +92,14 @@ class IssnregistryViewPublication extends JViewLegacy {
             // Show MARC related buttons only if form and publisher are both set
             if ($this->item->form_id > 0 && $this->item->publisher_id > 0) {
                 // Render the popup button
-                $dhtml = $layout->render(array('name' => 'generate-marc', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PREVIEW_MARC'), 'class' => 'icon-book'));
+                $dhtml = $layout->render(array('name' => 'generate-marc', 'doTask' => '', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PREVIEW_MARC'), 'class' => 'icon-book'));
                 $toolbar->appendButton('Custom', $dhtml);
 
                 JToolBarHelper::custom('publication.download', 'download', 'download', JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_DOWNLOAD_MARC'), false, false);
             }
 
             // Render print button
-            $dhtml = $layout->render(array('name' => 'print', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PRINT'), 'class' => 'icon-print'));
+            $dhtml = $layout->render(array('name' => 'print', 'doTask' => '', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_PRINT'), 'class' => 'icon-print'));
             $toolbar->appendButton('Custom', $dhtml);
 
             // Publisher must be set for ISSN related operations
@@ -113,7 +113,7 @@ class IssnregistryViewPublication extends JViewLegacy {
             // Go to form button is shown only if form is set
             if ($this->item->form_id > 0) {
                 // Render print button
-                $dhtml = $layout->render(array('name' => 'goto-form', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_GOTO_FORM'), 'class' => 'icon-file-2'));
+                $dhtml = $layout->render(array('name' => 'goto-form', 'doTask' => '', 'text' => JText::_('COM_ISSNREGISTRY_PUBLICATION_BUTTON_GOTO_FORM'), 'class' => 'icon-file-2'));
                 $toolbar->appendButton('Custom', $dhtml);
             }
         }
