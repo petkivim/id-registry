@@ -77,6 +77,10 @@ class IsbnregistryViewPublication extends JViewLegacy {
         JToolbarHelper::save2new('publication.save2new');
 
         if (!$isNew) {
+            // Add save2copy button if identifiers have not been assigned yet
+            if (empty($this->item->publication_identifier_print) && empty($this->item->publication_identifier_electronical)) {
+                JToolbarHelper::save2copy('publication.save2copy');
+            }
             // Add custom button for generating MARC record
             $toolbar = JToolBar::getInstance('toolbar');
             $layout = new JLayoutFile('joomla.toolbar.popup');

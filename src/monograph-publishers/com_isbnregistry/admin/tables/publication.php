@@ -314,7 +314,7 @@ class IsbnRegistryTablePublication extends JTable {
     }
 
     /**
-     * Returns an array that contains all the publications own by the publisher
+     * Returns an array that contains all the publications owned by the publisher
      * spesified by the publisher id that have at least one ISBN identifier.
      * If publisher id is not given, all the publications that have at least
      * one ISBN identifier are returned.
