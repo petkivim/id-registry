@@ -47,8 +47,7 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->form->renderField('lang_code'); ?>
                 <?php echo $this->form->renderField('promote_sorting'); ?>
                 <?php echo $this->form->renderField('has_quitted'); ?>
-                <?php echo $this->form->renderField('year_quitted'); ?>
-                <?php echo $this->form->renderField('additional_info'); ?>
+                <?php echo $this->form->renderField('year_quitted'); ?>             
             </div>
             <div class="span6">
                 <?php echo $this->form->renderField('address'); ?>
@@ -58,6 +57,7 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->form->renderField('phone'); ?>
                 <?php echo $this->form->renderField('email'); ?>
                 <?php echo $this->form->renderField('www'); ?>
+                <?php echo $this->form->renderField('additional_info'); ?>
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
