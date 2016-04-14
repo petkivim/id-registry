@@ -14,7 +14,7 @@ class IssnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<div class="form_header">' . JText::_('PLG_ISSNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
+        $html = '<div class="form_header">' . JText::_('PLG_ISSNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
         $html .= '<div class="plg_issnregistry_forms" id="plg_issnregistry_forms_application" >';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_1') . '</div>';
         $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="issnApplicationForm" id="issnApplicationForm">';
@@ -22,32 +22,32 @@ class IssnregistryFormsHtmlBuilder {
         $html .= '<tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLISHER_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="publisher" id="publisher" size="30" value="' . $post->get('publisher', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['publisher']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['publisher']) ? JText::_($errors['publisher']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="contact_person" id="contact_person" size="30" value="' . $post->get('contact_person', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['contact_person']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['contact_person']) ? JText::_($errors['contact_person']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_EMAIL_FIELD') . ':</td>';
         // Content - Email Cloaking plugin must be disabled to get this work
         $html .= '<td><input type="text" id="email" name="email" size="30" value="' . $post->get('email', null, 'string') . '"  maxlength="100"/></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['email']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['email']) ? JText::_($errors['email']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PHONE_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="phone" id="phone" size="10" value="' . $post->get('phone', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['phone']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['phone']) ? JText::_($errors['phone']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="address" id="address" size="30" value="' . $post->get('address', null, 'string') . '" /></td>';
-        $html .= '<td class="error"> ' . JText::_($errors['address']) . '</td>';
+        $html .= '<td class="error"> ' . (isset($errors['address']) ? JText::_($errors['address']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ZIP_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="zip" id="zip" size="5" value="' . $post->get('zip', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['zip']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['zip']) ? JText::_($errors['zip']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_CITY_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="city" id="city" size="20" value="' . $post->get('city', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['city']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['city']) ? JText::_($errors['city']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td></td>';
         $html .= '<td class="button_row"><input type="submit" name="submit_application_pt1" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_CONTINUE_BTN') . '" /></td>';
@@ -72,13 +72,13 @@ class IssnregistryFormsHtmlBuilder {
             $publicationCount = $maxPublicationsCount;
         }
 
-        $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_2') . '</div>';
+        $html = '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_2') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_FORMATS_INFO') . '</div>';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_3') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_LANGUAGES_INFO') . '</div>';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_4') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_COUNT_FIELD') . '</div>';
-     
+
         $html .= '<div class="plg_issnregistry_forms" id="plg_issnregistry_forms_application" >';
         $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="issnApplicationForm" id="issnApplicationForm">';
 
@@ -88,11 +88,11 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<option value="' . $i . '"' . ($publicationCount == $i ? ' selected' : '') . '>' . $i . '</option>';
         }
         $html .= '</select>';
-        $html .= '<span class="error">* ' . JText::_($errors['publication_count']) . '</span></div>';
+        $html .= '<span class="error">* ' . (isset($errors['publication_count']) ? JText::_($errors['publication_count']) : '') . '</span></div>';
         $html .= '<div class="button_row"><input type="submit" name="refresh_application_pt2" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_REFRESH_BTN') . '" /></div>';
 
         $html .= '<div class="form_header_info">' . JText::_('PLG_ISSNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
-        
+
         // Create publication forms
         for ($i = 0; $i < $publicationCount; $i++) {
             $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_5') . ($publicationCount > 1 ? (' ' . ($i + 1)) : '') . '</div>';
@@ -101,104 +101,104 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<tr>';
             $html .= '<td class="form3_col1">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_FIELD') . ':</td>';
             $html .= '<td class="form3_col2"><input type="text" name="title_' . $i . '" id="title_' . $i . '" size="30" value="' . $post->get('title_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['title_' . $i]) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['title_' . $i]) ? JText::_($errors['title_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PLACE_OF_PUBLICATION_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="place_of_publication_' . $i . '" id="place_of_publication_' . $i . '" size="30" value="' . $post->get('place_of_publication_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['place_of_publication_' . $i]) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['place_of_publication_' . $i]) ? JText::_($errors['place_of_publication_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PRINTER_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="printer_' . $i . '" id="printer_' . $i . '" size="30" value="' . $post->get('printer_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['printer_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['printer_' . $i]) ? JText::_($errors['printer_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ISSUED_FROM_YEAR_FIELD') . ':</td>';
             $html .= '<td>' . self::getIssuedFromYearMenu($i) . '</td>';
-            $html .= '<td class="error">* ' . JText::_($errors['issued_from_year_' . $i]) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['issued_from_year_' . $i]) ? JText::_($errors['issued_from_year_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ISSUED_FROM_NUMBER_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="issued_from_number_' . $i . '" id="issued_from_number_' . $i . '" size="8" value="' . $post->get('issued_from_number_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['issued_from_number_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['issued_from_number_' . $i]) ? JText::_($errors['issued_from_number_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_FIELD') . ':</td>';
             $html .= '<td>' . self::getFrequencyMenu($i) . '</td>';
-            $html .= '<td class="error">* ' . JText::_($errors['frequency_' . $i]) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['frequency_' . $i]) ? JText::_($errors['frequency_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td></td>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_OTHER_FIELD') . '<input type="text" name="frequency_other_' . $i . '" id="frequency_other_' . $i . '" size="20" class="frequency_other" value="' . $post->get('frequency_other_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['frequency_other_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['frequency_other_' . $i]) ? JText::_($errors['frequency_other_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
             $html .= '<td>' . self::getLanguageMenu($i) . '</td>';
-            $html .= '<td class="error">* ' . JText::_($errors['language_' . $i]) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['language_' . $i]) ? JText::_($errors['language_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_TYPE_FIELD') . ':</td>';
             $html .= '<td>' . self::getPublicationTypeMenu($i) . '</td>';
-            $html .= '<td class="error">* ' . JText::_($errors['publication_type_' . $i]) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['publication_type_' . $i]) ? JText::_($errors['publication_type_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td></td>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_TYPE_OTHER_FIELD') . '<input type="text" name="publication_type_other_' . $i . '" id="publication_type_other_' . $i . '" size="20" class="publication_type_other" value="' . $post->get('publication_type_other_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['publication_type_other_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['publication_type_other_' . $i]) ? JText::_($errors['publication_type_other_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_MEDIUM_FIELD') . ':</td>';
             $html .= '<td>' . self::getMedium($i) . '</td>';
-            $html .= '<td class="error">* ' . JText::_($errors['medium_' . $i]) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['medium_' . $i]) ? JText::_($errors['medium_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td colspan="2">' . JText::_('PLG_ISSNREGISTRY_FORMS_URL_FIELD') . ':</td>';
             $html .= '</tr><tr>';
             $html .= '<td></td>';
             $html .= '<td><input type="text" name="url_' . $i . '" id="url_' . $i . '" size="30" value="' . $post->get('url_' . $i, null, 'string') . '" />';
             $html .= '<span class="field_info">' . JText::_('PLG_ISSNREGISTRY_FORMS_URL_INFO') . '</span></td>';
-            $html .= '<td class="error">' . JText::_($errors['url_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['url_' . $i]) ? JText::_($errors['url_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td colspan="2" class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_HAS_PREVIOUS_TITLE') . ':</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PREVIOUS_TITLE_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="previous_title_' . $i . '" id="previous_title_' . $i . '" size="30" value="' . $post->get('previous_title_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['previous_title_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['previous_title_' . $i]) ? JText::_($errors['previous_title_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PREVIOUS_ISSN_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="previous_issn_' . $i . '" id="previous_issn_' . $i . '" size="15" value="' . $post->get('previous_issn_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['previous_issn_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['previous_issn_' . $i]) ? JText::_($errors['previous_issn_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PREVIOUS_TITLE_LAST_ISSUE_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="previous_title_last_issue_' . $i . '" id="previous_title_last_issue_' . $i . '" size="15" value="' . $post->get('previous_title_last_issue_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['previous_title_last_issue_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['previous_title_last_issue_' . $i]) ? JText::_($errors['previous_title_last_issue_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td colspan="2" class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_IS_PART_OF_MAIN_SERIES') . ':</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_MAIN_SERIES_TITLE_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="main_series_title_' . $i . '" id="main_series_title_' . $i . '" size="30" value="' . $post->get('main_series_title_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['main_series_title_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['main_series_title_' . $i]) ? JText::_($errors['main_series_title_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_MAIN_SERIES_ISSN_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="main_series_issn_' . $i . '" id="main_series_issn_' . $i . '" size="15" value="' . $post->get('main_series_issn_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['main_series_issn_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['main_series_issn_' . $i]) ? JText::_($errors['main_series_issn_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td colspan="2" class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_HAS_SUBSERIES') . ':</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_SUBSERIES_TITLE_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="subseries_title_' . $i . '" id="subseries_title_' . $i . '" size="30" value="' . $post->get('subseries_title_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['subseries_title_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['subseries_title_' . $i]) ? JText::_($errors['subseries_title_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_SUBSERIES_ISSN_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="subseries_issn_' . $i . '" id="subseries_issn_' . $i . '" size="15" value="' . $post->get('subseries_issn_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['subseries_issn_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['subseries_issn_' . $i]) ? JText::_($errors['subseries_issn_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td colspan="2" class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_IS_ISSUED_IN_ANOTHER_MEDIUM') . ':</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ANOTHER_MEDIUM_TITLE_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="another_medium_title_' . $i . '" id="another_medium_title_' . $i . '" size="30" value="' . $post->get('another_medium_title_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['another_medium_title_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['another_medium_title_' . $i]) ? JText::_($errors['another_medium_title_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ANOTHER_MEDIUM_ISSN_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="another_medium_issn_' . $i . '" id="another_medium_issn_' . $i . '" size="15" value="' . $post->get('another_medium_issn_' . $i, null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['another_medium_issn_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['another_medium_issn_' . $i]) ? JText::_($errors['another_medium_issn_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td class="sub_title"></td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ADDITIONAL_INFO_FIELD') . ':</td>';
             $html .= '<td><textarea name="additional_info_' . $i . '" id="additional_info_' . $i . '" class="additional_info">' . $post->get('additional_info_' . $i, null, 'string') . '</textarea></td>';
-            $html .= '<td class="error">' . JText::_($errors['additional_info_' . $i]) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['additional_info_' . $i]) ? JText::_($errors['additional_info_' . $i]) : '') . '</td>';
             $html .= '</tr>';
             $html .= '</table>';
             if ($i < $publicationCount - 1) {
@@ -226,7 +226,7 @@ class IssnregistryFormsHtmlBuilder {
         }
 
         // Information about the publisher
-        $html .= '<div class="form_header">' . JText::_('PLG_ISSNREGISTRY_FORMS_APPLICATION_SUMMARY_HEADER') . '</div>';
+        $html = '<div class="form_header">' . JText::_('PLG_ISSNREGISTRY_FORMS_APPLICATION_SUMMARY_HEADER') . '</div>';
         $html .= '<div class="plg_issnregistry_forms" id="plg_issnregistry_forms_application" >';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_1') . '</div>';
         $html .= '<table>';
@@ -360,7 +360,7 @@ class IssnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<input type="hidden" name="publisher" value="' . $post->get('publisher', null, 'string') . '" />';
+        $html = '<input type="hidden" name="publisher" value="' . $post->get('publisher', null, 'string') . '" />';
         $html .= '<input type="hidden" name="contact_person" value="' . $post->get('contact_person', null, 'string') . '" />';
         $html .= '<input type="hidden" name="email" value="' . $post->get('email', null, 'string') . '" />';
         $html .= '<input type="hidden" name="phone" value="' . $post->get('phone', null, 'string') . '" />';
@@ -378,8 +378,8 @@ class IssnregistryFormsHtmlBuilder {
         // Get publication count
         $publicationCount = $post->get('publication_count', 0, 'integer');
 
-        $html .= '<input type="hidden" name="publication_count" value="' . $post->get('publication_count', 0, 'integer') . '" />';
-        
+        $html = '<input type="hidden" name="publication_count" value="' . $post->get('publication_count', 0, 'integer') . '" />';
+
         // Create publication forms
         for ($i = 0; $i < $publicationCount; $i++) {
             $html .= '<input type="hidden" name="title_' . $i . '" value="' . $post->get('title_' . $i, null, 'string') . '" />';
@@ -415,7 +415,7 @@ class IssnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
         $publicationType = $post->get('publication_type_' . $index, null, 'string');
 
-        $html .= '<select class="publication_type" name="publication_type_' . $index . '" id="publication_type_' . $index . '">';
+        $html = '<select class="publication_type" name="publication_type_' . $index . '" id="publication_type_' . $index . '">';
         $html .= '<option value=""' . (strcmp($publicationType, '') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
         $html .= '<option value="JOURNAL"' . (strcmp($publicationType, 'JOURNAL') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_TYPE_JOURNAL') . '</option>';
         $html .= '<option value="NEWSLETTER"' . (strcmp($publicationType, 'NEWSLETTER') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_PUBLICATION_TYPE_NEWSLETTER') . '</option>';
@@ -453,7 +453,7 @@ class IssnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
         $medium = $post->get('medium_' . $index, null, 'string');
 
-        $html .= '<input class="medium" type="radio" name="medium_' . $index . '" value="PRINTED"' . (strcmp($medium, 'PRINTED') == 0 ? ' checked' : '') . '/>' . JText::_('PLG_ISSNREGISTRY_FORMS_MEDIUM_PRINTED') . '<br />';
+        $html = '<input class="medium" type="radio" name="medium_' . $index . '" value="PRINTED"' . (strcmp($medium, 'PRINTED') == 0 ? ' checked' : '') . '/>' . JText::_('PLG_ISSNREGISTRY_FORMS_MEDIUM_PRINTED') . '<br />';
         $html .= '<input class="medium" type="radio" name="medium_' . $index . '" value="ONLINE"' . (strcmp($medium, 'ONLINE') == 0 ? ' checked' : '') . '/>' . JText::_('PLG_ISSNREGISTRY_FORMS_MEDIUM_ONLINE') . '<br />';
         $html .= '<input class="medium" type="radio" name="medium_' . $index . '" value="CDROM"' . (strcmp($medium, 'CDROM') == 0 ? ' checked' : '') . '/>' . JText::_('PLG_ISSNREGISTRY_FORMS_MEDIUM_CDROM') . '<br />';
         $html .= '<input class="medium" type="radio" name="medium_' . $index . '" value="OTHER"' . (strcmp($medium, 'OTHER') == 0 ? ' checked' : '') . '/>' . JText::_('PLG_ISSNREGISTRY_FORMS_MEDIUM_OTHER');
@@ -479,7 +479,7 @@ class IssnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
         $userLanguage = $post->get('language_' . $index, null, 'string');
 
-        $html .= '<select class="language" name="language_' . $index . '" id="language_' . $index . '">';
+        $html = '<select class="language" name="language_' . $index . '" id="language_' . $index . '">';
         $html .= '<option value=""' . (strcmp($userLanguage, '') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
         foreach (IssnregistryFormsHelper::getLanguageList() as $language) {
             $html .= '<option value="' . $language . '"' . (strcmp($userLanguage, $language) == 0 ? ' selected' : '') . '>' . JText::_("PLG_ISSNREGISTRY_FORMS_LANGUAGE_$language") . '</option>';
@@ -501,7 +501,7 @@ class IssnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
         $userFrequency = $post->get('frequency_' . $index, null, 'string');
 
-        $html .= '<select class="frequency" name="frequency_' . $index . '" id="frequency_' . $index . '">';
+        $html = '<select class="frequency" name="frequency_' . $index . '" id="frequency_' . $index . '">';
         $html .= '<option value=""' . (strcmp($userFrequency, '') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
         foreach (IssnregistryFormsHelper::getFrequencyList() as $frequency) {
             $html .= '<option value="' . $frequency . '"' . (strcmp($userFrequency, $frequency) == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_FREQUENCY_' . strtoupper($frequency)) . '</option>';
@@ -525,7 +525,7 @@ class IssnregistryFormsHtmlBuilder {
         // Get current year
         $currentYear = date("Y");
 
-        $html .= '<select class="issued_from_year" name="issued_from_year_' . $index . '" id="issued_from_year_' . $index . '">';
+        $html = '<select class="issued_from_year" name="issued_from_year_' . $index . '" id="issued_from_year_' . $index . '">';
         $html .= '<option value=""' . (strcmp($year, '') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
         for ($i = $currentYear; $i >= 1900; $i--) {
             $html .= '<option value="' . $i . '"' . (($year == $i) ? ' selected' : '') . '>' . $i . '</option>';
