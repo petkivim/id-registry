@@ -146,7 +146,8 @@ CREATE TABLE `#__issn_registry_publisher` (
     `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `modified_by` VARCHAR(30),
     PRIMARY KEY (`id`),
-    INDEX `idx_publisher` (`publisher`)
+    INDEX `idx_official_name`(`official_name`),
+    INDEX `idx_form_id`(`form_id`)
 )
 ENGINE =InnoDB
 AUTO_INCREMENT =0
