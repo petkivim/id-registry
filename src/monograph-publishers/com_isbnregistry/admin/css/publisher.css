@@ -55,3 +55,7 @@
     width: 90%;
     height: 30em;
 }
+
+span.ismn_label {
+    font-style: italic;
+}

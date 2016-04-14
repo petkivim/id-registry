@@ -131,4 +131,25 @@ class IsbnregistryModelPublisherismnrange extends IsbnregistryModelAbstractPubli
     public function getIdentifierVarTotalLength() {
         return 8;
     }
+
+    /**
+     * Returns an array of publisher ids that contains ids of all the ISMN
+     * publishers. Publisher ids are array keys and the value is always 1.
+     * @return array array of publisher ids
+     */
+    public function getIsmnPublisherIds() {
+        // Get db access
+        $table = $this->getTable();
+        // Get ids
+        $publisherIds = $table->getIsmnPublisherIds();
+        // Ne array for results
+        $results = array();
+        // Loop through results
+        foreach($publisherIds as $publisherId) {
+            $results[$publisherId] = 1;
+        }
+        // Return results
+        return $results;
+    }
+
 }

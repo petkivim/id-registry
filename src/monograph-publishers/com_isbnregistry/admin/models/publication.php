@@ -115,10 +115,10 @@ class IsbnregistryModelPublication extends JModelAdmin {
      * @return mixed publication format string or null
      */
     public function getPublicationFormat($publicationId) {
-        // Get DAO for db access
-        $dao = $this->getTable();
+        // Get db access
+        $table = $this->getTable();
         // Return result
-        return $dao->loadPublicationFormat($publicationId);
+        return $table->loadPublicationFormat($publicationId);
     }
 
     /**

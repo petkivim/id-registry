@@ -85,6 +85,9 @@ $document->addScriptDeclaration('
                                 <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_PUBLISHER'); ?>">
                                     <?php echo $row->official_name; ?>
                                 </a>
+                                <span class="ismn_label">
+                                    <?php echo (isset($this->ismn_publisher_ids[$row->id]) ? JText::_('COM_ISBNREGISTRY_PUBLISHERS_ISMN_LABEL') : ''); ?>
+                                </span>
                             </td>   
                             <td>
                                 <?php

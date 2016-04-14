@@ -55,6 +55,22 @@ class IsbnRegistryTablePublisherismnrange extends IsbnRegistryTableAbstractPubli
         return 8;
     }
 
+    /**
+     * Returns an array of publisher ids that contains ids of all the ISMN
+     * publishers.
+     * @return array array of publisher ids
+     */
+    public function getIsmnPublisherIds() {
+        $query = $this->_db->getQuery(true);
+
+        // Create the query
+        $query->select('distinct publisher_id')
+                ->from($this->_db->quoteName($this->_tbl));
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadColumn();
+    }
+
 }
 
 ?>

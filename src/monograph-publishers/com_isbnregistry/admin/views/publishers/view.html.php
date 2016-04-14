@@ -45,8 +45,16 @@ class IsbnregistryViewPublishers extends JViewLegacy {
         // Add sidebar
         if ($filterNoIdentifier == 1) {
             PublishersHelper::addSubmenu('publishers_applications');
+            // Set an empty array as variable value
+            $this->ismn_publisher_ids = array();
         } else {
             PublishersHelper::addSubmenu('publishers_registry');
+            // Load publisher ismn range model
+            $model = JModelLegacy::getInstance('publisherismnrange', 'IsbnregistryModel');
+            // Load message types
+            $ids = $model->getIsmnPublisherIds();
+            // Pass results to the layout
+            $this->ismn_publisher_ids = $ids;
         }
 
         // Set the toolbar
