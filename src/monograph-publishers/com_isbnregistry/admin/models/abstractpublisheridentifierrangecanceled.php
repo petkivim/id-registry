@@ -33,8 +33,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRangeCanceled extends
     /**
      * Returns the smallest canceled identifier object (fifo) that belongs to 
      * the given category and that was given from the range identified by the 
-     * given id. If id is not defined, the smallest identifier with the given
-     * category from any range is returned.
+     * given id.
      * @param int $category category
      * @param int $rangeId identifier range id
      * @return string smallest identifier that was given from the 
@@ -45,13 +44,6 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRangeCanceled extends
         $table = $this->getTable();
         // Try to get a canceled identifier from the given range
         $identifier = $table->getIdentifier($category, $rangeId);
-        // Return result if we have one
-        if ($identifier != null) {
-            return $identifier;
-        }
-        // Try to get a canceled identifier with the same category, but from any
-        // range
-        $identifier = $table->getIdentifier($category);
         // Return result
         return $identifier;
     }
