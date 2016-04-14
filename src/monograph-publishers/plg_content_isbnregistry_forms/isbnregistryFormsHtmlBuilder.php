@@ -14,7 +14,7 @@ class IsbnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
+        $html = '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_HEADER') . '</div>';
         $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_registration" >';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_SUB_TITLE_1') . '</div>';
         $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="registerMonographPublisherForm" id="registerMonographPublisherForm">';
@@ -22,76 +22,76 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_OFFICIAL_NAME_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="official_name" id="official_name" size="30" value="' . $post->get('official_name', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['official_name']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['official_name']) ? JText::_($errors['official_name']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_OTHER_NAMES_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="other_names" id="other_names" size="30" value="' . $post->get('other_names', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['other_names']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['other_names']) ? JText::_($errors['other_names']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="address" id="address" size="30" value="' . $post->get('address', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['address']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['address']) ? JText::_($errors['address']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ZIP_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="zip" id="zip" size="5" value="' . $post->get('zip', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['zip']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['zip']) ? JText::_($errors['zip']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CITY_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="city" id="city" size="20" value="' . $post->get('city', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['city']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['city']) ? JText::_($errors['city']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PHONE_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="phone" id="phone" size="10" value="' . $post->get('phone', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['phone']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['phone']) ? JText::_($errors['phone']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD') . ':</td>';
         // Content - Email Cloaking plugin must be disabled to get this work
         $html .= '<td><input type="text" id="email" name="email" size="30" value="' . $post->get('email', null, 'string') . '"  maxlength="100"/></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['email']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['email']) ? JText::_($errors['email']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_WWW_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="www" id="www" size="30" value="' . $post->get('www', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['www']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['www']) ? JText::_($errors['www']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="contact_person" id="contact_person" size="30" value="' . $post->get('contact_person', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['contact_person']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['contact_person']) ? JText::_($errors['contact_person']) : '') . '</td>';
         $html .= '</tr>';
         $html .= '</table>';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_SUB_TITLE_2') . '</div>';
         $html .= '<div class="pre_field">' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTIONS_PRE_FIELD') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_1_FIELD') . '</div>';
         $html .= '<div><input type="text" name="question_1" id="question_1" class="question" size="30" value="' . $post->get('question_1', null, 'string') . '" />';
-        $html .= '<span class="error">' . JText::_($errors['question_1']) . '</span></div>';
+        $html .= '<span class="error">' . (isset($errors['question_1']) ? JText::_($errors['question_1']) : '') . '</span></div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_2_FIELD') . '</div>';
         $html .= '<div><input type="text" name="question_2" id="question_2" class="question" size="30" value="' . $post->get('question_2', null, 'string') . '" />';
-        $html .= '<span class="error">' . JText::_($errors['question_2']) . '</span></div>';
+        $html .= '<span class="error">' . (isset($errors['question_2']) ? JText::_($errors['question_2']) : '') . '</span></div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_3_FIELD') . '</div>';
         $html .= '<div><input type="text" name="question_3" id="question_3" class="question" size="30" value="' . $post->get('question_3', null, 'string') . '" />';
-        $html .= '<span class="error">' . JText::_($errors['question_3']) . '</span></div>';
+        $html .= '<span class="error">' . (isset($errors['question_3']) ? JText::_($errors['question_3']) : '') . '</span></div>';
         $html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_3_POST_FIELD') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_4_FIELD') . '</div>';
         $html .= '<div><textarea name="question_4" id="question_4" class="question">' . $post->get('question_4', null, 'string') . '</textarea>';
-        $html .= '<span class="error">' . JText::_($errors['question_4']) . '</span></div>';
+        $html .= '<span class="error">' . (isset($errors['question_4']) ? JText::_($errors['question_4']) : '') . '</span></div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_5_FIELD') . '</div>';
         $html .= '<div><textarea name="question_5" id="question_5" class="question">' . $post->get('question_5', null, 'string') . '</textarea>';
-        $html .= '<span class="error">' . JText::_($errors['question_5']) . '</span></div>';
+        $html .= '<span class="error">' . (isset($errors['question_5']) ? JText::_($errors['question_5']) : '') . '</span></div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_6_FIELD') . '</div>';
         $html .= '<div><input type="text" name="question_6" id="question_6" class="question" size="30" value="' . $post->get('question_6', null, 'string') . '" />';
-        $html .= '<span  class="error">' . JText::_($errors['question_6']) . '</span></div>';
+        $html .= '<span  class="error">' . (isset($errors['question_6']) ? JText::_($errors['question_6']) : '') . '</span></div>';
         $html .= '<div class="pre_field">' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_7_PRE_FIELD') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_7_FIELD') . '</div>';
         $html .= self::getClassificationMenu($errors);
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_QUESTION_8_FIELD') . '</div>';
         $html .= '<div><input type="text" name="question_8" id="question_8" class="question" size="30" value="' . $post->get('question_8', null, 'string') . '" />';
-        $html .= '<span class="error">' . JText::_($errors['question_8']) . '</span></div>';
+        $html .= '<span class="error">' . (isset($errors['question_8']) ? JText::_($errors['question_8']) : '') . '</span></div>';
         $html .= '<div class="pre_field">' . JText::_('PLG_ISBNREGISTRY_FORMS_CONFIRMATION_PRE_FIELD') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONFIRMATION_FIELD') . '<span  class="error"> *</span></div>';
         $html .= '<div><input type="text" name="confirmation" id="confirmation" size="30" value="';
         $confirmation = $post->get('confirmation', null, 'string');
         $html .= isset($confirmation) ? $confirmation : date("d.m.Y");
         $html .= '" />';
-        $html .= '<span  class="error">' . JText::_($errors['confirmation']) . '</span></div>';
+        $html .= '<span  class="error">' . (isset($errors['confirmation']) ? JText::_($errors['confirmation']) : '') . '</span></div>';
         $html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_CONFIRMATION_POST_FIELD') . '</div>';
         $html .= '<div><input type="submit" name="submit_registration" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_SEND_BTN') . '" /></div>';
         $html .= JHTML::_('form.token');
@@ -103,7 +103,7 @@ class IsbnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_HEADER') . '</div>';
+        $html = '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_HEADER') . '</div>';
         $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application" >';
         $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="isbnApplicationForm" id="isbnApplicationForm">';
         // Preliminary information about the publication
@@ -115,7 +115,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<option value="SHEET_MUSIC"' . (($post->get('publication_type', null, 'string') == 'SHEET_MUSIC') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_SHEET_MUSIC') . '</option>';
         $html .= '<option value="MAP"' . (($post->get('publication_type', null, 'string') == 'MAP') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_MAP') . '</option>';
         $html .= '<option value="OTHER"' . (($post->get('publication_type', null, 'string') == 'OTHER') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_TYPE_OTHER') . '</option>';
-        $html .= '</select><span class="error">* ' . JText::_($errors['publication_type']) . '</span></div>';
+        $html .= '</select><span class="error">* ' . (isset($errors['publication_type']) ? JText::_($errors['publication_type']) : '') . '</span></div>';
         $html .= '<div><input type="submit" name="submit_application_pt1" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
         $html .= self::getIsbnApplicationFormPt2Hidden();
         $backApplicationPt2 = $post->get('back_application_pt2', null, 'string');
@@ -132,6 +132,7 @@ class IsbnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
+        $html = '';
         // Information about the publisher
         if (IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
             $html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_HEADER_DISSERTATION') . '</div>';
@@ -150,56 +151,56 @@ class IsbnregistryFormsHtmlBuilder {
         if (IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_UNIVERSITY') . ':</td>';
             $html .= '<td><input type="text" name="official_name" id="official_name" size="30" value="' . $post->get('official_name', null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['official_name']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['official_name']) ? JText::_($errors['official_name']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_LOCALITY') . ':</td>';
             $html .= '<td><input type="text" name="locality" id="locality" size="30" value="' . $post->get('locality', null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['locality']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['locality']) ? JText::_($errors['locality']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_FIRST_NAME') . ':</td>';
             $html .= '<td><input type="text" name="first_name" id="first_name" size="30" value="' . $post->get('first_name', null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['first_name']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['first_name']) ? JText::_($errors['first_name']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_DISSERTATION_LAST_NAME') . ':</td>';
             $html .= '<td><input type="text" name="last_name" id="last_name" size="30" value="' . $post->get('last_name', null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['last_name']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['last_name']) ? JText::_($errors['last_name']) : '') . '</td>';
             $html .= '</tr><tr>';
         } else {
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_OFFICIAL_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="official_name" id="official_name" size="30" value="' . $post->get('official_name', null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['official_name']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['official_name']) ? JText::_($errors['official_name']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHER_IDENTIFIER_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="publisher_identifier_str" id="publisher_identifier_str" size="30" value="' . $post->get('publisher_identifier_str', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['publisher_identifier_str']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['publisher_identifier_str']) ? JText::_($errors['publisher_identifier_str']) : '') . '</td>';
             $html .= '</tr><tr>';
         }
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="address" id="address" size="30" value="' . $post->get('address', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['address']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['address']) ? JText::_($errors['address']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ZIP_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="zip" id="zip" size="5" value="' . $post->get('zip', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['zip']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['zip']) ? JText::_($errors['zip']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CITY_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="city" id="city" size="20" value="' . $post->get('city', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['city']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['city']) ? JText::_($errors['city']) : '') . '</td>';
         $html .= '</tr><tr>';
         if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="contact_person" id="contact_person" size="30" value="' . $post->get('contact_person', null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['contact_person']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['contact_person']) ? JText::_($errors['contact_person']) : '') . '</td>';
             $html .= '</tr><tr>';
         }
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PHONE_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="phone" id="phone" size="15" value="' . $post->get('phone', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['phone']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['phone']) ? JText::_($errors['phone']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD') . ':</td>';
         // Content - Email Cloaking plugin must be disabled to get this work
         $html .= '<td><input type="text" id="email" name="email" size="30" value="' . $post->get('email', null, 'string') . '" maxlength="100"/></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['email']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['email']) ? JText::_($errors['email']) : '') . '</td>';
         $html .= '</tr>';
         $html .= '</table>';
         // These fields are for for all the other publication types, but not for dissertations
@@ -211,28 +212,28 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<option value="-"' . (($post->get('published_before', null, 'string') == '-') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_SELECT') . '</option>';
             $html .= '<option value="1"' . (($post->get('published_before', null, 'string') == '1') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_YES') . '</option>';
             $html .= '<option value="0"' . (($post->get('published_before', null, 'string') == '0') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_NO') . '</option>';
-            $html .= '</select><span class="error">* ' . JText::_($errors['published_before']) . '</span></div>';
+            $html .= '</select><span class="error">* ' . (isset($errors['published_before']) ? JText::_($errors['published_before']) : '') . '</span></div>';
             $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_PUBLIC_FIELD') . '</div>';
             $html .= '<div class="post_field"><select name="publications_public" id="publications_public">';
             $html .= '<option value="-"' . (($post->get('publications_public', null, 'string') == '-') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_SELECT') . '</option>';
             $html .= '<option value="1"' . (($post->get('publications_public', null, 'string') == '1') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_YES') . '</option>';
             $html .= '<option value="0"' . (($post->get('publications_public', null, 'string') == '0') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_NO') . '</option>';
-            $html .= '</select><span class="error">* ' . JText::_($errors['publications_public']) . '</span></div>';
+            $html .= '</select><span class="error">* ' . (isset($errors['publications_public']) ? JText::_($errors['publications_public']) : '') . '</span></div>';
             $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATIONS_INTRA_FIELD') . '</div>';
             $html .= '<div class="post_field"><select name="publications_intra" id="publications_intra">';
             $html .= '<option value="-"' . (($post->get('publications_intra', null, 'string') == '-') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_SELECT') . '</option>';
             $html .= '<option value="1"' . (($post->get('publications_intra', null, 'string') == '1') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_YES') . '</option>';
             $html .= '<option value="0"' . (($post->get('publications_intra', null, 'string') == '0') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_NO') . '</option>';
-            $html .= '</select><span class="error">* ' . JText::_($errors['publications_intra']) . '</span></div>';
+            $html .= '</select><span class="error">* ' . (isset($errors['publications_intra']) ? JText::_($errors['publications_intra']) : '') . '</span></div>';
             $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_FIELD') . '</div>';
             $html .= '<div class="post_field"><select name="publishing_activity" id="publishing_activity">';
             $html .= '<option value="-"' . (($post->get('publishing_activity', null, 'string') == '-') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_SELECT') . '</option>';
             $html .= '<option value="OCCASIONAL"' . (($post->get('publishing_activity', null, 'string') == 'OCCASIONAL') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_OCCASIONAL') . '</option>';
             $html .= '<option value="CONTINUOUS"' . (($post->get('publishing_activity', null, 'string') == 'CONTINUOUS') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_CONTINUOUS') . '</option>';
-            $html .= '</select><span class="error">* ' . JText::_($errors['publishing_activity']) . '</span></div>';
+            $html .= '</select><span class="error">* ' . (isset($errors['publishing_activity']) ? JText::_($errors['publishing_activity']) : '') . '</span></div>';
             $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_AMOUNT_FIELD') . '</div>';
             $html .= '<div class="post_field"><input type="text" name="publishing_activity_amount" id="publishing_activity_amount" size="5" class="question" value="' . $post->get('publishing_activity_amount', null, 'string') . '" />';
-            $html .= '<span class="error"> ' . JText::_($errors['publishing_activity_amount']) . '</span></div>';
+            $html .= '<span class="error"> ' . (isset($errors['publishing_activity_amount']) ? JText::_($errors['publishing_activity_amount']) : '') . '</span></div>';
         }
         // Preliminary information about the publication
         $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_3') . '</div>';
@@ -242,7 +243,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<option value="PRINT"' . (($post->get('publication_format', null, 'string') == 'PRINT') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_PRINT') . '</option>';
         $html .= '<option value="ELECTRONICAL"' . (($post->get('publication_format', null, 'string') == 'ELECTRONICAL') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_ELECTRONICAL') . '</option>';
         $html .= '<option value="PRINT_ELECTRONICAL"' . (($post->get('publication_format', null, 'string') == 'PRINT_ELECTRONICAL') ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_BOTH') . '</option>';
-        $html .= '</select><span class="error">* ' . JText::_($errors['publication_format']) . '</span></div>';
+        $html .= '</select><span class="error">* ' . (isset($errors['publication_format']) ? JText::_($errors['publication_format']) : '') . '</span></div>';
         $html .= '<div class="field_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLICATION_FORMAT_POST_FIELD') . '</div>';
         $html .= '<div><input type="submit" name="back_application_pt2" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_BACK_BTN') . '" />';
         $html .= '<input type="submit" name="submit_application_pt2" value="' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTINUE_BTN') . '" /></div>';
@@ -257,7 +258,7 @@ class IsbnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application" >';
+        $html = '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application" >';
         $html .= '<form action = "' . JURI::getInstance()->toString() . '" method = "post" name="isbnApplicationForm" id="isbnApplicationForm">';
         // Author info is not needed for dissertations - for other publication types it's mandatory		
         if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
@@ -271,11 +272,11 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="first_name_1" id="first_name_1" size="30" value="' . $post->get('first_name_1', null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['first_name_1']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['first_name_1']) ? JText::_($errors['first_name_1']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="last_name_1" id="last_name_1" size="30" value="' . $post->get('last_name_1', null, 'string') . '" /></td>';
-            $html .= '<td class="error">* ' . JText::_($errors['last_name_1']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['last_name_1']) ? JText::_($errors['last_name_1']) : '') . '</td>';
             $html .= '</tr><tr class="spacer_bottom">';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
             $html .= '<td>';
@@ -285,7 +286,7 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<input class="role_checkbox" type="checkbox" name="role_1[]" value="TRANSLATOR"' . (isset($role1) && in_array('TRANSLATOR', $role1) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
             $html .= '<input class="role_checkbox" type="checkbox" name="role_1[]" value="EDITOR"' . (isset($role1) && in_array('EDITOR', $role1) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
             $html .= '</td>';
-            $html .= '<td class="error">* ' . JText::_($errors['role_1']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['role_1']) ? JText::_($errors['role_1']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<th></th>';
             $html .= '<th>' . JText::_('PLG_ISBNREGISTRY_FORMS_OTHER_AUTHORS_FIELD') . '</th>';
@@ -293,11 +294,11 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="first_name_2" id="first_name_2" size="30" value="' . $post->get('first_name_2', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['first_name_2']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['first_name_2']) ? JText::_($errors['first_name_2']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="last_name_2" id="last_name_2" size="30" value="' . $post->get('last_name_2', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['last_name_2']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['last_name_2']) ? JText::_($errors['last_name_2']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
             $html .= '<td>';
@@ -307,15 +308,15 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<input class="role_checkbox" type="checkbox" name="role_2[]" value="TRANSLATOR"' . (isset($role2) && in_array('TRANSLATOR', $role2) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
             $html .= '<input class="role_checkbox" type="checkbox" name="role_2[]" value="EDITOR"' . (isset($role2) && in_array('EDITOR', $role2) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
             $html .= '</td>';
-            $html .= '<td class="error">' . JText::_($errors['role_2']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['role_2']) ? JText::_($errors['role_2']) : '') . '</td>';
             $html .= '</tr><tr class="spacer_top">';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="first_name_3" id="first_name_3" size="30" value="' . $post->get('first_name_3', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['first_name_3']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['first_name_3']) ? JText::_($errors['first_name_3']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="last_name_3" id="last_name_3" size="30" value="' . $post->get('last_name_3', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['last_name_3']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['last_name_3']) ? JText::_($errors['last_name_3']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
             $html .= '<td>';
@@ -325,15 +326,15 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<input class="role_checkbox" type="checkbox" name="role_3[]" value="TRANSLATOR"' . (isset($role3) && in_array('TRANSLATOR', $role3) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
             $html .= '<input class="role_checkbox" type="checkbox" name="role_3[]" value="EDITOR"' . (isset($role3) && in_array('EDITOR', $role3) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
             $html .= '</td>';
-            $html .= '<td class="error">' . JText::_($errors['role_3']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['role_3']) ? JText::_($errors['role_3']) : '') . '</td>';
             $html .= '</tr><tr class="spacer_top">';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FIRST_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="first_name_4" id="first_name_4" size="30" value="' . $post->get('first_name_4', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['first_name_4']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['first_name_4']) ? JText::_($errors['first_name_4']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LAST_NAME_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="last_name_4" id="last_name_4" size="30" value="' . $post->get('last_name_4', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['last_name_4']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['last_name_4']) ? JText::_($errors['last_name_4']) : '') . '</td>';
             $html .= '</tr><tr class="spacer_bottom">';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_FIELD') . ':</td>';
             $html .= '<td>';
@@ -343,7 +344,7 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<input class="role_checkbox" type="checkbox" name="role_4[]" value="TRANSLATOR"' . (isset($role4) && in_array('TRANSLATOR', $role4) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_TRANSLATOR');
             $html .= '<input class="role_checkbox" type="checkbox" name="role_4[]" value="EDITOR"' . (isset($role4) && in_array('EDITOR', $role4) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_ROLE_EDITOR');
             $html .= '</td>';
-            $html .= '<td class="error">' . JText::_($errors['role_4']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['role_4']) ? JText::_($errors['role_4']) : '') . '</td>';
             $html .= '</tr>';
             $html .= '</table>';
         }
@@ -359,30 +360,30 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TITLE_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="title" id="title" size="50" value="' . $post->get('title', null, 'string') . '" /></td>';
-        $html .= '<td class="error">* ' . JText::_($errors['title']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['title']) ? JText::_($errors['title']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_SUBTITLE_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="subtitle" id="title" size="50" value="' . $post->get('subtitle', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['subtitle']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['subtitle']) ? JText::_($errors['subtitle']) : '') . '</td>';
         $html .= '</tr><tr>';
         if (IsbnregistryFormsHelper::isMap($post->get('publication_type', null, 'string'))) {
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_MAP_SCALE_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="map_scale" id="map_scale" size="15" value="' . $post->get('map_scale', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['map_scale']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['map_scale']) ? JText::_($errors['map_scale']) : '') . '</td>';
             $html .= '</tr><tr>';
         }
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_LANGUAGE_FIELD') . ':</td>';
         $html .= '<td>';
         $html .= self::getLanguageMenu();
         $html .= '</td>';
-        $html .= '<td class="error">* ' . JText::_($errors['language']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['language']) ? JText::_($errors['language']) : '') . '</td>';
         $html .= '</tr><tr class="spacer_bottom">';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_FIELD') . ':</td>';
         $html .= '<td>';
         $html .= self::getPublishedYearMenu();
         $html .= self::getPublishedMonthMenu();
         $html .= '</td>';
-        $html .= '<td class="error">* ' . JText::_($errors['published']) . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['published']) ? JText::_($errors['published']) : '') . '</td>';
         $html .= '</tr>';
         $html .= '</table>';
         // Information about the series
@@ -395,15 +396,15 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_SERIES_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="series" id="series" size="50" value="' . $post->get('series', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['series']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['series']) ? JText::_($errors['series']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_ISSN_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="issn" id="issn" size="9" value="' . $post->get('issn', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['issn']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['issn']) ? JText::_($errors['issn']) : '') . '</td>';
         $html .= '</tr><tr class="spacer_bottom">';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_VOLUME_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="volume" id="volume" size="2" value="' . $post->get('volume', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . JText::_($errors['volume']) . '</td>';
+        $html .= '<td class="error">' . (isset($errors['volume']) ? JText::_($errors['volume']) : '') . '</td>';
         $html .= '</tr>';
         $html .= '</table>';
         if (IsbnregistryFormsHelper::isPrint($post->get('publication_format', null, 'string'))) {
@@ -413,24 +414,24 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PRINTING_HOUSE_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="printing_house" id="printing_house" size="50" value="' . $post->get('printing_house', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['printing_house']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['printing_house']) ? JText::_($errors['printing_house']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PRINTING_HOUSE_CITY_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="printing_house_city" id="printing_house_city" size="50" value="' . $post->get('printing_house_city', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['printing_house_city']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['printing_house_city']) ? JText::_($errors['printing_house_city']) : '') . '</td>';
             $html .= '</tr>';
             // Copies and edition fields are shown only if the publication is not a dissertation
             if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
                 $html .= '<tr>';
                 $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_COPIES_FIELD') . ':</td>';
                 $html .= '<td><input type="text" name="copies" id="copies" size="4" value="' . $post->get('copies', null, 'string') . '" /></td>';
-                $html .= '<td class="error">' . JText::_($errors['copies']) . '</td>';
+                $html .= '<td class="error">' . (isset($errors['copies']) ? JText::_($errors['copies']) : '') . '</td>';
                 $html .= '</tr><tr>';
                 $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EDITION_FIELD') . ':</td>';
                 $html .= '<td>';
                 $html .= self::getEditionMenu();
                 $html .= '</td>';
-                $html .= '<td class="error">' . JText::_($errors['edition']) . '</td>';
+                $html .= '<td class="error">' . (isset($errors['edition']) ? JText::_($errors['edition']) : '') . '</td>';
                 $html .= '</tr>';
             }
             $html .= '<tr class="spacer_bottom">';
@@ -445,11 +446,11 @@ class IsbnregistryFormsHtmlBuilder {
             }
             $html .= '<input class="role_checkbox" type="checkbox" name="type[]" value="OTHER_PRINT"' . (isset($type) && in_array('OTHER_PRINT', $type) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_OTHER_PRINT');
             $html .= '</td>';
-            $html .= '<td class="error">* ' . JText::_($errors['type']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['type']) ? JText::_($errors['type']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_TYPE_OTHER_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="type_other" id="type_other" size="25" value="' . $post->get('type_other', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['type_other']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['type_other']) ? JText::_($errors['type_other']) : '') . '</td>';
             $html .= '</tr>';
             $html .= '</table>';
         }
@@ -457,7 +458,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_8') . '</div>';
         $html .= '<div>' . JText::_('PLG_ISBNREGISTRY_FORMS_COMMENTS_FIELD') . '</div>';
         $html .= '<div class="spacer_bottom"><textarea name="comments" id="comments" class="question">' . $post->get('comments', null, 'string') . '</textarea>';
-        $html .= '<span class="error">' . JText::_($errors['comments']) . '</span></div>';
+        $html .= '<span class="error">' . (isset($errors['comments']) ? JText::_($errors['comments']) : '') . '</span></div>';
         if (IsbnregistryFormsHelper::isElectronical($post->get('publication_format', null, 'string'))) {
             // Other information
             $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_9') . '</div>';
@@ -474,11 +475,11 @@ class IsbnregistryFormsHtmlBuilder {
             }
             $html .= '<input class="role_checkbox" type="checkbox" name="fileformat[]" value="OTHER"' . (isset($fileformat) && in_array('OTHER', $fileformat) ? ' checked' : '') . '/>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_OTHER');
             $html .= '</td>';
-            $html .= '<td class="error">* ' . JText::_($errors['fileformat']) . '</td>';
+            $html .= '<td class="error">* ' . (isset($errors['fileformat']) ? JText::_($errors['fileformat']) : '') . '</td>';
             $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_FILE_FORMAT_OTHER_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="fileformat_other" id="fileformat_other" size="25" value="' . $post->get('fileformat_other', null, 'string') . '" /></td>';
-            $html .= '<td class="error">' . JText::_($errors['fileformat_other']) . '</td>';
+            $html .= '<td class="error">' . (isset($errors['fileformat_other']) ? JText::_($errors['fileformat_other']) : '') . '</td>';
             $html .= '</tr>';
             $html .= '</table>';
         }
@@ -496,7 +497,7 @@ class IsbnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
 
         // Information about the publisher
-        $html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUMMARY_HEADER') . '</div>';
+        $html = '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUMMARY_HEADER') . '</div>';
         $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application_summary" >';
         $html .= '<div class="sub_title">';
         if (IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
@@ -622,7 +623,7 @@ class IsbnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<input type="hidden" name="publication_type" value="' . $post->get('publication_type', null, 'string') . '" />';
+        $html = '<input type="hidden" name="publication_type" value="' . $post->get('publication_type', null, 'string') . '" />';
         return $html;
     }
 
@@ -630,7 +631,7 @@ class IsbnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<input type="hidden" name="official_name" value="' . $post->get('official_name', null, 'string') . '" />';
+        $html = '<input type="hidden" name="official_name" value="' . $post->get('official_name', null, 'string') . '" />';
         $html .= '<input type="hidden" name="address" value="' . $post->get('address', null, 'string') . '" />';
         $html .= '<input type="hidden" name="zip" value="' . $post->get('zip', null, 'string') . '" />';
         $html .= '<input type="hidden" name="city" value="' . $post->get('city', null, 'string') . '" />';
@@ -657,6 +658,7 @@ class IsbnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
+        $html = '';
         // Author info is included only if the publication is not a dissertation
         if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
             $html .= '<input type="hidden" name="first_name_1" value="' . $post->get('first_name_1', null, 'string') . '" />';
@@ -737,7 +739,7 @@ class IsbnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
         $userLanguage = $post->get('language', null, 'string');
 
-        $html .= '<select name="language" id="language">';
+        $html = '<select name="language" id="language">';
         $html .= '<option value="-"' . (strcmp($userLanguage, '-') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_CLASS_SELECT') . '</option>';
         foreach (IsbnregistryFormsHelper::getLanguageList() as $language) {
             $html .= '<option value="' . $language . '"' . (strcmp($userLanguage, $language) == 0 ? ' selected' : '') . '>' . JText::_("PLG_ISBNREGISTRY_FORMS_LANGUAGE_$language") . '</option>';
@@ -751,7 +753,7 @@ class IsbnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
         $year = $post->get('year', null, 'string');
 
-        $html .= '<select name="year" id="year">';
+        $html = '<select name="year" id="year">';
         $html .= '<option value="-"' . (strcmp($year, '-') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_YEAR') . '</option>';
         $html .= '<option value="' . (date("Y") - 2) . '"' . ($year == (date("Y") - 2) ? ' selected' : '') . '>' . (date("Y") - 2) . '</option>';
         $html .= '<option value="' . (date("Y") - 1) . '"' . ($year == (date("Y") - 1) ? ' selected' : '') . '>' . (date("Y") - 1) . '</option>';
@@ -767,7 +769,7 @@ class IsbnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
         $month = $post->get('month', null, 'string');
 
-        $html .= '<select name="month" id="month">';
+        $html = '<select name="month" id="month">';
         $html .= '<option value="-"' . (strcmp($month, '-') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_MONTH') . '</option>';
         $html .= '<option value="01"' . (strcmp($month, '01') == 0 ? ' selected' : '') . '>01</option>';
         $html .= '<option value="02"' . (strcmp($month, '02') == 0 ? ' selected' : '') . '>02</option>';
@@ -789,7 +791,7 @@ class IsbnregistryFormsHtmlBuilder {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
-        $html .= '<select name="edition" id="edition">';
+        $html = '<select name="edition" id="edition">';
         $html .= '<option value="-"' . (strcmp($post->get('year', null, 'string'), '-') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_CLASS_SELECT') . '</option>';
         for ($x = 1; $x <= 10; $x++) {
             $html .= '<option value="' . $x . '"' . (strcmp($post->get('edition', null, 'string'), $x) == 0 ? ' selected' : '') . '>' . $x . '</option>';
@@ -803,7 +805,7 @@ class IsbnregistryFormsHtmlBuilder {
         $post = JFactory::getApplication()->input->post;
         $question7 = $post->get('question_7', null, 'array');
 
-        $html .= '<div>';
+        $html = '<div>';
         $html .= '<select name="question_7[]" data-placeholder = "' . JText::_('PLG_ISBNREGISTRY_FORMS_CLASS_SELECT') . '" multiple = "multiple" id="question_7">';
         $html .= '<option value="000"' . (isset($question7) && in_array('000', $question7) ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_CLASS_000') . '</option>';
         $html .= '<option value="015"' . (isset($question7) && in_array('015', $question7) ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_CLASS_015') . '</option>';
@@ -891,7 +893,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<option value="930"' . (isset($question7) && in_array('930', $question7) ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_CLASS_930') . '</option>';
         $html .= '<option value="940"' . (isset($question7) && in_array('940', $question7) ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_CLASS_940') . '</option>';
         $html .= '<option value="950"' . (isset($question7) && in_array('950', $question7) ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_CLASS_950') . '</option>';
-        $html .= '</select><span class="error">' . JText::_($errors['question_7']) . '</span></div>';
+        $html .= '</select><span class="error">' . (isset($errors['question_7']) ? JText::_($errors['question_7']) : '') . '</span></div>';
         return $html;
     }
 
