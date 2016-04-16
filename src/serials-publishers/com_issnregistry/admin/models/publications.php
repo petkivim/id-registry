@@ -86,7 +86,7 @@ class IssnregistryModelPublications extends JModelList {
             $query->select('*')
                     ->from($db->quoteName('#__issn_registry_publication'));
             $query->where($db->quoteName('form_id') . ' = ' . $db->quote($formId));
-            $query->order('title ASC');
+            $query->order('id DESC');
 
             return $query;
         }
