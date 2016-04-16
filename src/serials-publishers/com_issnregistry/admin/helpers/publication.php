@@ -288,6 +288,10 @@ class PublicationHelper extends JHelperContent {
         // Check that JSON is not null
         if ($json) {
             for ($i = 0; $i < sizeof($json->{'title'}); $i++) {
+                // Skip empty fields
+                if (empty($json->{'title'}[$i]) && empty($json->{'issn'}[$i])) {
+                    continue;
+                }
                 $datafield = new DataField('760', '0', '#');
                 $datafield->addSubfield(new Subfield('t', $json->{'title'}[$i]));
                 $datafield->addSubfield(new Subfield('x', $json->{'issn'}[$i]));
@@ -303,6 +307,10 @@ class PublicationHelper extends JHelperContent {
         // Check that JSON is not null
         if ($json) {
             for ($i = 0; $i < sizeof($json->{'title'}); $i++) {
+                // Skip empty fields
+                if (empty($json->{'title'}[$i]) && empty($json->{'issn'}[$i])) {
+                    continue;
+                }
                 $datafield = new DataField('762', '0', '#');
                 $datafield->addSubfield(new Subfield('t', $json->{'title'}[$i]));
                 $datafield->addSubfield(new Subfield('x', $json->{'issn'}[$i]));
@@ -319,6 +327,10 @@ class PublicationHelper extends JHelperContent {
         if ($json) {
             for ($i = 0; $i < sizeof($json->{'title'}); $i++) {
                 $datafield = new DataField('776', '0', '_');
+                // Skip empty fields
+                if (empty($json->{'title'}[$i]) && empty($json->{'issn'}[$i])) {
+                    continue;
+                }
                 $datafield->addSubfield(new Subfield('t', $json->{'title'}[$i]));
                 if (!self::isElectronical($format)) {
                     $datafield->addSubfield(new Subfield('c', JText::_('COM_ISSNREGISTRY_MARC_776_B_PRINT')));
@@ -338,6 +350,10 @@ class PublicationHelper extends JHelperContent {
         // Check that JSON is not null
         if ($json) {
             for ($i = 0; $i < sizeof($json->{'title'}); $i++) {
+                // Skip empty fields
+                if (empty($json->{'title'}[$i]) && empty($json->{'issn'}[$i])) {
+                    continue;
+                }
                 $datafield = new DataField('780', '0', '0');
                 $datafield->addSubfield(new Subfield('t', $json->{'title'}[$i]));
                 $datafield->addSubfield(new Subfield('c', '()'));
