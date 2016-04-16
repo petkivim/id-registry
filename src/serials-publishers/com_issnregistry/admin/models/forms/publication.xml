@@ -88,6 +88,7 @@
 			<option value="d">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_D</option>
 			<option value="k">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_K</option>
 			<option value="z">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_Z</option>
+			<option value="#">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_#</option>
 			<option value="u">COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_U</option>
 		</field>
         <field
