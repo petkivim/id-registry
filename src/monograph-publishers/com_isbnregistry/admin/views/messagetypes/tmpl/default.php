@@ -72,7 +72,7 @@ $document->addScriptDeclaration('
                             </td>   
                             <td>
                                 <a href="<?php echo $link; ?>" title="<?php echo JText::_('COM_ISBNREGISTRY_EDIT_MESSAGE_TYPE'); ?>">
-                                    <?php echo (strlen($row->description) > 50 ? substr($row->description, 0, 47) . '...' : $row->description); ?>
+                                    <?php echo (strlen($row->description) > 130 ? substr($row->description, 0, 130) . '...' : $row->description); ?>
                                 </a>
                             </td> 							
                             <td align="center">

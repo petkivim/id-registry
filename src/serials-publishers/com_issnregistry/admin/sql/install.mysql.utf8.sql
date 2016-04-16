@@ -236,7 +236,7 @@ DROP TABLE IF EXISTS `#__issn_registry_message_template`;
 CREATE TABLE `#__issn_registry_message_template` (
     `id`       INT(11)     NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
-    `subject` VARCHAR(50) NOT NULL,
+    `subject` VARCHAR(150) NOT NULL,
     `lang_code` VARCHAR(8),
     `message_type_id` INT default 0,
     `message` text NOT NULL,

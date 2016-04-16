@@ -1,7 +1,15 @@
 .header {
-	background-color: #829522!important;
+    background-color: #829522!important;
 }
 
 .toggle-editor {
     display: none;
+}
+
+#jform_recipient {
+    width: 25em;
+}
+
+#jform_subject {
+    width: 40em;
 }

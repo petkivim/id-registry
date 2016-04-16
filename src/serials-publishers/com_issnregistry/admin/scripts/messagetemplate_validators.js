@@ -4,7 +4,7 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("subject", function (value) {
-        regex = /^.{1,50}$/;
+        regex = /^.{1,150}$/;
         return regex.test(value);
     });	
     document.formvalidator.setHandler("message", function (value) {
