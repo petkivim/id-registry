@@ -333,6 +333,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
     public function filterMessage($messageBody, $publisher) {
         $messageBody = $this->filterDate($messageBody);
         $messageBody = $this->filterUser($messageBody);
+        $messageBody = $this->filterPublisher($messageBody, $publisher);
         $messageBody = $this->filterAddress($messageBody, $publisher->address, $publisher->zip, $publisher->city);
         return $messageBody;
     }
@@ -352,6 +353,10 @@ class IsbnregistryModelMessage extends JModelAdmin {
             }
             return str_replace("#IDENTIFIERS#", $html, $messageBody);
         }
+    }
+
+    private function filterPublisher($messageBody, $publisher) {
+        return str_replace("#PUBLISHER#", $publisher->official_name, $messageBody);
     }
 
     private function filterPublisherIdentifier($messageBody, $identifier) {

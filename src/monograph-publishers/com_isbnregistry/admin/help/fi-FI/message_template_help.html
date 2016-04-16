@@ -3,13 +3,14 @@
     <body>
         <h3>Viestipohjat</h3>
         <p>
-            Viestipohjissa on k‰ytˆss‰ joukko muuttujia, joiden avulla on 
-            mahdollista tuoda viesteihin j‰rjestelm‰‰n tallennettuja tietoja. 
-            T‰llaisia tietoja ovat esimerkiksi kustantajatunnus, luodut ISBN- 
-            ja ISMN-tunnukset, p‰iv‰m‰‰r‰ ja viestin l‰hett‰v‰n k‰ytt‰j‰n nimi.
-            Muuttujat merkataan sivupohjiin #-merkkien sis‰lle, esim:
+            Viestipohjissa on k&auml;yt&ouml;ss&auml; joukko muuttujia, joiden avulla on 
+            mahdollista tuoda viesteihin j&auml;rjestelm&auml;&auml;n tallennettuja tietoja. 
+            T&auml;llaisia tietoja ovat esimerkiksi kustantajatunnus, luodut ISBN- 
+            ja ISMN-tunnukset, p&auml;iv&auml;m&auml;&auml;r&auml; ja viestin l&auml;hett&auml;v&auml;n k&auml;ytt&auml;j&auml;n nimi.
+            Muuttujat merkataan sivupohjiin #-merkkien sis&auml;lle, esim:
         </p>
         <pre>
+#PUBLISHER#
 #IDENTIFIERS#
 #IDENTIFIER#
 #DATE#
@@ -17,13 +18,19 @@
 #ADDRESS#
         </pre>
         <p>
-            Alla olevassa taulukossa on esitetty j‰rjestelm‰n t‰ll‰ hetkell‰
+            Alla olevassa taulukossa on esitetty j&auml;rjestelm&auml;n t&auml;ll&auml; hetkell&auml;
             tukemat viisi muuttujaa.
         </p>
         <table width="80%">
             <tr>
                 <th width="20%" align="left">Muuttuja</th>
                 <th width="60%" align="left">Selitys</th>
+            </tr>
+            <tr>
+                <td>PUBLISHER</td>
+                <td>
+                    Kustantajan nimi.
+                </td>
             </tr>
             <tr>
                 <td>IDENTIFIERS</td>
@@ -35,17 +42,17 @@
             </tr>
             <tr>
                 <td>DATE</td>
-                <td>P‰iv‰m‰‰r‰ muodossa pp.kk.vvvv.</td>
+                <td>P&auml;iv&auml;m&auml;&auml;r&auml; muodossa pp.kk.vvvv.</td>
             </tr>
             <tr>
                 <td>USER</td>
-                <td>Viestin l‰hett‰v‰n k‰ytt‰j‰n nimi.</td>
+                <td>Viestin l&auml;hett&auml;v&auml;n k&auml;ytt&auml;j&auml;n nimi.</td>
             </tr>            
             <tr>
                 <td>ADDRESS</td>
                 <td>
-                    Kustantajan osoite jaettuna kahdella riville siten, ett‰ 
-                    ensim‰isell‰ rivill‰ on katuosoite ja toisella rivill‰ 
+                    Kustantajan osoite jaettuna kahdella riville siten, ett&auml; 
+                    ensim&auml;isell&auml; rivill&auml; on katuosoite ja toisella rivill&auml; 
                     postinumero ja postitoimipaikka.
                 </td>
             </tr>
