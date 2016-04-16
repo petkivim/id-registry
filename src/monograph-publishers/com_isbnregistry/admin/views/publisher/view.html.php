@@ -33,6 +33,8 @@ class IsbnregistryViewPublisher extends JViewLegacy {
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
         $this->state = $this->get('State');
+        $this->filterForm = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
@@ -59,13 +61,13 @@ class IsbnregistryViewPublisher extends JViewLegacy {
         if (strcmp($identifier, 'true') == 0) {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_IDENTIFIER_RANGE_SUCCESS'));
         }
-        
+
         // Check if publisher has quitted
-        if($this->item->has_quitted) {
+        if ($this->item->has_quitted) {
             // Raise a warning if publisher has quitted
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_PUBLISHER_WARNING_HAS_QUITTED'), 'Warning');
         }
-        
+
         // Set the toolbar
         $this->addToolBar();
         // Add jQuery
@@ -92,7 +94,16 @@ class IsbnregistryViewPublisher extends JViewLegacy {
         if ($isNew) {
             $title = JText::_('COM_ISBNREGISTRY_PUBLISHER_NEW');
         } else {
-            $title = JText::_('COM_ISBNREGISTRY_PUBLISHER_EDIT');
+            // Load publishers model
+            $model = JModelLegacy::getInstance('publishers', 'IsbnregistryModel');
+            // Get the value of no_identifier filter
+            $state = $model->getState('filter.no_identifier');
+            // Show page title according to the filter value
+            if ($state == 1 && empty($this->item->active_identifier_isbn) && empty($this->item->active_identifier_ismn)) {
+                $title = JText::_('COM_ISBNREGISTRY_PUBLISHER_EDIT_APPLICATION');
+            } else {
+                $title = JText::_('COM_ISBNREGISTRY_PUBLISHER_EDIT_REGISTRY');
+            }
             $title .= ' : ' . $this->item->official_name;
         }
 

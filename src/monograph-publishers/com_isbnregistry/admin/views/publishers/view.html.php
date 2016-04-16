@@ -73,13 +73,16 @@ class IsbnregistryViewPublishers extends JViewLegacy {
      * @since   1.6
      */
     protected function addToolBar() {
-        JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLISHERS'));
         JToolBarHelper::addNew('publisher.add');
         JToolBarHelper::editList('publisher.edit');
         JToolBarHelper::deleteList('', 'publishers.delete');
 
+        // Get the value of no_identifier filter
+        $state = $this->state->get('filter.no_identifier');
         // Check that we're showing publisher register
-        if ($this->state->get('filter.no_identifier') == 5) {
+        if ($state == 5) {
+            // Set page title
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLISHERS_REGISTRY'));
             // Get component parameters
             $params = JComponentHelper::getParams('com_isbnregistry');
 
@@ -102,6 +105,10 @@ class IsbnregistryViewPublishers extends JViewLegacy {
             if ($authorPublisherId != 0) {
                 JToolBarHelper::custom('publishers.toAuthorPublisher', 'user', 'user', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_TO_AUTHOR_PUBLISHER'), false, false);
             }
+        } else if ($state == 1) {
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLISHERS_APPLICATION'));
+        } else {
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLISHERS'));
         }
         JToolBarHelper::preferences('com_isbnregistry');
     }
