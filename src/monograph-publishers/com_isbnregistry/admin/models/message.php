@@ -258,8 +258,21 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $message->publication_id = $publicationId;
             // Set publication lang code
             $message->lang_code = $publication->lang_code;
-            // Update recipient
-            $message->recipient = $publication->email;
+            // Get the id of the publisher that represents author publishers
+            $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
+
+            // Is the publisher author publisher? If true, publisher's name,
+            // address and recipient's email must be read from the publication
+            if ($authorPublisherId == $publisher->id) {
+                // Get publisher name and address - this change is NOT stored
+                // to DB
+                $publisher->official_name = $publication->official_name;
+                $publisher->address = $publication->address;
+                $publisher->zip = $publication->zip;
+                $publisher->city = $publication->city;
+                // Update recipient
+                $message->recipient = $publication->email;
+            }
         }
 
         // Load message template model
