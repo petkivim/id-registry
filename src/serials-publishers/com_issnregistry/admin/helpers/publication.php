@@ -79,6 +79,8 @@ class PublicationHelper extends JHelperContent {
         self::addField594($record);
         // Add 710
         self::addField710($record, $form, $publisher);
+        // Add 762
+        self::addField762($record, $publication);
         // Add 776
         self::addField776($record, $publication, $format);
         // Add 776
@@ -276,6 +278,21 @@ class PublicationHelper extends JHelperContent {
         $name = !empty($form->publisher) ? $form->publisher : $publisher->official_name;
         $datafield->addSubfield(new Subfield('a', $name . '.'));
         $record->addDataField($datafield);
+    }
+
+    private static function addField762($record, $publication) {
+        // Get JSON object
+        $json = json_decode($publication->subseries);
+        // Check that JSON is not null
+        if ($json) {
+            for ($i = 0; $i < sizeof($json->{'title'}); $i++) {
+                $datafield = new DataField('762', '0', '#');
+                $datafield->addSubfield(new Subfield('t', $json->{'title'}[$i]));
+                $datafield->addSubfield(new Subfield('x', $json->{'issn'}[$i]));
+                $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
+                $record->addDataField($datafield);
+            }
+        }
     }
 
     private static function addField776($record, $publication, $format) {
