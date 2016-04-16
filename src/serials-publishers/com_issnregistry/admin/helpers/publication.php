@@ -251,7 +251,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField362($record, $publication) {
         $datafield = new DataField('362', '0', '_');
-        $datafield->addSubfield(new Subfield('a', 'Vol. ' . $publication->issued_from_number . '-'));
+        $datafield->addSubfield(new Subfield('a', $publication->issued_from_number . '-'));
         $record->addDataField($datafield);
     }
 
