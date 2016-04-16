@@ -67,12 +67,23 @@ class IsbnregistryViewPublications extends JViewLegacy {
      * @since   1.6
      */
     protected function addToolBar() {
-        JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS'));
-        JToolBarHelper::addNew('publication.add');
-        JToolBarHelper::editList('publication.edit');
-
         // Get filter status
         $filterStatus = $this->state->get('filter.status');
+        
+        if ($filterStatus == 1) {
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_RECEIVED'));
+            // Add new button if received view is showed
+            JToolBarHelper::addNew('publication.add');
+        } else if ($filterStatus == 2) {
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_ON_PROCESS'));
+        } else if ($filterStatus == 3) {
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_PROCESSED'));
+        } else if ($filterStatus == 4) {
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_NO_IDENTIFIER_GRANTED'));
+        } else {
+            JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS'));
+        }
+        JToolBarHelper::editList('publication.edit');
 
         // Add export button only if processed publications are being viewed
         if ($filterStatus == 3) {

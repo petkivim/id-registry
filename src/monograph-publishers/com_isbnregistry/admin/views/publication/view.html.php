@@ -67,7 +67,17 @@ class IsbnregistryViewPublication extends JViewLegacy {
         if ($isNew) {
             $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_NEW');
         } else {
-            $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_EDIT');
+            if (empty($this->item->publication_identifier_print) && empty($this->item->publication_identifier_electronical) && !$this->item->on_process && !$this->item->no_identifier_granted) {
+                $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_EDIT_RECEIVED');
+            } else if (empty($this->item->publication_identifier_print) && empty($this->item->publication_identifier_electronical) && $this->item->on_process && !$this->item->no_identifier_granted) {
+                $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_EDIT_ON_PROCESS');
+            } else if ((!empty($this->item->publication_identifier_print) || !empty($this->item->publication_identifier_electronical)) && !$this->item->no_identifier_granted) {
+                $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_EDIT_PROCESSED');
+            } else if ($this->item->no_identifier_granted) {
+                $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_EDIT_NO_IDENTIFIER_GRANTED');
+            } else {
+                $title = JText::_('COM_ISBNREGISTRY_PUBLICATION_EDIT');
+            }
             $title .= ' : ' . $this->item->title;
         }
 

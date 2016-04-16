@@ -48,10 +48,15 @@ class IsbnRegistryTablePublication extends JTable {
         $user = JFactory::getUser();
 
         if ($this->id) {
-            // Is this first modification?
+            // Is this the first modification?
             if (empty($this->modified_by)) {
                 // Set on_process to true
                 $this->on_process = true;
+            }
+            // Is no_identifier_granted set to true
+            if ($this->no_identifier_granted) {
+                // Set on_process to false
+                $this->on_process = false;
             }
             // Existing item
             $this->modified_by = $user->get('username');
