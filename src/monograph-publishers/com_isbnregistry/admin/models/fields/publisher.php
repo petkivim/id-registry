@@ -34,9 +34,12 @@ class JFormFieldPublisher extends JFormFieldList {
     protected function getOptions() {
         $db = JFactory::getDBO();
         $query = $db->getQuery(true);
-        $query->select('id,official_name');
-        $query->from('#__isbn_registry_publisher');
-        $query->order('promote_sorting DESC, official_name ASC');
+        $query->select('DISTINCT a.id, a.official_name');
+        $query->from('#__isbn_registry_publisher as a');
+        $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON a.id = isbn.publisher_id');
+        $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
+        $query->where('(isbn.publisher_identifier != "" OR ismn.publisher_identifier != "")');
+        $query->order('a.promote_sorting DESC, a.official_name ASC');
         $db->setQuery((string) $query);
         $publishers = $db->loadObjectList();
         $options = array('' => JText::_('COM_ISBNREGISTRY_FIELD_SELECT'));
