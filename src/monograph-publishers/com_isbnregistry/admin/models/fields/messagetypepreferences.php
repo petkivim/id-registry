@@ -137,7 +137,7 @@ class JFormFieldMessagetypepreferences extends JFormFieldList {
         // Loop through the templates
         foreach ($templates as $template) {
             // Init array for the message type id
-            if (!$result[$template->message_type_id]) {
+            if (!array_key_exists($template->message_type_id, $result)) {
                 $result[$template->message_type_id] = array();
             }
             // Does this message type already have a template in this language?
