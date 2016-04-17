@@ -64,7 +64,7 @@ JHTML::_('behavior.modal');
                             ?>
                         </td>  
                         <td>
-                            <?
+                            <?php
                             if (empty($this->messages[$row->id])) {
                                 $publicationId = '';
                                 if ($row->publication_id != 0) {

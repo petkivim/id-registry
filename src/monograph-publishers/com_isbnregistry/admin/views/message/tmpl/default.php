@@ -39,7 +39,7 @@ $link_end = '&tmpl=component" class="modal" rel="{size: {x: 1200, y: 600}, handl
                 <?php echo JText::_('COM_ISBNREGISTRY_MESSAGE_FIELD_PUBLISHER_LABEL'); ?>
             </div>
             <div class="controls">
-                <?
+                <?php
                 if ($this->item->publisher_id != 0) {
                     echo $link_begin . 'publisher&id=' . $this->item->publisher_id . $link_end;
                 } else {
