@@ -86,6 +86,9 @@ class IssnregistryModelForms extends JModelList {
                 case 3:
                     $query->where('a.status = "COMPLETED"');
                     break;
+                case 4:
+                    $query->where('a.status = "REJECTED"');
+                    break;
             }
         }
 

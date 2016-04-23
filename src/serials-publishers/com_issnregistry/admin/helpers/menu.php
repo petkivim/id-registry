@@ -36,6 +36,9 @@ class MenuHelper extends JHelperContent {
                 JText::_('COM_ISSNREGISTRY_SUBMENU_FORMS_COMPLETED'), 'index.php?option=com_issnregistry&view=forms&filter_status=3', $vName == 'forms_completed'
         );
         JHtmlSidebar::addEntry(
+                JText::_('COM_ISSNREGISTRY_SUBMENU_FORMS_REJECTED'), 'index.php?option=com_issnregistry&view=forms&filter_status=4', $vName == 'forms_rejected'
+        );
+        JHtmlSidebar::addEntry(
                 JText::_('COM_ISSNREGISTRY_SUBMENU_PUBLICATIONS'), 'index.php?option=com_issnregistry&view=publications', $vName == 'publications'
         );
         JHtmlSidebar::addEntry(

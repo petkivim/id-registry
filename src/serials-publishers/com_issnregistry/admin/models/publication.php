@@ -230,4 +230,17 @@ class IssnregistryModelPublication extends JModelAdmin {
         return $table->getPublicationIdsByFormId($formId);
     }
 
+    /**
+     * Sets the status of publications related to the forms identified by the
+     * given form id to "NO_ISSN_GRANTED".
+     * @param int $formId form id
+     * @return int number of publications that were updated
+     */
+    public function setStatusToNoISSNGranted($formId) {
+        // Get db access
+        $table = $this->getTable();
+        // Update publications
+        return $table->setStatusToNoISSNGranted($formId);
+    }
+
 }

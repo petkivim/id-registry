@@ -307,4 +307,38 @@ class IssnRegistryTablePublication extends JTable {
         return $this->_db->loadColumn();
     }
 
+    /**
+     * Sets the status of publications related to the forms identified by the
+     * given form id to "NO_ISSN_GRANTED".
+     * @param int $formId form id
+     * @return int number of publications that were updated
+     */
+    public function setStatusToNoISSNGranted($formId) {
+        // Get date and user
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        // Database connection
+        $query = $this->_db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $this->_db->quoteName('status') . ' = ' . $this->_db->quote('NO_ISSN_GRANTED'),
+            $this->_db->quoteName('modified') . ' = ' . $this->_db->quote($date->toSql()),
+            $this->_db->quoteName('modified_by') . ' = ' . $this->_db->quote($user->get('username'))
+        );
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId)
+        );
+        // Create query
+        $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        $result = $this->_db->execute();
+        // Return the number of rows that was updated
+        return $this->_db->getAffectedRows();
+    }
+
 }

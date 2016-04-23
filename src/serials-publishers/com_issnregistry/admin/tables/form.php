@@ -57,7 +57,17 @@ class IssnRegistryTableForm extends JTable {
             $this->created = $date->toSql();
         }
 
-        return parent::store($updateNulls);
+        if (parent::store($updateNulls)) {
+            // Check form status, if "REJECTED", update publications status
+            if (strcmp($this->status, "REJECTED") == 0) {
+                // Load publication model
+                $publicationModel = JModelLegacy::getInstance('publication', 'IssnregistryModel');
+                // Update publications status
+                $publicationModel->setStatusToNoISSNGranted($this->id);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**

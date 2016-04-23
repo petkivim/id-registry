@@ -17,7 +17,8 @@
             <option value="">COM_ISSNREGISTRY_FORM_FILTER_STATUS_SELECT</option>
             <option value="1">COM_ISSNREGISTRY_FORM_FILTER_STATUS_NOT_HANDLED</option>
 			<option value="2">COM_ISSNREGISTRY_FORM_FILTER_STATUS_NOT_NOTIFIED</option>
-            <option value="3">COM_ISSNREGISTRY_FORM_FILTER_STATUS_COMPLETED</option>       			
+            <option value="3">COM_ISSNREGISTRY_FORM_FILTER_STATUS_COMPLETED</option>   
+			<option value="4">COM_ISSNREGISTRY_FORM_FILTER_STATUS_REJECTED</option>			
         </field>
     </fields>
     <fields name="list">

@@ -90,6 +90,7 @@
 			<option value="NOT_HANDLED">COM_ISSNREGISTRY_FORM_STATUS_NOT_HANDLED</option>
 			<option value="NOT_NOTIFIED">COM_ISSNREGISTRY_FORM_STATUS_NOT_NOTIFIED</option>
 			<option value="COMPLETED">COM_ISSNREGISTRY_FORM_STATUS_COMPLETED</option>
+			<option value="REJECTED">COM_ISSNREGISTRY_FORM_STATUS_REJECTED</option>
 		</field>	
         <field
             name="publication_count"

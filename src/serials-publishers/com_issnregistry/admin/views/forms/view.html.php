@@ -47,7 +47,9 @@ class IssnregistryViewForms extends JViewLegacy {
             MenuHelper::addSubmenu('forms_not_notified');
         } else if ($filterStatus == 3) {
             MenuHelper::addSubmenu('forms_completed');
-        }  else {
+        } else if ($filterStatus == 4) {
+            MenuHelper::addSubmenu('forms_rejected');
+        } else {
             MenuHelper::addSubmenu('forms_not_handled');
         }
         // Set the toolbar
