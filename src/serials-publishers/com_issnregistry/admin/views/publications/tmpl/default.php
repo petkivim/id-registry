@@ -50,20 +50,20 @@ $document->addScriptDeclaration('
                         <th width="2%">
                             <?php echo JHtml::_('grid.checkall'); ?>
                         </th>
-                        <th width="20%">
+                        <th width="10%">
                             <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_ISSN'); ?>
                         </th>	          
                         <th width="30%">
                             <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_TITLE'); ?>
                         </th>
-                        <th width="30%">
+                        <th width="25%">
                             <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_PUBLISHER'); ?>
                         </th>	
                         <th width="15%">
                             <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_MEDIUM'); ?>
                         </th>
-                        <th width="10%">
-                            <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_FORM'); ?>
+                        <th width="15%">
+                            <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_STATUS'); ?>
                         </th>	
                         <th width="2%">
                             <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_ID'); ?>
@@ -107,9 +107,7 @@ $document->addScriptDeclaration('
                                     <?php echo (empty($row->medium) ? '' : JText::_('COM_ISSNREGISTRY_PUBLICATION_MEDIUM_' . $row->medium)); ?>
                                 </td>
                                 <td>
-                                    <a href="<?php echo $linkForm; ?>" title="<?php echo JText::_('COM_ISSNREGISTRY_FORM_EDIT'); ?>">
-                                        <?php echo JText::_('COM_ISSNREGISTRY_FIELD_EDIT'); ?>
-                                    </a>
+                                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_STATUS_' . $row->status); ?>
                                 </td>
                                 </td> 	                                
                                 <td align="center">
