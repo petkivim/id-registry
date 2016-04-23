@@ -78,6 +78,7 @@ class IssnregistryModelPublications extends JModelList {
             $query->select('*')
                     ->from($db->quoteName('#__issn_registry_publication'));
             $query->where($db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId));
+            $query->where('status != "NO_ISSN_GRANTED"');
             $query->order('title ASC');
 
             return $query;
