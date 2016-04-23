@@ -175,6 +175,11 @@ class IsbnregistryModelPublishers extends JModelList {
             }
         }
 
+        // Set group by. This is needed for pagination, because pagination
+        // seems to ignore DISTINCT on query and returns wrong total number
+        // of rows. This causes wrong number of result pages on search results.
+        $query->group('a.id');
+
         // Set order
         $query->order('official_name ASC');
 
