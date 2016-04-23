@@ -332,12 +332,10 @@ class DbHelper {
             $table = $ismn ? '#__isbn_registry_publisher_ismn_range' : '#__isbn_registry_publisher_isbn_range';
             // database connection
             $db = JFactory::getDbo();
-            // Created info
-            $created = JFactory::getDate();
             // Insert columns
             $columns = array('publisher_identifier', 'publisher_id', $rangeIdLabel, 'category', 'range_begin', 'range_end', 'free', 'taken', 'canceled', 'next', 'is_active', 'is_closed', 'id_old', 'created', 'created_by');
             // Insert values
-            $values = array($db->quote($range['publisher_identifier']), $range['publisher_id'], $range[$rangeIdLabel], $range['category'], $db->quote($range['range_begin']), $db->quote($range['range_end']), $range['free'], $range['taken'], $range['canceled'], $db->quote($range['next']), $range['is_active'] ? 'true' : 'false', $range['is_closed'] ? 'true' : 'false', $id, $db->quote($created->toSql()), $db->quote(self::$createdBy));
+            $values = array($db->quote($range['publisher_identifier']), $range['publisher_id'], $range[$rangeIdLabel], $range['category'], $db->quote($range['range_begin']), $db->quote($range['range_end']), $range['free'], $range['taken'], $range['canceled'], $db->quote($range['next']), $range['is_active'] ? 'true' : 'false', $range['is_closed'] ? 'true' : 'false', $id, $db->quote($range['created']), $db->quote($range['created_by']));
             // Create a new query object.
             $query = $db->getQuery(true);
             // Prepare the insert query
@@ -376,6 +374,86 @@ class DbHelper {
 
             return true;
         } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function deleteOther() {
+        // Get DB connection
+        $db = JFactory::getDbo();
+        // Start transaction
+        JFactory::getDbo()->transactionStart();
+        try {
+            // Create query
+            $query = $db->getQuery(true);
+            // Set conditions
+            $conditions = array(
+                $db->quoteName('id') . ' > ' . $db->quote(0)
+            );
+
+            $query->delete($db->quoteName('#__isbn_registry_publication'));
+            $query->where($conditions);
+
+            $db->setQuery($query);
+
+            $result = $db->execute();
+
+            // Create new query
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName('#__isbn_registry_message'));
+            $query->where($conditions);
+
+            $db->setQuery($query);
+
+            $result = $db->execute();
+
+            // Create new query
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName('#__isbn_registry_identifier_batch'));
+            $query->where($conditions);
+
+            $db->setQuery($query);
+
+            $result = $db->execute();
+
+            // Create new query
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName('#__isbn_registry_identifier'));
+            $query->where($conditions);
+
+            $db->setQuery($query);
+
+            $result = $db->execute();
+
+            // Create new query
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName('#__isbn_registry_identifier_canceled'));
+            $query->where($conditions);
+
+            $db->setQuery($query);
+
+            $result = $db->execute();
+
+            // Create new query
+            $query = $db->getQuery(true);
+
+            $query->delete($db->quoteName('#__isbn_registry_group_message'));
+            $query->where($conditions);
+
+            $db->setQuery($query);
+
+            $result = $db->execute();
+
+            // Commit transaction
+            JFactory::getDbo()->transactionCommit();
+            return true;
+        } catch (Exception $e) {
+            // If operation failed, do rollback
+            JFactory::getDbo()->transactionRollback();
             return false;
         }
     }

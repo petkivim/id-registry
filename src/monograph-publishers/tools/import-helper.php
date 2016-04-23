@@ -243,8 +243,8 @@ class ImportHelper {
             'prefix' => $data[1],
             'lang_group' => $data[2],
             'category' => $data[3],
-            'range_begin' => str_pad((int)$data[4], (int)$data[3], "0", STR_PAD_LEFT),
-            'range_end' => str_pad((int)$data[5], (int)$data[3], "0", STR_PAD_LEFT),
+            'range_begin' => str_pad((int) $data[4], (int) $data[3], "0", STR_PAD_LEFT),
+            'range_end' => str_pad((int) $data[5], (int) $data[3], "0", STR_PAD_LEFT),
             'free' => $data[7] - $canceled,
             'taken' => $data[8] + $canceled,
             'canceled' => $canceled,
@@ -284,7 +284,7 @@ class ImportHelper {
             $next = $data[5] + 1;
         }
         // Add padding
-        $next = str_pad($next, (int)$data[3], "0", STR_PAD_LEFT);
+        $next = str_pad($next, (int) $data[3], "0", STR_PAD_LEFT);
         // Return result
         return $next;
     }
@@ -477,7 +477,9 @@ class ImportHelper {
             'canceled' => 0,
             'next' => $next,
             'is_active' => false,
-            'is_closed' => ($totalCount == $next ? true : false)
+            'is_closed' => ($totalCount == $next ? true : false),
+            'created' => self::convertDate($data[10]),
+            'created_by' => $data[11]
         );
         return $range;
     }
