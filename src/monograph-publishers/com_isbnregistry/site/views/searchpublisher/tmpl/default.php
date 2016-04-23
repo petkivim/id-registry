@@ -19,7 +19,7 @@ $document->addStyleSheet("components/com_isbnregistry/css/searchpublisher.css");
 
 <div class="intro"><?php echo JText::_('COM_ISBNREGISTRY_SEARCH_PUBLISHER_INTRO'); ?></div>
 
-<form action="<?php echo JURI::current(); ?>" method="post">
+<form action="<?php echo JURI::current(); ?>" method="get">
     <div>
         <table>
             <tr>
@@ -30,7 +30,7 @@ $document->addStyleSheet("components/com_isbnregistry/css/searchpublisher.css");
             </tr>
         </table>
     </div>
-    <?php if (JRequest::getVar('searchBtn') != null || JRequest::getVar('limit') != null) : ?>
+    <?php if (JFactory::getApplication()->input->get('searchBtn', null, 'string') != null || JFactory::getApplication()->input->get('limit', 0, 'int') != 0) : ?>
         <h3><?php echo JText::_('COM_ISBNREGISTRY_SEARCH_PUBLISHER_SUBTITLE_RESULTS'); ?></h3>
         <div id="j-main-container" class="span10">
             <?php if (empty($this->items)) : ?>
@@ -41,12 +41,12 @@ $document->addStyleSheet("components/com_isbnregistry/css/searchpublisher.css");
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th width="5%"><?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_NUM'); ?></th>
+                            <th width="5%"><?php echo JText::_('COM_ISBNREGISTRY_SEARCH_PUBLISHERS_NUM'); ?></th>
                             <th width="65%">
-                                <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_OFFICIAL_NAME'); ?>
+                                <?php echo JText::_('COM_ISBNREGISTRY_SEARCH_PUBLISHERS_OFFICIAL_NAME'); ?>
                             </th>
                             <th width="30%">
-                                <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_ACTIVE_IDENTIFIERS'); ?>
+                                <?php echo JText::_('COM_ISBNREGISTRY_SEARCH_PUBLISHERS_ACTIVE_IDENTIFIERS'); ?>
                             </th>
                         </tr>
                     </thead>
@@ -65,7 +65,12 @@ $document->addStyleSheet("components/com_isbnregistry/css/searchpublisher.css");
                             ?>
                             <tr>
                                 <td><?php echo $this->pagination->getRowOffset($i); ?></td>
-                                <td><?php echo $link; ?></td>   
+                                <td>
+                                    <?php echo $link; ?>
+                                    <span class="ismn_label">
+                                        <?php echo (isset($this->ismn_publisher_ids[$row->id]) ? JText::_('COM_ISBNREGISTRY_SEARCH_PUBLISHERS_ISMN_LABEL') : ''); ?>
+                                    </span>
+                                </td>   
                                 <td>
                                     <?php
                                     $identifier = empty($row->active_identifier_isbn) ? '' : $row->active_identifier_isbn;

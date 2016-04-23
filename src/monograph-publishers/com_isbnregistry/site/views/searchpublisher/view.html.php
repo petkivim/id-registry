@@ -38,11 +38,12 @@ class IsbnRegistryViewSearchPublisher extends JViewLegacy {
             return false;
         }
 
+        // Include component models
+        JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models');
+        // Include component tables
+        JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_isbnregistry/tables');
+
         if ($this->getLayout() == 'info') {
-            // Include component models
-            JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_isbnregistry/models');
-            // Include component tables
-            JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_isbnregistry/tables');
             // Get publisher id URL parameter
             $publisherId = JFactory::getApplication()->input->getInt('publisherId', 0);
             // Check publisher id
@@ -70,6 +71,13 @@ class IsbnRegistryViewSearchPublisher extends JViewLegacy {
                     $this->assignRef('ismns', $ismns);
                 }
             }
+        } else if (!empty($this->items)) {
+            // Load publisher ismn range model
+            $model = JModelLegacy::getInstance('publisherismnrange', 'IsbnregistryModel');
+            // Load message types
+            $ids = $model->getIsmnPublisherIds();
+            // Pass results to the layout
+            $this->ismn_publisher_ids = $ids;
         }
 
         // Display the view

@@ -38,3 +38,6 @@ iframe {
     margin-bottom: 1em;
 }
 
+span.ismn_label {
+    font-style: italic;
+}

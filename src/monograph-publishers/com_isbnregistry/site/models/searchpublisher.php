@@ -28,7 +28,7 @@ class IsbnregistryModelSearchPublisher extends JModelList {
         $query = $db->getQuery(true);
 
         // Get the post variables
-        $post = JFactory::getApplication()->input->post;
+        $post = JFactory::getApplication()->input->get;
 
         // Get search string        
         $search = $post->get('searchStr', '', 'string');
@@ -80,7 +80,10 @@ class IsbnregistryModelSearchPublisher extends JModelList {
             $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
             $query->where('(isbn.publisher_identifier != \'\' OR ismn.publisher_identifier != \'\')');
         }
-
+        // Set group by. This is needed for pagination, because pagination
+        // seems to ignore DISTINCT on query and returns wrong total number
+        // of rows. This causes wrong number of result pages on search results.
+        $query->group('a.id');
         // Set order
         $query->order('official_name ASC');
 
