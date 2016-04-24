@@ -85,15 +85,6 @@ class IsbnregistryViewPublications extends JViewLegacy {
         }
         JToolBarHelper::editList('publication.edit');
 
-        // Add export button only if processed publications are being viewed
-        if ($filterStatus == 3) {
-            // Get component parameters
-            $params = JComponentHelper::getParams('com_isbnregistry');
-            // Get statistics file format
-            $format = $params->get('statistics_format', 'XLS');
-
-            JToolBarHelper::custom('publications.get' . $format, 'pie', 'pie', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_GET_CSV'), false, false);
-        }
         JToolBarHelper::preferences('com_isbnregistry');
     }
 

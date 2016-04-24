@@ -34,24 +34,6 @@ class IsbnregistryControllerPublishers extends JControllerAdmin {
         return $model;
     }
 
-    public function getCSV() {
-        // Check for request forgeries
-        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
-
-        // Redirect to CSV format
-        $this->setRedirect('index.php?option=com_isbnregistry&view=publishers&format=csv');
-        $this->redirect();
-    }
-
-    public function getXLS() {
-        // Check for request forgeries
-        JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
-
-        // Redirect to XML format
-        $this->setRedirect('index.php?option=com_isbnregistry&view=publishers&format=xls');
-        $this->redirect();
-    }
-
     public function toAuthorPublisher() {
         // Check for request forgeries
         JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
