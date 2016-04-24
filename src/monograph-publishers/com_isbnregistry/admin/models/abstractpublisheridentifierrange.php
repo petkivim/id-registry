@@ -662,6 +662,26 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         return $table->increaseDeleted($publisherRange, $count);
     }
 
+    /**
+     * Returns the number of created identifiers between the given timeframe.
+     * If publisher id is given then only the number of created identifiers
+     * related to given publisher is returned
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param int $publisherId publisher id
+     * @param int $category publisher identifier category
+     * @param array $excludePublisherIds publisher ids that are excluded if
+     * search is completed by category, otherwise the value is ignored
+     * @return ObjectList number of created identifiers grouped by year and
+     * month
+     */
+    public function getCreatedIdentifierCountByDates($begin, $end, $publisherId = 0, $category = 0, $excludePublisherIds = array()) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->getCreatedIdentifierCountByDates($begin, $end, $publisherId, $category, $excludePublisherIds);
+    }
+
     private function fromStrToArray($source) {
         $result = array();
         if (empty($source)) {

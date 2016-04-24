@@ -484,6 +484,53 @@ abstract class IsbnRegistryTableAbstractPublisherIdentifierRange extends JTable 
     }
 
     /**
+     * Returns the number of created identifiers between the given timeframe.
+     * If publisher id is given then only the number of created identifiers
+     * related to given publisher is returned
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param int $publisherId publisher id
+     * @param int $category publisher identifier category
+     * @param array $excludePublisherIds publisher ids that are excluded if
+     * search is completed by category, otherwise the value is ignored
+     * @return ObjectList number of created identifiers grouped by year and
+     * month
+     */
+    public function getCreatedIdentifierCountByDates($begin, $end, $publisherId = 0, $category = 0, $excludePublisherIds = array()) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('ib.created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('ib.created') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+        // If publisherId or category is given, set more conditions
+        if ($publisherId > 0) {
+            array_push($conditions, $this->_db->quoteName('ir.publisher_id') . ' = ' . $this->_db->quote($publisherId));
+        } else if ($category > 0) {
+            array_push($conditions, $this->_db->quoteName('ir.category') . ' = ' . $this->_db->quote($category));
+            if (!empty($excludePublisherIds)) {
+                foreach ($excludePublisherIds as $id) {
+                    array_push($conditions, $this->_db->quoteName('ir.publisher_id') . ' != ' . $this->_db->quote($id));
+                }
+            }
+        }
+
+        // Create the query
+        $query->select('YEAR(ib.created) as year, MONTH(ib.created) as month, count(distinct i.id) as count');
+        $query->from($this->_db->quoteName($this->_tbl) . ' as ir');
+        $query->join('INNER', '#__isbn_registry_identifier AS i ON i.publisher_identifier_range_id = ir.id');
+        $query->join('INNER', '#__isbn_registry_identifier_batch ib ON i.identifier_batch_id = ib.id');
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(ib.created), MONTH(ib.created)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
      * Starts a transaction.
      */
     public function transactionStart() {

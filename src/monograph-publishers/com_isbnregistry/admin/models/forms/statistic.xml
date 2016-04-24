@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addrulepath="/administrator/components/com_isbnregistry/models/rules">	
     <fieldset>
+        <field
+            name="type"
+            type="list"
+            label="COM_ISBNREGISTRY_STATISTIC_FIELD_TYPE_LABEL"
+            description="COM_ISBNREGISTRY_STATISTIC_FIELD_TYPE_DESC"
+            class=""
+        >	
+			<option value="">COM_ISBNREGISTRY_FIELD_SELECT</option>
+			<option value="MONTHLY">COM_ISBNREGISTRY_STATISTIC_MONTHLY</option>
+			<option value="PROGRESS_ISBN">COM_ISBNREGISTRY_STATISTIC_PROGRESS_ISBN</option>
+			<option value="PROGRESS_ISMN">COM_ISBNREGISTRY_STATISTIC_PROGRESS_ISMN</option>
+			<option value="PUBLISHERS">COM_ISBNREGISTRY_STATISTIC_PUBLISHER_ISBN</option>
+			<option value="PUBLICATIONS">COM_ISBNREGISTRY_STATISTIC_PUBLICATION_ISBN</option>
+		</field>	
         <field 
 			name="begin" 
 			type="calendar" 

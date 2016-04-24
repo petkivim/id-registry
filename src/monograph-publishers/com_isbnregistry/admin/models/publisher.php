@@ -182,4 +182,34 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         return $table->hasQuitted($publisherId);
     }
 
+    /**
+     * Returns the number of created publishers between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param boolean $ismn is ismn publisher
+     * @return ObjectList number of modified publishers grouped by year and
+     * month
+     */
+    public function getCreatedPublisherCountByDates($begin, $end, $ismn = false) {
+        // Get db access
+        $table = $this->getTable();
+        //  Return result
+        return $table->getCreatedPublisherCountByDates($begin, $end, $ismn);
+    }
+
+    /**
+     * Returns the number of modified publishers between the given timeframe.
+     * Only one modification per publisher is calculated.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of modified publishers grouped by year and
+     * month
+     */
+    public function getModifiedPublisherCountByDates($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        //  Return result
+        return $table->getModifiedPublisherCountByDates($begin, $end);
+    }
+
 }

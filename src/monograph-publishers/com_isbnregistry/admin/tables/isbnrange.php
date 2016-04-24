@@ -27,4 +27,23 @@ class IsbnRegistryTableIsbnrange extends IsbnRegistryTableAbstractIdentifierRang
     function __construct(&$db) {
         parent::__construct('#__isbn_registry_isbn_range', $db);
     }
+
+    /**
+     * Return a list of all the ISMN ranges in the database.
+     * @return ObjectList list of all the ISMN ranges in the database
+     */
+    public function getRanges() {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Create the base select statement.
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->order('prefix ASC, lang_group ASC, category ASC, range_begin ASC');
+
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

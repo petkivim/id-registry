@@ -210,6 +210,31 @@ abstract class IsbnregistryModelAbstractIdentifierRange extends JModelAdmin {
         return $table->increaseCanceled($range, $count);
     }
 
+    /**
+     * Returns the number of created identifiers between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of created identifiers grouped by year and
+     * month
+     */
+    public function getCreatedIdentifierCountByDates($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->getCreatedIdentifierCountByDates($begin, $end);
+    }
+
+    /**
+     * Return a list of all the ISMN ranges in the database.
+     * @return ObjectList list of all the ISMN ranges in the database
+     */
+    public function getRanges() {
+        // Get db access
+        $table = $this->getTable();
+        // Get results 
+        return $table->getRanges();
+    }
+
 }
 
 ?>

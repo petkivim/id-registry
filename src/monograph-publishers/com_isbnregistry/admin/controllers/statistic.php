@@ -33,11 +33,18 @@ class IsbnregistryControllerStatistic extends JControllerForm {
         $begin = $data['begin'];
         // Get end
         $end = $data['end'];
+        // Get type
+        $type = $data['type'];
+        
         // Redirect
-        if ($this->validateDate($begin) && $this->validateDate($end)) {
-            $this->setRedirect('index.php?option=com_isbnregistry&view=statistic&format=' . strtolower($format) . '&begin=' . $begin . '&end=' . $end);
+        if ($this->validateDate($begin) && $this->validateDate($end) && $this->validateType($type)) {
+            $this->setRedirect('index.php?option=com_isbnregistry&view=statistic&format=' . strtolower($format) . '&begin=' . $begin . '&end=' . $end . '&type=' . $type);
         } else {
-            $this->setMessage(JText::_('COM_ISBNREGISTRY_STATISTIC_INVALID_DATE'), 'error');
+            if (!$this->validateType($type)) {
+                $this->setMessage(JText::_('COM_ISBNREGISTRY_STATISTIC_INVALID_TYPE'), 'error');
+            } else {
+                $this->setMessage(JText::_('COM_ISBNREGISTRY_STATISTIC_INVALID_DATE'), 'error');
+            }
             $this->setRedirect('index.php?option=com_isbnregistry&view=statistic&layout=popup&tmpl=component');
         }
         $this->redirect();
@@ -45,6 +52,13 @@ class IsbnregistryControllerStatistic extends JControllerForm {
 
     private function validateDate($dateStr) {
         if (!preg_match('/^\d{2}\.\d{2}\.\d{4}$/', $dateStr)) {
+            return false;
+        }
+        return true;
+    }
+
+    private function validateType($type) {
+        if (!preg_match('/^(MONTHLY|PROGRESS_ISBN|PROGRESS_ISMN|PUBLISHERS|PUBLICATIONS)$/', $type)) {
             return false;
         }
         return true;

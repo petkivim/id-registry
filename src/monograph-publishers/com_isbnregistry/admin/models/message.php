@@ -495,4 +495,18 @@ class IsbnregistryModelMessage extends JModelAdmin {
         return $results;
     }
 
+    /**
+     * Returns the number of sent messages between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of sent messages grouped by year and
+     * month
+     */
+    public function getMessageCountByDates($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        // Return results
+        return $table->getMessageCountByDates($begin, $end);
+    }
+
 }

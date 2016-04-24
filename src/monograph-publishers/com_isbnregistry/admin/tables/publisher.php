@@ -294,4 +294,68 @@ class IsbnRegistryTablePublisher extends JTable {
         return $this->_db->loadResult();
     }
 
+    /**
+     * Returns the number of modified publishers between the given timeframe.
+     * Only one modification per publisher is calculated.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of modified publishers grouped by year and
+     * month
+     */
+    public function getModifiedPublisherCountByDates($begin, $end) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('p.modified') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('p.modified') . ' <= ' . $this->_db->quote($end->toSql()),
+            '(isbn.publisher_identifier != "" OR ismn.publisher_identifier != "")'
+        );
+        // Create the query
+        $query->select('YEAR(p.modified) as year, MONTH(p.modified) as month, count(distinct p.id) as count');
+        $query->from($this->_db->quoteName($this->_tbl) . ' as p');
+        $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON p.id = isbn.publisher_id');
+        $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON p.id = ismn.publisher_id');
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(p.modified), MONTH(p.modified)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Returns the number of created publishers between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param boolean $ismn is ismn publisher
+     * @return ObjectList number of modified publishers grouped by year and
+     * month
+     */
+    public function getCreatedPublisherCountByDates($begin, $end, $ismn = false) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('p.created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('p.created') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+        // Create the query
+        $query->select('YEAR(p.created) as year, MONTH(p.created) as month, count(distinct p.id) as count');
+        $query->from($this->_db->quoteName($this->_tbl) . ' as p');
+        if (!$ismn) {
+            $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS isbn ON p.id = isbn.publisher_id');
+        } else {
+            $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS ismn ON p.id = ismn.publisher_id');
+        }
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(p.created), MONTH(p.created)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

@@ -28,22 +28,22 @@ class IsbnregistryViewStatistic extends JViewLegacy {
 
         // Get parameters
         $jinput = JFactory::getApplication()->input;
+        $type = $jinput->get('type', null, 'string');
         $begin = $jinput->get('begin', null, 'string');
         $end = $jinput->get('end', null, 'string');
 
-        // Get publisher model
-        $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
-        // Get list of publishers
-        $list = $publisherModel->getPublishersAndIsbnIdentifiers();
-        // Add publications helper file
-        require_once JPATH_COMPONENT . '/helpers/publishers.php';
-        // Convert list to CSV array
-        $csv = PublishersHelper::toCSVArray($list);
+        // Convert date strings to JDate objects
+        $beginDate = new JDate($begin);
+        $endDate = new JDate($end . ' 23:59:59');
+        // Get statistic model
+        $statisticModel = JModelLegacy::getInstance('statistic', 'IsbnregistryModel');
+        // Get statistics
+        $csv = $statisticModel->getStats($type, $beginDate, $endDate);
 
         // Set document properties
         $document = JFactory::getDocument();
         $document->setMimeEncoding('text/csv; charset="UTF-8"');
-        JResponse::setHeader('Content-disposition', 'attachment; filename="statistics.' . $begin . '-' . $end . '.csv"', true);
+        JResponse::setHeader('Content-disposition', 'attachment; filename="statistics.csv"', true);
 
         // Write to output
         $out = fopen('php://output', 'w');

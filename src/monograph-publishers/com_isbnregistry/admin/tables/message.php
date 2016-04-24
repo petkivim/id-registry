@@ -173,4 +173,31 @@ class IsbnRegistryTableMessage extends JTable {
         return $this->_db->loadObjectList();
     }
 
+    /**
+     * Returns the number of sent messages between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of sent messages grouped by year and
+     * month
+     */
+    public function getMessageCountByDates($begin, $end) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('sent') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('sent') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+        // Create the query
+        $query->select('YEAR(sent) as year, MONTH(sent) as month, count(distinct id) as count')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(sent), MONTH(sent)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

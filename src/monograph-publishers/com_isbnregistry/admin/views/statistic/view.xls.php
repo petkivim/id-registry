@@ -28,28 +28,28 @@ class IsbnregistryViewStatistic extends JViewLegacy {
 
         // Get parameters
         $jinput = JFactory::getApplication()->input;
+        $type = $jinput->get('type', null, 'string');
         $begin = $jinput->get('begin', null, 'string');
         $end = $jinput->get('end', null, 'string');
 
-        // Get publisher model
-        $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
-        // Get list of publishers
-        $list = $publisherModel->getPublishersAndIsbnIdentifiers();
-        // Add publications helper file
-        require_once JPATH_COMPONENT . '/helpers/publishers.php';
-        // Convert list to CSV array
-        $data = PublishersHelper::toCSVArray($list);
+        // Convert date strings to JDate objects
+        $beginDate = new JDate($begin);
+        $endDate = new JDate($end . ' 23:59:59');
+        // Get statistic model
+        $statisticModel = JModelLegacy::getInstance('statistic', 'IsbnregistryModel');
+        // Get statistics
+        $data = $statisticModel->getStats($type, $beginDate, $endDate);
 
         // Set document properties
         $document = JFactory::getDocument();
         $document->setMimeEncoding('application/vnd.ms-excel; charset="UTF-8"');
-        JResponse::setHeader('Content-disposition', 'attachment; filename="statistics.' . $begin . '-' . $end . '.xml"', true);
+        JResponse::setHeader('Content-disposition', 'attachment; filename="statistics.xml"', true);
 
         // Get Excel helper
         require_once JPATH_COMPONENT . '/helpers/php-export-data.class.php';
         // Create new Excled worksheet
         $excel = new ExportDataExcel('browser');
-        $excel->filename = "statistics." . $begin . "-" . $end . ".xml";
+        $excel->filename = "statistics.xml";
         $excel->initialize();
         // Loop through data array
         foreach ($data as $row) {
