@@ -3,12 +3,12 @@
  * @package     Joomla.Administrator
  * @subpackage  com_isbnregistry
  * @author 	Petteri Kivimäki
- * @copyright	Copyright (C) 2015 Petteri Kivimäki. All rights reserved.
+ * @copyright	Copyright (C) 2016 Petteri Kivimäki. All rights reserved.
  */
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
-<form action="index.php?option=com_isbnregistry&view=publications&publisherId=<?php echo JFactory::getApplication()->input->getInt('publisherId', 0); ?>&tmpl=component&layout=embed&filter_status=" method="post" id="adminForm" name="adminForm">
+<form action="index.php?option=com_isbnregistry&view=publicationsembed&publisherId=<?php echo JFactory::getApplication()->input->getInt('publisherId', 0); ?>&tmpl=component" method="post" id="adminForm" name="adminForm">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
