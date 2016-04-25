@@ -60,7 +60,15 @@ class IsbnregistryViewMessagetypes extends JViewLegacy {
         JToolBarHelper::addNew('messagetype.add');
         JToolBarHelper::editList('messagetype.edit');
         JToolBarHelper::deleteList('', 'messagetypes.delete');
-        JToolBarHelper::preferences('com_isbnregistry');
+
+        // Get current user
+        $user = JFactory::getUser();
+        // Is it a super user?
+        $isroot = $user->authorise('core.admin');
+        // Only super users can access preferences
+        if ($isroot) {
+            JToolBarHelper::preferences('com_isbnregistry');
+        }
     }
 
 }
