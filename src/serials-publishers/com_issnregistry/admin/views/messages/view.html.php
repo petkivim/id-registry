@@ -59,7 +59,15 @@ class IssnregistryViewMessages extends JViewLegacy {
         JToolBarHelper::title(JText::_('COM_ISSNREGISTRY_MESSAGES'));
         //JToolBarHelper::addNew('message.add');
         JToolBarHelper::deleteList('', 'messages.delete');
-        JToolBarHelper::preferences('com_issnregistry');
+
+        // Get current user
+        $user = JFactory::getUser();
+        // Is it a super user?
+        $isroot = $user->authorise('core.admin');
+        // Only super users can access preferences
+        if ($isroot) {
+            JToolBarHelper::preferences('com_issnregistry');
+        }
     }
 
 }
