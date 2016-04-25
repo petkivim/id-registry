@@ -430,7 +430,7 @@ class IsbnregistryFormsHtmlBuilder {
                 $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EDITION_FIELD') . ':</td>';
                 $html .= '<td>';
                 $html .= self::getEditionMenu();
-                $html .= '</td>';
+                $html .= '<span class="edition_info">' . JText::_('PLG_ISBNREGISTRY_FORMS_EDITION_FIELD_INFO') . '</span></td>';
                 $html .= '<td class="error">' . (isset($errors['edition']) ? JText::_($errors['edition']) : '') . '</td>';
                 $html .= '</tr>';
             }

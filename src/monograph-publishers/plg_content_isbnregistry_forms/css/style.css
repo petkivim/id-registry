@@ -17,7 +17,7 @@
 }
 
 .field_info {
-    font-size: 80%;
+    font-size: 90%;
     font-style: italic;
     margin-bottom: 1em;
 }
@@ -55,9 +55,15 @@ tr.spacer_bottom > td, .spacer_bottom  {
 }
 
 #series_info {
-    font-size: 80%;
+    font-size: 90%;
     font-style: italic;
     font-weight: bold;
+}
+
+.edition_info {
+    font-size: 90%;
+    font-style: italic;
+    margin-left: 1em;
 }
 
 #plg_isbnregistry_forms_application_summary td {
