@@ -129,26 +129,37 @@ class IsbnregistryModelPublishers extends JModelList {
             switch ($noIdentifier) {
                 case 1:
                     $query->where('(isbn.publisher_identifier is null AND ismn.publisher_identifier is null)');
+                    $query->order('a.created DESC');
                     break;
                 case 2:
                     $query->where('a.active_identifier_isbn = ""');
                     break;
                 case 3:
                     $query->where('a.active_identifier_ismn = ""');
+                    $query->order('a.official_name ASC');
                     break;
                 case 4:
                     $query->where('(a.active_identifier_isbn != "" AND a.active_identifier_ismn != "")');
+                    $query->order('a.official_name ASC');
                     break;
                 case 5:
                     $query->where('(isbn.publisher_identifier != "" OR ismn.publisher_identifier != "")');
+                    $query->order('a.official_name ASC');
                     break;
                 case 6:
                     $query->where('a.active_identifier_isbn != ""');
+                    $query->order('a.official_name ASC');
                     break;
                 case 7:
                     $query->where('a.active_identifier_ismn != ""');
+                    $query->order('a.official_name ASC');
+                    break;
+                default :
+                    $query->order('a.official_name ASC');
                     break;
             }
+        } else {
+            $query->order('a.official_name ASC');
         }
 
         // Build search
@@ -179,9 +190,6 @@ class IsbnregistryModelPublishers extends JModelList {
         // seems to ignore DISTINCT on query and returns wrong total number
         // of rows. This causes wrong number of result pages on search results.
         $query->group('a.id');
-
-        // Set order
-        $query->order('official_name ASC');
 
         return $query;
     }
