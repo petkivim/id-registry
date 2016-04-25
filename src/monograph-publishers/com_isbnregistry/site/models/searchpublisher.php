@@ -57,8 +57,8 @@ class IsbnregistryModelSearchPublisher extends JModelList {
 
         // Build search
         if (!empty($search)) {
-            // If search string contains only [0-9-], search from identifier field only
-            if (preg_match('/^[\d\-]+$/', $search) === 1) {
+            // If search string contains only [0-9-Mm], search from identifier field only
+            if (preg_match('/^[\d\-Mm]+$/', $search) === 1) {
                 $search = $db->quote('%' . trim($search) . '%');
                 // If type is not defined, search ISBN and ISMN identifiers
                 if (empty($type)) {
