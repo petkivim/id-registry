@@ -181,4 +181,58 @@ class IssnRegistryTablePublisher extends JTable {
         return $this->_db->getAffectedRows();
     }
 
+    /**
+     * Returns the number of created publishers between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of created publishers grouped by year and
+     * month
+     */
+    public function getCreatedPublisherCountByDates($begin, $end) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('created') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+        // Create the query
+        $query->select('YEAR(created) as year, MONTH(created) as month, count(distinct id) as count');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(created), MONTH(created)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Returns the number of modified publishers between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of modified publishers grouped by year and
+     * month
+     */
+    public function getModifiedPublisherCountByDates($begin, $end) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('modified') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('modified') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+        // Create the query
+        $query->select('YEAR(modified) as year, MONTH(modified) as month, count(distinct id) as count');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(modified), MONTH(modified)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

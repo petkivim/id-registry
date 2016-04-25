@@ -272,3 +272,14 @@ ENGINE =InnoDB
 AUTO_INCREMENT =0
 DEFAULT CHARSET =utf8
 COLLATE utf8_swedish_ci;
+
+DROP TABLE IF EXISTS `#__issn_registry_statistic`;
+
+CREATE TABLE `#__issn_registry_statistic` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (`id`)
+)
+ENGINE =InnoDB
+AUTO_INCREMENT =0
+DEFAULT CHARSET =utf8
+COLLATE utf8_swedish_ci;

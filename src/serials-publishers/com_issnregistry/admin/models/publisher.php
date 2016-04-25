@@ -135,4 +135,32 @@ class IssnregistryModelPublisher extends JModelAdmin {
         return $table->resetFormId($formId);
     }
 
+    /**
+     * Returns the number of created publishers between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of created publishers grouped by year and
+     * month
+     */
+    public function getCreatedPublisherCountByDates($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        // Return results
+        return $table->getCreatedPublisherCountByDates($begin, $end);
+    }
+
+    /**
+     * Returns the number of modified publishers between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of modified publishers grouped by year and
+     * month
+     */
+    public function getModifiedPublisherCountByDates($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        // Return results
+        return $table->getModifiedPublisherCountByDates($begin, $end);
+    }
+
 }

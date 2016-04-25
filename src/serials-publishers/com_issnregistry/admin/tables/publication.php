@@ -341,4 +341,34 @@ class IssnRegistryTablePublication extends JTable {
         return $this->_db->getAffectedRows();
     }
 
+    /**
+     * Returns the number of created publications between the given timeframe
+     * that have the given status.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param string publication status
+     * @return ObjectList number of created publications grouped by year and
+     * month
+     */
+    public function getPublicationsCountByStatusAndDates($begin, $end, $status) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('created') . ' <= ' . $this->_db->quote($end->toSql()),
+            $this->_db->quoteName('status') . ' = ' . $this->_db->quote($status)
+        );
+        // Create the query
+        $query->select('YEAR(created) as year, MONTH(created) as month, count(distinct id) as count');
+        $query->from($this->_db->quoteName($this->_tbl));
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(created), MONTH(created)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addrulepath="/administrator/components/com_issnregistry/models/rules">	
+    <fieldset>
+        <field
+            name="type"
+            type="list"
+            label="COM_ISSNREGISTRY_STATISTIC_FIELD_TYPE_LABEL"
+            description="COM_ISSNREGISTRY_STATISTIC_FIELD_TYPE_DESC"
+            class=""
+        >	
+			<option value="">COM_ISSNREGISTRY_FIELD_SELECT</option>
+			<option value="ISSN">COM_ISSNREGISTRY_STATISTIC_ISSN</option>
+			<option value="PUBLISHERS">COM_ISSNREGISTRY_STATISTIC_PUBLISHERS</option>
+			<option value="PUBLICATIONS">COM_ISSNREGISTRY_STATISTIC_PUBLICATIONS</option>
+			<option value="FORMS">COM_ISSNREGISTRY_STATISTIC_FORMS</option>
+		</field>	
+        <field 
+			name="begin" 
+			type="calendar" 
+			default="1.1.2016" 
+			label="COM_ISSNREGISTRY_STATISTIC_FIELD_BEGIN_LABEL" 
+			description="COM_ISSNREGISTRY_STATISTIC_FIELD_BEGIN_DESC" 
+			format="%d.%m.%Y" 
+		/>
+        <field 
+			name="end" 
+			type="calendar" 
+			default="NOW" 
+			label="COM_ISSNREGISTRY_STATISTIC_FIELD_END_LABEL" 
+			description="COM_ISSNREGISTRY_STATISTIC_FIELD_END_DESC" 
+			format="%d.%m.%Y" 
+		/>		
+    </fieldset>
+</form>

@@ -247,6 +247,53 @@ class IssnRegistryTableIssnrange extends JTable {
     }
 
     /**
+     * Return a list of all the ISSN ranges in the database.
+     * @return ObjectList list of all the ISSN ranges in the database
+     */
+    public function getRanges() {
+        $query = $this->_db->getQuery(true);
+
+        $query->select('*')
+                ->from($this->_db->quoteName($this->_tbl))
+                ->order('block ASC, range_begin ASC');
+
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Returns a list of created ISSN identifiers inside the given timeframe.
+     * The results are grouped by year, month and ISSN block.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of created identifiers grouped by year, month
+     * and block
+     */
+    public function getCreatedIssnCountByDates($begin, $end) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('iu.created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('iu.created') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+
+        // Create the query
+        $query->select('YEAR(iu.created) as year, MONTH(iu.created) as month, ir.block, count(distinct iu.id) as count');
+        $query->from($this->_db->quoteName($this->_tbl) . ' as ir');
+        $query->join('INNER', '#__issn_registry_issn_used AS iu ON iu.issn_range_id = ir.id');
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(iu.created), MONTH(iu.created), ir.block');
+        $query->order('YEAR(iu.created), MONTH(iu.created), ir.block');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
      * Starts a transaction.
      */
     public function transactionStart() {

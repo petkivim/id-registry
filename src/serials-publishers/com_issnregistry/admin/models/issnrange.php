@@ -361,4 +361,30 @@ class IssnregistryModelIssnrange extends JModelAdmin {
         return false;
     }
 
+    /**
+     * Return a list of all the ISSN ranges in the database.
+     * @return ObjectList list of all the ISSN ranges in the database
+     */
+    public function getRanges() {
+        // Get db access
+        $table = $this->getTable();
+        // Return results
+        return $table->getRanges();
+    }
+
+    /**
+     * Returns a list of created ISSN identifiers inside the given timeframe.
+     * The results are grouped by year, month and ISSN block.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of created identifiers grouped by year, month
+     * and block
+     */
+    public function getCreatedIssnCountByDates($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        // Return results
+        return $table->getCreatedIssnCountByDates($begin, $end);
+    }
+
 }

@@ -243,4 +243,20 @@ class IssnregistryModelPublication extends JModelAdmin {
         return $table->setStatusToNoISSNGranted($formId);
     }
 
+    /**
+     * Returns the number of created publications between the given timeframe
+     * that have the given status.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param string publication status
+     * @return ObjectList number of created publications grouped by year and
+     * month
+     */
+    public function getPublicationsCountByStatusAndDates($begin, $end, $status) {
+        // Get db access
+        $table = $this->getTable();
+        // Return results
+        return $table->getPublicationsCountByStatusAndDates($begin, $end, $status);
+    }
+
 }

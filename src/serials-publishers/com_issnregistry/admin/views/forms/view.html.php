@@ -72,6 +72,13 @@ class IssnregistryViewForms extends JViewLegacy {
         JToolBarHelper::addNew('form.add');
         JToolBarHelper::editList('form.edit');
         JToolBarHelper::deleteList('', 'forms.delete');
+
+        $toolbar = JToolBar::getInstance('toolbar');
+        $layout = new JLayoutFile('joomla.toolbar.popup');
+
+        // Render the popup button
+        $dhtml = $layout->render(array('name' => 'statistics', 'doTask' => '', 'text' => JText::_('COM_ISSNREGISTRY_STATISTICS_BUTTON'), 'class' => 'icon-pie'));
+        $toolbar->appendButton('Custom', $dhtml);
     }
 
 }

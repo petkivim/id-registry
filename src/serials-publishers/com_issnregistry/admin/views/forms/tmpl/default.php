@@ -11,10 +11,13 @@ defined('_JEXEC') or die('Restricted Access');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
+JHTML::_('behavior.modal');
 
 // Load styles
 $document = JFactory::getDocument();
 $document->addStyleSheet("components/com_issnregistry/css/form.css");
+// Add scripts
+$document->addScript("components/com_issnregistry/scripts/forms.js");
 
 $document->addScriptDeclaration('
     Joomla.submitbutton = function(task) {

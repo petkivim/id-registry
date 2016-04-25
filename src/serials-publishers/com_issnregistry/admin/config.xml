@@ -56,4 +56,20 @@
             min="0"
         />			
 	</fieldset>
+<fieldset
+		name="export"
+		label="COM_ISSNREGISTRY_CONFIG_EXPORT_LABEL"
+		description="COM_ISSNREGISTRY_CONFIG_EXPORT_DESC"
+		>	
+		<field
+			name="statistics_format"
+			type="radio"
+			class="btn-group btn-group-yesno"
+			default="XLS"
+            label="COM_ISSNREGISTRY_CONFIG_EXPORT_STATISTICS_FORMAT_LABEL"
+            description="COM_ISSNREGISTRY_CONFIG_EXPORT_STATISTICS_FORMAT_DESC">
+			<option value="CSV">CSV</option>
+			<option value="XLS">XLS</option>
+		</field>					
+	</fieldset>		
 </config>

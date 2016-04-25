@@ -176,7 +176,7 @@ class IssnregistryModelForm extends JModelAdmin {
         // Create array for publisher
         $publisher = array(
             'official_name' => $form->publisher,
-            'contact_person' =>  empty($form->contact_person) ? '' : $this->toJson($form->contact_person, $form->email),
+            'contact_person' => empty($form->contact_person) ? '' : $this->toJson($form->contact_person, $form->email),
             'email' => empty($form->contact_person) ? $form->email : '',
             'phone' => $form->phone,
             'address' => $form->address,
@@ -278,6 +278,20 @@ class IssnregistryModelForm extends JModelAdmin {
         $table = $this->getTable();
         // Decrease count
         return $table->setStatusCompleted($formId);
+    }
+
+    /**
+     * Returns the number of created forms between the given timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of created forms grouped by year and
+     * month
+     */
+    public function getCreatedFormCountByDates($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        // Decrease count
+        return $table->getCreatedFormCountByDates($begin, $end);
     }
 
     private function toJson($contactPerson, $email) {

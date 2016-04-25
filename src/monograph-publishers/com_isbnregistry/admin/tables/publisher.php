@@ -330,7 +330,7 @@ class IsbnRegistryTablePublisher extends JTable {
      * @param JDate $begin begin date
      * @param JDate $end end date
      * @param boolean $ismn is ismn publisher
-     * @return ObjectList number of modified publishers grouped by year and
+     * @return ObjectList number of created publishers grouped by year and
      * month
      */
     public function getCreatedPublisherCountByDates($begin, $end, $ismn = false) {
