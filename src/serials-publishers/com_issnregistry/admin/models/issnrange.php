@@ -135,22 +135,24 @@ class IssnregistryModelIssnrange extends JModelAdmin {
                 $range->is_active = false;
                 // Range becomes closed
                 $range->is_closed = true;
+                // Range is closed, next pointer is empty
+                $range->next = '';
+            } else {
+                // Increase next pointer
+                $range->next = substr($range->next, 0, 3) + 1;
+                // Next pointer is a string, add left padding
+                $range->next = str_pad($range->next, 3, "0", STR_PAD_LEFT);
+                // Get next pointer check digit
+                $rangeNextCheckDigit = IssnrangeHelper::countIssnCheckDigit($range->block . $range->next);
+                // Set next pointer check digit
+                $range->next .= $rangeNextCheckDigit;
+                // Validate next pointer
+                if (!IssnrangeHelper::validateIssn($range->block . $range->next)) {
+                    $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_RANGE_UPDATE_INVALID_NEXT_POINTER'));
+                    $table->transactionRollback();
+                    return '';
+                }
             }
-            // Increase next pointer
-            $range->next = substr($range->next, 0, 3) + 1;
-            // Next pointer is a string, add left padding
-            $range->next = str_pad($range->next, 3, "0", STR_PAD_LEFT);
-            // Get next pointer check digit
-            $rangeNextCheckDigit = IssnrangeHelper::countIssnCheckDigit($range->block . $range->next);
-            // Set next pointer check digit
-            $range->next .= $rangeNextCheckDigit;
-            // Validate next pointer
-            if (!IssnrangeHelper::validateIssn($range->block . $range->next)) {
-                $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_RANGE_UPDATE_INVALID_NEXT_POINTER'));
-                $table->transactionRollback();
-                return '';
-            }
-
             // Decrease free numbers pointer 
             $range->free -= 1;
             // Increase used numbers pointer
@@ -328,21 +330,6 @@ class IssnregistryModelIssnrange extends JModelAdmin {
 
         // Check that we have a result
         if ($range != null) {
-            // Decrease next pointer
-            $range->next = substr($range->next, 0, 3) - 1;
-            // Next pointer is a string, add left padding
-            $range->next = str_pad($range->next, 3, "0", STR_PAD_LEFT);
-            // Add ISSN range helper file
-            require_once JPATH_COMPONENT . '/helpers/issnrange.php';
-            // Get next pointer check digit
-            $rangeNextCheckDigit = IssnrangeHelper::countIssnCheckDigit($range->block . $range->next);
-            // Set next pointer check digit
-            $range->next .= $rangeNextCheckDigit;
-            // Validate next pointer
-            if (!IssnrangeHelper::validateIssn($range->block . $range->next)) {
-                $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_RANGE_UPDATE_INVALID_NEXT_POINTER'));
-                return false;
-            }
             // Update free
             $range->free += 1;
             // Update taken
@@ -352,6 +339,24 @@ class IssnregistryModelIssnrange extends JModelAdmin {
                 // Update is_closed and is_active
                 $range->is_closed = false;
                 $range->is_active = true;
+                // Range reopened, range end becomes next pointer
+                $range->next = $range->range_end;
+            } else {
+                // Decrease next pointer
+                $range->next = substr($range->next, 0, 3) - 1;
+                // Next pointer is a string, add left padding
+                $range->next = str_pad($range->next, 3, "0", STR_PAD_LEFT);
+                // Add ISSN range helper file
+                require_once JPATH_COMPONENT . '/helpers/issnrange.php';
+                // Get next pointer check digit
+                $rangeNextCheckDigit = IssnrangeHelper::countIssnCheckDigit($range->block . $range->next);
+                // Set next pointer check digit
+                $range->next .= $rangeNextCheckDigit;
+                // Validate next pointer
+                if (!IssnrangeHelper::validateIssn($range->block . $range->next)) {
+                    $this->setError(JText::_('COM_ISSNREGISTRY_ERROR_ISSN_RANGE_UPDATE_INVALID_NEXT_POINTER'));
+                    return false;
+                }
             }
             // Update to db
             if ($table->updateDecrease($range)) {
