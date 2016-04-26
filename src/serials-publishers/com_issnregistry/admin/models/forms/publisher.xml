@@ -22,7 +22,7 @@
 			description="COM_ISSNREGISTRY_PUBLISHER_FIELD_CONTACT_PERSONS_DESC"
 			select="COM_ISSNREGISTRY_PUBLICATION_FIELD_CONTACT_PERSONS_EDIT"
 			class="validate-contactperson"
-			maximum="5"
+			maximum="10"
             default="">
             <fieldset hidden="true" name="list_contact_persons" repeat="true">
                 <field name="name"

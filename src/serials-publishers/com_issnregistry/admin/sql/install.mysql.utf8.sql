@@ -120,7 +120,6 @@ CREATE TABLE `#__issn_registry_publication_archive` (
     `another_medium` VARCHAR(600),
     `additional_info` VARCHAR(1000),
     `form_id` INT DEFAULT 0,
-    `id_old` INT,
     `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `created_by` VARCHAR(30),
     PRIMARY KEY (`id`),
@@ -137,7 +136,7 @@ DROP TABLE IF EXISTS `#__issn_registry_publisher`;
 CREATE TABLE `#__issn_registry_publisher` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `official_name` VARCHAR(100) NOT NULL,
-    `contact_person` VARCHAR(100),
+    `contact_person` VARCHAR(1200),
     `email` VARCHAR(100) NOT NULL,
     `phone` VARCHAR(30),
     `address` VARCHAR(50) NOT NULL,
