@@ -8,7 +8,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted Access');
 ?>
-<form action="index.php?option=com_issnregistry&view=publications&formId=<?php echo JFactory::getApplication()->input->getInt('formId', 0); ?>&tmpl=component&layout=embed_form" method="post" id="adminForm" name="adminForm">
+<form action="index.php?option=com_issnregistry&view=publicationsembed&publisherId=<?php echo JFactory::getApplication()->input->getInt('publisherId', 0); ?>&tmpl=component" method="post" id="adminForm" name="adminForm">
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -22,8 +22,8 @@ defined('_JEXEC') or die('Restricted Access');
                 <th width="15%">
                     <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_MEDIUM'); ?>
                 </th>
-                <th width="20%">
-                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_STATUS'); ?>
+                <th width="10%">
+                    <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_FORM'); ?>
                 </th>	
                 <th width="2%">
                     <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATIONS_ID'); ?>
@@ -58,8 +58,10 @@ defined('_JEXEC') or die('Restricted Access');
                             <?php echo (empty($row->medium) ? '' : JText::_('COM_ISSNREGISTRY_PUBLICATION_MEDIUM_' . $row->medium)); ?>
                         </td>
                         <td>
-                            <?php echo JText::_('COM_ISSNREGISTRY_PUBLICATION_STATUS_' . $row->status); ?>
-                        </td>                                
+                            <a href="<?php echo $linkForm; ?>" title="<?php echo JText::_('COM_ISSNREGISTRY_FORM_EDIT'); ?>" target="new">
+                                <?php echo JText::_('COM_ISSNREGISTRY_FIELD_EDIT'); ?>
+                            </a>
+                        </td>	                                
                         <td align="center">
                             <?php echo $row->id; ?>
                         </td>

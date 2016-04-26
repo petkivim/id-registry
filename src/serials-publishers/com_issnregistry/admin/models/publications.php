@@ -66,31 +66,6 @@ class IssnregistryModelPublications extends JModelList {
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        // Get publisher id URL parameter
-        $publisherId = JFactory::getApplication()->input->getInt('publisherId');
-        // Get form id URL parameter
-        $formId = JFactory::getApplication()->input->getInt('formId');
-
-        // If publisher id is not null, the request comes from embed
-        // layout and no other filtering is needed
-        if ($publisherId != null) {
-            // Create the base select statement.
-            $query->select('*')
-                    ->from($db->quoteName('#__issn_registry_publication'));
-            $query->where($db->quoteName('publisher_id') . ' = ' . $db->quote($publisherId));
-            $query->where('status != "NO_ISSN_GRANTED"');
-            $query->order('title ASC');
-
-            return $query;
-        } else if ($formId != null) {
-            // Create the base select statement.
-            $query->select('*')
-                    ->from($db->quoteName('#__issn_registry_publication'));
-            $query->where($db->quoteName('form_id') . ' = ' . $db->quote($formId));
-            $query->order('id DESC');
-
-            return $query;
-        }
         // Get search string        
         $search = $this->getState('filter.search');
         // Get has quitted value
