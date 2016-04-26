@@ -43,10 +43,7 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->form->renderField('official_name'); ?>
                 <?php echo $this->form->renderField('contact_person'); ?>
                 <?php echo $this->form->renderField('lang_code'); ?>
-                <?php echo $this->form->renderField('created'); ?>
-                <?php echo $this->form->renderField('created_by'); ?>
-                <?php echo $this->form->renderField('modified'); ?>
-                <?php echo $this->form->renderField('modified_by'); ?>
+                <?php echo $this->form->renderField('additional_info'); ?>
             </div>
             <div class="span6">
                 <?php echo $this->form->renderField('address'); ?>
@@ -54,6 +51,7 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
                 <?php echo $this->form->renderField('city'); ?>
                 <?php echo $this->form->renderField('phone'); ?>
                 <?php echo $this->form->renderField('email'); ?>
+
             </div>
         </div>
         <?php echo JHtml::_('bootstrap.endTab'); ?>
@@ -66,6 +64,18 @@ $viewOnly = strcmp(htmlentities(JRequest::getVar('tmpl')), 'component') == 0 ? t
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'messages', JText::_('COM_ISSNREGISTRY_PUBLISHER_TAB_MESSAGES', true)); ?>
             <div class="row-fluid form-horizontal-desktop">
                 <?php echo $this->loadTemplate('messages_list'); ?>
+            </div>
+            <?php echo JHtml::_('bootstrap.endTab'); ?>
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'history', JText::_('COM_ISSNREGISTRY_PUBLISHER_TAB_HISTORY', true)); ?>
+            <div class="row-fluid form-horizontal-desktop">
+                <div class="span6">
+                    <?php echo $this->form->renderField('created'); ?>
+                    <?php echo $this->form->renderField('created_by'); ?>
+                    <?php echo $this->form->renderField('modified'); ?>
+                    <?php echo $this->form->renderField('modified_by'); ?>
+                </div>
+                <div class="span6">
+                </div>
             </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php endif; ?>

@@ -91,6 +91,15 @@
             label="COM_ISSNREGISTRY_PUBLISHER_FIELD_LANGUAGE_LABEL"
             description="COM_ISSNREGISTRY_PUBLISHER_FIELD_LANGUAGE_DESC"
         />
+        <field
+            name="additional_info"
+            type="textarea"
+            label="COM_ISSNREGISTRY_PUBLISHER_FIELD_ADDITIONAL_INFO_LABEL"
+            description="COM_ISSNREGISTRY_PUBLISHER_FIELD_ADDITIONAL_INFO_DESC"
+            class="inputbox validate-additionalinfo"
+            rows="3"
+            cols="40"
+        /> 		
         <field 
             name="created"
             type="calendar"

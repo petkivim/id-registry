@@ -1,3 +1,8 @@
 .header {
     background-color: #96AAC8!important;
 }
+
+#jform_additional_info {
+    width: 90%;
+    height: 30em;
+}

@@ -23,4 +23,7 @@ jQuery(document).ready(function () {
         regex = /^(\+){0,1}[0-9 ()]{0,30}$/;
         return regex.test(value);
     });
+    document.formvalidator.setHandler("additionalinfo", function (value) {
+        return value.length <= 2000;
+    });
 });
