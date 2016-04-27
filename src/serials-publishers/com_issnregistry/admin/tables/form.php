@@ -37,7 +37,7 @@ class IssnRegistryTableForm extends JTable {
      */
     public function store($updateNulls = false) {
         // Transform the params field
-        if (is_array($this->params)) {
+        if (isset($this->params) && is_array($this->params)) {
             $registry = new Registry;
             $registry->loadArray($this->params);
             $this->params = (string) $registry;

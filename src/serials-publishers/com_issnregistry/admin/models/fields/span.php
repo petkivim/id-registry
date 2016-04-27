@@ -21,7 +21,7 @@ class JFormFieldSpan extends JFormField {
     }
 
     public function getInput() {
-        $html .= '<span id="' . $this->id . '" class="' . $this->class . '">' . JText::_($this->default) . '</span>';
+        $html = '<span id="' . $this->id . '" class="' . $this->class . '">' . JText::_($this->default) . '</span>';
         return $html;
     }
 
