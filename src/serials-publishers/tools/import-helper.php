@@ -44,7 +44,7 @@ class ImportHelper {
         return $date->format('Y-m-d H:i:s');
     }
 
-    public static function readImportForm1($file) {
+    public static function readImportForm1($file, &$publisherLanguage, &$firstPublisherForm) {
         // Open file that contains forms data
         $fp = fopen($file, 'r');
 
@@ -66,6 +66,16 @@ class ImportHelper {
             }
             // Create a new form
             $form = self::getForm($data);
+            // Set publisher language
+            $publisherLanguage[$form['publisher_id']] = $form['lang_code'];
+            // Check if the fist form with current publisher has already
+            // been set
+            if (!array_key_exists($form['publisher_id'], $firstPublisherForm)) {
+                // Set publisher id - form id pair that tells the id of the
+                // form where the publisher id was used for the very first
+                // time
+                $firstPublisherForm[$form['publisher_id']] = $data[0];
+            }
             // Add new form to the forms array. Use old id as key.
             $forms[$data[0]] = $form;
         }
@@ -97,6 +107,105 @@ class ImportHelper {
             'created_by' => (preg_match('/^[\d\.]+$/i', $data[14]) ? 'WWW' : $data[14])
         );
         return $form;
+    }
+
+    public static function readImportPublisher1($file, $publisherLanguage, $firstPublisherForm) {
+        // Open file that contains publishers data
+        $fp = fopen($file, 'r');
+
+        // Array for results
+        $publishers = array();
+        // Line counter
+        $i = 0;
+        // Loop through the file. One publisher per line.
+        while (!feof($fp)) {
+            // Increase counter
+            $i++;
+            // Get line
+            $line = fgets($fp, 2048);
+            // Split by "\t"
+            $data = str_getcsv($line, "\t");
+            // Skip headers and empty lines
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
+                continue;
+            }
+            // Create a new publisher
+            $publisher = self::getPublisher($data, $publisherLanguage, $firstPublisherForm);
+            // Add new publisher to the publishers array. Use old id as key.
+            $publishers[$data[0]] = $publisher;
+        }
+        // Close file
+        fclose($fp);
+        // Return publishers
+        return $publishers;
+    }
+
+    public static function readImportPublisher2($file, &$publishers) {
+        // Open file that contains publishers data
+        $fp = fopen($file, 'r');
+
+        // Line counter
+        $i = 0;
+        // Loop through the file. One publisher per line.
+        while (!feof($fp)) {
+            // Increase counter
+            $i++;
+            // Get line
+            $line = fgets($fp, 2048);
+            // Split by "\t"
+            $data = str_getcsv($line, "\t");
+            // Skip headers and empty lines
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
+                continue;
+            }
+            // Check if publisher already has a contact person
+            if (empty($publishers[$data[0]]['contact_person'])) {
+                $contact = array(
+                    'name' => array(trim($data[1])),
+                    'email' => array(trim($data[2]))
+                );
+                $publishers[$data[0]]['contact_person'] = json_encode($contact, JSON_UNESCAPED_UNICODE);
+            } else {
+                // Decode string to JSON array
+                $json = json_decode($publishers[$data[0]]['contact_person'], true);
+                if (!empty($json)) {
+                    // Add new values to array
+                    array_push($json['name'], trim($data[1]));
+                    array_push($json['email'], trim($data[2]));
+                    // Encode array back to JSON string
+                    $publishers[$data[0]]['contact_person'] = json_encode($json, JSON_UNESCAPED_UNICODE);
+                }
+            }
+        }
+        // Close file
+        fclose($fp);
+    }
+
+    private static function getPublisher($data, $publisherLanguage, $firstPublisherForm) {
+        $contact = '';
+        if (!empty($data[2])) {
+            $contact = '{"name":["' . $data[2] . '"],"email":["' . $data[3] . '"]}';
+        }
+        // Create a new publisher
+        $publisher = array(
+            'id' => 0,
+            'official_name' => $data[1],
+            'contact_person' => $contact,
+            'email' => (empty($data[2]) ? $data[3] : ''),
+            'phone' => $data[4],
+            'address' => $data[5],
+            'zip' => $data[6],
+            'city' => $data[7],
+            'lang_code' => (array_key_exists($data[0], $publisherLanguage) ? $publisherLanguage[$data[0]] : self::getLanguage('')),
+            'additional_info' => $data[8],
+            'form_id' => (array_key_exists($data[0], $firstPublisherForm) ? $firstPublisherForm[$data[0]] : 0),
+            'id_old' => $data[0],
+            'created' => self::convertDate($data[9]),
+            'created_by' => $data[10],
+            'modified' => self::convertDate($data[11]),
+            'modified_by' => $data[12]
+        );
+        return $publisher;
     }
 
     public static function readImportRange1($file) {
