@@ -260,8 +260,8 @@ class IssnregistryModelStatistic extends JModelAdmin {
             $taken = $range->taken - $range->canceled;
             $row = array(
                 $range->block,
-                $free,
                 $taken,
+                $free,
                 ($free + $taken)
             );
             array_push($results, $row);
