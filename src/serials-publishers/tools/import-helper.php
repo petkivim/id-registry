@@ -18,11 +18,45 @@ class ImportHelper {
         'ENG' => 'en-GB',
         'SWE' => 'sv-SE'
     );
+    private static $publicationLanguages = array(
+        'SUOMI' => 'FIN',
+        'FINSKA' => 'FIN',
+        'FINNISH' => 'FIN',
+        'RUOTSI' => 'SWE',
+        'SVENSKA' => 'SWE',
+        'SWEDISH' => 'SWE',
+        'ENGLANTI' => 'ENG',
+        'ENGELSKA' => 'ENG',
+        'ENGLISH' => 'ENG'
+    );
     private static $formStates = array(
         '1' => 'NOT_HANDLED',
         '3' => 'NOT_NOTIFIED',
         '8' => 'COMPLETED',
         '9' => 'REJECTED'
+    );
+    private static $publicationTypes = array(
+        '1' => 'JOURNAL',
+        '2' => 'NEWSLETTER',
+        '3' => 'STAFF_MAGAZINE',
+        '4' => 'MEMBERSHIP_BASED_MAGAZINE',
+        '5' => 'CARTOON',
+        '6' => 'NEWSPAPER',
+        '7' => 'FREE_PAPER',
+        '8' => 'MONOGRAPHY_SERIES',
+        '9' => 'OTHER_SERIAL'
+    );
+    private static $mediums = array(
+        '1' => 'PRINTED',
+        '2' => 'ONLINE',
+        '3' => 'CDROM',
+        '4' => 'OTHER'
+    );
+    private static $statuses = array(
+        '1' => 'NO_PREPUBLICATION_RECORD',
+        '2' => 'ISSN_FROZEN',
+        '3' => 'WAITING_FOR_CONTROL_COPY',
+        '4' => 'COMPLETED'
     );
 
     public static function getLanguage($language) {
@@ -32,11 +66,39 @@ class ImportHelper {
         return self::$languages[$language];
     }
 
+    public static function getPublicationLanguage($language) {
+        if (!array_key_exists($language, self::$publicationLanguages)) {
+            return '';
+        }
+        return self::$publicationLanguages[$language];
+    }
+
     public static function getFormState($state) {
         if (!array_key_exists($state, self::$formStates)) {
             return self::$formStates['1'];
         }
         return self::$formStates[$state];
+    }
+
+    public static function getPublicationType($type) {
+        if (!array_key_exists($type, self::$publicationTypes)) {
+            return self::$publicationTypes['9'];
+        }
+        return self::$publicationTypes[$type];
+    }
+
+    public static function getMedium($medium) {
+        if (!array_key_exists($medium, self::$mediums)) {
+            return self::$mediums['4'];
+        }
+        return self::$mediums[$medium];
+    }
+
+    public static function getStatus($status) {
+        if (!array_key_exists($status, self::$statuses)) {
+            return self::$statuses['1'];
+        }
+        return self::$statuses[$status];
     }
 
     public static function convertDate($source) {
@@ -107,6 +169,131 @@ class ImportHelper {
             'created_by' => (preg_match('/^[\d\.]+$/i', $data[14]) ? 'WWW' : $data[14])
         );
         return $form;
+    }
+
+    public static function readImportPublication1($file) {
+        // Open file that contains publications data
+        $fp = fopen($file, 'r');
+
+        // Array for results
+        $publications = array();
+        // Line counter
+        $i = 0;
+        // Loop through the file. One publication per line.
+        while (!feof($fp)) {
+            // Increase counter
+            $i++;
+            // Get line
+            $line = fgets($fp, 2048);
+            // Split by "\t"
+            $data = str_getcsv($line, "\t");
+            // Skip headers and empty lines
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
+                continue;
+            }
+            // Create a new publication
+            $publication = self::getPublication($data);
+            // Add new publisher to the publications array. Use old id as key.
+            $publications[$data[0]] = $publication;
+        }
+        // Close file
+        fclose($fp);
+        // Return publications
+        return $publications;
+    }
+
+    private static function getPublication($data) {
+        // Variable for additional info
+        $additionalInfo = $data[23];
+        // Check that year is OK
+        $yearOk = preg_match('/^[\d]{4}$/i', trim($data[5]));
+        // Get language
+        $language = strtoupper(trim($data[8]));
+        // Validate language
+        $languageOk = self::validateLanguage($language);
+        if (!$languageOk) {
+            // Language is not OK, try to fix the most common errors
+            $language = self::getPublicationLanguage($language);
+            // Revalidate
+            $languageOk = self::validateLanguage($language);
+            // Check if the publication is multilingual
+            if (!$languageOk && self::isMultiLingual($language)) {
+                $language = 'MUL';
+                $additionalInfo .= empty($additionalInfo) ? '' : ' ';
+                $additionalInfo .= 'Lang: ' . $data[8];
+            } else {
+                $additionalInfo .= empty($additionalInfo) ? '' : ' ';
+                $additionalInfo .= 'Lang: ' . $data[8];
+            }
+        }
+        // Create a new publication
+        $publication = array(
+            'id' => 0,
+            'title' => $data[1],
+            'issn' => $data[2],
+            'place_of_publication' => $data[3],
+            'printer' => $data[4],
+            'issued_from_year' => ($yearOk ? $data[5] : ''),
+            'issued_from_number' => ($yearOk ? $data[6] : $data[5] . ', ' . $data[6]),
+            'frequency' => 'z',
+            'frequency_other' => $data[7],
+            'language' => $language,
+            'publication_type' => self::getPublicationType($data[9]),
+            'publication_type_other' => $data[10],
+            'medium' => self::getMedium($data[11]),
+            'medium_other' => $data[12],
+            'url' => (strlen(trim($data[13])) > 0 && !preg_match('/^http(s)?:\/\//', $data[13]) ? 'http://' . $data[13] : $data[13]),
+            'previous' => self::getPrevious($data),
+            'main_series' => self::getTitleIssn($data[17], $data[18]),
+            'subseries' => self::getTitleIssn($data[19], $data[20]),
+            'another_medium' => self::getTitleIssn($data[21], $data[22]),
+            'additional_info' => $additionalInfo,
+            'status' => self::getStatus($data[24]),
+            'form_id' => $data[25],
+            'publisher_id' => $data[26],
+            'id_old' => $data[0],
+            'created' => self::convertDate($data[27]),
+            'created_by' => $data[28],
+            'modified' => self::convertDate($data[29]),
+            'modified_by' => $data[30]
+        );
+        return $publication;
+    }
+
+    private static function getPrevious($data) {
+        $previous = array(
+            'title' => array(trim($data[14])),
+            'issn' => array(trim($data[15])),
+            'last_issue' => array(trim($data[16]))
+        );
+        return json_encode($previous, JSON_UNESCAPED_UNICODE);
+    }
+
+    private static function getTitleIssn($title, $issn) {
+        $arr = array(
+            'title' => array(trim($title)),
+            'issn' => array(trim($issn))
+        );
+        return json_encode($arr, JSON_UNESCAPED_UNICODE);
+    }
+
+    private static function getLanguageList() {
+        $languages = array(
+            'FIN', 'SWE', 'ENG', 'SMI', 'SPA', 'FRE', 'RUS', 'GER', 'MUL'
+        );
+        return $languages;
+    }
+
+    private static function validateLanguage($language) {
+        $languages = self::getLanguageList();
+        if (!in_array($language, $languages)) {
+            return false;
+        }
+        return true;
+    }
+
+    private static function isMultiLingual($langCode) {
+        return preg_match('(ja|tai| |,)', strtolower($langCode));
     }
 
     public static function readImportPublisher1($file, $publisherLanguage, $firstPublisherForm) {
