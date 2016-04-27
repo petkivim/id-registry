@@ -137,6 +137,8 @@ class ImportHelper {
                 // form where the publisher id was used for the very first
                 // time
                 $firstPublisherForm[$form['publisher_id']] = $data[0];
+                // Set publisher_created to true
+                $form['publisher_created'] = true;
             }
             // Add new form to the forms array. Use old id as key.
             $forms[$data[0]] = $form;
@@ -229,7 +231,7 @@ class ImportHelper {
         // Create a new publication
         $publication = array(
             'id' => 0,
-            'title' => $data[1],
+            'title' => trim($data[1]),
             'issn' => $data[2],
             'place_of_publication' => $data[3],
             'printer' => $data[4],
@@ -345,6 +347,10 @@ class ImportHelper {
             if ($i == 1 || strlen(trim($data[0])) == 0) {
                 continue;
             }
+            // Check that a corresponding publisher exists
+            if (!array_key_exists($data[0], $publishers)) {
+                continue;
+            }
             // Check if publisher already has a contact person
             if (empty($publishers[$data[0]]['contact_person'])) {
                 $contact = array(
@@ -376,7 +382,7 @@ class ImportHelper {
         // Create a new publisher
         $publisher = array(
             'id' => 0,
-            'official_name' => $data[1],
+            'official_name' => trim($data[1]),
             'contact_person' => $contact,
             'email' => (empty($data[2]) ? $data[3] : ''),
             'phone' => $data[4],
@@ -418,7 +424,7 @@ class ImportHelper {
             if (!array_key_exists($data[0], $ranges)) {
                 $ranges[$data[0]] = array();
             }
-            if (!array_key_exists('free ', $ranges[$data[0]])) {
+            if (!array_key_exists('free', $ranges[$data[0]])) {
                 $ranges[$data[0]]['free'] = 0;
             }
             if (!array_key_exists('taken', $ranges[$data[0]])) {
@@ -554,6 +560,58 @@ class ImportHelper {
 
         // Return identifiers
         return $identifiers;
+    }
+
+    public static function readImportIdentifier12($file) {
+        // Open file that contains identifiers data
+        $fp = fopen($file, 'r');
+
+        // Array for results
+        $identifiers = array();
+
+        // Line counter
+        $i = 0;
+        // Loop through the file. One identifier per line.
+        while (!feof($fp)) {
+            // Increase counter
+            $i++;
+            // Get line
+            $line = fgets($fp, 2048);
+            // Split by "\t"
+            $data = str_getcsv($line, "\t");
+            // Skip headers and empty lines
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
+                continue;
+            }
+
+            // Create new identifier if range id is not 0 and 
+            // status is 2
+            if ($data[2] != 0 && $data[3] == 2) {
+                // Get new range object
+                $issn = self::getIdentifierUsed($data);
+                // Add new identifier range to the identifier ranges array. Use 
+                // class id as key.
+                $identifiers[$data[0]] = $issn;
+            }
+        }
+        // Close file
+        fclose($fp);
+
+        // Return identifiers
+        return $identifiers;
+    }
+
+    private static function getIdentifierUsed($data) {
+        // Create a new identifier
+        $issn = array(
+            'id' => 0,
+            'issn' => $data[0],
+            'publication_id' => $data[2],
+            'issn_range_id' => $data[1],
+            'created' => self::convertDate($data[5]),
+            'created_by' => $data[4]
+        );
+        return $issn;
     }
 
 }
