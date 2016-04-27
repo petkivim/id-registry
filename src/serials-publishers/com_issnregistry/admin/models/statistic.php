@@ -256,13 +256,11 @@ class IssnregistryModelStatistic extends JModelAdmin {
         array_push($results, $row1);
         // Add results
         foreach ($ranges as $range) {
-            $free = $range->free + $range->canceled;
-            $taken = $range->taken - $range->canceled;
             $row = array(
                 $range->block,
-                $taken,
-                $free,
-                ($free + $taken)
+                $range->taken,
+                $range->free,
+                ($range->free + $range->taken)
             );
             array_push($results, $row);
         }
