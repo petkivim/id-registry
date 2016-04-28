@@ -485,7 +485,7 @@ class ImportHelper {
             'free' => $rangesFreeTaken[$data[0]]['free'],
             'taken' => $rangesFreeTaken[$data[0]]['taken'],
             'next' => self::getRangeNextPointer($data, $identifiers, $rangesFreeTaken),
-            'is_active' => false,
+            'is_active' => (($rangesFreeTaken[$data[0]]['free'] > 0 && $rangesFreeTaken[$data[0]]['taken'] > 0) ? true : false),
             'is_closed' => ($rangesFreeTaken[$data[0]]['free'] == 0 ? true : false),
             'id_old' => $data[0],
             'created' => self::convertDate($data[5]),
