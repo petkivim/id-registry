@@ -386,7 +386,7 @@ class ImportHelper {
         return $identifiers;
     }
 
-    public static function readImportIdentifier2($file, $identifiers, $ismn, $canceled) {
+    public static function readImportIdentifier2($file, $identifiers, $ismn, $canceled, &$publishersIdentifierCount) {
         // Open file that contains identifier range data
         $fp = fopen($file, 'r');
 
@@ -428,9 +428,55 @@ class ImportHelper {
                 }
             }
             if (isset($range)) {
+                if (!$canceled) {
+                    if (!array_key_exists($range['publisher_id'], $publishersIdentifierCount)) {
+                        $publishersIdentifierCount[$range['publisher_id']] = 1;
+                    } else {
+                        $publishersIdentifierCount[$range['publisher_id']] += 1;
+                    }
+                }
                 // Add new identifier range to the identifier ranges array. Use 
-                // class id as key.
+                // range id as key.
                 $results[$data[0]] = $range;
+            }
+            // Destroy range object
+            unset($range);
+        }
+        // Close file
+        fclose($fp);
+        // Return results
+        return $results;
+    }
+
+    public static function readImportIdentifier3($file, $ismn) {
+        // Open file that contains identifier range data
+        $fp = fopen($file, 'r');
+
+        // Array for results - publisher ranges or canceled publisher ranges
+        $results = array();
+        // Line counter
+        $i = 0;
+        // Loop through the file. One identifier range per line.
+        while (!feof($fp)) {
+            // Increase counter
+            $i++;
+            // Get line
+            $line = fgets($fp, 2048);
+            // Split by "\t"
+            $data = str_getcsv($line, "\t");
+            // Skip headers and empty lines
+            if ($i == 1 || strlen(trim($data[0])) == 0) {
+                continue;
+            }
+
+            // Check if we're handling ISMN or ISBN
+            if ($ismn && strcmp($data[3], 'M') == 0) {
+                $range = self::getUsedIdentifierRange($data, true);
+            } else if (!$ismn && strcmp($data[3], 'M') != 0) {
+                $range = self::getUsedIdentifierRange($data, false);
+            }
+            if (isset($range)) {
+                array_push($results, $range);
             }
             // Destroy range object
             unset($range);
@@ -476,12 +522,69 @@ class ImportHelper {
             'taken' => $next - $rangeBegin,
             'canceled' => 0,
             'next' => $next,
+            'id_old' => $data[0],
             'is_active' => false,
             'is_closed' => ($totalCount == $next ? true : false),
             'created' => self::convertDate($data[10]),
             'created_by' => $data[11]
         );
         return $range;
+    }
+
+    public static function handleMultiPublisherRanges(&$multiPublisherRanges, &$publishers, &$usedRanges, &$publishersIdentifierCount, $configuration) {
+        foreach ($multiPublisherRanges as $key => $mpr) {
+            // Get identifier
+            $identifier = $mpr['publisher_identifier'];
+            // Check that the configuration item exists
+            if (!array_key_exists($identifier, $configuration)) {
+                continue;
+            }
+            // Get publisher id of the owner from configuration
+            // Configuration:
+            // array('identifier' => publisher_id, 'identifier' => publisher_id)
+            $ownerId = $configuration[$identifier];
+            // Get the id of the current owner
+            $currentOwnerId = $mpr['publisher_id'];
+            // If this identifier is already owned by the owner, no
+            // need to do anything
+            if ($currentOwnerId == $ownerId) {
+                // Add range to used ranges
+                $usedRanges[$mpr['id_old']] = $mpr;
+                // Jump to next identifier
+                continue;
+            }
+            // Handle other current owners. If this is the
+            // only identifier of the current owner, the current owner can be
+            // removed, but some information must be copied to the
+            // additional_info field of the right owner.
+            // 
+            // Get other names
+            $otherNames = $publishers[$ownerId]['other_names'];
+            // Add current owner to other names
+            $otherNames .= empty($otherNames) ? $publishers[$currentOwnerId]['official_name'] : ', ' . $publishers[$currentOwnerId]['official_name'];
+            // Update value
+            $publishers[$ownerId]['other_names'] = $otherNames;
+            // Get additional_info from the right owner
+            $info = $publishers[$ownerId]['additional_info'];
+            // Add spacing if needed
+            $info .= empty($info) ? '' : ' ';
+            // Update info
+            $info .= 'Liitetty kustantaja ' . $publishers[$currentOwnerId]['official_name'] . ', ';
+            $info .= 'koska kustantajilla yhteinen tunnus ' . $identifier . '. ';
+            // Is this the only identifier of the current owner?
+            if (!array_key_exists($currentOwnerId, $publishersIdentifierCount) || $publishersIdentifierCount[$currentOwnerId] == 1) {
+                $info .= $publishers[$currentOwnerId]['official_name'] . ' poistettu, koska ei muita kustantajatunnuksia.';
+                // Remove the current owner from publishers
+                unset($publishers[$currentOwnerId]);
+            } else {
+                $info .= $publishers[$currentOwnerId]['official_name'] . ' jatetty rekisteriin, koska kustantajalla myös muita kustantajatunnuksia.';
+            }
+            // Get date and add it to additional info field
+            $date = new DateTime();
+            $info .= ' ' . $date->format('d.m.Y') . ' /IMPORT';
+            // Set info
+            $publishers[$ownerId]['additional_info'] = $info;
+        }
     }
 
 }
