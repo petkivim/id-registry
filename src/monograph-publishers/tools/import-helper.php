@@ -587,6 +587,33 @@ class ImportHelper {
         }
     }
 
+    public static function changeIdentifierOwner(&$identifiers, &$publishers, $configuration) {
+        foreach ($configuration as $conf) {
+            // Get configuration values
+            $identifierId = $conf[0];
+            $currentOwnerId = $conf[1];
+            $newOwnerId = $conf[2];
+            $removeCurrentOwner = $conf[3];
+            // Check that identifier exists
+            if (!array_key_exists($identifierId, $identifiers)) {
+                continue;
+            }
+            // Check that both current and new owner exist
+            if (!array_key_exists($currentOwnerId, $publishers) || !array_key_exists($newOwnerId, $publishers)) {
+                continue;
+            }
+            // Change owner if current owner id is correct
+            if ($identifiers[$identifierId]['publisher_id'] == $currentOwnerId) {
+                // Set new owner id
+                $identifiers[$identifierId]['publisher_id'] = $newOwnerId;
+                if ($removeCurrentOwner) {
+                    // Remove the current owner from publishers
+                    unset($publishers[$currentOwnerId]);
+                }
+            }
+        }
+    }
+
 }
 
 ?>
