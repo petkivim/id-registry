@@ -61,12 +61,8 @@ class IsbnregistryViewGroupmessages extends JViewLegacy {
         JToolBarHelper::editList('groupmessage.edit', 'COM_ISBNREGISTRY_GROUP_MESSAGE_EDIT');
         JToolBarHelper::deleteList('', 'groupmessages.delete');
 
-        // Get current user
-        $user = JFactory::getUser();
-        // Is it a super user?
-        $isroot = $user->authorise('core.admin');
-        // Only super users can access preferences
-        if ($isroot) {
+        // Has user rights to access preferences?
+        if (JFactory::getUser()->authorise('core.admin', 'com_isbnregistry')) {
             JToolBarHelper::preferences('com_isbnregistry');
         }
     }

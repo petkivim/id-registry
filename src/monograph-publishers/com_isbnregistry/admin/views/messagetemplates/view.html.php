@@ -68,12 +68,8 @@ class IsbnregistryViewMessagetemplates extends JViewLegacy {
         JToolBarHelper::editList('messagetemplate.edit');
         JToolBarHelper::deleteList('', 'messagetemplates.delete');
 
-        // Get current user
-        $user = JFactory::getUser();
-        // Is it a super user?
-        $isroot = $user->authorise('core.admin');
-        // Only super users can access preferences
-        if ($isroot) {
+        // Has user rights to access preferences?
+        if (JFactory::getUser()->authorise('core.admin', 'com_isbnregistry')) {
             JToolBarHelper::preferences('com_isbnregistry');
         }
     }
