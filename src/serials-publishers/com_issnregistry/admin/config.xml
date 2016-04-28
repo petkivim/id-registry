@@ -56,7 +56,7 @@
             min="0"
         />			
 	</fieldset>
-<fieldset
+	<fieldset
 		name="export"
 		label="COM_ISSNREGISTRY_CONFIG_EXPORT_LABEL"
 		description="COM_ISSNREGISTRY_CONFIG_EXPORT_DESC"
@@ -71,5 +71,21 @@
 			<option value="CSV">CSV</option>
 			<option value="XLS">XLS</option>
 		</field>					
+	</fieldset>		
+	<fieldset
+		name="permissions"
+		label="JCONFIG_PERMISSIONS_LABEL"
+		description="JCONFIG_PERMISSIONS_DESC"
+		>
+		<field
+			name="rules"
+			type="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			class="inputbox"
+			validate="rules"
+			filter="rules"
+			component="com_issnregistry"
+			section="component"
+		/>	
 	</fieldset>		
 </config>

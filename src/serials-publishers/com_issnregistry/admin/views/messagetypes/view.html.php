@@ -61,12 +61,8 @@ class IssnregistryViewMessagetypes extends JViewLegacy {
         JToolBarHelper::editList('messagetype.edit');
         JToolBarHelper::deleteList('', 'messagetypes.delete');
 
-        // Get current user
-        $user = JFactory::getUser();
-        // Is it a super user?
-        $isroot = $user->authorise('core.admin');
-        // Only super users can access preferences
-        if ($isroot) {
+        // Has user rights to access preferences?
+        if (JFactory::getUser()->authorise('core.admin', 'com_issnregistry')) {
             JToolBarHelper::preferences('com_issnregistry');
         }
     }

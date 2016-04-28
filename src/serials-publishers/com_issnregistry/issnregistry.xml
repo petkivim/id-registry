@@ -3,7 +3,7 @@
 
     <name>COM_ISSNREGISTRY</name>
     <!-- The following elements are optional and free of formatting constraints -->
-    <creationDate>27 April 2016</creationDate>
+    <creationDate>28 April 2016</creationDate>
     <author>Petteri Kivimäki</author>
     <copyright>(C)2016 Petteri Kivimäki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
@@ -60,6 +60,7 @@
             <filename>issnregistry.php</filename>
             <filename>controller.php</filename>
 			<filename>config.xml</filename>
+			<filename>access.xml</filename>
             <!-- SQL files section -->
             <folder>sql</folder>
             <!-- tables files section -->
