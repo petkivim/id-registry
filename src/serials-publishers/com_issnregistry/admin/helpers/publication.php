@@ -311,7 +311,7 @@ class PublicationHelper extends JHelperContent {
                 if (empty($json->{'title'}[$i]) && empty($json->{'issn'}[$i])) {
                     continue;
                 }
-                $datafield = new DataField('762', '0', '#');
+                $datafield = new DataField('762', '0', ' ');
                 $datafield->addSubfield(new Subfield('t', $json->{'title'}[$i]));
                 $datafield->addSubfield(new Subfield('x', $json->{'issn'}[$i]));
                 $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
