@@ -32,11 +32,11 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("phone", function (value) {
-        regex = /^(\+){0,1}[0-9 ()]{0,30}$/;
+        regex = /^.{0,30}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("www", function (value) {
-        regex = /^http(s)?:\/\/(www\.)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+        regex = /^.{0,100}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("question1", function (value) {
@@ -79,7 +79,7 @@ jQuery(document).ready(function () {
         return value.length <= 2000;
     });
     document.formvalidator.setHandler("yearquitted", function (value) {
-        regex = /^\d{4}$/;
+        regex = /^.{4}$/;
         return regex.test(value);
     });
 });
