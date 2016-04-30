@@ -233,17 +233,6 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
             return false;
         }
 
-        // Go through identifiers that should be new and not canceled before.
-        // These identifiers must have the same publisher identifier range id
-        // with the batch object. If the id is not the same there are probably
-        // canceled identifiers that are from a later range. In this case delete
-        // process should be different and that's not supported.
-        for ($i = 0; $i < $identifierBatch->identifier_count; $i++) {
-            if ($identifiers[$i]->publisher_identifier_range_id != $identifierBatch->publisher_identifier_range_id) {
-                $table->transactionRollback();
-                return false;
-            }
-        }
         // Get an instance of identifier canceled model
         $identifierCanceledModel = $this->getInstance('Identifiercanceled', 'IsbnregistryModel');
         // Get publisher identifier range object - we need to know the category
@@ -254,41 +243,52 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         // Add publisher range to cache
         $rangeCache[$publisherIdentifierRange->id] = $publisherIdentifierRange;
 
-        // Reused identifiers must be moved back to cancelled identifiers
-        for ($i = $identifierBatch->identifier_count; $i < $identifierBatch->identifier_count + $identifierBatch->identifier_canceled_used_count; $i++) {
-            // Create new identifier canceled object
-            $identifierCanceled = array(
-                'id' => 0,
-                'identifier' => $identifiers[$i]->identifier,
-                'identifier_type' => $identifierBatch->identifier_type,
-                'category' => $publisherIdentifierRange->category,
-                'publisher_id' => $identifierBatch->publisher_id,
-                'publisher_identifier_range_id' => $identifiers[$i]->publisher_identifier_range_id
-            );
+        // Go through all the identifiers and move reused identifiers back to
+        // canceled identifiers. Canceled identifiers can be recognized from
+        // publisher identifier range id which is different from identifier
+        // batch object's publisher identifier range id. For identifiers that
+        // are from the range defined by identifier batch, it's enough to update
+        // the range's counters and pointers, and delete the identifiers.
+        // The range's counters were already updated earlier and all the used
+        // identifiers will be deleted later. In other words, at this point we
+        // only must deal with reused/canceled identifiers and ignore the rest.
+        for ($i = 0; $i < $identifierBatch->identifier_count + $identifierBatch->identifier_canceled_used_count; $i++) {
+            // If publisher identifier range ids do not match, this identifier must be added to canceled identifiers
+            if ($identifiers[$i]->publisher_identifier_range_id != $identifierBatch->publisher_identifier_range_id) {
+                // Create new identifier canceled object
+                $identifierCanceled = array(
+                    'id' => 0,
+                    'identifier' => $identifiers[$i]->identifier,
+                    'identifier_type' => $identifierBatch->identifier_type,
+                    'category' => $publisherIdentifierRange->category,
+                    'publisher_id' => $identifierBatch->publisher_id,
+                    'publisher_identifier_range_id' => $identifiers[$i]->publisher_identifier_range_id
+                );
 
-            // Save new identifier canceled object
-            if (!$identifierCanceledModel->save($identifierCanceled)) {
-                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_SAVE_IDENTIFIER_CANCELED_FAILED'));
-                $table->transactionRollback();
-                return false;
-            }
+                // Save new identifier canceled object
+                if (!$identifierCanceledModel->save($identifierCanceled)) {
+                    $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_SAVE_IDENTIFIER_CANCELED_FAILED'));
+                    $table->transactionRollback();
+                    return false;
+                }
 
-            // Check if publisher range is in cache
-            if (!array_key_exists($identifiers[$i]->publisher_identifier_range_id, $rangeCache)) {
-                $rangeCache[$identifiers[$i]->publisher_identifier_range_id] = $rangeModel->getItem($identifiers[$i]->publisher_identifier_range_id);
-            }
-            // Increase publisher identifier range canceled counter
-            $rangeCache[$identifiers[$i]->publisher_identifier_range_id]->canceled += 1;
-            // Check if closed
-            if ($rangeCache[$identifiers[$i]->publisher_identifier_range_id]->is_closed) {
-                // Update is_closed
-                $rangeCache[$identifiers[$i]->publisher_identifier_range_id]->is_closed = false;
-            }
-            // Update to database
-            if (!$rangeModel->increaseCanceled($rangeCache[$identifiers[$i]->publisher_identifier_range_id], 1)) {
-                $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));
-                $table->transactionRollback();
-                return false;
+                // Check if publisher range is in cache
+                if (!array_key_exists($identifiers[$i]->publisher_identifier_range_id, $rangeCache)) {
+                    $rangeCache[$identifiers[$i]->publisher_identifier_range_id] = $rangeModel->getItem($identifiers[$i]->publisher_identifier_range_id);
+                }
+                // Increase publisher identifier range canceled counter
+                $rangeCache[$identifiers[$i]->publisher_identifier_range_id]->canceled += 1;
+                // Check if closed
+                if ($rangeCache[$identifiers[$i]->publisher_identifier_range_id]->is_closed) {
+                    // Update is_closed
+                    $rangeCache[$identifiers[$i]->publisher_identifier_range_id]->is_closed = false;
+                }
+                // Update to database
+                if (!$rangeModel->increaseCanceled($rangeCache[$identifiers[$i]->publisher_identifier_range_id], 1)) {
+                    $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_DELETE_IDENTIFIER_UPDATE_IDENTIFIER_RANGE_FAILED'));
+                    $table->transactionRollback();
+                    return false;
+                }
             }
         }
         // Put identifier ids into array that we can delete them easily
