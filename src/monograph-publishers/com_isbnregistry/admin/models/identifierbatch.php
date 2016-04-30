@@ -238,6 +238,30 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
         // Get publisher identifier range object - we need to know the category
         $publisherIdentifierRange = $rangeModel->getItem($identifiers[0]->publisher_identifier_range_id);
 
+        // Array for ids of new identifiers that can be canceled by updating
+        // range counters
+        $newIdentifierIds = array();
+        // If canceled identifiers have been used we must know if some of them
+        // is from the same range with new identifiers
+        if ($identifierBatch->identifier_canceled_used_count > 0) {
+            // Counter for new identifiers that have been added to the table
+            $j = 0;
+            // Go through all the identifiers and add their ids to new identifiers
+            // table.
+            foreach ($identifiers as $identifier) {
+                // Identifier batch's identifier count tells the number of new
+                // identifiers. The identifiers are sorted by identfier in 
+                // descending order which means that new identifiers come
+                // first. As we know the number of new identifiers so we
+                // can collect their ids.
+                if ($identifier->publisher_identifier_range_id == $identifierBatch->publisher_identifier_range_id && $j < $identifierBatch->identifier_count) {
+                    // Add identifier to new identifiers array
+                    array_push($newIdentifierIds, $identifier->id);
+                    // Update counter
+                    $j++;
+                }
+            }
+        }
         // Cache for publisher ranges
         $rangeCache = array();
         // Add publisher range to cache
@@ -245,16 +269,21 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
 
         // Go through all the identifiers and move reused identifiers back to
         // canceled identifiers. Canceled identifiers can be recognized from
-        // publisher identifier range id which is different from identifier
-        // batch object's publisher identifier range id. For identifiers that
+        // publisher identifier range id which may be different from identifier
+        // batch object's publisher identifier range id. For new identifiers that
         // are from the range defined by identifier batch, it's enough to update
         // the range's counters and pointers, and delete the identifiers.
         // The range's counters were already updated earlier and all the used
-        // identifiers will be deleted later. In other words, at this point we
-        // only must deal with reused/canceled identifiers and ignore the rest.
+        // identifiers will be deleted later. However, some canceled identifiers
+        // might be from the same range with new identifiers which is why
+        // we use the new identifiers array as help.
         for ($i = 0; $i < $identifierBatch->identifier_count + $identifierBatch->identifier_canceled_used_count; $i++) {
-            // If publisher identifier range ids do not match, this identifier must be added to canceled identifiers
-            if ($identifiers[$i]->publisher_identifier_range_id != $identifierBatch->publisher_identifier_range_id) {
+            // If publisher identifier range ids do not match, this identifier 
+            // must be added to canceled identifiers. The identifier must
+            // be added to canceled identifiers also in case that range ids
+            // match, but identifier's id is not found from new identifiers
+            // array.
+            if ($identifiers[$i]->publisher_identifier_range_id != $identifierBatch->publisher_identifier_range_id || !in_array($identifiers[$i]->id, $newIdentifierIds)) {
                 // Create new identifier canceled object
                 $identifierCanceled = array(
                     'id' => 0,
