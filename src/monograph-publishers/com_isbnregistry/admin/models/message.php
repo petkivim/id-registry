@@ -291,6 +291,11 @@ class IsbnregistryModelMessage extends JModelAdmin {
         // Set message
         $message->message = $template->message;
 
+        // Check if publication identifiers should be added to the message
+        $addPublicationIdentifiers = ConfigurationHelper::addPublicationIdentifiers($code);
+        // Variable that tells if publisher identifier has been added to the message
+        $publisherIdentifierAddedd = false;
+
         // Load publisher identifier
         // Do we need to load ISBN or ISMN?
         $type = ConfigurationHelper::isIsbn($code) ? 'isbn' : 'ismn';
@@ -302,6 +307,26 @@ class IsbnregistryModelMessage extends JModelAdmin {
         if ($publisherIdentifierRange) {
             // Add publisher identifier to the template
             $message->message = $this->filterPublisherIdentifier($message->message, $publisherIdentifierRange->publisher_identifier);
+            $publisherIdentifierAddedd = true;
+        } else if ($addPublicationIdentifiers) {
+            // Publisher identifier range may have been closed after identifier
+            // generation and publisher does not currently have active identifier.
+            // Load identifier batch model so that we can use the identifier
+            // that was used during identifier generation
+            $identifierBatchModel = JModelLegacy::getInstance('identifierbatch', 'IsbnregistryModel');
+            // Load batch object
+            $identifierBatch = $identifierBatchModel->getItem($identifierBatchId);
+            // Check publisher identifier range id value
+            if ($identifierBatch->publisher_identifier_range_id > 0) {
+                // Get publisher identifier range object used in identifier batch
+                $publisherIdentifierRange = $publisherIdentifierRangeModel->getItem($identifierBatch->publisher_identifier_range_id);
+                // Check that we have a result
+                if ($publisherIdentifierRange) {
+                    // Add publisher identifier to the template
+                    $message->message = $this->filterPublisherIdentifier($message->message, $publisherIdentifierRange->publisher_identifier);
+                    $publisherIdentifierAddedd = true;
+                }
+            }
         } else {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_ACTIVE_PUBLISHER_IDENTIFIERS_FOUND'), 'warning');
         }
@@ -310,8 +335,6 @@ class IsbnregistryModelMessage extends JModelAdmin {
         // in "filterPublicationIdentifiers" function later
         JFactory::getLanguage()->load('com_isbnregistry_email', JPATH_ADMINISTRATOR, $message->lang_code, true);
 
-        // Check if publication identifiers should be added to the message
-        $addPublicationIdentifiers = ConfigurationHelper::addPublicationIdentifiers($code);
         // Add identifiers if needed
         if ($addPublicationIdentifiers) {
             // Load identifier model
@@ -329,6 +352,19 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $message->has_attachment = $useAttachment;
             // Add identifiers
             $message->message = $this->filterPublicationIdentifiers($message->message, $identifiers, $useAttachment);
+            // Check if publisher identifier has been added already
+            if (!$publisherIdentifierAddedd) {
+                // Get publisher identifier range object used in the first identifier
+                $publisherIdentifierRange = $publisherIdentifierRangeModel->getItem($identifiers[0]->publisher_identifier_range_id);
+                // Check that we have a result
+                if ($publisherIdentifierRange) {
+                    // Add publisher identifier to the template
+                    $message->message = $this->filterPublisherIdentifier($message->message, $publisherIdentifierRange->publisher_identifier);
+                    $publisherIdentifierAddedd = true;
+                } else {
+                    JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_ERROR_MESSAGE_NO_PUBLISHER_IDENTIFIERS_FOUND'), 'warning');
+                }
+            }
         }
         // Filter message
         $message->message = $this->filterMessage($message->message, $publisher);
