@@ -352,7 +352,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 // Check if there are identifiers that must be cancelled
                 if ($publisherRange->free > 0) {
                     // Get all the free identifiers from the current range
-                    $idsToCancel = $this->generateIdentifiers($publisherId, $publisherRange->free);
+                    $idsToCancel = $this->generateIdentifiers($publisherId, ($publisherRange->free + $publisherRange->canceled));
 
                     // Cancel all the identifiers that were generated from the
                     // the current range
