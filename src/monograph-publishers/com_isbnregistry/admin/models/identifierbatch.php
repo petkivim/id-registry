@@ -170,8 +170,8 @@ class IsbnregistryModelIdentifierbatch extends JModelAdmin {
             return false;
         }
 
-        // Check that no single identifiers have been canceled
-        if ($identifierBatch->identifier_canceled_count != 0) {
+        // Check that no single identifiers have been canceled or deleted
+        if ($identifierBatch->identifier_canceled_count != 0 || $identifierBatch->identifier_deleted_count != 0) {
             $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_IDENTIFIER_BATCH_DELETE_FAILED_CANCELED_COUNT_NOT_ZERO'));
             return false;
         }
