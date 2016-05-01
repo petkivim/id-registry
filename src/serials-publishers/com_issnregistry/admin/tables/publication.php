@@ -84,7 +84,7 @@ class IssnRegistryTablePublication extends JTable {
                 $form = $formModel->getItem($this->form_id);
                 // Decrease publication count by one
                 if (!$formModel->decreasePublicationCount($form->id, $form->publication_count)) {
-                    JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_UPDATE_PUBLICATION_COUNT_FAILED'), 'warning');
+                    //JFactory::getApplication()->enqueueMessage(JText::_('COM_ISSNREGISTRY_FORM_UPDATE_PUBLICATION_COUNT_FAILED'), 'warning');
                 }
             }
             // Load publication archive model
