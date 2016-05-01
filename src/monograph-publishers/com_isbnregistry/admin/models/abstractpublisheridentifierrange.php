@@ -211,6 +211,11 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
      * @param type $count number of identifiers to be generated
      * @param int $publicationId id of the publication if the identifiers
      * to be generated are for a particular publication. 0 by default.
+     * @param boolean $useCanceledFromAnyRange boolean value that tells if
+     * canceled identifiers should be used only from currently active range
+     * or from any range with the same category. When false, only canceled
+     * identifiers from the active range are used; otherwise canceled identifiers
+     * form any range with the same category are used
      * @return array array of identifiers on success, empty array on failure
      */
     public function generateIdentifiers($publisherId, $count, $publicationId = 0, $useCanceledFromAnyRange = false) {
