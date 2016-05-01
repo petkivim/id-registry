@@ -213,7 +213,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
      * to be generated are for a particular publication. 0 by default.
      * @return array array of identifiers on success, empty array on failure
      */
-    public function generateIdentifiers($publisherId, $count, $publicationId = 0) {
+    public function generateIdentifiers($publisherId, $count, $publicationId = 0, $useCanceledFromAnyRange = false) {
         // Get db access
         $table = $this->getTable();
         // Start transaction
@@ -261,7 +261,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         if ($publicationId != 0) {
             // Load publication model
             $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
-            // Get publication format
+            // Get publication
             $publication = $publicationModel->getItem($publicationId);
             // Check that the format has been set
             if (!$publication) {
@@ -270,6 +270,10 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 return $resultsArray;
             } else if (empty($publication->publication_format)) {
                 $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_' . $identifierType . '_NUMBER_FAILED_NO_FORMAT'));
+                $table->transactionRollback();
+                return $resultsArray;
+            } else if ($publication->publisher_id != $publisherId) {
+                $this->setError(JText::_('COM_ISBNREGISTRY_PUBLISHER_GET_IDENTIFIER_PUBLICATION_INVALID_PUBLISHER_ID'));
                 $table->transactionRollback();
                 return $resultsArray;
             }
@@ -320,7 +324,13 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
         // Load identifier canceled model
         $identifierCanceledModel = JModelLegacy::getInstance('identifiercanceled', 'IsbnregistryModel');
         // Get canceled identifiers
-        $canceledIdentifiers = $identifierCanceledModel->getIdentifiers($publisherRange->category, $publisherId, $identifierType, $count, $publisherRange->id);
+        if ($useCanceledFromAnyRange) {
+            // Get canceled identifiers from any range with the same category
+            $canceledIdentifiers = $identifierCanceledModel->getIdentifiers($publisherRange->category, $publisherId, $identifierType, $count);
+        } else {
+            // Get canceled identifiers that belong to the same range only
+            $canceledIdentifiers = $identifierCanceledModel->getIdentifiers($publisherRange->category, $publisherId, $identifierType, $count, $publisherRange->id);
+        }
         // Get canceled identifiers count
         $canceledIdentifiersCount = sizeof($canceledIdentifiers);
         // Update count
@@ -342,7 +352,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 $newPublisherRange = $table->getPublisherRangeByPublisherIdAndCategory($publisherRange->publisher_id, $publisherRange->category);
                 // New range must have enough numbers that it can cover the missing part:
                 // canceled identifiers + current range free + new range free >= original count
-                if ($newPublisherRange->free < ($count - $publisherRange->free)) {
+                if (($newPublisherRange->free + $newPublisherRange->canceled ) < ($count - $publisherRange->free)) {
                     $this->setError(JText::_('COM_ISBNREGISTRY_ERROR_PUBLISHER_IDENTIFIER_RANGE_NOT_ENOUGH_FREE_IDENTIFIERS'));
                     $table->transactionRollback();
                     // If not enough free numbers, return an empty array
@@ -376,7 +386,7 @@ abstract class IsbnregistryModelAbstractPublisherIdentifierRange extends JModelA
                 // Generate identifiers - these results include earlier created
                 // and then cancelled identifiers, and identifiers from the
                 // new range
-                $resultsArray = $this->generateIdentifiers($publisherId, ($count + $canceledIdentifiersCount), $publicationId);
+                $resultsArray = $this->generateIdentifiers($publisherId, ($count + $canceledIdentifiersCount), $publicationId, true);
                 // Return results
                 return $resultsArray;
             }

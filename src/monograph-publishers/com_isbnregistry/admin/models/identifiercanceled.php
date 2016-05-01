@@ -93,35 +93,8 @@ class IsbnregistryModelIdentifiercanceled extends JModelAdmin {
     public function getIdentifiers($category, $publisherId, $identifierType, $count, $rangeId = 0) {
         // Get db access
         $table = $this->getTable();
-        // Try to get a canceled identifiers from the given range
-        $identifiersWithRange = $table->getIdentifiers($category, $publisherId, $identifierType, $count, $rangeId);
-        // Return result if we have one
-        if (!empty($identifiersWithRange)) {
-            // Check if we got all the identifiers
-            if (sizeof($identifiersWithRange) == $count) {
-                return $identifiersWithRange;
-            } else {
-                // If identifiers are still missing, update count variable
-                $count -= sizeof($identifiersWithRange);
-            }
-        }
-        // Try to get missing canceled identifiers with the same category, 
-        // but from any range
-        $identifiersNoRange = $table->getIdentifiers($category, $publisherId, $identifierType, $count);
-        // Merge arrays
-        $identifiers = array_merge($identifiersWithRange, $identifiersNoRange);
-        // We may have double values that must be removed
-        $result = array();
-        $index = array();
-        // Loop through merged arrays and remove double values
-        foreach ($identifiers as $identifier) {
-            if (!array_key_exists($identifier->identifier, $index)) {
-                array_push($result, $identifier);
-                $index[$identifier->identifier] = 1;
-            }
-        }
-        // Return result
-        return $result;
+        // Get canceled identifiers from the given range
+        return $table->getIdentifiers($category, $publisherId, $identifierType, $count, $rangeId);
     }
 
     /**
