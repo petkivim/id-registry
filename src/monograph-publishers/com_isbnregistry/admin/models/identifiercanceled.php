@@ -79,8 +79,8 @@ class IsbnregistryModelIdentifiercanceled extends JModelAdmin {
 
     /**
      * Returns the smallest canceled identifier objects (fifo) that belong to 
-     * the given category and publisher, presents the given type and that 
-     * was given from the range identified by the given id. If id is not 
+     * the given category and publisher, represent the given type and that 
+     * belong to the range identified by the given id. If id is not 
      * defined, the smallest identifiers from any range are returned.
      * @param int $category category identifier category
      * @param int $publisherId publisher id
