@@ -121,7 +121,7 @@ class PublicationHelper extends JHelperContent {
         // 15-17
         $field .= "fi ";
         // 18
-        $field .= $frequency;
+        $field .= empty($frequency) ? '|' : $frequency;
         // 19-20
         $field .= "||";
         // 21
