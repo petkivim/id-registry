@@ -2,7 +2,7 @@
 <extension type="plugin" group="content" version="2.5" method="upgrade">
     <name>PLG_ISSNREGISTRY_FORMS</name>
     <author>Petteri Kivimäki</author>
-    <creationDate>16 April 2016</creationDate>
+    <creationDate>5 May 2016</creationDate>
     <copyright>(C)2016 Petteri Kivimaki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
     <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
