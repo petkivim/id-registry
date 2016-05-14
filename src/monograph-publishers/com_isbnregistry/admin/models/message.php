@@ -276,6 +276,10 @@ class IsbnregistryModelMessage extends JModelAdmin {
                 $publisher->city = $publication->city;
                 // Update recipient
                 $message->recipient = $publication->email;
+            } else if (!empty($publication->email)) {
+                // Update recipient - publication email address is the
+                // primary email address
+                $message->recipient = $publication->email;
             }
         }
 
