@@ -417,6 +417,10 @@ class ImportHelper {
                         $range = self::getUsedIdentifierRange($data, true);
                     }
                 }
+                // If range is set, replace '979-M' with '979-0'
+                if (isset($range)) {
+                   $range = preg_replace('/^979-M/', '979-0', $range); 
+                }
             } else if (!$ismn && strcmp($data[3], 'M') != 0) {
                 // Canceled or used publisher ranges?
                 if ($canceled && in_array($data[0], $identifiers[$data[2]]['canceled'])) {
