@@ -52,6 +52,11 @@ class IsbnregistryViewIdentifierbatches extends JViewLegacy {
         $this->messages = $ids;
         // Set publisher id
         $this->publisher_id = $publisherId;
+
+        // Get component parameters
+        $params = JComponentHelper::getParams('com_isbnregistry');
+        // Set identifiers attachment limit
+        $this->attachmentLimit = $params->get('identifiers_attachment_limit', 0);
         
         // Render the sidebar - pagination does not work without this!
         $this->sidebar = JHtmlSidebar::render();
