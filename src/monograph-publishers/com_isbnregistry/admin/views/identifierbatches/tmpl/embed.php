@@ -15,7 +15,7 @@ JHTML::_('behavior.modal');
             <tr>
                 <th width="1%"><?php echo JText::_('COM_ISBNREGISTRY_IDENTIFIER_BATCHES_NUM'); ?></th>
                 <th width="30%">
-                    <?php echo JText::_('COM_ISBNREGISTRY_IDENTIFIER_BATCHES_PUBLICATION'); ?>
+                    <?php echo JText::_('COM_ISBNREGISTRY_IDENTIFIER_BATCHES_PUBLICATION_OR_SUBJECT'); ?>
                 </th>	
                 <th width="10%">
                     <?php echo JText::_('COM_ISBNREGISTRY_IDENTIFIER_BATCHES_MESSAGE'); ?>
@@ -59,13 +59,17 @@ JHTML::_('behavior.modal');
                                 $publicationUrl = JRoute::_('index.php?option=com_isbnregistry&task=publication.edit&id=' . $row->publication_id);
                                 echo '<a href="' . $publicationUrl . '" title="' . JText::_('COM_ISBNREGISTRY_EDIT_PUBLICATION') . '" target="blank">' . $this->publications[$row->publication_id] . '</a>';
                             } else {
-                                echo '-';
+                                if (array_key_exists($row->id, $this->messages)) {
+                                    echo $this->messages[$row->id]->subject;
+                                } else {
+                                    echo '-';
+                                }
                             }
                             ?>
                         </td>  
                         <td>
                             <?php
-                            if (empty($this->messages[$row->id])) {
+                            if (!array_key_exists($row->id, $this->messages)) {
                                 $publicationId = '';
                                 if ($row->publication_id != 0) {
                                     $code = 'identifier_created_' . strtolower($row->identifier_type);
@@ -77,7 +81,7 @@ JHTML::_('behavior.modal');
                                 $url .= '" class="modal" rel="{size: {x: 800, y: 500}, handler:\'iframe\'}">' . JText::_('COM_ISBNREGISTRY_IDENTIFIER_BATCHES_SEND_MESSAGE') . '</a>';
                                 echo $url;
                             } else {
-                                $url = '<a target="blank" href="' . JRoute::_('index.php?option=com_isbnregistry&view=message&id=' . $this->messages[$row->id]) . '">';
+                                $url = '<a target="blank" href="' . JRoute::_('index.php?option=com_isbnregistry&view=message&id=' . $this->messages[$row->id]->id) . '">';
                                 $url .= JText::_('COM_ISBNREGISTRY_IDENTIFIER_BATCHES_SHOW_MESSAGE') . '</a>';
                                 echo $url;
                             }

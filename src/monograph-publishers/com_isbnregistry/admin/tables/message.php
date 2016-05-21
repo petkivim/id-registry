@@ -164,7 +164,7 @@ class IsbnRegistryTableMessage extends JTable {
         $query = $this->_db->getQuery(true);
 
         // Create the query
-        $query->select('id, batch_id')
+        $query->select('id, batch_id, subject')
                 ->from($this->_db->quoteName($this->_tbl))
                 ->where($this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
         $query->order('id ASC');

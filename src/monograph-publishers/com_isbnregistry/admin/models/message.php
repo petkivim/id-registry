@@ -554,7 +554,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
         $results = array();
         // Loop through the ids
         foreach ($ids as $id) {
-            $results[$id->batch_id] = $id->id;
+            $results[$id->batch_id] = $id;
         }
         // Return results
         return $results;
