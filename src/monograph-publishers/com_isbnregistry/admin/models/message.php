@@ -114,6 +114,9 @@ class IsbnregistryModelMessage extends JModelAdmin {
                 ''
             );
 
+            // Get cc address
+            $cc = $params->get('email_cc', '');
+
             // Get and configure mailer
             $mailer = JFactory::getMailer();
             $mailer->setSender($sender);
@@ -121,6 +124,11 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $mailer->setSubject($table->subject);
             $mailer->isHTML(true);
             $mailer->setBody($table->message);
+
+            // Add cc if not empty
+            if (!empty($cc)) {
+                $mailer->addBcc($cc);
+            }
 
             if ($table->has_attachment) {
                 $mailer->addAttachment($filename);

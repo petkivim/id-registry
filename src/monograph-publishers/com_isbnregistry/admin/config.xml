@@ -99,6 +99,14 @@
             description="COM_ISBNREGISTRY_CONFIG_EMAIL_FROM_DESC"
         />	
         <field
+            name="email_cc" 
+            type="email" 
+            default="" 
+			validate="email"
+            label="COM_ISBNREGISTRY_CONFIG_EMAIL_CC_LABEL"
+            description="COM_ISBNREGISTRY_CONFIG_EMAIL_CC_DESC"
+        />		
+        <field
             name="identifiers_attachment_limit"
             type="number"
             label="COM_ISBNREGISTRY_CONFIG_EMAIL_IDENTIFIERS_ATTACHMENT_LIMIT_LABEL"
