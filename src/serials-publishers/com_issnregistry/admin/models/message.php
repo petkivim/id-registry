@@ -190,7 +190,9 @@ class IssnregistryModelMessage extends JModelAdmin {
 
         // Load publisher model
         $publisherModel = JModelLegacy::getInstance('publisher', 'IssnregistryModel');
-
+        // Variable that tell if publisher email address should be used
+        $usePublisherEmail = false;
+            
         if ($isFormHandled) {
             // Load form model
             $formModel = JModelLegacy::getInstance('form', 'IssnregistryModel');
@@ -209,7 +211,12 @@ class IssnregistryModelMessage extends JModelAdmin {
             $message->lang_code = $form->lang_code;
             // Update recipient
             $message->recipient = $form->email;
-        } else if ($isPublisherSummary) {
+            // If email is empty, use publisher email
+            if(empty($message->recipient)) {
+                 $usePublisherEmail = true;
+            }
+        }
+        if ($isPublisherSummary || $usePublisherEmail) {
             // Load publisher
             $publisher = $publisherModel->getPublisherById($publisherId);
             // Check the result
