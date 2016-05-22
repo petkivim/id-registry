@@ -34,7 +34,7 @@ class JFormFieldPublisher extends JFormFieldList {
     protected function getOptions() {
         $db = JFactory::getDBO();
         $query = $db->getQuery(true);
-        $query->select('DISTINCT a.id, a.official_name');
+        $query->select('DISTINCT a.id, a.official_name, a.other_names, a.previous_names');
         $query->from('#__isbn_registry_publisher as a');
         $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON a.id = isbn.publisher_id');
         $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
@@ -46,7 +46,13 @@ class JFormFieldPublisher extends JFormFieldList {
 
         if ($publishers) {
             foreach ($publishers as $publisher) {
-                $options[] = JHtml::_('select.option', $publisher->id, $publisher->official_name);
+                $name = $publisher->official_name;
+                $name .= empty($publisher->other_names) ? '' : ', ' . $publisher->other_names;
+                $obj = json_decode($publisher->previous_names);
+                if(!empty($obj)) {
+                    $name .= ', ' . implode(', ', $obj->{'name'});
+                }
+                $options[] = JHtml::_('select.option', $publisher->id, $name);
             }
         }
 
