@@ -94,8 +94,12 @@ class IssnregistryModelForms extends JModelList {
 
         // Build search
         if (!empty($search)) {
-            $search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
-            $query->where('(a.publisher LIKE ' . $search . ' OR a.contact_person LIKE ' . $search . ')');
+			if (preg_match('/^[\d]+$/', $search) === 1) {
+				$query->where($db->quoteName('a.id') . ' = ' . $db->quote($search));
+			} else {
+				$search = $db->quote('%' . str_replace(' ', '%', trim($search) . '%'));
+				$query->where('(a.publisher LIKE ' . $search . ' OR a.contact_person LIKE ' . $search . ')');
+			}
         }
 
         $query->order('a.created DESC');
