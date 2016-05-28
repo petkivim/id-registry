@@ -274,6 +274,8 @@ class IssnregistryModelMessage extends JModelAdmin {
             $message->message = $this->filterPublications($message->message, $publications);
             // Add publication title
             $message->message = $this->filterPublicationTitle($message->message, $publications);
+            // Add publication title to subject
+            $message->subject = $this->filterPublicationTitle($message->subject, $publications);
         }
         // Filter message
         $message->message = $this->filterMessage($message->message, $form, $publisher);
