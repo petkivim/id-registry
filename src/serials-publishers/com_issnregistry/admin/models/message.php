@@ -192,7 +192,7 @@ class IssnregistryModelMessage extends JModelAdmin {
         $publisherModel = JModelLegacy::getInstance('publisher', 'IssnregistryModel');
         // Variable that tell if publisher email address should be used
         $usePublisherEmail = false;
-            
+
         if ($isFormHandled) {
             // Load form model
             $formModel = JModelLegacy::getInstance('form', 'IssnregistryModel');
@@ -212,8 +212,8 @@ class IssnregistryModelMessage extends JModelAdmin {
             // Update recipient
             $message->recipient = $form->email;
             // If email is empty, use publisher email
-            if(empty($message->recipient)) {
-                 $usePublisherEmail = true;
+            if (empty($message->recipient)) {
+                $usePublisherEmail = true;
             }
         }
         if ($isPublisherSummary || $usePublisherEmail) {
@@ -272,6 +272,8 @@ class IssnregistryModelMessage extends JModelAdmin {
             }
             // Add publications info
             $message->message = $this->filterPublications($message->message, $publications);
+            // Add publication title
+            $message->message = $this->filterPublicationTitle($message->message, $publications);
         }
         // Filter message
         $message->message = $this->filterMessage($message->message, $form, $publisher);
@@ -303,11 +305,21 @@ class IssnregistryModelMessage extends JModelAdmin {
 
     private function filterPublications($messageBody, $publications) {
         $html = '';
+        $counter = 0;
         foreach ($publications as $publication) {
-            $html .= $publication->title . ', ' . $publication->issn;
+            $html .= $publication->title . '<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISSN ' . $publication->issn;
             $html .= ' (' . JText::_('COM_ISSNREGISTRY_EMAIL_PUBLICATION_MEDIUM_' . $publication->medium) . ')<br />';
+            if ($counter < sizeof($publications) - 1) {
+                $html .= '<br />';
+            }
+            $counter++;
         }
         return str_replace("#PUBLICATIONS#", $html, $messageBody);
+    }
+
+    private function filterPublicationTitle($messageBody, $publications) {
+        $html = sizeof($publications) > 0 ? $publications[0]->title : '';
+        return str_replace("#TITLE#", $html, $messageBody);
     }
 
     private function filterForm($messageBody, $form) {
