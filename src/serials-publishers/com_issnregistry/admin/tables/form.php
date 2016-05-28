@@ -55,6 +55,38 @@ class IssnRegistryTableForm extends JTable {
             // New item
             $this->created_by = $user->get('username');
             $this->created = $date->toSql();
+
+            // If publisher name, email and contact person are empty, and 
+            // publisher has been selected from the db, copy publisher name, 
+            // email and contact person from publisher.
+            if (empty($this->publisher) && empty($this->email) && empty($this->contact_person) && $this->publisher_id > 0) {
+                // Load publisher model
+                $publisherModel = JModelLegacy::getInstance('publisher', 'IssnregistryModel');
+                // Load publisher
+                $publisher = $publisherModel->getItem($this->publisher_id);
+                // Get publisher name
+                $this->publisher = $publisher->official_name;
+                // Get email
+                $email = $publisher->email;
+                // Contact person
+                $contactPerson = '';
+                // Get contact persons as JSON 
+                $json = json_decode($publisher->contact_person);
+                // Check that we have a JSON object
+                if (!empty($json)) {
+                    // Get the last contact person
+                    $contactPerson = $json->{'name'}[sizeof($json->{'name'}) - 1];
+                    // Get the last email
+                    $emailTemp = $json->{'email'}[sizeof($json->{'email'}) - 1];
+                    // If the email is not empty, let's use it
+                    if (!empty($emailTemp)) {
+                        $email = $emailTemp;
+                    }
+                }
+                // Set contact person and email
+                $this->email = $email;
+                $this->contact_person = $contactPerson;
+            }
         }
 
         if (parent::store($updateNulls)) {
