@@ -755,8 +755,6 @@ class IsbnregistryFormsHtmlBuilder {
 
         $html = '<select name="year" id="year">';
         $html .= '<option value="-"' . (strcmp($year, '-') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISBNREGISTRY_FORMS_PUBLISHED_YEAR') . '</option>';
-        $html .= '<option value="' . (date("Y") - 2) . '"' . ($year == (date("Y") - 2) ? ' selected' : '') . '>' . (date("Y") - 2) . '</option>';
-        $html .= '<option value="' . (date("Y") - 1) . '"' . ($year == (date("Y") - 1) ? ' selected' : '') . '>' . (date("Y") - 1) . '</option>';
         $html .= '<option value="' . (date("Y")) . '"' . ($year == date("Y") ? ' selected' : '') . '>' . (date("Y")) . '</option>';
         $html .= '<option value="' . (date("Y") + 1) . '"' . ($year == (date("Y") + 1) ? ' selected' : '') . '>' . (date("Y") + 1) . '</option>';
         $html .= '<option value="' . (date("Y") + 2) . '"' . ($year == (date("Y") + 2) ? ' selected' : '') . '>' . (date("Y") + 2) . '</option>';
