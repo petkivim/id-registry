@@ -309,7 +309,8 @@ class IssnRegistryTablePublication extends JTable {
 
     /**
      * Sets the status of publications related to the forms identified by the
-     * given form id to "NO_ISSN_GRANTED".
+     * given form id to "NO_ISSN_GRANTED". The status is updated if and only
+     * if the publication does not have ISSN number yet.
      * @param int $formId form id
      * @return int number of publications that were updated
      */
@@ -330,7 +331,8 @@ class IssnRegistryTablePublication extends JTable {
 
         // Conditions for which records should be updated.
         $conditions = array(
-            $this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId)
+            $this->_db->quoteName('form_id') . ' = ' . $this->_db->quote($formId),
+            $this->_db->quoteName('issn') . ' = ' . $this->_db->quote('')
         );
         // Create query
         $query->update($this->_db->quoteName($this->_tbl))->set($fields)->where($conditions);

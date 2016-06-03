@@ -232,7 +232,8 @@ class IssnregistryModelPublication extends JModelAdmin {
 
     /**
      * Sets the status of publications related to the forms identified by the
-     * given form id to "NO_ISSN_GRANTED".
+     * given form id to "NO_ISSN_GRANTED". The status is updated if and only
+     * if the publication does not have ISSN number yet.
      * @param int $formId form id
      * @return int number of publications that were updated
      */
