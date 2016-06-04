@@ -83,11 +83,6 @@ class IsbnregistryViewPublishers extends JViewLegacy {
         if ($state == 5) {
             // Set page title
             JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLISHERS_REGISTRY'));
-            // Get component parameters
-            $params = JComponentHelper::getParams('com_isbnregistry');
-
-            // Get the id of the publisher that represents author publishers
-            $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
 
             $toolbar = JToolBar::getInstance('toolbar');
             $layout = new JLayoutFile('joomla.toolbar.popup');
@@ -96,10 +91,6 @@ class IsbnregistryViewPublishers extends JViewLegacy {
             $dhtml = $layout->render(array('name' => 'statistics', 'doTask' => '', 'text' => JText::_('COM_ISBNREGISTRY_PUBLISHER_BUTTON_STATISTICS'), 'class' => 'icon-pie'));
             $toolbar->appendButton('Custom', $dhtml);
 
-            // Check that author publisher has been defined
-            if ($authorPublisherId != 0) {
-                JToolBarHelper::custom('publishers.toAuthorPublisher', 'user', 'user', JText::_('COM_ISBNREGISTRY_PUBLISHERS_BUTTON_TO_AUTHOR_PUBLISHER'), false, false);
-            }
         } else if ($state == 1) {
             JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLISHERS_APPLICATION'));
         } else {
