@@ -27,10 +27,10 @@ class PublishersHelper extends JHelperContent {
      */
     public static function addSubmenu($vName) {
         JHtmlSidebar::addEntry(
-                JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLISHERS_APPLICATIONS'), 'index.php?option=com_isbnregistry&view=publishers&filter_no_identifier=1', $vName == 'publishers_applications'
+                JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLISHERS_REGISTRY'), 'index.php?option=com_isbnregistry&view=publishers&filter_no_identifier=5', $vName == 'publishers_registry'
         );
         JHtmlSidebar::addEntry(
-                JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLISHERS_REGISTRY'), 'index.php?option=com_isbnregistry&view=publishers&filter_no_identifier=5', $vName == 'publishers_registry'
+                JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLISHERS_APPLICATIONS'), 'index.php?option=com_isbnregistry&view=publishers&filter_no_identifier=1', $vName == 'publishers_applications'
         );
         JHtmlSidebar::addEntry(
                 JText::_('COM_ISBNREGISTRY_SUBMENU_PUBLICATIONS_RECEIVED'), 'index.php?option=com_isbnregistry&view=publications&filter_status=1', $vName == 'publications_received'
