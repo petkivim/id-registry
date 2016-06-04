@@ -369,7 +369,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
             // Set has attachment value
             $message->has_attachment = $useAttachment;
             // Add identifiers
-            $message->message = $this->filterPublicationIdentifiers($message->message, $identifiers, $useAttachment);
+            $message->message = $this->filterPublicationIdentifiers($message->message, $identifiers, $useAttachment, strtoupper($type));
             // Check if publisher identifier has been added already
             if (!$publisherIdentifierAddedd) {
                 // Get publisher identifier range object used in the first identifier
@@ -408,7 +408,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
         return $messageBody;
     }
 
-    private function filterPublicationIdentifiers($messageBody, $identifiers, $useAttachment) {
+    private function filterPublicationIdentifiers($messageBody, $identifiers, $useAttachment, $identifierType) {
         if ($useAttachment) {
             JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_MESSAGE_IDENTIFIERS_IN_ATTACHMENT'), 'notice');
             return str_replace("#IDENTIFIERS#", '', $messageBody);
@@ -416,7 +416,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $html = '';
             foreach ($identifiers as $identifier) {
                 $html .= empty($html) ? '' : '<br />';
-                $html .= $identifier->identifier;
+                $html .= $identifierType . ' ' . $identifier->identifier;
                 if (!empty($identifier->publication_type)) {
                     $html .= ' (' . JText::_('COM_ISBNREGISTRY_EMAIL_IDENTIFIER_TYPE_' . $identifier->publication_type) . ')';
                 }
