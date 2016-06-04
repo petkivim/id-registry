@@ -234,6 +234,11 @@
             class="inputbox validate-yearquitted"
             default=""
         />   
+		<!-- 
+		In the UI the label is "Is active" which is why 0 = Yes and 1 = No. 
+		By default the publisher is active so default value is 0 = Yes.
+		User sees "Is active" => Yes and to db is stored has_quitted = false.
+		-->
         <field
             name="has_quitted"
             type="radio"
@@ -242,8 +247,8 @@
             default="0"
             validate="boolean"
         >	
-            <option value="1">JYES</option>
-            <option value="0">JNO</option>        
+			<option value="0">JYES</option>
+            <option value="1">JNO</option>                    
         </field>
         <field
             name="question_7"
