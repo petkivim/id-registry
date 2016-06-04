@@ -419,7 +419,7 @@ class ImportHelper {
                 }
                 // If range is set, replace '979-M' with '979-0'
                 if (isset($range)) {
-                   $range = preg_replace('/^979-M/', '979-0', $range); 
+                    $range = preg_replace('/^979-M/', '979-0', $range);
                 }
             } else if (!$ismn && strcmp($data[3], 'M') != 0) {
                 // Canceled or used publisher ranges?
@@ -476,6 +476,7 @@ class ImportHelper {
             // Check if we're handling ISMN or ISBN
             if ($ismn && strcmp($data[3], 'M') == 0) {
                 $range = self::getUsedIdentifierRange($data, true);
+                $range['publisher_identifier'] = preg_replace('/^979-M/', '979-0', $range['publisher_identifier']);
             } else if (!$ismn && strcmp($data[3], 'M') != 0) {
                 $range = self::getUsedIdentifierRange($data, false);
             }
@@ -536,6 +537,15 @@ class ImportHelper {
     }
 
     public static function handleMultiPublisherRanges(&$multiPublisherRanges, &$publishers, &$usedRanges, &$publishersIdentifierCount, $configuration) {
+        $publisherIndex = array();
+        // Create index that contains count of how many shared identifiers
+        // each publisher has
+        foreach ($multiPublisherRanges as $key => $mpr) {
+            if (!array_key_exists($mpr['publisher_id'], $publisherIndex)) {
+                $publisherIndex[$mpr['publisher_id']] = 0;
+            }
+            $publisherIndex[$mpr['publisher_id']] += 1;
+        }
         foreach ($multiPublisherRanges as $key => $mpr) {
             // Get identifier
             $identifier = $mpr['publisher_identifier'];
@@ -564,8 +574,13 @@ class ImportHelper {
             // 
             // Get other names
             $otherNames = $publishers[$ownerId]['other_names'];
-            // Add current owner to other names
-            $otherNames .= empty($otherNames) ? $publishers[$currentOwnerId]['official_name'] : ', ' . $publishers[$currentOwnerId]['official_name'];
+            // Get official name of the current owner and escape delimiters
+            $tempName = str_replace('/', '\/', $publishers[$currentOwnerId]['official_name']);
+            // Check that the name of the current owner is not present yet
+            if (!preg_match("/$tempName/i", $otherNames)) {
+                // Add current owner to other names
+                $otherNames .= empty($otherNames) ? $publishers[$currentOwnerId]['official_name'] : ', ' . $publishers[$currentOwnerId]['official_name'];
+            }
             // Update value
             $publishers[$ownerId]['other_names'] = $otherNames;
             // Get additional_info from the right owner
@@ -578,10 +593,13 @@ class ImportHelper {
             // Is this the only identifier of the current owner?
             if (!array_key_exists($currentOwnerId, $publishersIdentifierCount) || $publishersIdentifierCount[$currentOwnerId] == 1) {
                 $info .= $publishers[$currentOwnerId]['official_name'] . ' poistettu, koska ei muita kustantajatunnuksia.';
-                // Remove the current owner from publishers
-                unset($publishers[$currentOwnerId]);
+                $publisherIndex[$currentOwnerId] -= 1;
+                if ($publisherIndex[$currentOwnerId] === 0) {
+                    // Remove the current owner from publishers
+                    unset($publishers[$currentOwnerId]);
+                }
             } else {
-                $info .= $publishers[$currentOwnerId]['official_name'] . ' jatetty rekisteriin, koska kustantajalla myös muita kustantajatunnuksia.';
+                $info .= $publishers[$currentOwnerId]['official_name'] . ' jatetty rekisteriin, koska kustantajalla myos muita kustantajatunnuksia.';
             }
             // Get date and add it to additional info field
             $date = new DateTime();
