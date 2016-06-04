@@ -74,8 +74,6 @@ class IsbnregistryViewMessagetemplate extends JViewLegacy {
 
         JToolBarHelper::title($title, 'messagetemplate');
         JToolbarHelper::apply('messagetemplate.apply');
-        JToolBarHelper::save('messagetemplate.save');
-        JToolbarHelper::save2new('messagetemplate.save2new');
         JToolBarHelper::cancel(
                 'messagetemplate.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );

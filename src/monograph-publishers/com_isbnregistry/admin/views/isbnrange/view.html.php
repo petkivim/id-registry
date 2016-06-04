@@ -75,8 +75,6 @@ class IsbnregistryViewIsbnrange extends JViewLegacy {
 
         JToolBarHelper::title($title, 'isbnrange');
         JToolbarHelper::apply('isbnrange.apply');
-        JToolBarHelper::save('isbnrange.save');
-        JToolbarHelper::save2new('isbnrange.save2new');
         JToolBarHelper::cancel(
                 'isbnrange.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );

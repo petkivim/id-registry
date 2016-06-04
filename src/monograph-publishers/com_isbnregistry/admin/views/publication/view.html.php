@@ -83,8 +83,6 @@ class IsbnregistryViewPublication extends JViewLegacy {
 
         JToolBarHelper::title($title, 'publication');
         JToolbarHelper::apply('publication.apply');
-        JToolBarHelper::save('publication.save');
-        JToolbarHelper::save2new('publication.save2new');
 
         if (!$isNew) {
             // Add save2copy button if identifiers have not been assigned yet
