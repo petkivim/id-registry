@@ -50,6 +50,27 @@ Identifier Registry is installed as any other Joomla extension.
 
 More detailed [instuctions](https://docs.joomla.org/Installing_an_extension).
 
+### Usage
+
+Using the content plugins it's possible to embed registrarion and application forms on articles.
+
+ISBN & ISMN Registry registration form for publishers:
+
+```
+{mono_pub_form registration}
+``` 
+
+ISBN & ISMN Registry identifier application form for publishers:
+
+```
+{mono_pub_form application}
+``` 
+
+ISSN Registry identifier application form for publishers:
+
+```
+{serials_pub_form}
+```
 ### Architecture
 
 The system is based on Joomla! CMS 3.X Platform and the architecture follows the rules and guidelines for Joomla [components](https://docs.joomla.org/Absolute_Basics_of_How_a_Component_Functions) and [plugins](https://docs.joomla.org/J3.x:Creating_a_Plugin_for_Joomla). 
