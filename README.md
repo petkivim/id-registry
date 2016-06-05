@@ -43,6 +43,8 @@ ISBN & ISMN registry and ISSN registry are independet of each other, and it's po
 
 The system is based on Joomla! CMS 3.X Platform and the architecture follows the rules and guidelines for Joomla [components](https://docs.joomla.org/Absolute_Basics_of_How_a_Component_Functions) and [plugins](https://docs.joomla.org/J3.x:Creating_a_Plugin_for_Joomla). 
 
+#### Ajax Calls
+
 In general the system is based on Joomla MVC architecture, but there are some backend features that use asynchronous Ajax calls instead.
 
 * get list of ISBN/ISMN identifers that belong to a publisher ([jQuery](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L144))
@@ -58,5 +60,7 @@ In general the system is based on Joomla MVC architecture, but there are some ba
 Ajax calls are implemented using ```jQuery``` and responses are returned in ```JSON``` format. Below there's an example that shows the execution chain when a list of ISBN/ISMN identifers belonging to a publisher is fetched.
 
 [jQuery](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L144) => [controller](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/controllers/abstractpublisheridentifierrange.php#L76) => [model](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/models/abstractpublisheridentifierrange.php#L566) => [table](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/tables/abstractpublisheridentifierrange.php#L443)
+
+#### Database Operations
 
 Transactions are used in business operations that consist of multiple database queries that must all be succesful, e.g. create new publication ISBN identifier. Transactions are always implemented on model level and functions on table level classes must be called from the same model only. All the other parts of the system (e.g. controller, view, other models) must use the functions through model classes. Database queries are placed on table level, not on model, view or controller level. However, there are some exceptions because of Joomla's conventions, e.g. ```getListQuery``` function in ```mymodels``` class that returns a list of database items for the list view.
