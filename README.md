@@ -17,6 +17,8 @@ The system is based on Joomla! CMS platform. The registry includes two parts tha
 
 ISBN & ISMN registry and ISSN registry are independet of each other, and it's possible to install and use both or only one of them. The backend components can be used also without the content plugins, but the use of the content plugins is not possible without the backend components.
 
+More detailed information about the system can be foung on the [wiki](https://github.com/petkivim/id-registry/wiki) section.
+
 ### ISBN & ISMN Registry Features
 
 * Publisher Registry
