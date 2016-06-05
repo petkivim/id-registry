@@ -42,3 +42,17 @@ ISBN & ISMN registry and ISSN registry are independet of each other, and it's po
 ### Architecture
 
 The system is based on Joomla! CMS 3.X Platform and the architecture follows the rules and guidelines for Joomla [components](https://docs.joomla.org/Absolute_Basics_of_How_a_Component_Functions) and [plugins](https://docs.joomla.org/J3.x:Creating_a_Plugin_for_Joomla). 
+
+In general the system is based on Joomla MVC architecture, but there are some backend features that use asynchronous Ajax calls instead.
+
+* get list of ISBN/ISMN identifers that belong to a publisher ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L144))
+* get list of publications without ISBN/ISMN identifier related to a publisher ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L409))
+* create new publisher ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L68))
+* create new ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L293))
+* create new ISBN/ISMN identifiers ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L352))
+* update active publisher ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L112))
+* delete publisher ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L252))
+* cancel publication ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publication.js#L67))
+* delete publication ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publication.js#L102))
+
+Ajax calls are implemented using ```jQuery``` and responses are returned in ```JSON``` format. 
