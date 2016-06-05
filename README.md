@@ -26,6 +26,7 @@ ISBN & ISMN registry and ISSN registry are independet of each other, and it's po
   * notifications, group messages, message templates
 * Statistics
 * ISBN and ISMN range management 
+* ACL management
 
 ### ISSN Registry Features
 
@@ -35,4 +36,5 @@ ISBN & ISMN registry and ISSN registry are independet of each other, and it's po
 * Messaging
   * notifications, group messages, message templates
 * Statistics
-* ISSN range management  
+* ISSN range management
+* ACL management
