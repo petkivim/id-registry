@@ -45,7 +45,7 @@ The system is based on Joomla! CMS 3.X Platform and the architecture follows the
 
 In general the system is based on Joomla MVC architecture, but there are some backend features that use asynchronous Ajax calls instead.
 
-* get list of ISBN/ISMN identifers that belong to a publisher ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L144))
+* get list of ISBN/ISMN identifers that belong to a publisher ([jQuery](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L144))
 * get list of publications without ISBN/ISMN identifier related to a publisher ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L409))
 * create new publisher ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L68))
 * create new ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L293))
@@ -55,4 +55,6 @@ In general the system is based on Joomla MVC architecture, but there are some ba
 * cancel publication ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publication.js#L67))
 * delete publication ISBN/ISMN identifier ([show](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publication.js#L102))
 
-Ajax calls are implemented using ```jQuery``` and responses are returned in ```JSON``` format. 
+Ajax calls are implemented using ```jQuery``` and responses are returned in ```JSON``` format. Below there's an example that shows the execution chain when a list of ISBN/ISMN identifers belonging to a publisher is fetched.
+
+[jQuery](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/scripts/publisher.js#L144) => [controller](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/controllers/abstractpublisheridentifierrange.php#L76) => [model](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/models/abstractpublisheridentifierrange.php#L566) => [table](https://github.com/petkivim/id-registry/blob/master/src/monograph-publishers/com_isbnregistry/admin/tables/abstractpublisheridentifierrange.php#L443)
