@@ -25,7 +25,7 @@ More detailed information about the system can be foung on the [wiki](https://gi
   * Includes a public search feature
 * ISBN & ISMN application management and processing
 * Messaging
-  * notifications, group messages, message templates
+  * event base messages, group messages, message templates
 * Statistics
 * ISBN and ISMN range management 
 * ACL management
@@ -36,7 +36,7 @@ More detailed information about the system can be foung on the [wiki](https://gi
 * Publication Registry
 * ISSN application management and processing
 * Messaging
-  * notifications, group messages, message templates
+  * event base messages, message templates
 * Statistics
 * ISSN range management
 * ACL management
