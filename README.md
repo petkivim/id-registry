@@ -39,6 +39,17 @@ ISBN & ISMN registry and ISSN registry are independet of each other, and it's po
 * ISSN range management
 * ACL management
 
+### Installation
+
+Identifier Registry is installed as any other Joomla extension.
+
+* Download the extension to your local machine as a zip file package.
+* From the backend of your Joomla site (administration) select Extensions  →  Install/Uninstall.
+* Click the Browse button and select the extension package on your local machine.
+* Click the Upload File & Install button.
+
+More detailed [instuctions](https://docs.joomla.org/Installing_an_extension).
+
 ### Architecture
 
 The system is based on Joomla! CMS 3.X Platform and the architecture follows the rules and guidelines for Joomla [components](https://docs.joomla.org/Absolute_Basics_of_How_a_Component_Functions) and [plugins](https://docs.joomla.org/J3.x:Creating_a_Plugin_for_Joomla). 
