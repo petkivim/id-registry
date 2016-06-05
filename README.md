@@ -16,3 +16,23 @@ The system is based on Joomla! CMS platform. The registry includes two parts tha
   * plg_content_issnregistry_forms
 
 ISBN & ISMN registry and ISSN registry are independet of each other, and it's possible to install and use both or only one of them. The backend components can be used also without the content plugins, but the use of the content plugins is not possible without the backend components.
+
+### ISBN & ISMN Registry Features
+
+* Publisher Registry
+  * Includes a public search feature
+* ISBN & ISMN application management and processing
+* Messaging
+  * notifications, group messages, message templates
+* Statistics
+* ISBN and ISMN range management 
+
+### ISSN Registry Features
+
+* Publisher Registry
+* Publication Registry
+* ISSN application management and processing
+* Messaging
+  * notifications, group messages, message templates
+* Statistics
+* ISSN range management  
