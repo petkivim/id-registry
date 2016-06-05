@@ -38,3 +38,7 @@ ISBN & ISMN registry and ISSN registry are independet of each other, and it's po
 * Statistics
 * ISSN range management
 * ACL management
+
+### Architecture
+
+The system is based on Joomla! CMS 3.X Platform and the architecture follows the rules and guidelines for Joomla [components](https://docs.joomla.org/Absolute_Basics_of_How_a_Component_Functions) and [plugins](https://docs.joomla.org/J3.x:Creating_a_Plugin_for_Joomla). 
