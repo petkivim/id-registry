@@ -340,20 +340,6 @@ class IssnregistryModelMessage extends JModelAdmin {
         return str_replace("#TITLE#", $html, $messageBody);
     }
 
-    private function filterForm($messageBody, $form) {
-        $messageBody = str_replace("#PUBLISHER#", $form->publisher, $messageBody);
-        $messageBody = str_replace("#CONTACT_PERSON#", $form->contact_person, $messageBody);
-        $messageBody = str_replace("#EMAIL#", $form->email, $messageBody);
-        return $messageBody;
-    }
-
-    private function filterPublisher($messageBody, $publisher) {
-        $messageBody = str_replace("#PUBLISHER#", $publisher->official_name, $messageBody);
-        $messageBody = str_replace("#CONTACT_PERSON#", $this->getContactPerson($publisher), $messageBody);
-        $messageBody = str_replace("#EMAIL#", $this->getEmail($publisher), $messageBody);
-        return $messageBody;
-    }
-
     private function filterDate($messageBody) {
         // Get date and user
         $date = JFactory::getDate()->format('d.m.Y');
