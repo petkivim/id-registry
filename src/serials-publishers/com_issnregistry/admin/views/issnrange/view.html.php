@@ -72,8 +72,6 @@ class IssnregistryViewIssnrange extends JViewLegacy {
 
         JToolBarHelper::title($title, 'issnrange');
         JToolbarHelper::apply('issnrange.apply');
-        JToolBarHelper::save('issnrange.save');
-        JToolbarHelper::save2new('issnrange.save2new');
         JToolBarHelper::cancel(
                 'issnrange.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE'
         );

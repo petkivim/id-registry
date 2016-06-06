@@ -73,8 +73,6 @@ class IssnregistryViewForm extends JViewLegacy {
 
         JToolBarHelper::title($title, 'form');
         JToolbarHelper::apply('form.apply');
-        JToolBarHelper::save('form.save');
-        JToolbarHelper::save2new('form.save2new');
         if (!$isNew) {
             // Add custom button for sending a message
             $toolbar = JToolBar::getInstance('toolbar');

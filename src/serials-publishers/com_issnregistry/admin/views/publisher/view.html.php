@@ -73,8 +73,6 @@ class IssnregistryViewPublisher extends JViewLegacy {
 
         JToolBarHelper::title($title, 'publisher');
         JToolbarHelper::apply('publisher.apply');
-        JToolBarHelper::save('publisher.save');
-        JToolbarHelper::save2new('publisher.save2new');
         if (!$isNew) {
             // Add custom button for sending a message
             $toolbar = JToolBar::getInstance('toolbar');
