@@ -74,7 +74,7 @@
             default=""
         />						
         <field
-            name="email"
+            name="email_common"
             type="email"
             label="COM_ISSNREGISTRY_PUBLISHER_FIELD_EMAIL_LABEL"
             description="COM_ISSNREGISTRY_PUBLISHER_FIELD_EMAIL_DESC"

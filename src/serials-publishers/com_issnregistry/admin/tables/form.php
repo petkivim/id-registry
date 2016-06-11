@@ -67,7 +67,7 @@ class IssnRegistryTableForm extends JTable {
                 // Get publisher name
                 $this->publisher = $publisher->official_name;
                 // Get email
-                $email = $publisher->email;
+                $email = $publisher->email_common;
                 // Contact person
                 $contactPerson = '';
                 // Get contact persons as JSON 

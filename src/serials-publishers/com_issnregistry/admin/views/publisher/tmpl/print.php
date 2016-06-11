@@ -89,7 +89,7 @@ $this->form->setFieldAttribute( 'lang_code', 'readonly', 'true' );
             </div>
             <div class="control-group">
                 <div class="control-label">
-                    <?php echo $this->form->getLabel('email'); ?>
+                    <?php echo $this->form->getLabel('email_common'); ?>
                 </div>
                 <div class="controls">
                     <?php echo $this->item->email; ?>

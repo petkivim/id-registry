@@ -371,7 +371,7 @@ class IssnregistryModelMessage extends JModelAdmin {
         }
         // If no contact person email is found, use publisher's common email
         if (empty($result)) {
-            $result = $publisher->email;
+            $result = $publisher->email_common;
         }
         return $result;
     }

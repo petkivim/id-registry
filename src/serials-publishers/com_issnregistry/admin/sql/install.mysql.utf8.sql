@@ -138,7 +138,7 @@ CREATE TABLE `#__issn_registry_publisher` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `official_name` VARCHAR(100) NOT NULL,
     `contact_person` VARCHAR(1200),
-    `email` VARCHAR(100) NOT NULL,
+    `email_common` VARCHAR(100),
     `phone` VARCHAR(30),
     `address` VARCHAR(50) NOT NULL,
     `zip` VARCHAR(10) NOT NULL,
