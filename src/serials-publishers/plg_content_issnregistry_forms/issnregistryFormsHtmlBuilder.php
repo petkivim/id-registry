@@ -103,6 +103,10 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td class="form3_col2"><input type="text" name="title_' . $i . '" id="title_' . $i . '" size="30" value="' . $post->get('title_' . $i, null, 'string') . '" /></td>';
             $html .= '<td class="error">* ' . (isset($errors['title_' . $i]) ? JText::_($errors['title_' . $i]) : '') . '</td>';
             $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_SUBTITLE_FIELD') . ':</td>';
+            $html .= '<td><input type="text" name="subtitle_' . $i . '" id="subtitle_' . $i . '" size="30" value="' . $post->get('subtitle_' . $i, null, 'string') . '" /></td>';
+            $html .= '<td class="error">' . (isset($errors['subtitle_' . $i]) ? JText::_($errors['subtitle_' . $i]) : '') . '</td>';
+            $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PLACE_OF_PUBLICATION_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="place_of_publication_' . $i . '" id="place_of_publication_' . $i . '" size="30" value="' . $post->get('place_of_publication_' . $i, null, 'string') . '" /></td>';
             $html .= '<td class="error">* ' . (isset($errors['place_of_publication_' . $i]) ? JText::_($errors['place_of_publication_' . $i]) : '') . '</td>';
@@ -262,6 +266,9 @@ class IssnregistryFormsHtmlBuilder {
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_TITLE_FIELD') . ':</td>';
             $html .= '<td>' . $post->get('title_' . $i, null, 'string') . '</td>';
             $html .= '</tr><tr>';
+            $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_SUBTITLE_FIELD') . ':</td>';
+            $html .= '<td>' . $post->get('subtitle_' . $i, null, 'string') . '</td>';
+            $html .= '</tr><tr>';
             $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_PLACE_OF_PUBLICATION_FIELD') . ':</td>';
             $html .= '<td>' . $post->get('place_of_publication_' . $i, null, 'string') . '</td>';
             $html .= '</tr><tr>';
@@ -383,6 +390,7 @@ class IssnregistryFormsHtmlBuilder {
         // Create publication forms
         for ($i = 0; $i < $publicationCount; $i++) {
             $html .= '<input type="hidden" name="title_' . $i . '" value="' . $post->get('title_' . $i, null, 'string') . '" />';
+            $html .= '<input type="hidden" name="subtitle_' . $i . '" value="' . $post->get('subtitle_' . $i, null, 'string') . '" />';
             $html .= '<input type="hidden" name="place_of_publication_' . $i . '" value="' . $post->get('place_of_publication_' . $i, null, 'string') . '" />';
             $html .= '<input type="hidden" name="printer_' . $i . '" value="' . $post->get('printer_' . $i, null, 'string') . '" />';
             $html .= '<input type="hidden" name="issued_from_year_' . $i . '" value="' . $post->get('issued_from_year_' . $i, null, 'string') . '" />';

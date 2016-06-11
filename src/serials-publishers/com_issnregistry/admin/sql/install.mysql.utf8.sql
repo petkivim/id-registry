@@ -58,6 +58,7 @@ DROP TABLE IF EXISTS `#__issn_registry_publication`;
 CREATE TABLE `#__issn_registry_publication` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(200) NOT NULL,
+    `subtitle` VARCHAR(200),
     `issn` VARCHAR(9) DEFAULT '',
     `place_of_publication` VARCHAR(100) NOT NULL,
     `printer` VARCHAR(100),
@@ -100,6 +101,7 @@ CREATE TABLE `#__issn_registry_publication_archive` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `publication_id` INT NOT NULL,
     `title` VARCHAR(200) NOT NULL,
+    `subtitle` VARCHAR(200),
     `place_of_publication` VARCHAR(100) NOT NULL,
     `printer` VARCHAR(100),
     `issued_from_year` VARCHAR(4),

@@ -180,7 +180,10 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField245($record, $publication) {
         $datafield = new DataField('245', '0', '0');
-        $datafield->addSubfield(new Subfield('a', $publication->title));
+        $datafield->addSubfield(new Subfield('a', $publication->title . (empty($publication->subtitle) ? '.' : ' :')));
+        if (!empty($publication->subtitle)) {
+            $datafield->addSubfield(new Subfield('b', $publication->subtitle . '.'));
+        }
         $record->addDataField($datafield);
     }
 

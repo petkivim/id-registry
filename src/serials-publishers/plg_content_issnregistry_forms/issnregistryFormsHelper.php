@@ -96,6 +96,11 @@ class IssnregistryFormsHelper {
             } else if (strlen($title) > 200) {
                 $errors['title_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
             }
+            // Subtitle - optional
+            $subtitle = $post->get('subtitle_' . $i, null, 'string');
+            if (strlen($subtitle) > 200) {
+                $errors['subtitle_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
+            }
             // Place of publication - required
             $placeOfPublication = $post->get('place_of_publication_' . $i, null, 'string');
             if (empty($placeOfPublication) == true) {
@@ -326,6 +331,7 @@ class IssnregistryFormsHelper {
             for ($i = 0; $i < $publicationCount; $i++) {
                 // Get publication data from form
                 $title = $post->get('title_' . $i, null, 'string');
+                $subtitle = $post->get('subtitle_' . $i, null, 'string');
                 $placeOfPublication = $post->get('place_of_publication_' . $i, null, 'string');
                 $printer = $post->get('printer_' . $i, null, 'string');
                 $issuedFromYear = $post->get('issued_from_year_' . $i, null, 'string');
@@ -357,7 +363,7 @@ class IssnregistryFormsHelper {
 
                 // Insert columns
                 $pubColumns = array(
-                    'title', 'place_of_publication', 'printer', 'issued_from_year',
+                    'title', 'subtitle', 'place_of_publication', 'printer', 'issued_from_year',
                     'issued_from_number', 'frequency', 'frequency_other',
                     'language', 'publication_type', 'publication_type_other',
                     'medium', 'medium_other', 'url', 'previous', 'main_series',
@@ -365,7 +371,7 @@ class IssnregistryFormsHelper {
                     'created', 'created_by');
                 // Insert values
                 $pubValues = array(
-                    $db->quote($title), $db->quote($placeOfPublication), $db->quote($printer), $db->quote($issuedFromYear),
+                    $db->quote($title), $db->quote($subtitle), $db->quote($placeOfPublication), $db->quote($printer), $db->quote($issuedFromYear),
                     $db->quote($issuedFromNumber), $db->quote($frequency), $db->quote($frequencyOther),
                     $db->quote($language), $db->quote($publicationType), $db->quote($publicationTypeOther),
                     $db->quote($medium), $db->quote($mediumOther), $db->quote($url), $db->quote($previous), $db->quote($mainSeries),

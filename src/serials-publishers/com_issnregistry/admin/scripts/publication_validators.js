@@ -1,6 +1,10 @@
 jQuery(document).ready(function () {
     document.formvalidator.setHandler("title", function (value) {
-        regex = /^.{1,100}$/;
+        regex = /^.{1,200}$/;
+        return regex.test(value);
+    });
+    document.formvalidator.setHandler("subtitle", function (value) {
+        regex = /^.{0,200}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("issn", function (value) {
@@ -30,7 +34,7 @@ jQuery(document).ready(function () {
     document.formvalidator.setHandler("frequencyother", function (value) {
         regex = /^.{0,50}$/;
         return regex.test(value);
-    });    
+    });
     document.formvalidator.setHandler("language", function (value) {
         regex = /^.{0,50}$/;
         return regex.test(value);

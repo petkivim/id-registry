@@ -38,6 +38,14 @@ $this->form->setFieldAttribute('medium', 'readonly', 'true');
             </div>
             <div class="control-group">
                 <div class="control-label">
+                    <?php echo $this->form->getLabel('subtitle'); ?>
+                </div>
+                <div class="controls">
+                    <?php echo $this->item->subtitle; ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="control-label">
                     <?php echo $this->form->getLabel('issn'); ?>
                 </div>
                 <div class="controls">
