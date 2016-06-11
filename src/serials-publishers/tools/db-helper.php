@@ -170,9 +170,9 @@ class DbHelper {
             // database connection
             $db = JFactory::getDbo();
             // Insert columns
-            $columns = array('official_name', 'contact_person', 'email', 'phone', 'address', 'zip', 'city', 'lang_code', 'additional_info', 'form_id', 'id_old', 'created', 'created_by', 'modified', 'modified_by');
+            $columns = array('official_name', 'contact_person', 'email_common', 'phone', 'address', 'zip', 'city', 'lang_code', 'additional_info', 'form_id', 'id_old', 'created', 'created_by', 'modified', 'modified_by');
             // Insert values           
-            $values = array($db->quote($publisher['official_name']), $db->quote($publisher['contact_person']), $db->quote($publisher['email']), $db->quote($publisher['phone']), $db->quote($publisher['address']), $db->quote($publisher['zip']), $db->quote($publisher['city']), $db->quote($publisher['lang_code']), $db->quote($publisher['additional_info']), $db->quote($formId), $db->quote($publisher['id_old']), $db->quote($publisher['created']), $db->quote($publisher['created_by']), $db->quote($publisher['modified']), $db->quote($publisher['modified_by']));
+            $values = array($db->quote($publisher['official_name']), $db->quote($publisher['contact_person']), $db->quote($publisher['email_common']), $db->quote($publisher['phone']), $db->quote($publisher['address']), $db->quote($publisher['zip']), $db->quote($publisher['city']), $db->quote($publisher['lang_code']), $db->quote($publisher['additional_info']), $db->quote($formId), $db->quote($publisher['id_old']), $db->quote($publisher['created']), $db->quote($publisher['created_by']), $db->quote($publisher['modified']), $db->quote($publisher['modified_by']));
 
             // Create a new query object.
             $query = $db->getQuery(true);

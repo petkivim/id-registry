@@ -384,7 +384,7 @@ class ImportHelper {
             'id' => 0,
             'official_name' => trim($data[1]),
             'contact_person' => $contact,
-            'email' => (empty($data[2]) ? $data[3] : ''),
+            'email_common' => (empty($data[2]) ? $data[3] : ''),
             'phone' => $data[4],
             'address' => $data[5],
             'zip' => $data[6],
