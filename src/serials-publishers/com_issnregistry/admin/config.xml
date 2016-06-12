@@ -46,15 +46,7 @@
 				value="1">JYES</option>
 			<option
 				value="0">JNO</option>
-		</field>
-        <field
-            name="email_interval_microseconds"
-            type="number"
-            label="COM_ISSNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_LABEL"
-            description="COM_ISSNREGISTRY_CONFIG_EMAIL_INTERVAL_MICROSECONDS_DESC"
-            default="500000"
-            min="0"
-        />			
+		</field>			
 	</fieldset>
 	<fieldset
 		name="export"
