@@ -150,7 +150,7 @@ class PublicationHelper extends JHelperContent {
                 $json = json_decode($publication->publication_identifier_print);
                 if (!empty($json)) {
                     foreach ($json as $identifier => $publicationType) {
-                        $datafield = new DataField('020', '_', '_');
+                        $datafield = new DataField('020', ' ', ' ');
                         $datafield->addSubfield(new Subfield('a', $identifier));
                         $type = self::getType($publicationType);
                         if (!empty($type)) {
@@ -160,13 +160,13 @@ class PublicationHelper extends JHelperContent {
                     }
                 } else {
                     $types = self::fromStrToArray($publication->type);
-                    self::addTypes('020', '_', $record, $types);
+                    self::addTypes('020', ' ', $record, $types);
                 }
             } else {
                 $json = json_decode($publication->publication_identifier_electronical);
                 if (!empty($json)) {
                     foreach ($json as $identifier => $publicationType) {
-                        $datafield = new DataField('020', '_', '_');
+                        $datafield = new DataField('020', ' ', ' ');
                         $datafield->addSubfield(new Subfield('a', $identifier));
                         $fileFormat = self::getFileFormat($publicationType);
                         if (!empty($fileFormat)) {
@@ -176,7 +176,7 @@ class PublicationHelper extends JHelperContent {
                     }
                 } else {
                     $types = self::fromStrToArray($publication->fileformat);
-                    self::addTypes('020', '_', $record, $types, true);
+                    self::addTypes('020', ' ', $record, $types, true);
                 }
             }
         }
@@ -188,7 +188,7 @@ class PublicationHelper extends JHelperContent {
                 $json = json_decode($publication->publication_identifier_print);
                 if (!empty($json)) {
                     foreach ($json as $identifier => $publicationType) {
-                        $datafield = new DataField('024', '2', '_');
+                        $datafield = new DataField('024', '2', ' ');
                         $datafield->addSubfield(new Subfield('a', $identifier));
                         $type = self::getType($publicationType);
                         if (!empty($type)) {
@@ -204,7 +204,7 @@ class PublicationHelper extends JHelperContent {
                 $json = json_decode($publication->publication_identifier_electronical);
                 if (!empty($json)) {
                     foreach ($json as $identifier => $publicationType) {
-                        $datafield = new DataField('024', '2', '_');
+                        $datafield = new DataField('024', '2', ' ');
                         $datafield->addSubfield(new Subfield('a', $identifier));
                         $fileFormat = self::getFileFormat($publicationType);
                         if (!empty($fileFormat)) {
@@ -221,7 +221,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField040($record) {
-        $datafield = new DataField('040', '_', '_');
+        $datafield = new DataField('040', ' ', ' ');
         $datafield->addSubfield(new Subfield('a', 'FI-NL'));
         $datafield->addSubfield(new Subfield('b', 'fin'));
         $datafield->addSubfield(new Subfield('e', 'rda'));
@@ -230,7 +230,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField041($record, $publication) {
         if (!empty($publication->language)) {
-            $datafield = new DataField('041', '0', '_');
+            $datafield = new DataField('041', '0', ' ');
             $datafield->addSubfield(new Subfield('a', strtolower($publication->language)));
             $record->addDataField($datafield);
         }
@@ -238,7 +238,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField100($record, $publication) {
         if (self::contains($publication->role_1, 'AUTHOR')) {
-            $datafield = new DataField('100', '1', '_');
+            $datafield = new DataField('100', '1', ' ');
             $datafield->addSubfield(new Subfield('a', $publication->last_name_1 . ', ' . $publication->first_name_1 . ','));
             $datafield->addSubfield(new Subfield('g', 'ENNAKKOTIETO.'));
             $record->addDataField($datafield);
@@ -260,7 +260,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField250($record, $publication) {
         if (!empty($publication->edition)) {
-            $datafield = new DataField('250', '_', '_');
+            $datafield = new DataField('250', ' ', ' ');
             $datafield->addSubfield(new Subfield('a', $publication->edition . '. p.'));
             $record->addDataField($datafield);
         }
@@ -268,7 +268,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField255($record, $publication) {
         if (self::isMap($publication->publication_type) && !empty($publication->map_scale)) {
-            $datafield = new DataField('255', '0', '_');
+            $datafield = new DataField('255', '0', ' ');
             $datafield->addSubfield(new Subfield('a', $publication->map_scale));
             $record->addDataField($datafield);
         }
@@ -276,7 +276,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField263($record, $publication) {
         if (!empty($publication->year)) {
-            $datafield = new DataField('263', '_', '_');
+            $datafield = new DataField('263', ' ', ' ');
             $time = $publication->year;
             $time .= empty($publication->month) ? 'KK' : $publication->month;
             $datafield->addSubfield(new Subfield('a', $time));
@@ -285,7 +285,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField264a($record, $publication) {
-        $datafield = new DataField('264', '_', '1');
+        $datafield = new DataField('264', ' ', '1');
         if (self::isDissertation($publication->publication_type)) {
             $datafield->addSubfield(new Subfield('a', $publication->locality . ' :'));
         } else {
@@ -298,7 +298,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField264b($record, $publication, $format) {
         if (!self::isElectronical($format)) {
-            $datafield = new DataField('264', '_', '3');
+            $datafield = new DataField('264', ' ', '3');
             $datafield->addSubfield(new Subfield('a', $publication->printing_house_city . ' :'));
             $datafield->addSubfield(new Subfield('b', $publication->printing_house));
             $record->addDataField($datafield);
@@ -306,7 +306,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField336($record, $publication) {
-        $datafield = new DataField('336', '_', '_');
+        $datafield = new DataField('336', ' ', ' ');
 
         if (self::isMusic($publication->publication_type)) {
             $datafield->addSubfield(new Subfield('a', 'Nuottikirjoitus'));
@@ -323,7 +323,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField337($record, $format) {
-        $datafield = new DataField('337', '_', '_');
+        $datafield = new DataField('337', ' ', ' ');
         if (self::isElectronical($format)) {
             $datafield->addSubfield(new Subfield('a', JText::_('COM_ISBNREGISTRY_MARC_337_A_1')));
             $datafield->addSubfield(new Subfield('b', 'c'));
@@ -336,7 +336,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField338($record, $format) {
-        $datafield = new DataField('338', '_', '_');
+        $datafield = new DataField('338', ' ', ' ');
         if (self::isElectronical($format)) {
             $datafield->addSubfield(new Subfield('a', 'verkkoaineisto'));
             $datafield->addSubfield(new Subfield('b', 'cr'));
@@ -350,7 +350,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField490($record, $publication) {
         if (!empty($publication->series)) {
-            $datafield = new DataField('490', '0', '_');
+            $datafield = new DataField('490', '0', ' ');
             $a = $publication->series;
             $x = $publication->issn;
             $v = $publication->volume;
@@ -375,7 +375,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField502($record, $publication) {
         if (self::isDissertation($publication->publication_type)) {
-            $datafield = new DataField('502', '_', '_');
+            $datafield = new DataField('502', ' ', ' ');
             $datafield->addSubfield(new Subfield('a', 'Diss. : '));
             $datafield->addSubfield(new Subfield('c', $publication->official_name . '.'));
             $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
@@ -389,7 +389,7 @@ class PublicationHelper extends JHelperContent {
                 $json = json_decode($publication->publication_identifier_electronical);
                 if (!empty($json)) {
                     foreach ($json as $identifier => $publicationType) {
-                        $datafield = new DataField('530', '_', '_');
+                        $datafield = new DataField('530', ' ', ' ');
                         $a = JText::_('COM_ISBNREGISTRY_MARC_530_A_PRINT') . ' ' . $publication->publication_identifier_type . ' ';
                         $a .= $identifier;
                         $fileFormat = self::getFileFormat($publicationType);
@@ -405,7 +405,7 @@ class PublicationHelper extends JHelperContent {
                 $json = json_decode($publication->publication_identifier_print);
                 if (!empty($json)) {
                     foreach ($json as $identifier => $publicationType) {
-                        $datafield = new DataField('530', '_', '_');
+                        $datafield = new DataField('530', ' ', ' ');
                         $a = JText::_('COM_ISBNREGISTRY_MARC_530_A_ELECTRONICAL') . ' ' . $publication->publication_identifier_type . ' ';
                         $a .= $identifier;
                         $type = self::getType($publicationType);
@@ -423,7 +423,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField538($record, $format) {
         if (self::isElectronical($format)) {
-            $datafield = new DataField('538', '_', '_');
+            $datafield = new DataField('538', ' ', ' ');
             $datafield->addSubfield(new Subfield('a', 'Internet-yhteys.'));
             $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
             $record->addDataField($datafield);
@@ -431,7 +431,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField594($record, $selection) {
-        $datafield = new DataField('594', '_', '_');
+        $datafield = new DataField('594', ' ', ' ');
         switch ($selection) {
             case 1:
                 $datafield->addSubfield(new Subfield('a', 'ENNAKKOTIETO KANSALLISKIRJASTO.'));
@@ -446,7 +446,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField700($record, $publication) {
         if (!self::contains($publication->role_1, 'AUTHOR')) {
-            $datafield = new DataField('700', '1', '_');
+            $datafield = new DataField('700', '1', ' ');
             $datafield->addSubfield(new Subfield('a', $publication->last_name_1 . ', ' . $publication->first_name_1 . ','));
             $datafield->addSubfield(new Subfield('g', 'ENNAKKOTIETO.'));
             $record->addDataField($datafield);
@@ -456,7 +456,7 @@ class PublicationHelper extends JHelperContent {
     private static function addTypes($field, $ind1, $record, $types, $isElectronical = false) {
         if (!empty($types)) {
             foreach ($types as $type) {
-                $datafield = new DataField($field, $ind1, '_');
+                $datafield = new DataField($field, $ind1, ' ');
                 $datafield->addSubfield(new Subfield('a', ''));
                 $typeStr = $isElectronical ? self::getFileFormat($type) : self::getType($type);
                 if (!empty($type)) {
