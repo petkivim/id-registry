@@ -142,6 +142,9 @@ class IssnregistryFormsHelper {
                 $errors['frequency_other_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
             } else if (strcmp('z', $frequency) == 0 && empty($frequencyOther) == true) {
                 $errors['frequency_other_' . $i] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
+            } else if (strcmp('', $frequency) == 0 && strlen($frequencyOther) > 0) {
+                unset($errors['frequency_' . $i]);
+                $post->set('frequency_' . $i, 'z');
             }
             // Language - required
             $language = $post->get('language_' . $i, null, 'string');
@@ -165,9 +168,7 @@ class IssnregistryFormsHelper {
             $publicationTypeOther = $post->get('publication_type_other_' . $i, null, 'string');
             if (strlen($publicationTypeOther) > 50) {
                 $errors['publication_type_other_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
-            } else if (preg_match('/^OTHER_SERIAL$/', $publicationType) && empty($publicationTypeOther) == true) {
-                $errors['publication_type_other_' . $i] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
-            }
+            } 
             // Medium - required
             $medium = $post->get('medium_' . $i, null, 'string');
             if (empty($medium) == true) {
@@ -182,7 +183,7 @@ class IssnregistryFormsHelper {
             if (strlen($mediumOther) > 50) {
                 $errors['medium_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
             } else if (preg_match('/^OTHER$/', $medium) && empty($mediumOther) == true) {
-                $errors['medium_' . $i] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
+                $errors['medium_' . $i] = "PLG_ISSNREGISTRY_FORMS_MEDIUM_OTHER_FIELD_EMPTY";
             }
             // URL - optional (validate format)
             $url = $post->get('url_' . $i, null, 'string');
