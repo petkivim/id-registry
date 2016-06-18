@@ -42,7 +42,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PHONE_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="phone" id="phone" size="10" value="' . $post->get('phone', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . (isset($errors['phone']) ? JText::_($errors['phone']) : '') . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['phone']) ? JText::_($errors['phone']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD') . ':</td>';
         // Content - Email Cloaking plugin must be disabled to get this work
@@ -55,7 +55,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="contact_person" id="contact_person" size="30" value="' . $post->get('contact_person', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . (isset($errors['contact_person']) ? JText::_($errors['contact_person']) : '') . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['contact_person']) ? JText::_($errors['contact_person']) : '') . '</td>';
         $html .= '</tr>';
         $html .= '</table>';
         $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_REGISTRATION_SUB_TITLE_2') . '</div>';
@@ -188,7 +188,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td class="error">* ' . (isset($errors['city']) ? JText::_($errors['city']) : '') . '</td>';
         $html .= '</tr><tr>';
         if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
-            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_APPLICATION_FIELD') . ':</td>';
             $html .= '<td><input type="text" name="contact_person" id="contact_person" size="30" value="' . $post->get('contact_person', null, 'string') . '" /></td>';
             $html .= '<td class="error">* ' . (isset($errors['contact_person']) ? JText::_($errors['contact_person']) : '') . '</td>';
             $html .= '</tr><tr>';
@@ -197,7 +197,7 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td><input type="text" name="phone" id="phone" size="15" value="' . $post->get('phone', null, 'string') . '" /></td>';
         $html .= '<td class="error">* ' . (isset($errors['phone']) ? JText::_($errors['phone']) : '') . '</td>';
         $html .= '</tr><tr>';
-        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD') . ':</td>';
+        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_EMAIL_FIELD') . ':</td>';
         // Content - Email Cloaking plugin must be disabled to get this work
         $html .= '<td><input type="text" id="email" name="email" size="30" value="' . $post->get('email', null, 'string') . '" maxlength="100"/></td>';
         $html .= '<td class="error">* ' . (isset($errors['email']) ? JText::_($errors['email']) : '') . '</td>';
@@ -536,14 +536,14 @@ class IsbnregistryFormsHtmlBuilder {
         $html .= '<td>' . $post->get('city', null, 'string') . '</td>';
         $html .= '</tr><tr>';
         if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
-            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD') . ':</td>';
+            $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_APPLICATION_FIELD') . ':</td>';
             $html .= '<td>' . $post->get('contact_person', null, 'string') . '</td>';
             $html .= '</tr><tr>';
         }
         $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_PHONE_FIELD') . ':</td>';
         $html .= '<td>' . $post->get('phone', null, 'string') . '</td>';
         $html .= '</tr><tr class="spacer_bottom">';
-        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_EMAIL_FIELD') . ':</td>';
+        $html .= '<td>' . JText::_('PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_EMAIL_FIELD') . ':</td>';
         $html .= '<td>' . $post->get('email', null, 'string') . '</td>';
         $html .= '</tr>';
         $html .= '</table>';

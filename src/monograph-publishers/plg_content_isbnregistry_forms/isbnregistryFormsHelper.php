@@ -50,9 +50,11 @@ class IsbnregistryFormsHelper {
         } else if (strlen($city) > 50) {
             $errors['city'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
-        // Phone number - optional (validate format)
+        // Phone number - required (validate format)
         $phone = $post->get('phone', null, 'string');
-        if (!preg_match('/^(\+){0,1}[0-9 ]{0,30}$/i', $phone)) {
+        if (strlen($phone) == 0) {
+            $errors['phone'] = "PLG_ISBNREGISTRY_FORMS_PHONE_FIELD_EMPTY";
+        } else if (!preg_match('/^(\+){0,1}[0-9 ]{0,30}$/i', $phone)) {
             $errors['phone'] = "PLG_ISBNREGISTRY_FORMS_PHONE_FIELD_INVALID";
         }
         // Email - required
@@ -69,9 +71,11 @@ class IsbnregistryFormsHelper {
         } else if (strlen($www) > 100) {
             $errors['www'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
-        // Contact person - optional
+        // Contact person - required
         $contactPerson = $post->get('contact_person', null, 'string');
-        if (strlen($contactPerson) > 100) {
+        if (strlen($contactPerson) == 0) {
+            $errors['contact_person'] = "PLG_ISBNREGISTRY_FORMS_CONTACT_PERSON_FIELD_EMPTY";
+        } elseif (strlen($contactPerson) > 100) {
             $errors['contact_person'] = "PLG_ISBNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
         // Question 1 - optional
