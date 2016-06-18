@@ -57,7 +57,7 @@ class PublicationHelper extends JHelperContent {
         // Add 222
         self::addField222($record, $publication, $format);
         // Add 245
-        self::addField245($record, $publication);
+        self::addField245($record, $publication, $publisher);
         // Add 263
         self::addField263($record, $publication);
         // Add 264 * 2
@@ -178,11 +178,22 @@ class PublicationHelper extends JHelperContent {
         $record->addDataField($datafield);
     }
 
-    private static function addField245($record, $publication) {
+    private static function addField245($record, $publication, $publisher) {
         $datafield = new DataField('245', '0', '0');
-        $datafield->addSubfield(new Subfield('a', $publication->title . (empty($publication->subtitle) ? '.' : ' :')));
+        $title = $publication->title;
+        if (empty($publication->subtitle) && empty($publisher)) {
+            $title .= '.';
+        } else if (!empty($publication->subtitle)) {
+            $title .= ' :';
+        } else if (!empty($publisher)) {
+            $title .= ' /';
+        }
+        $datafield->addSubfield(new Subfield('a', $title));
         if (!empty($publication->subtitle)) {
-            $datafield->addSubfield(new Subfield('b', $publication->subtitle . '.'));
+            $datafield->addSubfield(new Subfield('b', $publication->subtitle . (empty($publisher) ? '.' : ' /')));
+        }
+        if (!empty($publisher)) {
+            $datafield->addSubfield(new Subfield('c', $publisher->official_name . '.'));
         }
         $record->addDataField($datafield);
     }
@@ -218,11 +229,11 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField310($record, $publication) {
         $datafield = new DataField('310', ' ', ' ');
-		if(strcmp($publication->frequency, 'z') == 0 && !empty($publication->frequency_other)) {
-			$datafield->addSubfield(new Subfield('a', $publication->frequency_other));
-		} else {
-			$datafield->addSubfield(new Subfield('a', JText::_('COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_' . strtoupper($publication->frequency))));
-		}
+        if (strcmp($publication->frequency, 'z') == 0 && !empty($publication->frequency_other)) {
+            $datafield->addSubfield(new Subfield('a', $publication->frequency_other));
+        } else {
+            $datafield->addSubfield(new Subfield('a', JText::_('COM_ISSNREGISTRY_PUBLICATION_FIELD_FREQUENCY_' . strtoupper($publication->frequency))));
+        }
         $record->addDataField($datafield);
     }
 
