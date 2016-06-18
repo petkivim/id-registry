@@ -255,7 +255,7 @@ class ImportHelper {
             'publisher_id' => $data[26],
             'id_old' => $data[0],
             'created' => self::convertDate($data[27]),
-            'created_by' => $data[28],
+            'created_by' => (preg_match('/^[\d\.]+$/i', $data[28]) ? 'WWW' : $data[28]),
             'modified' => self::convertDate($data[29]),
             'modified_by' => $data[30]
         );
