@@ -39,7 +39,7 @@ class IssnregistryFormsHtmlBuilder {
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ADDRESS_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="address" id="address" size="30" value="' . $post->get('address', null, 'string') . '" /></td>';
-        $html .= '<td class="error"> ' . (isset($errors['address']) ? JText::_($errors['address']) : '') . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['address']) ? JText::_($errors['address']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ZIP_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="zip" id="zip" size="5" value="' . $post->get('zip', null, 'string') . '" /></td>';
@@ -47,7 +47,7 @@ class IssnregistryFormsHtmlBuilder {
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_CITY_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="city" id="city" size="20" value="' . $post->get('city', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . (isset($errors['city']) ? JText::_($errors['city']) : '') . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['city']) ? JText::_($errors['city']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td></td>';
         $html .= '<td class="button_row"><input type="submit" name="submit_application_pt1" value="' . JText::_('PLG_ISSNREGISTRY_FORMS_CONTINUE_BTN') . '" /></td>';

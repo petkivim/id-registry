@@ -47,9 +47,11 @@ class IssnregistryFormsHelper {
         } else if (!preg_match('/^(\+){0,1}[0-9 ]{0,30}$/i', $phone)) {
             $errors['phone'] = "PLG_ISSNREGISTRY_FORMS_FIELD_INVALID";
         }
-        // Address - optional
+        // Address - required
         $address = $post->get('address', null, 'string');
-        if (strlen($address) > 50) {
+        if (empty($address) == true) {
+            $errors['address'] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
+        } else if (strlen($address) > 50) {
             $errors['address'] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
         // ZIP - optional
@@ -57,20 +59,14 @@ class IssnregistryFormsHelper {
         if (!empty($zip) && !preg_match('/^\d{5}$/i', $zip)) {
             $errors['zip'] = "PLG_ISSNREGISTRY_FORMS_FIELD_INVALID";
         }
-        // City - optional
+        // City - required
         $city = $post->get('city', null, 'string');
-        if (strlen($city) > 50) {
+        if (empty($city) == true) {
+            $errors['city'] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
+        } else if (strlen($city) > 50) {
             $errors['city'] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
         }
-        // If address not empty, zip and city can not be empty
-        if (!empty($address) == true) {
-            if (strlen($zip) == 0) {
-                $errors['zip'] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
-            }
-            if (strlen($city) == 0) {
-                $errors['city'] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
-            }
-        }
+
         return $errors;
     }
 
@@ -168,7 +164,7 @@ class IssnregistryFormsHelper {
             $publicationTypeOther = $post->get('publication_type_other_' . $i, null, 'string');
             if (strlen($publicationTypeOther) > 50) {
                 $errors['publication_type_other_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
-            } 
+            }
             // Medium - required
             $medium = $post->get('medium_' . $i, null, 'string');
             if (empty($medium) == true) {

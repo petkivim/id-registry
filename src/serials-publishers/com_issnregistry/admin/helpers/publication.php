@@ -101,9 +101,9 @@ class PublicationHelper extends JHelperContent {
 
     private static function getField007($format) {
         if (self::isElectronical($format)) {
-            return "cr|||_||||||||";
+            return "cr||||||||||||";
         } else {
-            return "ta|||_||||||||";
+            return "ta||||||||||||";
         }
     }
 
@@ -121,7 +121,7 @@ class PublicationHelper extends JHelperContent {
         // 15-17
         $field .= "fi ";
         // 18
-        $field .= empty($frequency) ? '|' : $frequency;
+        $field .= empty($frequency) ? '_' : $frequency;
         // 19-20
         $field .= "||";
         // 21
@@ -135,7 +135,7 @@ class PublicationHelper extends JHelperContent {
             $field .= "_";
         }
         // 24-34
-        $field .= "_____0000b0";
+        $field .= "_____0|||b0";
         // 35-37
         $field .= empty($language) ? '|||' : strtolower($language);
         // 38-39
