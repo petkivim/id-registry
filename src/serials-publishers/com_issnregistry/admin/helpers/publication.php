@@ -62,7 +62,7 @@ class PublicationHelper extends JHelperContent {
         self::addField263($record, $publication);
         // Add 264 * 2
         self::addField264a($record, $publication, $form, $publisher);
-        self::addField264b($record, $publication, $format);
+        self::addField264b($record, $publication);
         // Add 310
         self::addField310($record, $publication);
         // Add 336
@@ -210,21 +210,17 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField264a($record, $publication, $form, $publisher) {
         $datafield = new DataField('264', ' ', '1');
-        $city = !empty($form->city) ? $form->city : $publisher->city;
-        $datafield->addSubfield(new Subfield('a', $city . ' :'));
+        $datafield->addSubfield(new Subfield('a', $publication->place_of_publication . ' :'));
         $name = !empty($form->publisher) ? $form->publisher : $publisher->official_name;
         $datafield->addSubfield(new Subfield('b', $name . ','));
         $datafield->addSubfield(new Subfield('c', $publication->issued_from_year . '-'));
         $record->addDataField($datafield);
     }
 
-    private static function addField264b($record, $publication, $format) {
-        if (!self::isElectronical($format)) {
-            $datafield = new DataField('264', ' ', '3');
-            $datafield->addSubfield(new Subfield('a', $publication->place_of_publication . ' :'));
-            $datafield->addSubfield(new Subfield('b', $publication->printer));
-            $record->addDataField($datafield);
-        }
+    private static function addField264b($record, $publication) {
+        $datafield = new DataField('264', ' ', '3');
+        $datafield->addSubfield(new Subfield('b', $publication->printer));
+        $record->addDataField($datafield);
     }
 
     private static function addField310($record, $publication) {
