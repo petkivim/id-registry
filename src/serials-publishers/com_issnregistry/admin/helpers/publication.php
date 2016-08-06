@@ -96,7 +96,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function getLeader() {
-        return "00000nas_a22000008i_4500";
+        return "00000nas_a22000008i 4500";
     }
 
     private static function getField007($format) {
@@ -123,11 +123,11 @@ class PublicationHelper extends JHelperContent {
         // 18
         $field .= empty($frequency) ? '_' : $frequency;
         // 19-20
-        $field .= "||";
+        $field .= "| ";
         // 21
         $field .= "|";
         // 22
-        $field .= "_";
+        $field .= "|";
         // 23 - publication format
         if (self::isElectronical($format)) {
             $field .= "o";
@@ -218,9 +218,11 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function addField264b($record, $publication) {
-        $datafield = new DataField('264', ' ', '3');
-        $datafield->addSubfield(new Subfield('b', $publication->printer));
-        $record->addDataField($datafield);
+        if (!empty($publication->printer)) {
+            $datafield = new DataField('264', ' ', '3');
+            $datafield->addSubfield(new Subfield('b', $publication->printer));
+            $record->addDataField($datafield);
+        }
     }
 
     private static function addField310($record, $publication) {
