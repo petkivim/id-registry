@@ -201,9 +201,7 @@ class PublicationHelper extends JHelperContent {
     private static function addField263($record, $publication) {
         if (!empty($publication->issued_from_year)) {
             $datafield = new DataField('263', ' ', ' ');
-            $time = $publication->issued_from_year;
-            $time .= 'KK';
-            $datafield->addSubfield(new Subfield('a', $time));
+            $datafield->addSubfield(new Subfield('a', $publication->issued_from_year));
             $record->addDataField($datafield);
         }
     }
