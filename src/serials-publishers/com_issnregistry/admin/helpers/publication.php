@@ -96,7 +96,7 @@ class PublicationHelper extends JHelperContent {
     }
 
     private static function getLeader() {
-        return "00000nas_a22000008i 4500";
+        return "00000nas a22000008i 4500";
     }
 
     private static function getField007($format) {
