@@ -535,7 +535,7 @@ jQuery(document).ready(function ($) {
         var type = id.match(/isbns$/) ? 'isbn' : 'ismn';
         var batchId = (type === 'ismn' ? batch_id_ismns : batch_id_isbns);
         SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=big_publisher_'
-                + type + '&publisherId=' + publisher_id + '&batchId=' + batchId, {handler: 'iframe', size: {x: 800, y: 600}}
+                + type + '&publisherId=' + publisher_id + '&batchId=' + batchId, {handler: 'iframe', size: {x: 1200, y: 890}}
         );
     });
 
@@ -545,7 +545,7 @@ jQuery(document).ready(function ($) {
         var publication_id = (type === 'ismn' ? publication_id_ismn : publication_id_isbn);
         var batchId = (type === 'ismn' ? batch_id_ismn : batch_id_isbn);
         SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=identifier_created_'
-                + type + '&publisherId=' + publisher_id + '&batchId=' + batchId + '&publicationId=' + publication_id, {handler: 'iframe', size: {x: 800, y: 600}}
+                + type + '&publisherId=' + publisher_id + '&batchId=' + batchId + '&publicationId=' + publication_id, {handler: 'iframe', size: {x: 1200, y: 850}}
         );
     });
 
@@ -557,7 +557,7 @@ jQuery(document).ready(function ($) {
             type = 'ismn';
         }
         SqueezeBox.open(url + '?option=com_isbnregistry&view=message&layout=send&tmpl=component&code=publisher_registered_'
-                + type + '&publisherId=' + publisher_id, {handler: 'iframe', size: {x: 800, y: 600}}
+                + type + '&publisherId=' + publisher_id, {handler: 'iframe', size: {x: 1200, y: 850}}
         );
     });
 
