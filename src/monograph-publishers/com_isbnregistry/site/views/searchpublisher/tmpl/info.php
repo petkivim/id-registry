@@ -57,13 +57,7 @@ if (empty($this->isbns)) {
         foreach ($this->isbns as $isbn) {
             $row = '<tr><td class="identifier">';
             $row .= $isbn->publisher_identifier;
-            $row .= '</td><td class="description">';
-            if ($isbn->is_active && !$this->publisher->has_quitted) {
-                $row .= JText::_('COM_ISBNREGISTRY_VIEW_PUBLISHER_IDENTIFIER_STATE_ACTIVE');
-            } else if ($isbn->is_closed) {
-                $row .= JText::_('COM_ISBNREGISTRY_VIEW_PUBLISHER_IDENTIFIER_STATE_CLOSED');
-            }
-            $row .= '</td></tr>';
+            $row .= '</td><td class="description"></td></tr>';
             echo $row;
         }
     }
@@ -81,13 +75,7 @@ if (empty($this->ismns)) {
         foreach ($this->ismns as $ismn) {
             $row = '<tr><td class="identifier">';
             $row .= $ismn->publisher_identifier;
-            $row .= '</td><td class="description">';
-            if ($ismn->is_active && !$this->publisher->has_quitted) {
-                $row .= JText::_('COM_ISBNREGISTRY_VIEW_PUBLISHER_IDENTIFIER_STATE_ACTIVE');
-            } else if ($ismn->is_closed) {
-                $row .= JText::_('COM_ISBNREGISTRY_VIEW_PUBLISHER_IDENTIFIER_STATE_CLOSED');
-            }
-            $row .= '</td></tr>';
+            $row .= '</td><td class="description"></td></tr>';
             echo $row;
         }
     }
