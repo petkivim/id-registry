@@ -3,13 +3,13 @@
 
     <name>COM_ISBNREGISTRY</name>
     <!-- The following elements are optional and free of formatting constraints -->
-    <creationDate>5 August 2016</creationDate>
+    <creationDate>13 August 2016</creationDate>
     <author>Petteri Kivimäki</author>
     <copyright>(C)2015-2016 Petteri Kivimäki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
     <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
     <!--  The version string is recorded in the components table -->
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <!-- The description is optional and defaults to the name -->
     <description>COM_ISBNREGISTRY_DESCRIPTION</description>
 
