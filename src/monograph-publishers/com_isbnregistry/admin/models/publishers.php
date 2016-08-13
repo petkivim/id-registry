@@ -99,7 +99,7 @@ class IsbnregistryModelPublishers extends JModelList {
         $targetField = $this->getState('filter.target_field');
 
         // Create the base select statement.
-        $query->select('DISTINCT a.id, a.official_name, a.active_identifier_isbn, a.active_identifier_ismn, a.created')
+        $query->select('DISTINCT a.id, a.official_name, a.other_names, a.active_identifier_isbn, a.active_identifier_ismn, a.created')
                 ->from($db->quoteName('#__isbn_registry_publisher') . ' AS a');
 
         // Set has quitted

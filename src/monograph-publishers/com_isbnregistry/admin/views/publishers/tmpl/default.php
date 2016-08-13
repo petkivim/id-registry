@@ -53,11 +53,11 @@ $document->addScriptDeclaration('
                         <th width="2%">
                             <?php echo JHtml::_('grid.checkall'); ?>
                         </th>
-                        <th width="65%">
+                        <th width="45%">
                             <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_OFFICIAL_NAME'); ?>
                         </th>
-                        <th width="25%">
-                            <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_ACTIVE_IDENTIFIERS'); ?>
+                        <th width="50%">
+                            <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_OTHER_NAMES'); ?>
                         </th>
                         <th width="2%">
                             <?php echo JText::_('COM_ISBNREGISTRY_PUBLISHERS_ID'); ?>
@@ -90,12 +90,7 @@ $document->addScriptDeclaration('
                                 </span>
                             </td>   
                             <td>
-                                <?php
-                                $identifier = empty($row->active_identifier_isbn) ? '' : $row->active_identifier_isbn;
-                                $identifier .=!empty($row->active_identifier_isbn) && !empty($row->active_identifier_ismn) ? ', ' : '';
-                                $identifier .= empty($row->active_identifier_ismn) ? '' : $row->active_identifier_ismn;
-                                echo $identifier;
-                                ?>
+                                <?php echo $row->other_names; ?>
                             </td> 
                             <td align="center">
                                 <?php echo $row->id; ?>
