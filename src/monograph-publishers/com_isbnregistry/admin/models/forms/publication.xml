@@ -162,7 +162,7 @@
 		<field 
 			name="publications_public" 
 			type="radio" 
-			default="0" 
+			default="1" 
 			label="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_LABEL" 
 			description="COM_ISBNREGISTRY_PUBLICATION_FIELD_PUBLICATIONS_PUBLIC_DESC"
 			>
