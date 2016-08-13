@@ -94,6 +94,13 @@ class IsbnRegistryTablePublication extends JTable {
             // Return false as the item can't be deleted
             return false;
         }
+        // Item can be deleted only if no_identifier_granted is true
+        if (!$this->no_identifier_granted) {
+            // no_identifier_granted is false, raise a warning
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_DELETE_FAILED_IDENTIFIER_GRANTED'), 'warning');
+            // Return false as the item can't be deleted
+            return false;
+        }
         // No identifiers found, delete the item
         return parent::delete($pk);
     }

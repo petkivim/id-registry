@@ -70,6 +70,8 @@ class IsbnregistryViewPublications extends JViewLegacy {
         // Get filter status
         $filterStatus = $this->state->get('filter.status');
         
+        JToolBarHelper::editList('publication.edit');
+        
         if ($filterStatus == 1) {
             JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_RECEIVED'));
             // Add new button if received view is showed
@@ -80,10 +82,10 @@ class IsbnregistryViewPublications extends JViewLegacy {
             JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_PROCESSED'));
         } else if ($filterStatus == 4) {
             JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS_NO_IDENTIFIER_GRANTED'));
+            JToolBarHelper::deleteList('', 'publications.delete');
         } else {
             JToolBarHelper::title(JText::_('COM_ISBNREGISTRY_PUBLICATIONS'));
-        }
-        JToolBarHelper::editList('publication.edit');
+        }      
 
         // Has user rights to access preferences?
         if (JFactory::getUser()->authorise('core.admin', 'com_isbnregistry')) {
