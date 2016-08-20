@@ -96,7 +96,7 @@ $document->addScriptDeclaration('
                                     <?php echo (strlen($row->comments) > 50 ? substr($row->comments, 0, 70) . '...' : $row->comments); ?>
                                 </td>
                                 <td>
-                                    <?php echo JHtml::date($row->created, 'd.m.Y'); ?>
+                                    <?php echo JHtml::date($row->created, 'd.m.Y H:i'); ?>
                                 </td> 	                                
                                 <td align="center">
                                     <?php echo $row->id; ?>
