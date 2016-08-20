@@ -261,7 +261,7 @@ class PublicationHelper extends JHelperContent {
     private static function addField250($record, $publication) {
         if (!empty($publication->edition)) {
             $datafield = new DataField('250', ' ', ' ');
-            $datafield->addSubfield(new Subfield('a', $publication->edition . '. p.'));
+            $datafield->addSubfield(new Subfield('a', $publication->edition . '. ' . JText::_('COM_ISBNREGISTRY_MARC_250_A')));
             $record->addDataField($datafield);
         }
     }
