@@ -24,7 +24,7 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("issuedfromnumber", function (value) {
-        regex = /^.{0,20}$/;
+        regex = /^.{0,100}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("frequency", function (value) {

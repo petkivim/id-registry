@@ -120,7 +120,7 @@ class IssnregistryFormsHelper {
             }
             // Issued from number - optional
             $issuedFromNumber = $post->get('issued_from_number_' . $i, null, 'string');
-            if (strlen($issuedFromNumber) > 20) {
+            if (strlen($issuedFromNumber) > 100) {
                 $errors['issued_from_number_' . $i] = "PLG_ISSNREGISTRY_FORMS_FIELD_TOO_LONG";
             }
             // Frequency - required
