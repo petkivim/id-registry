@@ -52,12 +52,10 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("question4", function (value) {
-        regex = /^.{0,200}$/;
-        return regex.test(value);
+        return value.length <= 200;
     });
     document.formvalidator.setHandler("question5", function (value) {
-        regex = /^.{0,200}$/;
-        return regex.test(value);
+        return value.length <= 200;
     });
     document.formvalidator.setHandler("question6", function (value) {
         regex = /^.{0,50}$/;
