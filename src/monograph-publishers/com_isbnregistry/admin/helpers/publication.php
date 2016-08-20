@@ -451,6 +451,24 @@ class PublicationHelper extends JHelperContent {
             $datafield->addSubfield(new Subfield('g', 'ENNAKKOTIETO.'));
             $record->addDataField($datafield);
         }
+        if (!empty($publication->last_name_2) || !empty($publication->first_name_2)) {
+            $datafield = new DataField('700', '1', ' ');
+            $datafield->addSubfield(new Subfield('a', $publication->last_name_2 . ', ' . $publication->first_name_2 . ','));
+            $datafield->addSubfield(new Subfield('g', 'ENNAKKOTIETO.'));
+            $record->addDataField($datafield);
+        }
+        if (!empty($publication->last_name_3) || !empty($publication->first_name_3)) {
+            $datafield = new DataField('700', '1', ' ');
+            $datafield->addSubfield(new Subfield('a', $publication->last_name_3 . ', ' . $publication->first_name_3 . ','));
+            $datafield->addSubfield(new Subfield('g', 'ENNAKKOTIETO.'));
+            $record->addDataField($datafield);
+        }
+        if (!empty($publication->last_name_4) || !empty($publication->first_name_4)) {
+            $datafield = new DataField('700', '1', ' ');
+            $datafield->addSubfield(new Subfield('a', $publication->last_name_4 . ', ' . $publication->first_name_4 . ','));
+            $datafield->addSubfield(new Subfield('g', 'ENNAKKOTIETO.'));
+            $record->addDataField($datafield);
+        }
     }
 
     private static function addTypes($field, $ind1, $record, $types, $isElectronical = false) {
