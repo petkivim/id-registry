@@ -380,7 +380,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField856($record, $publication, $format) {
         if (self::isElectronical($format) && !empty($publication->url)) {
-            $datafield = new DataField('856', '0', '0');
+            $datafield = new DataField('856', '4', '0');
             $datafield->addSubfield(new Subfield('u', $publication->url));
             $datafield->addSubfield(new Subfield('y', JText::_('COM_ISSNREGISTRY_MARC_856_Y')));
             $record->addDataField($datafield);
