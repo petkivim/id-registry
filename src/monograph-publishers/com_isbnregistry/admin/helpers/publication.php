@@ -376,7 +376,7 @@ class PublicationHelper extends JHelperContent {
     private static function addField502($record, $publication) {
         if (self::isDissertation($publication->publication_type)) {
             $datafield = new DataField('502', ' ', ' ');
-            $datafield->addSubfield(new Subfield('a', 'Diss. : '));
+            $datafield->addSubfield(new Subfield('a', JText::_('COM_ISBNREGISTRY_MARC_502_A')));
             $datafield->addSubfield(new Subfield('c', $publication->official_name . '.'));
             $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
             $record->addDataField($datafield);
