@@ -195,11 +195,12 @@
                 <field name="title"
                        label="COM_ISSNREGISTRY_PUBLICATION_FIELD_PREVIOUS_TITLE_LABEL"
                        size="20"
-					   maxlength="50"
+					   maxlength="100"
                        type="text" />
 				<field name="issn"
                        label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_ISSN_LABEL"
                        size="9"
+					   maxlength="9"
                        type="text" />
 				<field name="last_issue"
                        label="COM_ISSNREGISTRY_PUBLISHER_FIELD_PREVIOUS_TITLE_LAST_ISSUE_LABEL"
@@ -221,7 +222,7 @@
                 <field name="title"
                        label="COM_ISSNREGISTRY_PUBLICATION_FIELD_MAIN_SERIES_TITLE_LABEL"
                        size="20"
-					   maxlength="50"
+					   maxlength="100"
                        type="text" />
 				<field name="issn"
                        label="COM_ISSNREGISTRY_PUBLISHER_FIELD_MAIN_SERIES_ISSN_LABEL"
@@ -243,7 +244,7 @@
                 <field name="title"
                        label="COM_ISSNREGISTRY_PUBLICATION_FIELD_SUBSERIES_TITLE_LABEL"
                        size="20"
-					   maxlength="50"
+					   maxlength="100"
                        type="text" />
 				<field name="issn"
                        label="COM_ISSNREGISTRY_PUBLISHER_FIELD_SUBSERIES_ISSN_LABEL"
@@ -265,7 +266,7 @@
                 <field name="title"
                        label="COM_ISSNREGISTRY_PUBLICATION_FIELD_ANOTHER_MEDIUM_TITLE_LABEL"
                        size="20"
-					   maxlength="50"
+					   maxlength="100"
                        type="text" />
 				<field name="issn"
                        label="COM_ISSNREGISTRY_PUBLISHER_FIELD_ANOTHER_MEDIUM_ISSN_LABEL"

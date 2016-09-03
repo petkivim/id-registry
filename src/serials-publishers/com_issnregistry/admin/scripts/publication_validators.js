@@ -56,19 +56,19 @@ jQuery(document).ready(function () {
         return regex.test(value);
     });
     document.formvalidator.setHandler("previous", function (value) {
-        regex = /^.{0,600}$/;
+        regex = /^.{0,850}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("mainseries", function (value) {
-        regex = /^.{0,600}$/;
+        regex = /^.{0,850}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("subseries", function (value) {
-        regex = /^.{0,600}$/;
+        regex = /^.{0,850}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("anothermedium", function (value) {
-        regex = /^.{0,600}$/;
+        regex = /^.{0,850}$/;
         return regex.test(value);
     });
     document.formvalidator.setHandler("additionalinfo", function (value) {
