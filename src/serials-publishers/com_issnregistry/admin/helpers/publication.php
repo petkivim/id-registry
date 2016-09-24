@@ -73,8 +73,6 @@ class PublicationHelper extends JHelperContent {
         self::addField338($record, $format);
         // Add 362
         self::addField362($record, $publication);
-        // Add 538
-        self::addField538($record, $format);
         // Add 594
         self::addField594($record);
         // Add 710
@@ -271,15 +269,6 @@ class PublicationHelper extends JHelperContent {
         if(!empty($publication->issued_from_number)) {
             $datafield = new DataField('362', '0', ' ');
             $datafield->addSubfield(new Subfield('a', $publication->issued_from_number . '-'));
-            $record->addDataField($datafield);
-        }
-    }
-
-    private static function addField538($record, $format) {
-        if (self::isElectronical($format)) {
-            $datafield = new DataField('538', ' ', ' ');
-            $datafield->addSubfield(new Subfield('a', 'Internet-yhteys.'));
-            $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
             $record->addDataField($datafield);
         }
     }
