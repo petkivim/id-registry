@@ -624,7 +624,7 @@ class PublicationHelper extends JHelperContent {
             '',
             '',
             '',
-            $publication->www,
+            '',
             '',
             ''
         );
