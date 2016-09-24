@@ -457,7 +457,7 @@ class PublicationHelper extends JHelperContent {
                             $a .= ' (' . $fileFormat . ')';
                         }
                         $a .= ':';
-                        $datafield->addSubfield(new Subfield('a', $a));
+                        $datafield->addSubfield(new Subfield('i', $a));
                         $datafield->addSubfield(new Subfield('z', $identifier));
                         $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
                         $record->addDataField($datafield);
@@ -468,7 +468,7 @@ class PublicationHelper extends JHelperContent {
                 if (!empty($json)) {
                     foreach ($json as $identifier => $publicationType) {
                         $datafield = new DataField('776', '0', '8');
-                        $datafield->addSubfield(new Subfield('a', JText::_('COM_ISBNREGISTRY_MARC_776_A_ELECTRONICAL') . ':'));
+                        $datafield->addSubfield(new Subfield('i', JText::_('COM_ISBNREGISTRY_MARC_776_A_ELECTRONICAL') . ':'));
                         $datafield->addSubfield(new Subfield('z', $identifier));
                         $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
                         $record->addDataField($datafield);
