@@ -98,6 +98,8 @@ class PublicationHelper extends JHelperContent {
         self::addField594($record, 2);
         // Add 700
         self::addField700($record, $publication);
+        // Add 776
+        self::addField776($record, $publication, $format);
 
         // Serialize record
         return $serializer->serialize($record);
@@ -439,6 +441,40 @@ class PublicationHelper extends JHelperContent {
             $datafield->addSubfield(new Subfield('a', $publication->last_name_4 . ', ' . $publication->first_name_4 . ','));
             $datafield->addSubfield(new Subfield('g', 'ENNAKKOTIETO.'));
             $record->addDataField($datafield);
+        }
+    }
+
+    private static function addField776($record, $publication, $format) {
+        if (strcmp($publication->publication_format, 'PRINT_ELECTRONICAL') == 0) {
+            if (!self::isElectronical($format)) {
+                $json = json_decode($publication->publication_identifier_electronical);
+                if (!empty($json)) {
+                    foreach ($json as $identifier => $publicationType) {
+                        $datafield = new DataField('776', '0', '8');
+                        $a = JText::_('COM_ISBNREGISTRY_MARC_776_A_PRINT');
+                        $fileFormat = self::getFileFormat($publicationType);
+                        if (!empty($fileFormat)) {
+                            $a .= ' (' . $fileFormat . ')';
+                        }
+                        $a .= ':';
+                        $datafield->addSubfield(new Subfield('a', $a));
+                        $datafield->addSubfield(new Subfield('z', $identifier));
+                        $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
+                        $record->addDataField($datafield);
+                    }
+                }
+            } else {
+                $json = json_decode($publication->publication_identifier_print);
+                if (!empty($json)) {
+                    foreach ($json as $identifier => $publicationType) {
+                        $datafield = new DataField('776', '0', '8');
+                        $datafield->addSubfield(new Subfield('a', JText::_('COM_ISBNREGISTRY_MARC_776_A_ELECTRONICAL') . ':'));
+                        $datafield->addSubfield(new Subfield('z', $identifier));
+                        $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
+                        $record->addDataField($datafield);
+                    }
+                }
+            }
         }
     }
 
