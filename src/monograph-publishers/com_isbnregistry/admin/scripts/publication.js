@@ -81,6 +81,7 @@ jQuery(document).ready(function ($) {
                     if (data.success == true) {
                         $('#system-message-container').html(showNotification('success', data.title, data.message));
                         $("#" + identifier).remove();
+                        updateIdentifiersJson(identifier);
                     } else {
                         $('#system-message-container').html(showNotification('error', data.title, data.message));
                     }
@@ -116,6 +117,7 @@ jQuery(document).ready(function ($) {
                     if (data.success == true) {
                         $('#system-message-container').html(showNotification('success', data.title, data.message));
                         $("#" + identifier).remove();
+                        updateIdentifiersJson(identifier);
                     } else {
                         $('#system-message-container').html(showNotification('error', data.title, data.message));
                     }
@@ -125,6 +127,29 @@ jQuery(document).ready(function ($) {
                     $('#system-message-container').html(showNotification('error', json.title, json.message));
                 });
     }
+
+    function updateIdentifiersJson(identifier) {
+        updateIdentifierJson('print', identifier);
+        updateIdentifierJson('electronical', identifier);
+
+    }
+
+    function updateIdentifierJson(type, identifier) {
+        var str = $('#jform_publication_identifier_' + type).val();
+        if (str.length > 0) {
+            var json = jQuery.parseJSON(str);
+            if (json[identifier]) {
+                delete json[identifier];
+                if (jQuery.isEmptyObject(json)) {
+                    str = '';
+                } else {
+                    str = JSON.stringify(json);
+                }
+                $('#jform_publication_identifier_' + type).val(str);
+            }
+        }
+    }
+
 });
 
 function showNotification(type, title, message) {
