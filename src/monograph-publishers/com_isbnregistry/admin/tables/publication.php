@@ -382,4 +382,45 @@ class IsbnRegistryTablePublication extends JTable {
         return $this->_db->getAffectedRows();
     }
 
+    /**
+     * Returns the number of received identifier applications between the given 
+     * timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param boolean $music if true the number of sheet music applications
+     * is returned, otherwise the number of all the other applications is
+     * returned
+     * @return ObjectList number of received identifier applications grouped by 
+     * year and month
+     */
+    public function getIdentifierApplicationCountByDates($begin, $end, $music = false) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('p.created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('p.created') . ' <= ' . $this->_db->quote($end->toSql()),
+            $this->_db->quoteName('p.created_by') . ' = ' . $this->_db->quote('WWW')
+        );
+
+        // 
+        if ($music) {
+            array_push($conditions, $this->_db->quoteName('p.publication_type') . ' = ' . $this->_db->quote('SHEET_MUSIC'));
+        } else {
+            array_push($conditions, $this->_db->quoteName('p.publication_type') . ' != ' . $this->_db->quote('SHEET_MUSIC'));
+        }
+
+        // Create the query
+        $query->select('YEAR(p.created) as year, MONTH(p.created) as month, count(distinct p.id) as count');
+        $query->from($this->_db->quoteName($this->_tbl) . ' as p');
+
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(p.created), MONTH(p.created)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

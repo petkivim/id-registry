@@ -228,6 +228,16 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         $this->addSelfRegisteredPublishers($results, $yearMonthArray, $selfRegisteredPublishers);
         array_push($results, array());
 
+        // Get new ISBN application count
+        $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
+        $isbnApplicationCount = $publicationModel->getIdentifierApplicationCountByDates($begin, $end, false);
+        $this->addReceivedIdentifierApplications($results, $yearMonthArray, $isbnApplicationCount, false);
+
+        // Get new ISMN application count
+        $ismnApplicationCount = $publicationModel->getIdentifierApplicationCountByDates($begin, $end, true);
+        $this->addReceivedIdentifierApplications($results, $yearMonthArray, $ismnApplicationCount, true);
+        array_push($results, array());
+
         // Get created ISBN count
         $publishserIsbnRangeModel = JModelLegacy::getInstance('publisherisbnrange', 'IsbnregistryModel');
         $createdIsbnsAuthorPublisher = $publishserIsbnRangeModel->getCreatedIdentifierCountByDates($begin, $end, $authorPublisherId);
@@ -331,6 +341,15 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         $row = array(JText::_('COM_ISBNREGISTRY_STATISTICS_SELF_REGISTERED_PUBLISHERS'), '');
         // Add data
         $this->addResultsRow($row, $yearMonthArray, $selfRegisteredPublishers);
+        // Add data to results
+        array_push($results, $row);
+    }
+
+    private function addReceivedIdentifierApplications(&$results, $yearMonthArray, $newPublishers, $ismn = false) {
+        // Row
+        $row = array(JText::_('COM_ISBNREGISTRY_STATISTICS_RECEIVED_' . ($ismn ? 'ISMN' : 'ISBN') . '_APPLICATIONS'), '');
+        // Add data
+        $this->addResultsRow($row, $yearMonthArray, $newPublishers);
         // Add data to results
         array_push($results, $row);
     }

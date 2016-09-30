@@ -336,6 +336,24 @@ class IsbnregistryModelPublication extends JModelAdmin {
         }
     }
 
+    /**
+     * Returns the number of received identifier applications between the given 
+     * timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param boolean $music if true the number of sheet music applications
+     * is returned, otherwise the number of all the other applications is
+     * returned
+     * @return ObjectList number of received identifier applications grouped by 
+     * year and month
+     */
+    public function getIdentifierApplicationCountByDates($begin, $end, $music = false) {
+        // Get db access
+        $table = $this->getTable();
+        // Return results
+        return $table->getIdentifierApplicationCountByDates($begin, $end, $music);
+    }
+
     private function identifiersPrintToJSON($identifiers) {
         $types = array('PAPERBACK', 'HARDBACK', 'SPIRAL_BINDING', 'OTHER_PRINT');
         $json = array();
