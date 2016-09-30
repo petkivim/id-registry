@@ -345,11 +345,11 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         array_push($results, $row);
     }
 
-    private function addReceivedIdentifierApplications(&$results, $yearMonthArray, $newPublishers, $ismn = false) {
+    private function addReceivedIdentifierApplications(&$results, $yearMonthArray, $receivedIdentifierApplications, $ismn = false) {
         // Row
         $row = array(JText::_('COM_ISBNREGISTRY_STATISTICS_RECEIVED_' . ($ismn ? 'ISMN' : 'ISBN') . '_APPLICATIONS'), '');
         // Add data
-        $this->addResultsRow($row, $yearMonthArray, $newPublishers);
+        $this->addResultsRow($row, $yearMonthArray, $receivedIdentifierApplications);
         // Add data to results
         array_push($results, $row);
     }
