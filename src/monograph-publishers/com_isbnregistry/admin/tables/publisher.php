@@ -358,4 +358,35 @@ class IsbnRegistryTablePublisher extends JTable {
         return $this->_db->loadObjectList();
     }
 
+    /**
+     * Returns the number of self registered publishers between the given 
+     * timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of self registered publishers grouped by year 
+     * and month
+     */
+    public function getSelfRegisteredPublisherCountByDates($begin, $end) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('p.created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('p.created') . ' <= ' . $this->_db->quote($end->toSql()),
+            $this->_db->quoteName('p.created_by') . ' = ' . $this->_db->quote('WWW')
+        );
+
+        // Create the query
+        $query->select('YEAR(p.created) as year, MONTH(p.created) as month, count(distinct p.id) as count');
+        $query->from($this->_db->quoteName($this->_tbl) . ' as p');
+
+        $query->where($conditions);
+        // Group by year and month
+        $query->group('YEAR(p.created), MONTH(p.created)');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
 }

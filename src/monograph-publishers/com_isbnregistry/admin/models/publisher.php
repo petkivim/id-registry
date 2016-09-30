@@ -212,4 +212,19 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         return $table->getModifiedPublisherCountByDates($begin, $end);
     }
 
+    /**
+     * Returns the number of self registered publishers between the given 
+     * timeframe.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return ObjectList number of self registered publishers grouped by year 
+     * and month
+     */
+    public function getSelfRegisteredPublisherCountByDates($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        //  Return result
+        return $table->getSelfRegisteredPublisherCountByDates($begin, $end);
+    }
+
 }

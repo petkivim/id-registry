@@ -141,7 +141,7 @@ class IsbnregistryModelStatistic extends JModelAdmin {
             $row = array(
                 $range->prefix > 0 ? $range->prefix : '',
                 $range->lang_group,
-                $range->range_begin  . ' ',
+                $range->range_begin . ' ',
                 $range->range_end . ' ',
                 ($range->free + $range->canceled),
                 ($range->taken - $range->canceled)
@@ -222,6 +222,10 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         // Get new ISMN publisher count
         $newIsmnPublishers = $publisherModel->getCreatedPublisherCountByDates($begin, $end, true);
         $this->addNewPublishers($results, $yearMonthArray, $newIsmnPublishers, true);
+
+        // Get self registered publisher count
+        $selfRegisteredPublishers = $publisherModel->getSelfRegisteredPublisherCountByDates($begin, $end);
+        $this->addSelfRegisteredPublishers($results, $yearMonthArray, $selfRegisteredPublishers);
         array_push($results, array());
 
         // Get created ISBN count
@@ -318,6 +322,15 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         $row = array(JText::_('COM_ISBNREGISTRY_STATISTICS_NEW_' . ($ismn ? 'ISMN' : 'ISBN') . '_PUBLISHERS_R1_C1'), '');
         // Add data
         $this->addResultsRow($row, $yearMonthArray, $newPublishers);
+        // Add data to results
+        array_push($results, $row);
+    }
+
+    private function addSelfRegisteredPublishers(&$results, $yearMonthArray, $selfRegisteredPublishers) {
+        // Row
+        $row = array(JText::_('COM_ISBNREGISTRY_STATISTICS_SELF_REGISTERED_PUBLISHERS'), '');
+        // Add data
+        $this->addResultsRow($row, $yearMonthArray, $selfRegisteredPublishers);
         // Add data to results
         array_push($results, $row);
     }
