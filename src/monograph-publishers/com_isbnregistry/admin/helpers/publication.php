@@ -390,6 +390,7 @@ class PublicationHelper extends JHelperContent {
                 if (!empty($json)) {
                     $datafield = new DataField('530', ' ', ' ');
                     $datafield->addSubfield(new Subfield('a', JText::_('COM_ISBNREGISTRY_MARC_530_A_PRINT') . '.'));
+                    $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
                     $record->addDataField($datafield);
                 }
             } else {
@@ -397,6 +398,7 @@ class PublicationHelper extends JHelperContent {
                 if (!empty($json)) {
                     $datafield = new DataField('530', ' ', ' ');
                     $datafield->addSubfield(new Subfield('a', JText::_('COM_ISBNREGISTRY_MARC_530_A_ELECTRONICAL') . '.'));
+                    $datafield->addSubfield(new Subfield('9', 'FENNI<KEEP>'));
                     $record->addDataField($datafield);
                 }
             }
