@@ -43,6 +43,8 @@ class plgContentIsbnregistry_forms extends JPlugin {
                 // Email settings
                 $email = $this->params->def('email', '');
                 $notifyAdmin = $this->params->def('notify_admin', true);
+                $notifyClientPublisher = $this->params->def('notify_client_publisher', true);
+                $notifyClientPublication = $this->params->def('notify_client_publication', true);
 
                 // Language settings
                 $lang = & JFactory::getLanguage();
@@ -74,6 +76,11 @@ class plgContentIsbnregistry_forms extends JPlugin {
                                 // Notify admin if necessary
                                 if ($notifyAdmin) {
                                     IsbnregistryFormsHelper::notifyAdmin($email, $publisherId, true);
+                                }
+                                if ($notifyClientPublisher) {
+                                    // Client email is required and it has already been validated
+                                    $clientEmail = $post->get('email', null, 'string');
+                                    IsbnregistryFormsHelper::notifyClient($clientEmail, true);
                                 }
                             }
                         } else {
@@ -143,6 +150,12 @@ class plgContentIsbnregistry_forms extends JPlugin {
                                 // Notify admin if necessary
                                 if ($notifyAdmin) {
                                     IsbnregistryFormsHelper::notifyAdmin($email, $publicationId, false);
+                                }
+                                // Notify client if necessary
+                                if ($notifyClientPublication) {
+                                    // Client email is required and it has already been validated
+                                    $clientEmail = $post->get('email', null, 'string');
+                                    IsbnregistryFormsHelper::notifyClient($clientEmail, false);
                                 }
                             }
                         } else {

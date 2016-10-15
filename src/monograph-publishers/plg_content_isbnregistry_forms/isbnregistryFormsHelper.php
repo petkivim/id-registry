@@ -932,6 +932,36 @@ class IsbnregistryFormsHelper {
         return $mailer->Send();
     }
 
+    public static function notifyClient($recipient, $isRegistration) {
+        // Get site's email address
+        $config = JFactory::getConfig();
+        $from = $config->get('mailfrom');
+
+        // If $recipient is empty, send mail to site admin
+        if (empty($recipient)) {
+            return false;
+        }
+
+        // Create sender array
+        $sender = array(
+            $from,
+            ''
+        );
+
+        // Build message
+        $subject = $isRegistration ? JText::_('PLG_ISBNREGISTRY_FORMS_NOTIFY_CLIENT_PUBLISHER_EMAIL_SUBJECT') : JText::_('PLG_ISBNREGISTRY_FORMS_NOTIFY_CLIENT_PUBLICATION_EMAIL_SUBJECT');
+        $message = $isRegistration ? JText::_('PLG_ISBNREGISTRY_FORMS_NOTIFY_CLIENT_PUBLISHER_EMAIL_MESSAGE') : JText::_('PLG_ISBNREGISTRY_FORMS_NOTIFY_CLIENT_PUBLICATION_EMAIL_MESSAGE');
+
+        // Get and configure mailer
+        $mailer = JFactory::getMailer();
+        $mailer->setSender($sender);
+        $mailer->addRecipient($recipient);
+        $mailer->setSubject($subject);
+        $mailer->isHTML(true);
+        $mailer->setBody($message);
+
+        return $mailer->Send();
+    }
 }
 
 ?>

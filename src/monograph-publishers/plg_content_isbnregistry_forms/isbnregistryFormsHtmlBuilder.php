@@ -264,8 +264,8 @@ class IsbnregistryFormsHtmlBuilder {
         if (!IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
             // Information about the authors
             $html .= '<div class="sub_title">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_4') . '</div>';
+            $html .= '<div class="post_field">' . JText::_('PLG_ISBNREGISTRY_FORMS_OTHER_AUTHORS_NOTE') . '</div>';
             $html .= '<table>';
-            $html .= '<tr class="spacer_bottom"><td colspan="2">' . JText::_('PLG_ISBNREGISTRY_FORMS_OTHER_AUTHORS_NOTE') . '</td></tr>';
             $html .= '<tr>';
             $html .= '<th></th>';
             $html .= '<th>' . JText::_('PLG_ISBNREGISTRY_FORMS_AUTHOR_FIELD') . '</th>';

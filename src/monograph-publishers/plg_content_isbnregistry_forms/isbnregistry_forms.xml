@@ -41,7 +41,23 @@
 				>
 				<option value="1">PLG_ISBNREGISTRY_FORMS_YES</option>
 				<option value="0">PLG_ISBNREGISTRY_FORMS_NO</option>			
-			</field>								
+			</field>	
+			<field name="notify_client_publisher" type="radio"
+				default="1"
+				description="PLG_ISBNREGISTRY_FORMS_NOTIFY_CLIENT_PUBLISHER_DESC"
+				label="PLG_ISBNREGISTRY_FORMS_NOTIFY_CLIENT_PUBLISHER_LBL"
+				>
+				<option value="1">PLG_ISBNREGISTRY_FORMS_YES</option>
+				<option value="0">PLG_ISBNREGISTRY_FORMS_NO</option>			
+			</field>
+			<field name="notify_client_publication" type="radio"
+				default="1"
+				description="PLG_ISBNREGISTRY_FORMS_NOTIFY_CLIENT_PUBLICATION_DESC"
+				label="PLG_ISBNREGISTRY_FORMS_NOTIFY_CLIENT_PUBLICATION_LBL"
+				>
+				<option value="1">PLG_ISBNREGISTRY_FORMS_YES</option>
+				<option value="0">PLG_ISBNREGISTRY_FORMS_NO</option>			
+			</field>				
 		</fieldset>
 	  </fields>    
 	</config>				
