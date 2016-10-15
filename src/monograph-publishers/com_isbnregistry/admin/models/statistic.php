@@ -86,25 +86,25 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         } else if (strcmp($type, 'PROGRESS_ISMN') == 0) {
             $results = $this->getProgressIsmn();
         } else if (strcmp($type, 'PUBLISHERS') == 0) {
-            $results = $this->getPublishersStats();
+            $results = $this->getPublishersStats($begin, $end);
         } else if (strcmp($type, 'PUBLICATIONS') == 0) {
-            $results = $this->getPublicationsStats();
+            $results = $this->getPublicationsStats($begin, $end);
         }
         return $results;
     }
 
-    private function getPublishersStats() {
+    private function getPublishersStats($begin, $end) {
         // Get publisher model
         $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
         // Get list of publishers
-        $list = $publisherModel->getPublishersAndIsbnIdentifiers();
+        $list = $publisherModel->getPublishersAndIsbnIdentifiers($begin, $end);
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publishers.php';
         // Convert list to CSV array
         return PublishersHelper::toCSVArray($list);
     }
 
-    private function getPublicationsStats() {
+    private function getPublicationsStats($begin, $end) {
         // Get component parameters
         $params = JComponentHelper::getParams('com_isbnregistry');
         // Get the id of the publisher that represents author publishers
@@ -112,7 +112,7 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         // Get publication model
         $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
         // Get list of publications
-        $list = $publicationModel->getPublicationsWithIsbnIdentifiers($authorPublisherId);
+        $list = $publicationModel->getPublicationsWithIsbnIdentifiers($begin, $end, $authorPublisherId);
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publication.php';
         // Convert list to CSV array

@@ -269,16 +269,18 @@ class IsbnregistryModelPublication extends JModelAdmin {
      * spesified by the publisher id that have at least one ISBN identifier.
      * If publisher id is not given, all the publications that have at least
      * one ISBN identifier are returned.
-     * @return array array of all the publications that have ISBN
-     * identifier
+     * @param JDate $begin begin date
+     * @param JDate $end end date
      * @param integer $publisherId id of the publisher that owns the
      * publications
+     * @return array array of all the publications that have ISBN
+     * identifier
      */
-    public function getPublicationsWithIsbnIdentifiers($publisherId = 0) {
+    public function getPublicationsWithIsbnIdentifiers($begin, $end, $publisherId = 0) {
         // Get db access
         $table = $this->getTable();
         // Get publications
-        return $table->getPublicationsWithIsbnIdentifiers($publisherId);
+        return $table->getPublicationsWithIsbnIdentifiers($begin, $end, $publisherId);
     }
 
     /**

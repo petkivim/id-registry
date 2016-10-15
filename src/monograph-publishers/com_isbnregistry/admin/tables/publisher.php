@@ -211,12 +211,15 @@ class IsbnRegistryTablePublisher extends JTable {
     }
 
     /**
-     * Returns a list of publishers and all the publisher ISBN identifiers.
+     * Returns a list of publishers and publisher ISBN identifiers that were
+     * created or modified between begin date and end date.
      * If publisher has multiple identifiers, the publisher is included in the
      * list multiple times.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
      * @return list of publishers
      */
-    public function getPublishersAndIsbnIdentifiers() {
+    public function getPublishersAndIsbnIdentifiers($begin, $end) {
         // Initialize variables.
         $query = $this->_db->getQuery(true);
 
@@ -225,6 +228,12 @@ class IsbnRegistryTablePublisher extends JTable {
         $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
         $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS pir ON p.id = pir.publisher_id');
         $query->order('p.official_name ASC');
+        $query->where('(' .
+                $this->_db->quoteName('p.created') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
+                $this->_db->quoteName('p.created') . ' <= ' . $this->_db->quote($end->toSql()) . ') OR (' .
+                $this->_db->quoteName('p.modified') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
+                $this->_db->quoteName('p.modified') . ' <= ' . $this->_db->quote($end->toSql()) .
+                ')');
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();

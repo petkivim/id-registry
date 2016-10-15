@@ -142,16 +142,19 @@ class IsbnregistryModelPublisher extends JModelAdmin {
     }
 
     /**
-     * Returns a list of publishers and all the publisher ISBN identifiers.
+     * Returns a list of publishers and publisher ISBN identifiers that were
+     * created or modified between begin date and end date.
      * If publisher has multiple identifiers, the publisher is included in the
      * list multiple times.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
      * @return list of publishers
      */
-    public function getPublishersAndIsbnIdentifiers() {
+    public function getPublishersAndIsbnIdentifiers($begin, $end) {
         // Get db access
         $table = $this->getTable();
         //   Return result
-        return $table->getPublishersAndIsbnIdentifiers();
+        return $table->getPublishersAndIsbnIdentifiers($begin, $end);
     }
 
     /**

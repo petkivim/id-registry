@@ -326,16 +326,18 @@ class IsbnRegistryTablePublication extends JTable {
     }
 
     /**
-     * Returns an array that contains all the publications owned by the publisher
+     * Returns an array that contains all the publications own by the publisher
      * spesified by the publisher id that have at least one ISBN identifier.
      * If publisher id is not given, all the publications that have at least
      * one ISBN identifier are returned.
-     * @return array array of all the publications that have ISBN
-     * identifier
+     * @param JDate $begin begin date
+     * @param JDate $end end date
      * @param integer $publisherId id of the publisher that owns the
      * publications
+     * @return array array of all the publications that have ISBN
+     * identifier
      */
-    public function getPublicationsWithIsbnIdentifiers($publisherId = 0) {
+    public function getPublicationsWithIsbnIdentifiers($begin, $end, $publisherId = 0) {
         // Initialize variables.
         $query = $this->_db->getQuery(true);
 
@@ -349,10 +351,16 @@ class IsbnRegistryTablePublication extends JTable {
         }
 
         // Create the query
-        $query->select('*')
-                ->from($this->_db->quoteName($this->_tbl))
-                ->where($conditions)
-                ->order('official_name ASC');
+        $query->select('p.*');
+        $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
+        $query->where('(' .
+                $this->_db->quoteName('p.created') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
+                $this->_db->quoteName('p.created') . ' <= ' . $this->_db->quote($end->toSql()) . ') OR (' .
+                $this->_db->quoteName('p.modified') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
+                $this->_db->quoteName('p.modified') . ' <= ' . $this->_db->quote($end->toSql()) .
+                ')');
+        $query->where($conditions);
+        $query->order('p.official_name ASC');
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();
