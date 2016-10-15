@@ -343,22 +343,22 @@ class IsbnRegistryTablePublication extends JTable {
 
         // Conditions for which records should be fetched
         $conditions = array(
-            $this->_db->quoteName('publication_identifier_type') . ' = ' . $this->_db->quote('ISBN')
+            $this->_db->quoteName('p.publication_identifier_type') . ' = ' . $this->_db->quote('ISBN')
         );
 
         if ($publisherId > 0) {
-            array_push($conditions, $this->_db->quoteName('publisher_id') . ' = ' . $this->_db->quote($publisherId));
+            array_push($conditions, $this->_db->quoteName('p.publisher_id') . ' = ' . $this->_db->quote($publisherId));
         }
 
         // Create the query
         $query->select('p.*');
         $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
-        $query->where('(' .
+        $query->where('((' .
                 $this->_db->quoteName('p.created') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
                 $this->_db->quoteName('p.created') . ' <= ' . $this->_db->quote($end->toSql()) . ') OR (' .
                 $this->_db->quoteName('p.modified') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
                 $this->_db->quoteName('p.modified') . ' <= ' . $this->_db->quote($end->toSql()) .
-                ')');
+                '))');
         $query->where($conditions);
         $query->order('p.official_name ASC');
         $this->_db->setQuery($query);
