@@ -74,7 +74,7 @@ $interval = $params->get('email_interval_microseconds', 500000);
 $messageModel = JModelLegacy::getInstance('message', 'IsbnregistryModel');
 
 // Set some counters
-$successCount= 0;
+$successCount = 0;
 $failCount = 0;
 $noEmailCount = 0;
 
@@ -86,6 +86,12 @@ foreach ($publishers as $publisher) {
     }
     // Get template
     $template = $templateHash[$publisher->lang_code];
+
+    // Get new Message instance
+    $messageNew = JModelLegacy::getInstance('message', 'IsbnregistryModel');
+    $messageNew->message = $template->message;
+    $messageNew->recipient = $publisher->email;
+
     // Create array for message data
     $message = array(
         'publisher_id' => $publisher->id,
@@ -94,10 +100,12 @@ foreach ($publishers as $publisher) {
         'group_message_id' => $groupMessageId,
         'recipient' => $publisher->email,
         'subject' => $template->subject,
-        'message' => $messageModel->filterMessage($template->message, $publisher),
+        'message' => $template->message,
         'lang_code' => $publisher->lang_code,
         'sent_by' => $groupMessage->created_by
     );
+    // Filter message
+    $message['message'] = $messageModel->filterMessage($messageNew, $publisher, "");
     // Save message
     if ($messageModel->save($message)) {
         $successCount++;

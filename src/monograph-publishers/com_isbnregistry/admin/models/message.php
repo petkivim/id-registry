@@ -393,7 +393,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
     /**
      * Filters the message body and replaces variables with real values,
      * e.g. date, username etc.
-     * @param string $message message object to be processed
+     * @param Message $message message object to be processed
      * @param Publisher publisher object related to the message
      * @param string $title publication title
      * @return string processed message body
