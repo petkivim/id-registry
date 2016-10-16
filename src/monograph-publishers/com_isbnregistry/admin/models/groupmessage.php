@@ -156,8 +156,8 @@ class IsbnregistryModelGroupmessage extends JModelAdmin {
             return false;
         }
 
-        // Send messages
-        $cmd = 'nohup nice -n 10 ' . PHP_BINDIR . '/php ' . JPATH_COMPONENT_ADMINISTRATOR . '/helpers/groupmessages-script.php ' . $table->id . ' >> /dev/null &';
+        // Send messages. Replace "/dev/null" with "~/debug.log 2>&1" for debugging.
+        $cmd = 'nohup nice -n 10 ' . PHP_BINDIR . '/php ' . JPATH_COMPONENT_ADMINISTRATOR . '/helpers/groupmessages-script.php ' . $table->id . ' > /dev/null 2>&1 &';
         exec($cmd);
 
         return true;

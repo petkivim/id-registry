@@ -168,8 +168,36 @@ class IsbnregistryModelPublisher extends JModelAdmin {
     public function getPublishersByCategory($categories, $hasQuitted, $type) {
         // Get db access
         $table = $this->getTable();
-        //   Return result
-        return $table->getPublishersByCategory($categories, $hasQuitted, $type);
+        // Get publishers by category
+        $publishersByCategory = $table->getPublishersByCategory($categories, $hasQuitted, $type);
+        // Get publishers and the latest identifier id
+        $publishersWithLatestIndentifierId = $table->getPublishersLatestIdentifierId($type);
+        // Create array for publisher - identifier id index
+        $index = array();
+        // Loop through publishers with the latest identifier ids
+        foreach ($publishersWithLatestIndentifierId as $publisher) {
+            $index[$publisher->id] = $publisher->range_id;
+        }
+        // Create array for results
+        $results = array();
+        // Loop through publishers by category
+        foreach ($publishersByCategory as $publisher) {
+            // Check that the publisher exists in index
+            if(array_key_exists($publisher->id, $index)) {
+                // Compare the latest identifier id with the id that was
+                // returned by publishers by category search.
+                if($index[$publisher->id] == $publisher->range_id) {
+                    // Add to results if ids match. Publisher may have multiple
+                    // identifiers and only the last one counts. This is why
+                    // we add to results only publishers which latest
+                    // idetifier belongs to the defined category. In this way
+                    // each publisher belongs to one category only.
+                    array_push($results, $publisher);
+                }
+            }      
+        }
+        // Return results
+        return $results;
     }
 
     /**
