@@ -223,17 +223,18 @@ class IsbnRegistryTablePublisher extends JTable {
         // Initialize variables.
         $query = $this->_db->getQuery(true);
 
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('pir.created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('pir.created') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+
         // Create the query
         $query->select('*');
         $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
         $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS pir ON p.id = pir.publisher_id');
         $query->order('p.official_name ASC');
-        $query->where('(' .
-                $this->_db->quoteName('p.created') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
-                $this->_db->quoteName('p.created') . ' <= ' . $this->_db->quote($end->toSql()) . ') OR (' .
-                $this->_db->quoteName('p.modified') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
-                $this->_db->quoteName('p.modified') . ' <= ' . $this->_db->quote($end->toSql()) .
-                ')');
+        $query->where($conditions);
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();
