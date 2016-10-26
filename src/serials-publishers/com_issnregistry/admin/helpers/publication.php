@@ -233,7 +233,7 @@ class PublicationHelper extends JHelperContent {
 
     private static function addField336($record) {
         $datafield = new DataField('336', ' ', ' ');
-        $datafield->addSubfield(new Subfield('a', 'Teksti'));
+        $datafield->addSubfield(new Subfield('a', 'teksti'));
         $datafield->addSubfield(new Subfield('b', 'txt'));
         $datafield->addSubfield(new Subfield('2', 'rdacontent'));
         $record->addDataField($datafield);
