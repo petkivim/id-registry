@@ -274,7 +274,7 @@ class IsbnregistryFormsHelper {
             }
             // Publishing activity amount - optional
             $publishingActivityAmount = $post->get('publishing_activity_amount', null, 'string');
-            if (!preg_match('/^\d{0,5}$/i', $publishingActivityAmount)) {
+            if (!preg_match('/^[\d\-]{0,5}$/i', $publishingActivityAmount)) {
                 $errors['publishing_activity_amount'] = "PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_AMOUNT_FIELD_INVALID";
             }
         } else {
