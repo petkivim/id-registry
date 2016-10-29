@@ -10,6 +10,37 @@ defined('_JEXEC') or die('Restricted access');
 
 class IsbnregistryFormsHelper {
 
+    public static function filterFields() {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+
+        // ZIP - required
+        $zip = $post->get('zip', null, 'string');
+        $zip = preg_replace("/[^0-9]/", "", $zip);
+        $post->set('zip', $zip);
+
+        // Phone number - required (validate format)
+        $phone = $post->get('phone', null, 'string');
+        $phone = trim($phone);
+        $phone = preg_replace("/[^0-9 \+]/", "", $phone);
+        $post->set('phone', $phone);
+
+        // Email - required
+        $email = $post->get('email', null, 'string');
+        $email = trim($email);
+        $post->set('email', $email);
+
+        // Www - optional
+        $www = $post->get('www', null, 'string');
+        if (strlen($www) > 0) {
+            $www = trim($www);
+            if(!preg_match('/^http(s)?:\/\/.+$/', $www)) {
+                $www = 'http://' . $www;
+            }
+            $post->set('www', $www);
+        }
+    }
+
     public static function validateRegistrationForm() {
         // Array for the error messages
         $errors = array();
@@ -962,6 +993,7 @@ class IsbnregistryFormsHelper {
 
         return $mailer->Send();
     }
+
 }
 
 ?>

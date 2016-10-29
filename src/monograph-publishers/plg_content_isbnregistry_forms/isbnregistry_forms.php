@@ -58,6 +58,8 @@ class plgContentIsbnregistry_forms extends JPlugin {
                 if (strpos($value, 'registration') !== false) {
                     $submitRegistration = $post->get('submit_registration', null, 'string');
                     if (JSession::checkToken() && isset($submitRegistration)) {
+                        // Filter input data
+                        IsbnregistryFormsHelper::filterFields();
                         // Validate input data
                         $errors = IsbnregistryFormsHelper::validateRegistrationForm();
                         // If there are no errors, continue processing
@@ -112,6 +114,8 @@ class plgContentIsbnregistry_forms extends JPlugin {
                             $html .= IsbnregistryFormsHtmlBuilder::getIsbnApplicationFormPt1($errors);
                         }
                     } else if (JSession::checkToken() && isset($submitApplicationPt2)) {
+                        // Filter input data
+                        IsbnregistryFormsHelper::filterFields();
                         // Validate input data
                         $errors = IsbnregistryFormsHelper::validateApplicationFormPt2();
                         // If there are no errors, continue processing

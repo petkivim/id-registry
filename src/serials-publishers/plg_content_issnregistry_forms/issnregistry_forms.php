@@ -66,6 +66,8 @@ class plgContentIssnregistry_forms extends JPlugin {
 
                 // Process
                 if (JSession::checkToken() && isset($submitApplicationPt1)) {
+                    // Filter input data
+                    IssnregistryFormsHelper::filterFields1();
                     // Validate input data
                     $errors = IssnregistryFormsHelper::validateApplicationFormPt1();
                     // If there are no errors, continue processing
@@ -77,6 +79,8 @@ class plgContentIssnregistry_forms extends JPlugin {
                         $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt1($errors);
                     }
                 } else if (JSession::checkToken() && isset($submitApplicationPt2)) {
+                    // Filter input data
+                    IssnregistryFormsHelper::filterFields2();
                     // Validate input data
                     $errors = IssnregistryFormsHelper::validateApplicationFormPt2();
                     if (empty($errors)) {

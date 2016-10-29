@@ -10,6 +10,48 @@ defined('_JEXEC') or die('Restricted access');
 
 class IssnregistryFormsHelper {
 
+    public static function filterFields1() {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+
+        // ZIP - required
+        $zip = $post->get('zip', null, 'string');
+        $zip = preg_replace("/[^0-9]/", "", $zip);
+        $post->set('zip', $zip);
+
+        // Phone number - required (validate format)
+        $phone = $post->get('phone', null, 'string');
+        $phone = trim($phone);
+        $phone = preg_replace("/[^0-9 \+]/", "", $phone);
+        $post->set('phone', $phone);
+
+        // Email - required
+        $email = $post->get('email', null, 'string');
+        $email = trim($email);
+        $post->set('email', $email);
+    }
+
+    public static function filterFields2() {
+        // Get the post variables
+        $post = JFactory::getApplication()->input->post;
+
+        // Publication count - required
+        $publicationCount = $post->get('publication_count', 0, 'integer');
+
+        // Loop through all the publications
+        for ($i = 0; $i < $publicationCount; $i++) {
+            // URL - optional
+            $url = $post->get('url_' . $i, null, 'string');
+            if (strlen($url) > 0) {
+                $url = trim($url);
+                if (!preg_match('/^http(s)?:\/\/.+$/', $url)) {
+                    $url = 'http://' . $url;
+                }
+                $post->set('url_' . $i, $url);
+            }           
+        }
+    }
+
     public static function validateApplicationFormPt1() {
         // Array for the error messages
         $errors = array();
