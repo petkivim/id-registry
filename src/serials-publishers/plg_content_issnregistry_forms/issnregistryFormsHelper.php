@@ -31,12 +31,17 @@ class IssnregistryFormsHelper {
         $post->set('email', $email);
     }
 
-    public static function filterFields2() {
+    public static function filterFields2($maxPublicationCount = 1) {
         // Get the post variables
         $post = JFactory::getApplication()->input->post;
 
         // Publication count - required
         $publicationCount = $post->get('publication_count', 0, 'integer');
+
+        // Sanity check for publication count
+        if ($publicationCount > $maxPublicationCount) {
+            $publicationCount = $maxPublicationCount;
+        }
 
         // Loop through all the publications
         for ($i = 0; $i < $publicationCount; $i++) {
@@ -48,7 +53,7 @@ class IssnregistryFormsHelper {
                     $url = 'http://' . $url;
                 }
                 $post->set('url_' . $i, $url);
-            }           
+            }
         }
     }
 
@@ -112,7 +117,7 @@ class IssnregistryFormsHelper {
         return $errors;
     }
 
-    public static function validateApplicationFormPt2() {
+    public static function validateApplicationFormPt2($maxPublicationCount = 1) {
         // Array for the error messages
         $errors = array();
 
@@ -123,6 +128,11 @@ class IssnregistryFormsHelper {
         $publicationCount = $post->get('publication_count', 0, 'integer');
         if ($publicationCount == 0) {
             $errors['publication_count'] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
+        }
+
+        // Sanity check for publication count
+        if ($publicationCount > $maxPublicationCount) {
+            $publicationCount = $maxPublicationCount;
         }
 
         // Loop through all the publications

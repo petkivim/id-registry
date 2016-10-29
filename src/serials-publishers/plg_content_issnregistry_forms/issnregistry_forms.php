@@ -58,7 +58,7 @@ class plgContentIssnregistry_forms extends JPlugin {
                 $submitApplicationPt1 = $post->get('submit_application_pt1', null, 'string');
                 $submitApplicationPt2 = $post->get('submit_application_pt2', null, 'string');
                 $submitApplicationPt3 = $post->get('submit_application_pt3', null, 'string');
-                $submitApplicationPt4 = $post->get('submit_application_pt4', null, 'string');
+
                 // Get back button values
                 $backApplicationPt3 = $post->get('back_application_pt3', null, 'string');
                 // Get refresh button value
@@ -80,9 +80,9 @@ class plgContentIssnregistry_forms extends JPlugin {
                     }
                 } else if (JSession::checkToken() && isset($submitApplicationPt2)) {
                     // Filter input data
-                    IssnregistryFormsHelper::filterFields2();
+                    IssnregistryFormsHelper::filterFields2($maxPublicationsCount);
                     // Validate input data
-                    $errors = IssnregistryFormsHelper::validateApplicationFormPt2();
+                    $errors = IssnregistryFormsHelper::validateApplicationFormPt2($maxPublicationsCount);
                     if (empty($errors)) {
                         // Show overview form
                         $html .= IssnregistryFormsHtmlBuilder::getIssnApplicationFormPt3($maxPublicationsCount);
