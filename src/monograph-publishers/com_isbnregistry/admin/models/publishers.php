@@ -25,6 +25,8 @@ class IsbnregistryModelPublishers extends JModelList {
                 'type', 'a.type',
                 'lang_code', 'a.lang_code',
                 'no_identifier', 'a.no_identifier',
+                'identifier_length_isbn', 'a.identifier_length_isbn',
+                'identifier_length_ismn', 'a.identifier_length_ismn',
                 'target_field', 'a.target_field',
                 'has_email', 'a.has_email'
             );
@@ -69,6 +71,12 @@ class IsbnregistryModelPublishers extends JModelList {
         $noIdentifier = $this->getUserStateFromRequest($this->context . '.filter.no_identifier', 'filter_no_identifier', '');
         $this->setState('filter.no_identifier', $noIdentifier);
 
+        $identifierLengthIsbn = $this->getUserStateFromRequest($this->context . '.filter.identifier_length_isbn', 'filter_identifier_length_isbn', '');
+        $this->setState('filter.identifier_length_isbn', $identifierLengthIsbn);
+
+        $identifierLengthIsmn = $this->getUserStateFromRequest($this->context . '.filter.identifier_length_ismn', 'filter_identifier_length_ismn', '');
+        $this->setState('filter.identifier_length_ismn', $identifierLengthIsmn);
+
         $targetField = $this->getUserStateFromRequest($this->context . '.filter.target_field', 'filter_target_field', '');
         $this->setState('filter.target_field', $targetField);
 
@@ -99,13 +107,17 @@ class IsbnregistryModelPublishers extends JModelList {
         $langCode = $this->getState('filter.lang_code');
         // Get identifier filter
         $noIdentifier = $this->getState('filter.no_identifier');
+        // Get ISBN identifier length filter
+        $identifierLengthIsbn = $this->getState('filter.identifier_length_isbn');
+        // Get ISBN identifier length filter
+        $identifierLengthIsmn = $this->getState('filter.identifier_length_ismn');
         // Get target field
         $targetField = $this->getState('filter.target_field');
         // Get has email value
         $hasEmail = $this->getState('filter.has_email');
 
         // Create the base select statement.
-        $query->select('DISTINCT a.id, a.official_name, a.other_names, a.active_identifier_isbn, a.active_identifier_ismn, a.created')
+        $query->select('DISTINCT a.id, a.official_name, a.other_names, a.created')
                 ->from($db->quoteName('#__isbn_registry_publisher') . ' AS a');
 
         // Set has quitted
@@ -122,21 +134,34 @@ class IsbnregistryModelPublishers extends JModelList {
         if (!empty($type)) {
             if (preg_match('/^ISBN$/', $type) === 1) {
                 $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS i ON a.id = i.publisher_id');
+                if (is_numeric($identifierLengthIsbn)) {
+                    $query->where('i.category = ' . $identifierLengthIsbn);
+                }
             } else if (preg_match('/^ISMN$/', $type) === 1) {
                 $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS i ON a.id = i.publisher_id');
+                if (is_numeric($identifierLengthIsmn)) {
+                    $query->where('i.category = ' . $identifierLengthIsmn);
+                }
             }
         } else {
             $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON a.id = isbn.publisher_id');
             $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
+            if (is_numeric($identifierLengthIsbn) && !is_numeric($identifierLengthIsmn)) {
+                $query->where('isbn.category = ' . $identifierLengthIsbn);
+            } else if (!is_numeric($identifierLengthIsbn) && is_numeric($identifierLengthIsmn)) {
+                $query->where('ismn.category = ' . $identifierLengthIsmn);
+            } else if (is_numeric($identifierLengthIsbn) && is_numeric($identifierLengthIsmn)) {
+                $query->where('(isbn.category = ' . $identifierLengthIsbn . ' OR ismn.category = ' . $identifierLengthIsmn . ')');
+            }
         }
 
         // Set has email
         if (is_numeric($hasEmail)) {
-            if($hasEmail == 0) {
+            if ($hasEmail == 0) {
                 $query->where('a.email = ""');
             } else {
                 $query->where('a.email != ""');
-            }          
+            }
         }
 
         // Set identifier filter

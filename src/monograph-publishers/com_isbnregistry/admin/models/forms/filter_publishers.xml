@@ -69,6 +69,36 @@
             <option value="7">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISMN</option>-->
         </field>
         <field
+            name="identifier_length_isbn"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_LENGTH_ISBN_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_LENGTH_ISBN_DESC"
+            onchange="this.form.submit();"
+        >
+			<option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_LENGTH_ISBN_SELECT</option>
+			<option value="5">1</option>
+			<option value="4">2</option>           
+			<option value="3">3</option>
+			<option value="2">4</option> 
+			<option value="1">5</option>
+        </field>		
+        <field
+            name="identifier_length_ismn"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_LENGTH_ISMN_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_LENGTH_ISMN_DESC"
+            onchange="this.form.submit();"
+        >
+			<option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_LENGTH_ISMN_SELECT</option>
+			<option value="7">1</option>
+			<option value="6">2</option>           
+			<option value="5">3</option>
+			<option value="4">4</option> 
+			<option value="3">5</option>
+			<option value="2">6</option> 
+			<option value="1">7</option> 
+        </field>		
+        <field
             name="has_email"
             type="list"
             label="COM_ISBNREGISTRY_PUBLISHER_FILTER_HAS_EMAIL_LABEL"
