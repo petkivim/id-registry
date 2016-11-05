@@ -68,6 +68,17 @@
             <!--<option value="6">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISBN</option>
             <option value="7">COM_ISBNREGISTRY_PUBLISHER_FILTER_IDENTIFIER_ISMN</option>-->
         </field>
+        <field
+            name="has_email"
+            type="list"
+            label="COM_ISBNREGISTRY_PUBLISHER_FILTER_HAS_EMAIL_LABEL"
+            description="COM_ISBNREGISTRY_PUBLISHER_FILTER_HAS_EMAIL_DESC"
+            onchange="this.form.submit();"
+        >
+            <option value="">COM_ISBNREGISTRY_PUBLISHER_FILTER_HAS_EMAIL_SELECT</option>
+			<option value="1">JYES</option>
+            <option value="0">JNO</option>           
+        </field>		
     </fields>
     <fields name="list">
         <field

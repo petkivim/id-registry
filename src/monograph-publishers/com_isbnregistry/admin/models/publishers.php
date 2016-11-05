@@ -25,7 +25,8 @@ class IsbnregistryModelPublishers extends JModelList {
                 'type', 'a.type',
                 'lang_code', 'a.lang_code',
                 'no_identifier', 'a.no_identifier',
-                'target_field', 'a.target_field'
+                'target_field', 'a.target_field',
+                'has_email', 'a.has_email'
             );
         }
 
@@ -71,6 +72,9 @@ class IsbnregistryModelPublishers extends JModelList {
         $targetField = $this->getUserStateFromRequest($this->context . '.filter.target_field', 'filter_target_field', '');
         $this->setState('filter.target_field', $targetField);
 
+        $hasEmail = $this->getUserStateFromRequest($this->context . '.filter.has_email', 'filter_has_email', '');
+        $this->setState('filter.has_email', $hasEmail);
+
         // List state information.
         parent::populateState('a.official_name', 'asc');
     }
@@ -97,6 +101,8 @@ class IsbnregistryModelPublishers extends JModelList {
         $noIdentifier = $this->getState('filter.no_identifier');
         // Get target field
         $targetField = $this->getState('filter.target_field');
+        // Get has email value
+        $hasEmail = $this->getState('filter.has_email');
 
         // Create the base select statement.
         $query->select('DISTINCT a.id, a.official_name, a.other_names, a.active_identifier_isbn, a.active_identifier_ismn, a.created')
@@ -122,6 +128,15 @@ class IsbnregistryModelPublishers extends JModelList {
         } else {
             $query->join('LEFT', '#__isbn_registry_publisher_isbn_range AS isbn ON a.id = isbn.publisher_id');
             $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
+        }
+
+        // Set has email
+        if (is_numeric($hasEmail)) {
+            if($hasEmail == 0) {
+                $query->where('a.email = ""');
+            } else {
+                $query->where('a.email != ""');
+            }          
         }
 
         // Set identifier filter
