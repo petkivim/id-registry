@@ -532,9 +532,15 @@ class IssnregistryFormsHtmlBuilder {
         $year = $post->get('issued_from_year_' . $index, null, 'string');
         // Get current year
         $currentYear = date("Y");
+        // Get current month
+        $currentMonth = date('n');
 
         $html = '<select class="issued_from_year" name="issued_from_year_' . $index . '" id="issued_from_year_' . $index . '">';
         $html .= '<option value=""' . (strcmp($year, '') == 0 ? ' selected' : '') . '>' . JText::_('PLG_ISSNREGISTRY_FORMS_SELECT') . '</option>';
+        // Starting from September the next year must be added
+        if ($currentMonth >= 9) {
+            $html .= '<option value="' . ($currentYear + 1) . '"' . (($year == $currentYear + 1) ? ' selected' : '') . '>' . ($currentYear + 1) . '</option>';
+        }
         for ($i = $currentYear; $i >= 1900; $i--) {
             $html .= '<option value="' . $i . '"' . (($year == $i) ? ' selected' : '') . '>' . $i . '</option>';
         }

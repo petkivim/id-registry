@@ -21,8 +21,14 @@ class JFormFieldYear extends JFormField {
     public function getInput() {
         // Get current year
         $currentYear = date("Y");
+        // Get current month
+        $currentMonth = date('n');
         $html = '<select name="' . $this->name . '" id="' . $this->id . '" class="' . $this->class . '">';
         $html .= '<option value=""' . (strcmp($this->value, '') == 0 ? ' selected' : '') . '>' . JText::_('COM_ISSNREGISTRY_FIELD_SELECT') . '</option>';
+        // Starting from September the next year must be added
+        if ($currentMonth >= 9) {
+            $html .= '<option value="' . ($currentYear + 1) . '"' . (($this->value == $currentYear + 1) ? ' selected' : '') . '>' . ($currentYear + 1) . '</option>';
+        }
         for ($i = $currentYear; $i >= 1900; $i--) {
             $html .= '<option value="' . $i . '"' . (($this->value == $i) ? ' selected' : '') . '>' . $i . '</option>';
         }
