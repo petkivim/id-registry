@@ -69,3 +69,7 @@ tr.spacer_bottom > td, .spacer_bottom  {
 #plg_isbnregistry_forms_application_summary td {
     width: 18em;
 }
+
+input[type=checkbox].check_department {
+    margin-right: .3em;
+}

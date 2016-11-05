@@ -34,7 +34,7 @@ class IsbnregistryFormsHelper {
         $www = $post->get('www', null, 'string');
         if (strlen($www) > 0) {
             $www = trim($www);
-            if(!preg_match('/^http(s)?:\/\/.+$/', $www)) {
+            if (!preg_match('/^http(s)?:\/\/.+$/', $www)) {
                 $www = 'http://' . $www;
             }
             $post->set('www', $www);
@@ -278,6 +278,12 @@ class IsbnregistryFormsHelper {
                 $errors['publishing_activity_amount'] = "PLG_ISBNREGISTRY_FORMS_PUBLISHING_ACTIVITY_AMOUNT_FIELD_INVALID";
             }
         } else {
+            // Check department must be checked
+            $checkDepartment = $post->get("check_department", null, 'string');
+            if (!isset($checkDepartment)) {
+                $errors['check_department'] = "PLG_ISBNREGISTRY_FORMS_CHECK_DEPARTMENT_FIELD_NOT_CHECKED";
+            }
+
             // First name - required
             $firstName = $post->get('first_name', null, 'string');
             if (empty($firstName) == true) {

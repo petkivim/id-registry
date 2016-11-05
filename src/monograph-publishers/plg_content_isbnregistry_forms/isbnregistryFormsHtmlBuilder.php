@@ -138,6 +138,16 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<div class="form_header">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_HEADER_DISSERTATION') . '</div>';
         }
         $html .= '<div class="plg_isbnregistry_forms" id="plg_isbnregistry_forms_application" >';
+        $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="isbnApplicationForm" id="isbnApplicationForm">';
+        if (IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
+            $checkDepartment = $post->get('check_department', null, 'string');
+            $html .= '<div>';
+            $html .= '<input class="check_department" type="checkbox" name="check_department" value=""' . (isset($checkDepartment) ? ' checked' : '') . '/>';
+            $html .= JText::_('PLG_ISBNREGISTRY_FORMS_CHECK_DEPARTMENT_FIELD');
+            $html .= '<span class="error">* ' . (isset($errors['check_department']) ? JText::_($errors['check_department']) : '') . '</span>';
+            $html .= '</div>';
+            $html .= '<div class="pre_field">' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_HEADER_DISSERTATION_NOTE') . '</div>';
+        }
         $html .= '<div class="sub_title">';
         if (IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
             $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1_1');
@@ -145,7 +155,6 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1') . ' ' . JText::_('PLG_ISBNREGISTRY_FORMS_APPLICATION_SUB_TITLE_1_LINK');
         }
         $html .= '</div>';
-        $html .= '<form action="' . JURI::getInstance()->toString() . '" method="post" name="isbnApplicationForm" id="isbnApplicationForm">';
         $html .= '<table>';
         $html .= '<tr>';
         if (IsbnregistryFormsHelper::isDissertation($post->get('publication_type', null, 'string'))) {
@@ -650,6 +659,8 @@ class IsbnregistryFormsHtmlBuilder {
             $html .= '<input type="hidden" name="first_name" value="' . $post->get('first_name', null, 'string') . '" />';
             $html .= '<input type="hidden" name="last_name" value="' . $post->get('last_name', null, 'string') . '" />';
             $html .= '<input type ="hidden" name ="locality" value="' . $post->get('locality', null, 'string') . '" />';
+            $checkDepartment = $post->get('check_department', null, 'string');
+            $html .= '<input style="display:none;" type="checkbox" name="check_department" value=""' . (isset($checkDepartment) ? ' checked' : '') . '/>';
         }
         $html .= '<input type="hidden" name="publication_format" value="' . $post->get('publication_format', null, 'string') . '" />';
         return $html;
