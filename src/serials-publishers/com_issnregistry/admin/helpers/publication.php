@@ -101,7 +101,7 @@ class PublicationHelper extends JHelperContent {
         if (self::isElectronical($format)) {
             return "cr||||||||||||";
         } else {
-            return "ta||||||||||||";
+            return "ta";
         }
     }
 
