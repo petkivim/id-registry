@@ -6,7 +6,7 @@
     <copyright>(C)2015-2016 Petteri Kivimaki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
     <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
-	<version>1.4.0</version>
+	<version>1.5.0</version>
 	<description>PLG_ISBNREGISTRY_FORMS_DESC</description>
 	<files>
 	   <filename plugin="isbnregistry_forms">isbnregistry_forms.php</filename>

@@ -9,7 +9,7 @@
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
     <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
     <!--  The version string is recorded in the components table -->
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <!-- The description is optional and defaults to the name -->
     <description>COM_ISBNREGISTRY_DESCRIPTION</description>
 

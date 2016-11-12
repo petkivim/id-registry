@@ -3,13 +3,13 @@
 
     <name>COM_ISSNREGISTRY</name>
     <!-- The following elements are optional and free of formatting constraints -->
-    <creationDate>6 November 2016</creationDate>
+    <creationDate>12 November 2016</creationDate>
     <author>Petteri Kivimäki</author>
     <copyright>(C)2016 Petteri Kivimäki</copyright>
     <license>http://www.gnu.org/copyright/gpl.html GNU/GPL</license>
     <authorEmail>petteri.kivimaki@helsinki.fi</authorEmail>
     <!--  The version string is recorded in the components table -->
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <!-- The description is optional and defaults to the name -->
     <description>COM_ISSNREGISTRY_DESCRIPTION</description>
 
