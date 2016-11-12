@@ -136,11 +136,13 @@ class IsbnregistryModelPublishers extends JModelList {
                 $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS i ON a.id = i.publisher_id');
                 if (is_numeric($identifierLengthIsbn)) {
                     $query->where('i.category = ' . $identifierLengthIsbn);
+                    $query->where('i.id in (' . $this->getSubquery($db, true) . ')');
                 }
             } else if (preg_match('/^ISMN$/', $type) === 1) {
                 $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS i ON a.id = i.publisher_id');
                 if (is_numeric($identifierLengthIsmn)) {
                     $query->where('i.category = ' . $identifierLengthIsmn);
+                    $query->where('i.id in (' . $this->getSubquery($db, false) . ')');
                 }
             }
         } else {
@@ -148,10 +150,13 @@ class IsbnregistryModelPublishers extends JModelList {
             $query->join('LEFT', '#__isbn_registry_publisher_ismn_range AS ismn ON a.id = ismn.publisher_id');
             if (is_numeric($identifierLengthIsbn) && !is_numeric($identifierLengthIsmn)) {
                 $query->where('isbn.category = ' . $identifierLengthIsbn);
+                $query->where('isbn.id in (' . $this->getSubquery($db, true) . ')');
             } else if (!is_numeric($identifierLengthIsbn) && is_numeric($identifierLengthIsmn)) {
                 $query->where('ismn.category = ' . $identifierLengthIsmn);
+                $query->where('ismn.id in (' . $this->getSubquery($db, false) . ')');
             } else if (is_numeric($identifierLengthIsbn) && is_numeric($identifierLengthIsmn)) {
                 $query->where('(isbn.category = ' . $identifierLengthIsbn . ' OR ismn.category = ' . $identifierLengthIsmn . ')');
+                $query->where('(isbn.id in (' . $this->getSubquery($db, true) . ') OR ismn.id in (' . $this->getSubquery($db, false) . '))');
             }
         }
 
@@ -232,6 +237,15 @@ class IsbnregistryModelPublishers extends JModelList {
         $query->group('a.id');
 
         return $query;
+    }
+
+    private function getSubquery($db, $isbn = true) {
+        $subquery = $db->getQuery(true);
+        $table = $isbn ? '#__isbn_registry_publisher_isbn_range' : '#__isbn_registry_publisher_ismn_range';
+        $subquery->select('max(pir.id)');
+        $subquery->from($db->quoteName($table) . ' AS pir');
+        $subquery->group('pir.publisher_id');
+        return $subquery->__toString();
     }
 
 }
