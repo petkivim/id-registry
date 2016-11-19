@@ -309,13 +309,13 @@ class PublicationHelper extends JHelperContent {
         $datafield = new DataField('336', ' ', ' ');
 
         if (self::isMusic($publication->publication_type)) {
-            $datafield->addSubfield(new Subfield('a', 'Nuottikirjoitus'));
+            $datafield->addSubfield(new Subfield('a', 'nuottikirjoitus'));
             $datafield->addSubfield(new Subfield('b', 'ntm'));
         } else if (self::isMap($publication->publication_type)) {
-            $datafield->addSubfield(new Subfield('a', 'Kartografinen kuva'));
+            $datafield->addSubfield(new Subfield('a', 'kartografinen kuva'));
             $datafield->addSubfield(new Subfield('b', 'cri'));
         } else {
-            $datafield->addSubfield(new Subfield('a', 'Teksti'));
+            $datafield->addSubfield(new Subfield('a', 'teksti'));
             $datafield->addSubfield(new Subfield('b', 'txt'));
         }
         $datafield->addSubfield(new Subfield('2', 'rdacontent'));
