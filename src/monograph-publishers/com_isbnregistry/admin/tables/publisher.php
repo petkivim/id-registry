@@ -212,7 +212,7 @@ class IsbnRegistryTablePublisher extends JTable {
 
     /**
      * Returns a list of publishers and publisher ISBN identifiers that were
-     * created or modified between begin date and end date.
+     * created between begin date and end date.
      * If publisher has multiple identifiers, the publisher is included in the
      * list multiple times.
      * @param JDate $begin begin date
@@ -242,7 +242,7 @@ class IsbnRegistryTablePublisher extends JTable {
 
     /**
      * Returns a list of publishers and publisher ISMN identifiers that were
-     * created or modified between begin date and end date.
+     * created between begin date and end date.
      * If publisher has multiple identifiers, the publisher is included in the
      * list multiple times.
      * @param JDate $begin begin date
@@ -333,6 +333,39 @@ class IsbnRegistryTablePublisher extends JTable {
             $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS pir ON p.id = pir.publisher_id');
         }
         $query->group('p.id');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
+     * Returns a list of publishers with the first publisher identifier that 
+     * were created between begin date and end date.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param string $type publisher's type: isbn or ismn
+     * @return ObjectList list of publishers matching the conditions
+     */
+    public function getPublishersWithFirstIdentifier($begin, $end, $type) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('pir.created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('pir.created') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+        // Create the query
+        $query->select('*');
+        $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
+        if (strcmp($type, 'isbn') == 0) {
+            $query->join('INNER', '#__isbn_registry_publisher_isbn_range AS pir ON p.id = pir.publisher_id');
+            $query->where('pir.id in (' . $this->getSubquery(true) . ')');
+        } else {
+            $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS pir ON p.id = pir.publisher_id');
+            $query->where('pir.id in (' . $this->getSubquery(false) . ')');
+        }
+        $query->where($conditions);
+        $query->order('p.official_name ASC');
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();
@@ -449,6 +482,15 @@ class IsbnRegistryTablePublisher extends JTable {
         $this->_db->setQuery($query);
         // Execute query
         return $this->_db->loadObjectList();
+    }
+
+    private function getSubquery($isbn = true) {
+        $subquery = $this->_db->getQuery(true);
+        $table = $isbn ? '#__isbn_registry_publisher_isbn_range' : '#__isbn_registry_publisher_ismn_range';
+        $subquery->select('min(pir.id)');
+        $subquery->from($this->_db->quoteName($table) . ' AS pir');
+        $subquery->group('pir.publisher_id');
+        return $subquery->__toString();
     }
 
 }

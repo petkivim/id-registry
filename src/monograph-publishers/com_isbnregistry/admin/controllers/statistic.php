@@ -58,7 +58,7 @@ class IsbnregistryControllerStatistic extends JControllerForm {
     }
 
     private function validateType($type) {
-        if (!preg_match('/^(MONTHLY|PROGRESS_ISBN|PROGRESS_ISMN|PUBLISHERS_ISBN|PUBLICATIONS_ISBN|PUBLISHERS_ISMN|PUBLICATIONS_ISMN)$/', $type)) {
+        if (!preg_match('/^(MONTHLY|PROGRESS_ISBN|PROGRESS_ISMN|PUBLISHERS_ISBN|PUBLICATIONS_ISBN|PUBLISHERS_ISMN|PUBLICATIONS_ISMN|PUBLISHERS_ISBN_UNIQUE|PUBLISHERS_ISMN_UNIQUE)$/', $type)) {
             return false;
         }
         return true;

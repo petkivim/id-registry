@@ -93,6 +93,10 @@ class IsbnregistryModelStatistic extends JModelAdmin {
             $results = $this->getISMNPublishersStats($begin, $end);
         } else if (strcmp($type, 'PUBLICATIONS_ISMN') == 0) {
             $results = $this->getISMNPublicationsStats($begin, $end);
+        } else if (strcmp($type, 'PUBLISHERS_ISBN_UNIQUE') == 0) {
+            $results = $this->getISBNPublishersStatsUnique($begin, $end);
+        } else if (strcmp($type, 'PUBLISHERS_ISMN_UNIQUE') == 0) {
+            $results = $this->getISMNPublishersStatsUnique($begin, $end);
         }
         return $results;
     }
@@ -123,6 +127,17 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         return PublicationHelper::toCSVArray($list);
     }
 
+    private function getISBNPublishersStatsUnique($begin, $end) {
+        // Get publisher model
+        $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
+        // Get list of publishers
+        $list = $publisherModel->getPublishersWithFirstIdentifier($begin, $end, 'isbn');
+        // Add publications helper file
+        require_once JPATH_COMPONENT . '/helpers/publishers.php';
+        // Convert list to CSV array
+        return PublishersHelper::toCSVArray($list);
+    }
+
     private function getISMNPublishersStats($begin, $end) {
         // Get publisher model
         $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
@@ -147,6 +162,17 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         require_once JPATH_COMPONENT . '/helpers/publication.php';
         // Convert list to CSV array
         return PublicationHelper::toCSVArray($list);
+    }
+
+    private function getISMNPublishersStatsUnique($begin, $end) {
+        // Get publisher model
+        $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
+        // Get list of publishers
+        $list = $publisherModel->getPublishersWithFirstIdentifier($begin, $end, 'ismn');
+        // Add publications helper file
+        require_once JPATH_COMPONENT . '/helpers/publishers.php';
+        // Convert list to CSV array
+        return PublishersHelper::toCSVArray($list);
     }
 
     private function getProgressIsbn() {
