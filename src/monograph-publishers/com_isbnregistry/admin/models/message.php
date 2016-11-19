@@ -248,8 +248,9 @@ class IsbnregistryModelMessage extends JModelAdmin {
         $message->lang_code = $publisher->lang_code;
         // Update recipient
         $message->recipient = $publisher->email;
-        // Variable for publication title
+        // Variables for publication title and subtitle
         $title = '';
+        $subtitle = '';
 
         // Check if identifiers are related to a publication
         $isPublicationIdentifierCreated = ConfigurationHelper::isPublicationIdentifierCreated($code);
@@ -270,6 +271,8 @@ class IsbnregistryModelMessage extends JModelAdmin {
             $message->lang_code = $publication->lang_code;
             // Set publication title
             $title = $publication->title;
+            // Set publication subtitle
+            $subtitle = $publication->subtitle;
             // Get the id of the publisher that represents author publishers
             $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
 
@@ -385,7 +388,7 @@ class IsbnregistryModelMessage extends JModelAdmin {
             }
         }
         // Filter message
-        $message->message = $this->filterMessage($message, $publisher, $title);
+        $message->message = $this->filterMessage($message, $publisher, $title, $subtitle);
         // Operation was successfull
         return true;
     }
@@ -396,15 +399,17 @@ class IsbnregistryModelMessage extends JModelAdmin {
      * @param Message $message message object to be processed
      * @param Publisher publisher object related to the message
      * @param string $title publication title
+     * @param string $subtitle publication subtitle
      * @return string processed message body
      */
-    public function filterMessage($message, $publisher, $title) {
+    public function filterMessage($message, $publisher, $title, $subtitle) {
         $messageBody = $this->filterDate($message->message);
         $messageBody = $this->filterUser($messageBody);
         $messageBody = $this->filterEmail($messageBody, $message->recipient);
         $messageBody = $this->filterPublisher($messageBody, $publisher);
         $messageBody = $this->filterAddress($messageBody, $publisher->address, $publisher->zip, $publisher->city);
         $messageBody = $this->filterPublicationTitle($messageBody, $title);
+        $messageBody = $this->filterPublicationSubtitle($messageBody, $subtitle);
         return $messageBody;
     }
 
@@ -431,6 +436,11 @@ class IsbnregistryModelMessage extends JModelAdmin {
 
     private function filterPublicationTitle($messageBody, $title) {
         return str_replace("#TITLE#", $title, $messageBody);
+    }
+
+    private function filterPublicationSubtitle($messageBody, $subtitle) {
+        $subtitle = empty($subtitle) ? '' : ' : ' . $subtitle;
+        return str_replace("#SUBTITLE#", $subtitle, $messageBody);
     }
 
     private function filterPublisherIdentifier($messageBody, $identifier) {
