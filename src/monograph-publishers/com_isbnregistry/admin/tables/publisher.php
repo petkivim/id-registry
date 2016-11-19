@@ -241,6 +241,36 @@ class IsbnRegistryTablePublisher extends JTable {
     }
 
     /**
+     * Returns a list of publishers and publisher ISMN identifiers that were
+     * created or modified between begin date and end date.
+     * If publisher has multiple identifiers, the publisher is included in the
+     * list multiple times.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return list of publishers
+     */
+    public function getPublishersAndIsmnIdentifiers($begin, $end) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions
+        $conditions = array(
+            $this->_db->quoteName('pir.created') . ' >= ' . $this->_db->quote($begin->toSql()),
+            $this->_db->quoteName('pir.created') . ' <= ' . $this->_db->quote($end->toSql())
+        );
+
+        // Create the query
+        $query->select('*');
+        $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
+        $query->join('INNER', '#__isbn_registry_publisher_ismn_range AS pir ON p.id = pir.publisher_id');
+        $query->order('p.official_name ASC');
+        $query->where($conditions);
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
      * Returns a list of publishers that belong to the given categories,
      * match the has quitted condition and are of the given type (isbn/ismn). 
      * @param array $categories allowed categories

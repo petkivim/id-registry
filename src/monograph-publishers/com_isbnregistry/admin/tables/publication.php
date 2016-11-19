@@ -367,6 +367,47 @@ class IsbnRegistryTablePublication extends JTable {
     }
 
     /**
+     * Returns an array that contains all the publications own by the publisher
+     * spesified by the publisher id that have at least one ISMN identifier.
+     * If publisher id is not given, all the publications that have at least
+     * one ISMN identifier are returned.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param integer $publisherId id of the publisher that owns the
+     * publications
+     * @return array array of all the publications that have ISMN
+     * identifier
+     */
+    public function getPublicationsWithIsmnIdentifiers($begin, $end, $publisherId = 0) {
+        // Initialize variables.
+        $query = $this->_db->getQuery(true);
+
+        // Conditions for which records should be fetched
+        $conditions = array(
+            $this->_db->quoteName('p.publication_identifier_type') . ' = ' . $this->_db->quote('ISMN')
+        );
+
+        if ($publisherId > 0) {
+            array_push($conditions, $this->_db->quoteName('p.publisher_id') . ' = ' . $this->_db->quote($publisherId));
+        }
+
+        // Create the query
+        $query->select('p.*');
+        $query->from($this->_db->quoteName($this->_tbl) . ' AS p');
+        $query->where('((' .
+                $this->_db->quoteName('p.created') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
+                $this->_db->quoteName('p.created') . ' <= ' . $this->_db->quote($end->toSql()) . ') OR (' .
+                $this->_db->quoteName('p.modified') . ' >= ' . $this->_db->quote($begin->toSql()) . ' AND ' .
+                $this->_db->quoteName('p.modified') . ' <= ' . $this->_db->quote($end->toSql()) .
+                '))');
+        $query->where($conditions);
+        $query->order('p.official_name ASC');
+        $this->_db->setQuery($query);
+        // Execute query
+        return $this->_db->loadObjectList();
+    }
+
+    /**
      * Delete all publications related to the publisher identified by
      * the given publisher id.
      * @param int $publisherId publisher id

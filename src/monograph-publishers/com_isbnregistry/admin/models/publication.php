@@ -284,6 +284,25 @@ class IsbnregistryModelPublication extends JModelAdmin {
     }
 
     /**
+     * Returns an array that contains all the publications own by the publisher
+     * spesified by the publisher id that have at least one ISMN identifier.
+     * If publisher id is not given, all the publications that have at least
+     * one ISMN identifier are returned.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @param integer $publisherId id of the publisher that owns the
+     * publications
+     * @return array array of all the publications that have ISMN
+     * identifier
+     */
+    public function getPublicationsWithIsmnIdentifiers($begin, $end, $publisherId = 0) {
+        // Get db access
+        $table = $this->getTable();
+        // Get publications
+        return $table->getPublicationsWithIsmnIdentifiers($begin, $end, $publisherId);
+    }
+
+    /**
      * Delete all publications related to the publisher identified by
      * the given publisher id.
      * @param int $publisherId publisher id

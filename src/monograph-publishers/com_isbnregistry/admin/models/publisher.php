@@ -158,6 +158,22 @@ class IsbnregistryModelPublisher extends JModelAdmin {
     }
 
     /**
+     * Returns a list of publishers and publisher ISMN identifiers that were
+     * created or modified between begin date and end date.
+     * If publisher has multiple identifiers, the publisher is included in the
+     * list multiple times.
+     * @param JDate $begin begin date
+     * @param JDate $end end date
+     * @return list of publishers
+     */
+    public function getPublishersAndIsmnIdentifiers($begin, $end) {
+        // Get db access
+        $table = $this->getTable();
+        //   Return result
+        return $table->getPublishersAndIsmnIdentifiers($begin, $end);
+    }
+
+    /**
      * Returns a list of publishers that belong to the given categories,
      * match the has quitted condition and are of the given type (isbn/ismn). 
      * @param array $categories allowed categories
@@ -183,10 +199,10 @@ class IsbnregistryModelPublisher extends JModelAdmin {
         // Loop through publishers by category
         foreach ($publishersByCategory as $publisher) {
             // Check that the publisher exists in index
-            if(array_key_exists($publisher->id, $index)) {
+            if (array_key_exists($publisher->id, $index)) {
                 // Compare the latest identifier id with the id that was
                 // returned by publishers by category search.
-                if($index[$publisher->id] == $publisher->range_id) {
+                if ($index[$publisher->id] == $publisher->range_id) {
                     // Add to results if ids match. Publisher may have multiple
                     // identifiers and only the last one counts. This is why
                     // we add to results only publishers which latest
@@ -194,7 +210,7 @@ class IsbnregistryModelPublisher extends JModelAdmin {
                     // each publisher belongs to one category only.
                     array_push($results, $publisher);
                 }
-            }      
+            }
         }
         // Return results
         return $results;

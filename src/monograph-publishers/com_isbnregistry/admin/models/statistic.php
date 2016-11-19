@@ -85,15 +85,19 @@ class IsbnregistryModelStatistic extends JModelAdmin {
             $results = $this->getProgressIsbn();
         } else if (strcmp($type, 'PROGRESS_ISMN') == 0) {
             $results = $this->getProgressIsmn();
-        } else if (strcmp($type, 'PUBLISHERS') == 0) {
-            $results = $this->getPublishersStats($begin, $end);
-        } else if (strcmp($type, 'PUBLICATIONS') == 0) {
-            $results = $this->getPublicationsStats($begin, $end);
+        } else if (strcmp($type, 'PUBLISHERS_ISBN') == 0) {
+            $results = $this->getISBNPublishersStats($begin, $end);
+        } else if (strcmp($type, 'PUBLICATIONS_ISBN') == 0) {
+            $results = $this->getISBNPublicationsStats($begin, $end);
+        } else if (strcmp($type, 'PUBLISHERS_ISMN') == 0) {
+            $results = $this->getISMNPublishersStats($begin, $end);
+        } else if (strcmp($type, 'PUBLICATIONS_ISMN') == 0) {
+            $results = $this->getISMNPublicationsStats($begin, $end);
         }
         return $results;
     }
 
-    private function getPublishersStats($begin, $end) {
+    private function getISBNPublishersStats($begin, $end) {
         // Get publisher model
         $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
         // Get list of publishers
@@ -104,7 +108,7 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         return PublishersHelper::toCSVArray($list);
     }
 
-    private function getPublicationsStats($begin, $end) {
+    private function getISBNPublicationsStats($begin, $end) {
         // Get component parameters
         $params = JComponentHelper::getParams('com_isbnregistry');
         // Get the id of the publisher that represents author publishers
@@ -113,6 +117,32 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
         // Get list of publications
         $list = $publicationModel->getPublicationsWithIsbnIdentifiers($begin, $end, $authorPublisherId);
+        // Add publications helper file
+        require_once JPATH_COMPONENT . '/helpers/publication.php';
+        // Convert list to CSV array
+        return PublicationHelper::toCSVArray($list);
+    }
+
+    private function getISMNPublishersStats($begin, $end) {
+        // Get publisher model
+        $publisherModel = JModelLegacy::getInstance('publisher', 'IsbnregistryModel');
+        // Get list of publishers
+        $list = $publisherModel->getPublishersAndIsmnIdentifiers($begin, $end);
+        // Add publications helper file
+        require_once JPATH_COMPONENT . '/helpers/publishers.php';
+        // Convert list to CSV array
+        return PublishersHelper::toCSVArray($list);
+    }
+
+    private function getISMNPublicationsStats($begin, $end) {
+        // Get component parameters
+        $params = JComponentHelper::getParams('com_isbnregistry');
+        // Get the id of the publisher that represents author publishers
+        $authorPublisherId = $params->get('author_publisher_id_isbn', 0);
+        // Get publication model
+        $publicationModel = JModelLegacy::getInstance('publication', 'IsbnregistryModel');
+        // Get list of publications
+        $list = $publicationModel->getPublicationsWithIsmnIdentifiers($begin, $end, $authorPublisherId);
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publication.php';
         // Convert list to CSV array
