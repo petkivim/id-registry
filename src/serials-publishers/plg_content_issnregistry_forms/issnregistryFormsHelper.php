@@ -103,7 +103,9 @@ class IssnregistryFormsHelper {
         }
         // ZIP - optional
         $zip = $post->get('zip', null, 'string');
-        if (!empty($zip) && !preg_match('/^\d{5}$/i', $zip)) {
+        if (empty($zip) == true) {
+            $errors['zip'] = "PLG_ISSNREGISTRY_FORMS_REQUIRED_FIELD_EMPTY";
+        } else if (!preg_match('/^\d{5}$/i', $zip)) {
             $errors['zip'] = "PLG_ISSNREGISTRY_FORMS_FIELD_INVALID";
         }
         // City - required

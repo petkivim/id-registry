@@ -43,7 +43,7 @@ class IssnregistryFormsHtmlBuilder {
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_ZIP_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="zip" id="zip" size="5" value="' . $post->get('zip', null, 'string') . '" /></td>';
-        $html .= '<td class="error">' . (isset($errors['zip']) ? JText::_($errors['zip']) : '') . '</td>';
+        $html .= '<td class="error">* ' . (isset($errors['zip']) ? JText::_($errors['zip']) : '') . '</td>';
         $html .= '</tr><tr>';
         $html .= '<td>' . JText::_('PLG_ISSNREGISTRY_FORMS_CITY_FIELD') . ':</td>';
         $html .= '<td><input type="text" name="city" id="city" size="20" value="' . $post->get('city', null, 'string') . '" /></td>';
