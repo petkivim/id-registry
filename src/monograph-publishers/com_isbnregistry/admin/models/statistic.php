@@ -146,7 +146,7 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publishers.php';
         // Convert list to CSV array
-        return PublishersHelper::toCSVArray($list);
+        return PublishersHelper::toCSVArray($list, true);
     }
 
     private function getISMNPublicationsStats($begin, $end) {
@@ -161,7 +161,7 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publication.php';
         // Convert list to CSV array
-        return PublicationHelper::toCSVArray($list);
+        return PublicationHelper::toCSVArray($list, true);
     }
 
     private function getISMNPublishersStatsUnique($begin, $end) {
@@ -172,7 +172,7 @@ class IsbnregistryModelStatistic extends JModelAdmin {
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publishers.php';
         // Convert list to CSV array
-        return PublishersHelper::toCSVArray($list);
+        return PublishersHelper::toCSVArray($list, true);
     }
 
     private function getProgressIsbn() {

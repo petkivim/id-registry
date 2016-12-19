@@ -575,15 +575,16 @@ class PublicationHelper extends JHelperContent {
      * Creates an array for generating a CSV file. Adds required headers and
      * publications data.
      * @param array $publications publications to be added to the CSV file
+     * @param boolean $ismn are these ISMN publications
      * @return array headers and publications array
      */
-    public static function toCSVArray($publications) {
+    public static function toCSVArray($publications, $ismn = false) {
         // Array for results
         $list = array();
         // Add publications helper file
         require_once JPATH_COMPONENT . '/helpers/publishers.php';
         // CSV headers
-        $headers = PublishersHelper::getPIIDHeaders();
+        $headers = PublishersHelper::getPIIDHeaders($ismn);
         // Add headers
         array_push($list, $headers);
         // Loop through the publications

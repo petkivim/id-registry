@@ -68,9 +68,10 @@ class PublishersHelper extends JHelperContent {
      * Creates an for generating a CSV file. Adds required headers and
      * publishers data.
      * @param array $publishers publishers to be added to the CSV file
+     * @param boolean $ismn are the publishers ISMN publishers
      * @return array headers and publishes array
      */
-    public static function toCSVArray($publishers) {
+    public static function toCSVArray($publishers, $ismn = false) {
         // Get component parameters
         $params = JComponentHelper::getParams('com_isbnregistry');
         // Get the id of the publisher that represents author publishers
@@ -78,7 +79,7 @@ class PublishersHelper extends JHelperContent {
         // Array for results
         $list = array();
         // CSV headers
-        $headers = self::getPIIDHeaders();
+        $headers = self::getPIIDHeaders($ismn);
         // Add headers
         array_push($list, $headers);
         // Loop through the publishers
@@ -92,13 +93,14 @@ class PublishersHelper extends JHelperContent {
     /**
      * Returns an array that contains the headers needed for publishers
      * and publications file for the International ISBN Directory (PIID).
+     * @param boolean $ismn are the headers for ISMN publishers
      * @return array PIID headers array
      */
-    public static function getPIIDHeaders() {
+    public static function getPIIDHeaders($ismn = false) {
         return array(
             'Registrant_Status_Code',
             'Registrant_Prefix_Type',
-            'Registrant_Prefix_Or_ISBN',
+            $ismn ? 'Registrant_Prefix_Or_ISMN' : 'Registrant_Prefix_Or_ISBN',
             'Registrant_Name',
             'ISO_ Country_Code',
             'Address_Line_1',
